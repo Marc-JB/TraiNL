@@ -104,7 +104,7 @@
                 style="@style/TextAppearance.MaterialComponents.Body2"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:background="@{viewModel.platformChanged || viewModel.cancelled ? @color/colorError : @color/colorPrimary}"
+                android:background="@{viewModel.platformChanged || viewModel.cancelled ? @drawable/platform_background_style_red : @drawable/platform_background_style}"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="@{viewModel.platform}"
@@ -115,7 +115,7 @@
                 app:autoSizeStepGranularity="4sp"
                 app:autoSizeTextType="uniform"
                 app:visibleUnless="@{viewModel.cancelled}"
-                tools:background="@color/colorPrimary"
+                tools:background="@drawable/platform_background_style"
                 tools:text="4b" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
