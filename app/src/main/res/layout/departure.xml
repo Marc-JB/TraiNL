@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="nl.marc_apps.ovgo.models.Departure" />
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.departureTimeText}"
+                android:textColor="@{viewModel.delayed || viewModel.cancelled ? @color/colorError : @color/colorOK}"
+                android:textStyle="bold"
+                tools:text="12:45"
+                tools:textColor="@color/colorOK" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.delayText}"
+                android:textColor="@color/colorError"
+                android:textStyle="bold"
+                app:invisibleUnless="@{viewModel.delayed}"
+                tools:text="+1"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.direction}"
+                    android:textColor="@{viewModel.cancelled ? @color/colorError : @color/colorPrimary}"
+                    android:textStyle="bold"
+                    tools:text="Breda"
+                    tools:textColor="@color/colorPrimary" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextAppearance.MaterialComponents.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@{viewModel.routeStationsText}"
+                    app:visibleUnless="@{viewModel.routeStationsText == `` || viewModel.cancelled}"
+                    tools:text="Via Dordrecht"
+                    tools:visibility="visible" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextAppearance.MaterialComponents.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/cancelled"
+                    android:textColor="@color/colorError"
+                    android:textStyle="bold"
+                    app:goneUnless="@{viewModel.cancelled}"
+                    tools:visibility="visible" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@{viewModel.operator + `\n` + viewModel.category}"
+                app:goneUnless="@{viewModel.cancelled}"
+                tools:text="Qbuzz\nR-NET Stoptrein"
+                tools:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@{viewModel.platformChanged || viewModel.cancelled ? @color/colorError : @color/colorPrimary}"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@{viewModel.platform}"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:autoSizeMaxTextSize="48sp"
+                app:autoSizeMinTextSize="10sp"
+                app:autoSizeStepGranularity="4sp"
+                app:autoSizeTextType="uniform"
+                app:visibleUnless="@{viewModel.cancelled}"
+                tools:background="@color/colorPrimary"
+                tools:text="4b" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            app:visibleUnless="@{viewModel.cancelled}">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextAppearance.MaterialComponents.Caption"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:text="@{viewModel.operator + `\n` + viewModel.category}"
+                    tools:text="Qbuzz\nR-NET Stoptrein" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    app:url="@{viewModel.trainComposition.images[0]}" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    app:url="@{viewModel.trainComposition.images[1]}" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    app:url="@{viewModel.trainComposition.images[2]}" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    app:url="@{viewModel.trainComposition.images[3]}" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </HorizontalScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="#50888888" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
