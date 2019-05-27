@@ -1,5 +1,5 @@
 # OVgo
-Example app that showcases various Android architecture patterns.
+Experimental public transport Android app that showcases various Android architecture patterns.
 
 ## To do
 * Modularise project
