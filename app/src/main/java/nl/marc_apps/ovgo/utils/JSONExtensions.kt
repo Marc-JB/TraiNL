@@ -1,14 +1,11 @@
 package nl.marc_apps.ovgo.utils
 
-import org.json.JSONArray
 import org.json.JSONObject
 
-inline fun <reified T> JSONArray.toArray(mapper: (JSONObject) -> T) =
-    Array(this.length()) { mapper(this.getJSONObject(it)) }
-
-inline fun <reified T> JSONObject.getArray(name: String, mapper: (JSONObject) -> T) =
-    optJSONArray(name)?.toArray(mapper) ?: emptyArray()
-
+/**
+ * Returns the value mapped by [name] if it exists, coercing it if
+ * necessary, or [fallback] if no such mapping exists.
+ */
 fun JSONObject.int(name: String, fallback: Int? = null): Int? {
     val value = opt(name)
     when (value) {
@@ -22,4 +19,8 @@ fun JSONObject.int(name: String, fallback: Int? = null): Int? {
     return fallback
 }
 
+/**
+ * Returns the value mapped by [name] if it exists, coercing it if
+ * necessary, or [fallback] if no such mapping exists.
+ */
 fun JSONObject.string(name: String, fallback: String? = null): String? = optString(name, null)

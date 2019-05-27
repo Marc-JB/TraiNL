@@ -8,6 +8,12 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import nl.marc_apps.ovgo.BR
 
+/**
+ * A generic [RecyclerView.Adapter].
+ * [myDataset] is the dataset that is used and will be passed onto the view with ID [BR.viewModel].
+ * [layoutId] is the layout to inflate using data binding.
+ * [lifecycleOwner] the lifecycleOwner that will be associated with the data binding.
+ */
 class GenericDataBindingAdapter<T>(private val myDataset: MutableList<T>, private val layoutId: Int, private val lifecycleOwner: LifecycleOwner? = null): RecyclerView.Adapter<GenericDataBindingAdapter.MyViewHolder>() {
     class MyViewHolder(val dataBinder: ViewDataBinding) : RecyclerView.ViewHolder(dataBinder.root)
 

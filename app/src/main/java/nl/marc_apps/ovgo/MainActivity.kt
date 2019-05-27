@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<BottomNavigationView>(R.id.nav_view).apply {
             setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+            // TODO: Retrieve number of Disruptions from the API
             showBadge(R.id.navigation_disruptions).number = 1
         }
 
