@@ -24,12 +24,16 @@ class DeparturesViewModel : ViewModel() {
         set(value){
             if(field != value && value != null) {
                 field = value
-                viewModelScope.launch {
-                    _isLoading.postValue(true)
-                    departures.clear()
-                    departures.addAll(dataRepository.getDepartures(value))
-                    _isLoading.postValue(false)
-                }
+                updateDepartures(value)
             }
         }
+
+    private fun updateDepartures(stationId: String){
+        viewModelScope.launch {
+            _isLoading.postValue(true)
+            departures.clear()
+            departures.addAll(dataRepository.getDepartures(stationId))
+            _isLoading.postValue(false)
+        }
+    }
 }

@@ -27,7 +27,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<BottomNavigationView>(R.id.nav_view).setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        findViewById<BottomNavigationView>(R.id.nav_view).apply {
+            setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+            showBadge(R.id.navigation_disruptions).number = 1
+        }
 
         when(val frag: Fragment? = supportFragmentManager.findFragmentByTag("fragment")){
             is DeparturesFragment -> loadFragments(departures = frag)
