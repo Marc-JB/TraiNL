@@ -12,6 +12,7 @@ Experimental public transport Android app that showcases various Android archite
 * Write [tests](https://developer.android.com/training/testing/)
   * Unit tests
 * Add dependency injection using [Dagger](https://dagger.dev/)
+* Migrate to stable versions of libraries
 * Add travel feature
 * Improve/expand existing features
 
