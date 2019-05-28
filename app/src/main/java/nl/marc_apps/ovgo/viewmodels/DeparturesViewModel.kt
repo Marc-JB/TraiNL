@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import nl.marc_apps.ovgo.models.Departure
-import nl.marc_apps.ovgo.repositories.NsRepository
+import nl.marc_apps.ovgo.domainmodels.Departure
+import nl.marc_apps.ovgo.domainservices.PublicTransportDataRepository
+import nl.marc_apps.ovgo.repositories.OVgoApiRepository
 
 class DeparturesViewModel : ViewModel() {
     val departures: MutableList<Departure> = mutableListOf()
@@ -17,8 +18,8 @@ class DeparturesViewModel : ViewModel() {
 
     var languageCode: String = "en"
 
-    private val dataRepository
-            get() = NsRepository(languageCode)
+    private val dataRepository: PublicTransportDataRepository
+        get() = OVgoApiRepository(languageCode)
 
     var stationCode: String? = null
         set(value){

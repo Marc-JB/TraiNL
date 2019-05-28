@@ -51,6 +51,9 @@ dependencies {
             "dir" to "libs"
     )))
 
+    // Modules
+    implementation(project(":DomainServices"))
+
     // General libraries
     implementation(kotlin("stdlib-jdk7", "1.3.31"))
     implementations {
@@ -60,7 +63,7 @@ dependencies {
         "androidx.constraintlayout:constraintlayout" version "1.1.3"
         "androidx.vectordrawable:vectordrawable" version "1.0.1"
         "androidx.legacy:legacy-support-v4" version "1.0.0"
-        "androidx.fragment:fragment-ktx" version "1.1.0-alpha08"
+        "androidx.fragment:fragment-ktx" version "1.1.0-alpha09"
 
         group("androidx.lifecycle") {
             "lifecycle-extensions" version "2.1.0-beta01"

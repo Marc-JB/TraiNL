@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import nl.marc_apps.ovgo.models.Disruption
-import nl.marc_apps.ovgo.repositories.NsRepository
+import nl.marc_apps.ovgo.domainmodels.Disruption
+import nl.marc_apps.ovgo.domainservices.PublicTransportDataRepository
+import nl.marc_apps.ovgo.repositories.OVgoApiRepository
 
 class DisruptionsViewModel : ViewModel() {
     val disruptions: MutableList<Disruption> = mutableListOf()
@@ -17,8 +18,8 @@ class DisruptionsViewModel : ViewModel() {
 
     var languageCode: String = "en"
 
-    private val dataRepository
-            get() = NsRepository(languageCode)
+    private val dataRepository: PublicTransportDataRepository
+        get() = OVgoApiRepository(languageCode)
 
     fun loadDisruptions() {
         viewModelScope.launch {

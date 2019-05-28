@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.models
+package nl.marc_apps.ovgo.domainmodels
 
 import java.text.DateFormat
 import java.util.*

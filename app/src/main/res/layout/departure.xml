@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="nl.marc_apps.ovgo.models.Departure" />
+            type="nl.marc_apps.ovgo.domainmodels.Departure" />
 
     </data>
 

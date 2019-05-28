@@ -13,7 +13,7 @@ fun JSONObject.int(name: String, fallback: Int? = null): Int? {
         is Number -> return value.toInt()
         is String -> try {
             return java.lang.Double.parseDouble(value).toInt()
-        } catch (ignored: NumberFormatException) {
+        } catch (ignored: Throwable) {
         }
     }
     return fallback

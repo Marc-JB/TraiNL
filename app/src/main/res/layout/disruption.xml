@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="nl.marc_apps.ovgo.models.Disruption" />
+            type="nl.marc_apps.ovgo.domainmodels.Disruption" />
 
     </data>
 

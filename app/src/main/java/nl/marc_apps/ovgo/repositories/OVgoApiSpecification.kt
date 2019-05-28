@@ -1,14 +1,14 @@
 package nl.marc_apps.ovgo.repositories
 
-import nl.marc_apps.ovgo.models.Departure
-import nl.marc_apps.ovgo.models.Disruption
+import nl.marc_apps.ovgo.domainmodels.Departure
+import nl.marc_apps.ovgo.domainmodels.Disruption
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface NsApi {
+interface OVgoApiSpecification {
     @GET("stations/{id}/departures.json")
     fun getDepartures(
         @Path("id") station: String,
