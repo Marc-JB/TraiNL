@@ -2,17 +2,13 @@
 Experimental public transport Android app that showcases various Android architecture patterns.
 
 ## To do
-* Improve documentation
 * Cache data using [Room](https://developer.android.com/topic/libraries/architecture/room) for offline use
 * Write [tests](https://developer.android.com/training/testing/)
   * Unit tests
 * Migrate to stable versions of libraries
 * Add travel feature
 * Improve/expand existing features
-
-## In progress
-* Add dependency injection using [Dagger](https://dagger.dev/)
-* Modularise project
+* Improve documentation & architecture
 
 ## Implemented
 * [Android Jetpack](https://developer.android.com/jetpack)
@@ -30,6 +26,9 @@ Experimental public transport Android app that showcases various Android archite
   * [Retrofit](https://square.github.io/retrofit/) *(used with kotlin coroutines trough [a third-party library](https://github.com/gildor/kotlin-coroutines-retrofit))*
   * [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
   * Serialization of JSON objects retrieved from the API using [Retrofit GSON converter](https://github.com/square/retrofit/tree/master/retrofit-converters/gson)
+  * Clean architecture  
+  *note: there's a dependency between the UI (app) module and the API module needed for dependency injection*
+  * Dependecy Injection using [Dagger 2](https://dagger.dev/)
 
 ## Screenshots of the app
 ![Trips](/docs/screenshots/trips-1.png?raw=true "Trips")
