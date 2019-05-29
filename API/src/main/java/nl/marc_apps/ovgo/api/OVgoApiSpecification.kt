@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.repositories
+package nl.marc_apps.ovgo.api
 
 import nl.marc_apps.ovgo.domainmodels.Departure
 import nl.marc_apps.ovgo.domainmodels.Disruption

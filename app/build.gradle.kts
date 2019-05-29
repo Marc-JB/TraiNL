@@ -54,6 +54,7 @@ dependencies {
     // Modules
     implementation(project(":DomainModels"))
     implementation(project(":DomainServices"))
+    implementation(project(":API"))
 
     // General libraries
     implementation(kotlin("stdlib-jdk7", "1.3.31"))

@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.repositories
+package nl.marc_apps.ovgo.api
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
