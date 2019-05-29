@@ -79,9 +79,6 @@ dependencies {
             "kotlinx-coroutines-android" version "1.2.1"
         }
 
-        "ru.gildor.coroutines:kotlin-coroutines-retrofit" version "1.1.0"
-        "com.squareup.retrofit2:converter-gson" version "2.5.0"
-
         "com.squareup.picasso:picasso" version "2.71828"
 
         "com.google.dagger:dagger" version "2.22.1"
