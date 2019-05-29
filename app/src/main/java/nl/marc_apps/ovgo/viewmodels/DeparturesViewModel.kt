@@ -5,11 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import nl.marc_apps.ovgo.dependency_injection.OVgoNetComponent
 import nl.marc_apps.ovgo.domainmodels.Departure
 import nl.marc_apps.ovgo.domainservices.PublicTransportDataRepository
-import nl.marc_apps.ovgo.repositories.OVgoApiRepository
+import javax.inject.Inject
 
-class DeparturesViewModel : ViewModel() {
+class DeparturesViewModel @Inject constructor() : ViewModel() {
+    @Inject
+    lateinit var dataRepository: PublicTransportDataRepository
+
     val departures: MutableList<Departure> = mutableListOf()
 
     private val _isLoading = MutableLiveData(true)
@@ -17,9 +21,10 @@ class DeparturesViewModel : ViewModel() {
         get() = _isLoading
 
     var languageCode: String = "en"
-
-    private val dataRepository: PublicTransportDataRepository
-        get() = OVgoApiRepository(languageCode)
+        set(value){
+            field = value
+            dataRepository.language = value
+        }
 
     var stationCode: String? = null
         set(value){
@@ -36,5 +41,9 @@ class DeparturesViewModel : ViewModel() {
             departures.addAll(dataRepository.getDepartures(stationId))
             _isLoading.postValue(false)
         }
+    }
+
+    init {
+        OVgoNetComponent.netComponent.inject(this)
     }
 }

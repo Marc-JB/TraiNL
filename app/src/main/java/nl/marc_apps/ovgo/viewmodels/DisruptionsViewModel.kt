@@ -5,11 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import nl.marc_apps.ovgo.dependency_injection.OVgoNetComponent
 import nl.marc_apps.ovgo.domainmodels.Disruption
 import nl.marc_apps.ovgo.domainservices.PublicTransportDataRepository
-import nl.marc_apps.ovgo.repositories.OVgoApiRepository
+import javax.inject.Inject
 
-class DisruptionsViewModel : ViewModel() {
+class DisruptionsViewModel @Inject constructor() : ViewModel() {
+    @Inject
+    lateinit var dataRepository: PublicTransportDataRepository
+
     val disruptions: MutableList<Disruption> = mutableListOf()
 
     private val _isLoading = MutableLiveData(true)
@@ -17,9 +21,10 @@ class DisruptionsViewModel : ViewModel() {
         get() = _isLoading
 
     var languageCode: String = "en"
-
-    private val dataRepository: PublicTransportDataRepository
-        get() = OVgoApiRepository(languageCode)
+        set(value){
+            field = value
+            dataRepository.language = value
+        }
 
     fun loadDisruptions() {
         viewModelScope.launch {
@@ -28,5 +33,9 @@ class DisruptionsViewModel : ViewModel() {
             disruptions.addAll(dataRepository.getDisruptions())
             _isLoading.postValue(false)
         }
+    }
+
+    init {
+        OVgoNetComponent.netComponent.inject(this)
     }
 }

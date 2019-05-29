@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.gildor.coroutines.retrofit.await
 
-class OVgoApiRepository(private val language: String = "en") : PublicTransportDataRepository {
+class OVgoApiRepository(override var language: String = "en") : PublicTransportDataRepository {
     override suspend fun getDepartures(station: String) = withContext(Dispatchers.IO) {
         api.getDepartures(station, language).await()
     }

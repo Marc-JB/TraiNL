@@ -52,6 +52,7 @@ dependencies {
     )))
 
     // Modules
+    implementation(project(":DomainModels"))
     implementation(project(":DomainServices"))
 
     // General libraries
@@ -81,7 +82,10 @@ dependencies {
         "com.squareup.retrofit2:converter-gson" version "2.5.0"
 
         "com.squareup.picasso:picasso" version "2.71828"
+
+        "com.google.dagger:dagger" version "2.22.1"
     }
+    kapt("com.google.dagger:dagger-compiler:2.22.1")
 
     // Testing libraries
     testImplementations {

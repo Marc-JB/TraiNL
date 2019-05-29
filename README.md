@@ -3,18 +3,16 @@ Experimental public transport Android app that showcases various Android archite
 
 ## To do
 * Improve documentation
-* Modularise project, either:
-  * Using clean architecture
-  * Using N-Layered architecture
-  * Based on feature
-  * A combination of those (e.g. clean architecture split up by feature, UI.Departures, UI.Disruptions, etc.)
 * Cache data using [Room](https://developer.android.com/topic/libraries/architecture/room) for offline use
 * Write [tests](https://developer.android.com/training/testing/)
   * Unit tests
-* Add dependency injection using [Dagger](https://dagger.dev/)
 * Migrate to stable versions of libraries
 * Add travel feature
 * Improve/expand existing features
+
+## In progress
+* Add dependency injection using [Dagger](https://dagger.dev/)
+* Modularise project
 
 ## Implemented
 * [Android Jetpack](https://developer.android.com/jetpack)
