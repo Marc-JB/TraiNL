@@ -45,7 +45,6 @@
                 android:layout_height="match_parent"
                 app:adapter="@{adapter}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:visibleUnless="@{viewModel.loading}"
                 tools:listitem="@layout/departure"
                 tools:visibility="visible" />
 

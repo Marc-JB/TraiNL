@@ -22,9 +22,9 @@ android {
     }
     buildTypes {
         maybeCreate("release").apply {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             isZipAlignEnabled = true
-            isShrinkResources = true
+            isShrinkResources = false
             isCrunchPngs = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }

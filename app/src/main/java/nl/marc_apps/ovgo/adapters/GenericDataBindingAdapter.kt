@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import nl.marc_apps.ovgo.BR
 
@@ -14,7 +16,7 @@ import nl.marc_apps.ovgo.BR
  * [layoutId] is the layout to inflate using data binding.
  * [lifecycleOwner] the lifecycleOwner that will be associated with the data binding.
  */
-class GenericDataBindingAdapter<T>(private val myDataset: MutableList<T>, private val layoutId: Int, private val lifecycleOwner: LifecycleOwner? = null): RecyclerView.Adapter<GenericDataBindingAdapter.MyViewHolder>() {
+class GenericDataBindingAdapter<T>(private val myDataset: LiveData<Array<T>>, private val layoutId: Int, private val lifecycleOwner: LifecycleOwner? = null): RecyclerView.Adapter<GenericDataBindingAdapter.MyViewHolder>() {
     class MyViewHolder(val dataBinder: ViewDataBinding) : RecyclerView.ViewHolder(dataBinder.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -24,8 +26,15 @@ class GenericDataBindingAdapter<T>(private val myDataset: MutableList<T>, privat
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.dataBinder.setVariable(BR.viewModel, myDataset[position])
+        val viewModel = myDataset.value?.get(position)
+        if(viewModel != null) holder.dataBinder.setVariable(BR.viewModel, viewModel)
     }
 
-    override fun getItemCount() = myDataset.size
+    override fun getItemCount() = myDataset.value?.size ?: 0
+
+    init {
+        if(lifecycleOwner != null) myDataset.observe(lifecycleOwner, Observer {
+            notifyDataSetChanged()
+        })
+    }
 }
