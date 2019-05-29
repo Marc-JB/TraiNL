@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import nl.marc_apps.ovgo.dependency_injection.OVgoNetComponent
+import nl.marc_apps.ovgo.dependency_injection.netComponent
 import nl.marc_apps.ovgo.domainmodels.Departure
 import nl.marc_apps.ovgo.domainservices.PublicTransportDataRepository
 import javax.inject.Inject
@@ -44,6 +44,6 @@ class DeparturesViewModel @Inject constructor() : ViewModel() {
     }
 
     init {
-        OVgoNetComponent.netComponent.inject(this)
+        netComponent.inject(this)
     }
 }

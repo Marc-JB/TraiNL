@@ -8,6 +8,7 @@ import javax.inject.Singleton
 
 @Module
 object OVgoModule {
+    @Singleton
     @JvmStatic
     @Provides
     fun providePublicTransportDataRepository(): PublicTransportDataRepository {
