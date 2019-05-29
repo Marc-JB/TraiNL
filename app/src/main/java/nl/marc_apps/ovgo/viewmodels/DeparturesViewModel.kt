@@ -14,7 +14,9 @@ class DeparturesViewModel @Inject constructor() : ViewModel() {
     @Inject
     lateinit var dataRepository: PublicTransportDataRepository
 
-    val departures: MutableList<Departure> = mutableListOf()
+    private val _departures: MutableLiveData<Array<Departure>> = MutableLiveData(emptyArray())
+    val departures: LiveData<Array<Departure>>
+        get() = _departures
 
     private val _isLoading = MutableLiveData(true)
     val isLoading: LiveData<Boolean>
@@ -37,8 +39,7 @@ class DeparturesViewModel @Inject constructor() : ViewModel() {
     private fun updateDepartures(stationId: String){
         viewModelScope.launch {
             _isLoading.postValue(true)
-            departures.clear()
-            departures.addAll(dataRepository.getDepartures(stationId))
+            _departures.postValue(dataRepository.getDepartures(stationId))
             _isLoading.postValue(false)
         }
     }

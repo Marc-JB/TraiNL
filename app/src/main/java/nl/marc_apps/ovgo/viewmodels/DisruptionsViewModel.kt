@@ -14,7 +14,9 @@ class DisruptionsViewModel @Inject constructor() : ViewModel() {
     @Inject
     lateinit var dataRepository: PublicTransportDataRepository
 
-    val disruptions: MutableList<Disruption> = mutableListOf()
+    private val _disruptions: MutableLiveData<Array<Disruption>> = MutableLiveData(emptyArray())
+    val disruptions: LiveData<Array<Disruption>>
+        get() = _disruptions
 
     private val _isLoading = MutableLiveData(true)
     val isLoading: LiveData<Boolean>
@@ -29,8 +31,7 @@ class DisruptionsViewModel @Inject constructor() : ViewModel() {
     fun loadDisruptions() {
         viewModelScope.launch {
             _isLoading.postValue(true)
-            disruptions.clear()
-            disruptions.addAll(dataRepository.getDisruptions())
+            _disruptions.postValue(dataRepository.getDisruptions())
             _isLoading.postValue(false)
         }
     }
