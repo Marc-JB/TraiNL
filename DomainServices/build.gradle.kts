@@ -14,5 +14,5 @@ dependencies {
     implementation(project(":DomainModels"))
 
     // Other
-    implementation(kotlin("stdlib-jdk7", "1.3.31"))
+    implementation(kotlin("stdlib-jdk7", "1.3.50"))
 }

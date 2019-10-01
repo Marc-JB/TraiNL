@@ -5,7 +5,7 @@ Experimental public transport Android app that showcases various Android archite
 * Cache data using [Room](https://developer.android.com/topic/libraries/architecture/room) for offline use
 * Write [tests](https://developer.android.com/training/testing/)
   * Unit tests
-* Migrate to stable versions of libraries
+* Use the stable version of the Material Design library
 * Add travel feature
 * Improve/expand existing features
 * Improve documentation & architecture
