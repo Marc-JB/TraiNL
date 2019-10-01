@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion(28)
+    compileSdkVersion(29)
     defaultConfig {
         fun setAppVersion(major: Int, minor: Int, release: Int = 0) {
             versionCode = major * 100 + minor * 10 + release
@@ -15,7 +15,7 @@ android {
 
         applicationId = "nl.marc_apps.ovgo"
         minSdkVersion(19)
-        targetSdkVersion(28)
+        targetSdkVersion(29)
         setAppVersion(0, 1, 0)
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -57,21 +57,21 @@ dependencies {
     implementation(project(":API"))
 
     // General libraries
-    implementation(kotlin("stdlib-jdk7", "1.3.31"))
+    implementation(kotlin("stdlib-jdk7", "1.3.50"))
     implementations {
-        "androidx.appcompat:appcompat" version "1.0.2"
-        "androidx.core:core-ktx" version "1.0.2"
-        "com.google.android.material:material" version "1.1.0-alpha06"
+        "androidx.appcompat:appcompat" version "1.1.0"
+        "androidx.core:core-ktx" version "1.1.0"
+        "com.google.android.material:material" version "1.1.0-alpha10"
         "androidx.constraintlayout:constraintlayout" version "1.1.3"
-        "androidx.vectordrawable:vectordrawable" version "1.0.1"
+        "androidx.vectordrawable:vectordrawable" version "1.1.0"
         "androidx.legacy:legacy-support-v4" version "1.0.0"
-        "androidx.fragment:fragment-ktx" version "1.1.0-alpha09"
+        "androidx.fragment:fragment-ktx" version "1.1.0"
 
         group("androidx.lifecycle") {
-            "lifecycle-extensions" version "2.1.0-beta01"
-            "lifecycle-viewmodel-ktx" version "2.1.0-beta01"
-            "lifecycle-livedata-core-ktx" version "2.1.0-beta01"
-            "lifecycle-livedata-ktx" version "2.1.0-beta01"
+            "lifecycle-extensions" version "2.1.0"
+            "lifecycle-viewmodel-ktx" version "2.1.0"
+            "lifecycle-livedata-core-ktx" version "2.1.0"
+            "lifecycle-livedata-ktx" version "2.1.0"
         }
 
         group("org.jetbrains.kotlinx") {
@@ -81,9 +81,9 @@ dependencies {
 
         "com.squareup.picasso:picasso" version "2.71828"
 
-        "com.google.dagger:dagger" version "2.22.1"
+        "com.google.dagger:dagger" version "2.24"
     }
-    kapt("com.google.dagger:dagger-compiler:2.22.1")
+    kapt("com.google.dagger:dagger-compiler:2.24")
 
     // Testing libraries
     testImplementations {
