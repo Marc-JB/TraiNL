@@ -23,10 +23,10 @@ Experimental public transport Android app that showcases various Android archite
   * UI
     * Fragment
 * Other
-  * [Retrofit](https://square.github.io/retrofit/) *(used with kotlin coroutines trough [a third-party library](https://github.com/gildor/kotlin-coroutines-retrofit))*
+  * [Retrofit](https://square.github.io/retrofit/) *(used with kotlin coroutines)*
   * [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
   * Serialization of JSON objects retrieved from the API using [Retrofit GSON converter](https://github.com/square/retrofit/tree/master/retrofit-converters/gson)
-  * Clean architecture  
+  * Clean architecture
   *note: there's a dependency between the UI (app) module and the API module needed for dependency injection*
   * Dependecy Injection using [Dagger 2](https://dagger.dev/)
 
