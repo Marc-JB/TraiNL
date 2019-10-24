@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/API/API.iml" filepath="$PROJECT_DIR$/API/API.iml" />
-      <module fileurl="file://$PROJECT_DIR$/DomainModels/DomainModels.iml" filepath="$PROJECT_DIR$/DomainModels/DomainModels.iml" />
-      <module fileurl="file://$PROJECT_DIR$/DomainServices/DomainServices.iml" filepath="$PROJECT_DIR$/DomainServices/DomainServices.iml" />
-      <module fileurl="file://$PROJECT_DIR$/OVgo.iml" filepath="$PROJECT_DIR$/OVgo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/API/API.iml" filepath="$PROJECT_DIR$/API/API.iml" group="OVgo/API" />
+      <module fileurl="file://$PROJECT_DIR$/DomainModels/DomainModels.iml" filepath="$PROJECT_DIR$/DomainModels/DomainModels.iml" group="OVgo/DomainModels" />
+      <module fileurl="file://$PROJECT_DIR$/DomainServices/DomainServices.iml" filepath="$PROJECT_DIR$/DomainServices/DomainServices.iml" group="OVgo/DomainServices" />
+      <module fileurl="file://$PROJECT_DIR$/OVgo.iml" filepath="$PROJECT_DIR$/OVgo.iml" group="OVgo" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="OVgo/app" />
     </modules>
   </component>
 </project>
