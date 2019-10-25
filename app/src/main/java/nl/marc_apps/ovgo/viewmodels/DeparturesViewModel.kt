@@ -5,14 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import nl.marc_apps.ovgo.dependency_injection.netComponent
+import nl.marc_apps.ovgo.DI
 import nl.marc_apps.ovgo.domainmodels.Departure
-import nl.marc_apps.ovgo.domainservices.PublicTransportDataRepository
-import javax.inject.Inject
 
-class DeparturesViewModel @Inject constructor() : ViewModel() {
-    @Inject
-    lateinit var dataRepository: PublicTransportDataRepository
+class DeparturesViewModel : ViewModel() {
+    private val dataRepository by lazy { DI.dataRepository }
 
     private val _departures: MutableLiveData<Array<Departure>> = MutableLiveData(emptyArray())
     val departures: LiveData<Array<Departure>>
@@ -42,9 +39,5 @@ class DeparturesViewModel @Inject constructor() : ViewModel() {
             _departures.postValue(dataRepository.getDepartures(stationId))
             _isLoading.postValue(false)
         }
-    }
-
-    init {
-        netComponent.inject(this)
     }
 }

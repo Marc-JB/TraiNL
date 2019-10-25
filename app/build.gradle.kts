@@ -1,8 +1,8 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    kotlin("android")
     id("kotlin-android-extensions")
-    id("kotlin-kapt")
+    kotlin("kapt")
 }
 
 android {
@@ -32,17 +32,7 @@ android {
     dataBinding.isEnabled = true
 }
 
-class ImplementationContext(val block: (dep: String) -> Unit) {
-    infix fun String.version(version: String) = block("${this}:$version")
-
-    inline fun group(name: String, b: ImplementationContext.() -> Unit) = b (ImplementationContext { dep -> block ("$name:$dep") })
-}
-
-inline fun DependencyHandlerScope.implementations(block: ImplementationContext.() -> Unit) = block(ImplementationContext { dep -> implementation(dep)})
-
-inline fun DependencyHandlerScope.testImplementations(block: ImplementationContext.() -> Unit) = block(ImplementationContext {dep -> testImplementation(dep)})
-
-inline fun DependencyHandlerScope.androidTestImplementations(block: ImplementationContext.() -> Unit) = block(ImplementationContext {dep -> androidTestImplementation(dep)})
+kapt.generateStubs = true
 
 dependencies {
     // File tree libraries
@@ -58,40 +48,28 @@ dependencies {
 
     // General libraries
     implementation(kotlin("stdlib-jdk7", "1.3.50"))
-    implementations {
-        "androidx.appcompat:appcompat" version "1.1.0"
-        "androidx.core:core-ktx" version "1.1.0"
-        "com.google.android.material:material" version "1.1.0-alpha10"
-        "androidx.constraintlayout:constraintlayout" version "1.1.3"
-        "androidx.vectordrawable:vectordrawable" version "1.1.0"
-        "androidx.legacy:legacy-support-v4" version "1.0.0"
-        "androidx.fragment:fragment-ktx" version "1.1.0"
 
-        group("androidx.lifecycle") {
-            "lifecycle-extensions" version "2.1.0"
-            "lifecycle-viewmodel-ktx" version "2.1.0"
-            "lifecycle-livedata-core-ktx" version "2.1.0"
-            "lifecycle-livedata-ktx" version "2.1.0"
-        }
+    implementation("androidx.appcompat:appcompat:1.1.0")
+    implementation("androidx.core:core-ktx:1.1.0")
+    implementation("com.google.android.material:material:1.1.0-beta01")
+    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
+    implementation("androidx.vectordrawable:vectordrawable:1.1.0")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.fragment:fragment-ktx:1.1.0")
 
-        group("org.jetbrains.kotlinx") {
-            "kotlinx-coroutines-core" version "1.2.1"
-            "kotlinx-coroutines-android" version "1.2.1"
-        }
+    implementation("androidx.lifecycle:lifecycle-extensions:2.1.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.1.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.1.0")
 
-        "com.squareup.picasso:picasso" version "2.71828"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1")
 
-        "com.google.dagger:dagger" version "2.24"
-    }
-    kapt("com.google.dagger:dagger-compiler:2.24")
+    implementation("com.squareup.picasso:picasso:2.71828")
 
     // Testing libraries
-    testImplementations {
-        "junit:junit" version "4.12"
-    }
+    testImplementation("junit:junit:4.12")
 
-    androidTestImplementations {
-        "androidx.test:runner" version "1.1.1"
-        "androidx.test.espresso:espresso-core" version "3.1.1"
-    }
+    androidTestImplementation("androidx.test:runner:1.2.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
 }

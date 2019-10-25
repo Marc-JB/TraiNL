@@ -18,5 +18,5 @@ dependencies {
     implementation(kotlin("stdlib-jdk7", "1.3.50"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
     implementation("com.squareup.retrofit2:retrofit:2.6.2")
-    implementation("com.squareup.retrofit2:converter-gson:2.5.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.6.2")
 }
