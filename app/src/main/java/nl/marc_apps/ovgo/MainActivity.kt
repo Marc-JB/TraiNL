@@ -6,12 +6,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.observe
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.*
-import nl.marc_apps.ovgo.api.OVgoApiRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.fragments.DeparturesFragment
 import nl.marc_apps.ovgo.fragments.DisruptionsFragment
 import nl.marc_apps.ovgo.fragments.TripsFragment
-import kotlin.coroutines.coroutineContext
 
 class MainActivity : AppCompatActivity() {
     private lateinit var tripsFragment: Fragment
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         // TODO: handle more nicely
         CoroutineScope(Dispatchers.IO).launch {
-            disruptionCount.postValue(OVgoApiRepository().getDisruptions(true).size)
+            disruptionCount.postValue(DI.dataRepository.getDisruptions(true).size)
         }
 
         setContentView(R.layout.activity_main)

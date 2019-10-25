@@ -67,13 +67,6 @@ dependencies {
 
     implementation("com.squareup.picasso:picasso:2.71828")
 
-    implementation("com.google.dagger:dagger:2.25.2")
-    implementation("com.google.dagger:dagger-android:2.25.2")
-    implementation("com.google.dagger:dagger-android-support:2.25.2")
-
-    kapt("com.google.dagger:dagger-compiler:2.25.2")
-    kapt("com.google.dagger:dagger-android-processor:2.25.2")
-
     // Testing libraries
     testImplementation("junit:junit:4.12")
 
