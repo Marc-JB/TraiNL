@@ -29,7 +29,7 @@ Experimental public transport Android app that showcases various Android archite
   * Serialization of JSON objects retrieved from the API using [Retrofit GSON converter](https://github.com/square/retrofit/tree/master/retrofit-converters/gson)
   * Clean architecture
   *note: there's a dependency between the UI (app) module and the API module needed for dependency injection*
-  * Manual Dependecy Injection
+  * Dependecy Injection using [Koin](https://insert-koin.io/)
 
 ## Screenshots of the app
 ![Trips](/docs/screenshots/trips-1.png?raw=true "Trips")
