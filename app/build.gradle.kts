@@ -67,6 +67,10 @@ dependencies {
 
     implementation("com.squareup.picasso:picasso:2.71828")
 
+    implementation("org.koin:koin-android:2.0.1")
+    implementation("org.koin:koin-android-scope:2.0.1")
+    implementation("org.koin:koin-android-viewmodel:2.0.1")
+
     // Testing libraries
     testImplementation("junit:junit:4.12")
 
