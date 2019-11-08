@@ -51,7 +51,7 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.core:core-ktx:1.1.0")
-    implementation("com.google.android.material:material:1.1.0-beta01")
+    implementation("com.google.android.material:material:1.1.0-beta02")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
     implementation("androidx.vectordrawable:vectordrawable:1.1.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
