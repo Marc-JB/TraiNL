@@ -9,7 +9,6 @@ Experimental public transport Android app that showcases various Android archite
 * Add travel feature
 * Improve/expand existing features
 * Improve documentation & architecture
-* Migrate to Android Jetpack Dependency Injection as soon as it's available
 
 ## Implemented
 * [Android Jetpack](https://developer.android.com/jetpack)
