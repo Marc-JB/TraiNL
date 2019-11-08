@@ -12,6 +12,9 @@ val appModule = module {
 
     viewModel {
         DeparturesViewModel(get())
+    }
+
+    viewModel {
         DisruptionsViewModel(get())
     }
 }

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import nl.marc_apps.ovgo.DI
 import nl.marc_apps.ovgo.domainmodels.Disruption
 import nl.marc_apps.ovgo.domainservices.PublicTransportDataRepository
 
