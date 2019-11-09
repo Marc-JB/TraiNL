@@ -50,9 +50,9 @@ dependencies {
     )))
 
     // Modules
-    implementation(project(":DomainModels"))
-    implementation(project(":DomainServices"))
-    implementation(project(":API"))
+    implementation(project(":domainModels"))
+    implementation(project(":domainServices"))
+    implementation(project(":api"))
     implementation(project(":ui"))
 
     // General libraries

@@ -1,1 +1,1 @@
-include(":DomainModels", ":DomainServices", ":API", ":ui", ":app")
+include(":domainModels", ":domainServices", ":api", ":ui", ":app")
