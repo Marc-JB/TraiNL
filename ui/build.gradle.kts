@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
     id("kotlin-android-extensions")
     kotlin("kapt")
@@ -14,8 +14,6 @@ android {
     buildToolsVersion = "29.0.2"
 
     defaultConfig {
-        applicationId = "nl.marc_apps.ovgo"
-
         minSdkVersion(minSdk)
         targetSdkVersion(targetAndCompileSdk)
 
@@ -25,6 +23,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        consumerProguardFiles("consumer-rules.pro")
     }
     buildTypes {
         maybeCreate("release").apply {
@@ -45,15 +44,13 @@ android {
 dependencies {
     // File tree libraries
     implementation(fileTree(mapOf(
-            "include" to listOf("*.jar"),
-            "dir" to "libs"
+        "include" to listOf("*.jar"),
+        "dir" to "libs"
     )))
 
     // Modules
     implementation(project(":DomainModels"))
     implementation(project(":DomainServices"))
-    implementation(project(":API"))
-    implementation(project(":ui"))
 
     // General libraries
     implementation(kotlin("stdlib-jdk8", "1.3.50"))
@@ -83,6 +80,6 @@ dependencies {
     // Testing libraries
     testImplementation("junit:junit:4.12")
 
-    androidTestImplementation("androidx.test:runner:1.2.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
 }

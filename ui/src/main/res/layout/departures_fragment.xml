@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="nl.marc_apps.ovgo.viewmodels.DeparturesViewModel" />
+            type="nl.marc_apps.ovgo.ui.viewmodels.DeparturesViewModel" />
 
         <variable
             name="adapter"

@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo
+package nl.marc_apps.ovgo.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -10,9 +10,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.domainservices.PublicTransportDataRepository
-import nl.marc_apps.ovgo.fragments.DeparturesFragment
-import nl.marc_apps.ovgo.fragments.DisruptionsFragment
-import nl.marc_apps.ovgo.fragments.TripsFragment
+import nl.marc_apps.ovgo.ui.fragments.DeparturesFragment
+import nl.marc_apps.ovgo.ui.fragments.DisruptionsFragment
+import nl.marc_apps.ovgo.ui.fragments.TripsFragment
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
