@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="departures">Vertrektijden</string>
-    <string name="disruptions">Storingen</string>
-    <string name="languageCode">nl</string>
-    <string name="trips">Reizen</string>
-    <string name="cancelled">Rijdt niet</string>
-</resources>
