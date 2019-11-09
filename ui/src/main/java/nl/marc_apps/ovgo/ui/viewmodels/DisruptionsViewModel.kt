@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import nl.marc_apps.ovgo.domainmodels.Disruption
-import nl.marc_apps.ovgo.domainservices.PublicTransportDataRepository
+import nl.marc_apps.ovgo.domain.models.Disruption
+import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
 
 class DisruptionsViewModel(private val dataRepository: PublicTransportDataRepository) : ViewModel() {
     private val _disruptions: MutableLiveData<Array<Disruption>> = MutableLiveData(emptyArray())

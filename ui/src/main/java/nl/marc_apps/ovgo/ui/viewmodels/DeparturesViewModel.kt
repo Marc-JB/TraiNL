@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import nl.marc_apps.ovgo.domainmodels.Departure
-import nl.marc_apps.ovgo.domainservices.PublicTransportDataRepository
+import nl.marc_apps.ovgo.domain.models.Departure
+import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
 
 class DeparturesViewModel(private val dataRepository: PublicTransportDataRepository) : ViewModel() {
     private val _departures: MutableLiveData<Array<Departure>> = MutableLiveData(emptyArray())

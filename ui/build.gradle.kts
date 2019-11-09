@@ -49,8 +49,7 @@ dependencies {
     )))
 
     // Modules
-    implementation(project(":domainModels"))
-    implementation(project(":domainServices"))
+    implementation(project(":domain"))
 
     // General libraries
     implementation(kotlin("stdlib-jdk8", "1.3.50"))

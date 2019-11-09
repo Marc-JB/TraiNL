@@ -1,7 +1,7 @@
 package nl.marc_apps.ovgo.api
 
-import nl.marc_apps.ovgo.domainmodels.Departure
-import nl.marc_apps.ovgo.domainmodels.Disruption
+import nl.marc_apps.ovgo.domain.models.Departure
+import nl.marc_apps.ovgo.domain.models.Disruption
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
