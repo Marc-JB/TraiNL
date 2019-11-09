@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     id("kotlin-android-extensions")
     kotlin("kapt")
+    // id("androidx.navigation.safeargs")
 }
 
 val minSdk = 21
@@ -22,9 +23,9 @@ android {
         versionName = "$major.$minor.$release"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
         consumerProguardFiles("consumer-rules.pro")
     }
+
     buildTypes {
         maybeCreate("release").apply {
             isMinifyEnabled = false
@@ -34,19 +35,22 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     dataBinding.isEnabled = true
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
     // File tree libraries
-    implementation(fileTree(mapOf(
-        "include" to listOf("*.jar"),
-        "dir" to "libs"
-    )))
+    implementation(fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
 
     // Modules
     implementation(project(":domain"))
@@ -56,16 +60,16 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.core:core-ktx:1.1.0")
+
     implementation("com.google.android.material:material:1.1.0-beta02")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    implementation("androidx.vectordrawable:vectordrawable:1.1.0")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.fragment:fragment-ktx:1.1.0")
+
+    // implementation("androidx.navigation:navigation-fragment:2.1.0")
+    // implementation("androidx.navigation:navigation-ui:2.1.0")
+    // implementation("androidx.navigation:navigation-fragment-ktx:2.1.0")
+    // implementation("androidx.navigation:navigation-ui-ktx:2.1.0")
 
     implementation("androidx.lifecycle:lifecycle-extensions:2.1.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.1.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.1.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1")
