@@ -1,8 +1,3 @@
 <resources>
     <string name="app_name">OVgo</string>
-    <string name="trips">Trips</string>
-    <string name="disruptions">Disruptions</string>
-    <string name="departures">Departures</string>
-    <string name="languageCode">en</string>
-    <string name="cancelled">Cancelled</string>
 </resources>

@@ -11,5 +11,5 @@ dependencies {
     )))
 
     // Other
-    implementation(kotlin("stdlib-jdk7", "1.3.50"))
+    implementation(kotlin("stdlib-jdk8", "1.3.50"))
 }

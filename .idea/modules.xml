@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/API/API.iml" filepath="$PROJECT_DIR$/API/API.iml" group="OVgo/API" />
-      <module fileurl="file://$PROJECT_DIR$/DomainModels/DomainModels.iml" filepath="$PROJECT_DIR$/DomainModels/DomainModels.iml" group="OVgo/DomainModels" />
-      <module fileurl="file://$PROJECT_DIR$/DomainServices/DomainServices.iml" filepath="$PROJECT_DIR$/DomainServices/DomainServices.iml" group="OVgo/DomainServices" />
       <module fileurl="file://$PROJECT_DIR$/OVgo.iml" filepath="$PROJECT_DIR$/OVgo.iml" group="OVgo" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="OVgo/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api/api.iml" filepath="$PROJECT_DIR$/.idea/modules/api/api.iml" group="OVgo/api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="OVgo/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domainModels/domainModels.iml" filepath="$PROJECT_DIR$/.idea/modules/domainModels/domainModels.iml" group="OVgo/domainModels" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domainServices/domainServices.iml" filepath="$PROJECT_DIR$/.idea/modules/domainServices/domainServices.iml" group="OVgo/domainServices" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui/ui.iml" filepath="$PROJECT_DIR$/.idea/modules/ui/ui.iml" group="OVgo/ui" />
     </modules>
   </component>
 </project>

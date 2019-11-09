@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.fragments
+package nl.marc_apps.ovgo.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import nl.marc_apps.ovgo.R
-import nl.marc_apps.ovgo.viewmodels.TripsViewModel
+import nl.marc_apps.ovgo.ui.R
+import nl.marc_apps.ovgo.ui.viewmodels.TripsViewModel
 
 class TripsFragment : Fragment() {
     companion object {

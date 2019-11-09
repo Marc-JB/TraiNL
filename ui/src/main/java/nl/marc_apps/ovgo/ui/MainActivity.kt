@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo
+package nl.marc_apps.ovgo.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,11 +9,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import nl.marc_apps.ovgo.fragments.DeparturesFragment
-import nl.marc_apps.ovgo.fragments.DisruptionsFragment
-import nl.marc_apps.ovgo.fragments.TripsFragment
+import nl.marc_apps.ovgo.domainservices.PublicTransportDataRepository
+import nl.marc_apps.ovgo.ui.fragments.DeparturesFragment
+import nl.marc_apps.ovgo.ui.fragments.DisruptionsFragment
+import nl.marc_apps.ovgo.ui.fragments.TripsFragment
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
+    private val dataRepository: PublicTransportDataRepository by inject()
+
     private lateinit var tripsFragment: Fragment
     private lateinit var departuresFragment: Fragment
     private lateinit var disruptionsFragment: Fragment
@@ -35,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         // TODO: handle more nicely
         CoroutineScope(Dispatchers.IO).launch {
-            disruptionCount.postValue(DI.dataRepository.getDisruptions(true).size)
+            disruptionCount.postValue(dataRepository.getDisruptions(true).size)
         }
 
         setContentView(R.layout.activity_main)

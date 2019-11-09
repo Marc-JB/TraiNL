@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.adapters
+package nl.marc_apps.ovgo.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import nl.marc_apps.ovgo.BR
+import nl.marc_apps.ovgo.ui.BR
 
 /**
  * A generic [RecyclerView.Adapter].

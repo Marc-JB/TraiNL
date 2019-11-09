@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.utils
+package nl.marc_apps.ovgo.ui.utils
 
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
