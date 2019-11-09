@@ -9,7 +9,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import nl.marc_apps.ovgo.domainservices.PublicTransportDataRepository
+import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
 import nl.marc_apps.ovgo.ui.fragments.DeparturesFragment
 import nl.marc_apps.ovgo.ui.fragments.DisruptionsFragment
 import nl.marc_apps.ovgo.ui.fragments.TripsFragment

@@ -1,8 +1,6 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("kotlin-android-extensions")
-    kotlin("kapt")
 }
 
 val minSdk = 21
@@ -50,8 +48,7 @@ dependencies {
     )))
 
     // Modules
-    implementation(project(":domainModels"))
-    implementation(project(":domainServices"))
+    implementation(project(":domain"))
     implementation(project(":api"))
     implementation(project(":ui"))
 
@@ -59,22 +56,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8", "1.3.50"))
 
     implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.core:core-ktx:1.1.0")
-    implementation("com.google.android.material:material:1.1.0-beta02")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
     implementation("androidx.vectordrawable:vectordrawable:1.1.0")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.fragment:fragment-ktx:1.1.0")
-
-    implementation("androidx.lifecycle:lifecycle-extensions:2.1.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.1.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.1.0")
-
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1")
-
-    implementation("com.squareup.picasso:picasso:2.71828")
 
     implementation("org.koin:koin-android:2.0.1")
     implementation("org.koin:koin-android-scope:2.0.1")

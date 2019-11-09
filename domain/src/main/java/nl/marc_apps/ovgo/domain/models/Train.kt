@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.domainmodels
+package nl.marc_apps.ovgo.domain.models
 
 data class Train(
     val image: String?,

@@ -1,7 +1,7 @@
-package nl.marc_apps.ovgo.domainservices
+package nl.marc_apps.ovgo.domain.services
 
-import nl.marc_apps.ovgo.domainmodels.Departure
-import nl.marc_apps.ovgo.domainmodels.Disruption
+import nl.marc_apps.ovgo.domain.models.Departure
+import nl.marc_apps.ovgo.domain.models.Disruption
 
 interface PublicTransportDataRepository {
     var language: String
