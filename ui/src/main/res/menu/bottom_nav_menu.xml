@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/navigation_trips"
+            android:icon="@drawable/ic_compass"
+            android:title="@string/trips"/>
+
+    <item
+            android:id="@+id/navigation_departures"
+            android:icon="@drawable/ic_departure_board"
+            android:title="@string/departures"/>
+
+    <item
+            android:id="@+id/navigation_disruptions"
+            android:icon="@drawable/ic_disruptions"
+            android:title="@string/disruptions"/>
+
+</menu>
