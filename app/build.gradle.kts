@@ -56,6 +56,8 @@ dependencies {
     // General libraries
     implementation(kotlin("stdlib-jdk8", "1.3.50"))
 
+    implementation("androidx.lifecycle:lifecycle-extensions:2.1.0")
+
     implementation("org.koin:koin-android:2.0.1")
     implementation("org.koin:koin-android-scope:2.0.1")
     implementation("org.koin:koin-android-viewmodel:2.0.1")

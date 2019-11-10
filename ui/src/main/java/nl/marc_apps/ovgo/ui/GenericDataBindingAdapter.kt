@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.ui.adapters
+package nl.marc_apps.ovgo.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.ui.fragments
+package nl.marc_apps.ovgo.ui.disruptions
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,16 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import nl.marc_apps.ovgo.ui.R
-import nl.marc_apps.ovgo.ui.adapters.GenericDataBindingAdapter
-import nl.marc_apps.ovgo.ui.databinding.DisruptionsFragmentBinding
-import nl.marc_apps.ovgo.ui.viewmodels.DisruptionsViewModel
+import nl.marc_apps.ovgo.ui.GenericDataBindingAdapter
+import nl.marc_apps.ovgo.ui.databinding.FragmentDisruptionsBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DisruptionsFragment : Fragment() {
-    companion object {
-        fun newInstance() = DisruptionsFragment()
-    }
-
     private val viewModel by viewModel<DisruptionsViewModel>()
 
     private val adapter by lazy {
@@ -24,7 +19,7 @@ class DisruptionsFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return DataBindingUtil.inflate<DisruptionsFragmentBinding>(layoutInflater, R.layout.disruptions_fragment, container, false).also {
+        return DataBindingUtil.inflate<FragmentDisruptionsBinding>(layoutInflater, R.layout.fragment_disruptions, container, false).also {
             it.viewModel = viewModel
             it.adapter = adapter
             it.lifecycleOwner = this

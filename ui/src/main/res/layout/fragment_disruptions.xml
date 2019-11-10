@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="nl.marc_apps.ovgo.ui.viewmodels.DisruptionsViewModel" />
+            type="nl.marc_apps.ovgo.ui.disruptions.DisruptionsViewModel" />
 
         <variable
             name="adapter"

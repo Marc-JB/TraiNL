@@ -63,6 +63,7 @@ dependencies {
 
     implementation("com.google.android.material:material:1.1.0-beta02")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     // implementation("androidx.navigation:navigation-fragment:2.1.0")
     // implementation("androidx.navigation:navigation-ui:2.1.0")
@@ -70,6 +71,8 @@ dependencies {
     // implementation("androidx.navigation:navigation-ui-ktx:2.1.0")
 
     implementation("androidx.lifecycle:lifecycle-extensions:2.1.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.1.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1")

@@ -1,23 +1,18 @@
-package nl.marc_apps.ovgo.ui.fragments
+package nl.marc_apps.ovgo.ui.trips
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import nl.marc_apps.ovgo.ui.R
-import nl.marc_apps.ovgo.ui.viewmodels.TripsViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class TripsFragment : Fragment() {
-    companion object {
-        fun newInstance() = TripsFragment()
-    }
-
-    private val viewModel by viewModels<TripsViewModel>()
+    private val viewModel by viewModel<TripsViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-            = inflater.inflate(R.layout.trips_fragment, container, false)
+            = inflater.inflate(R.layout.fragment_trips, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
