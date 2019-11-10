@@ -19,9 +19,11 @@ Experimental public transport Android app that showcases various Android archite
     * Data Binding
     * Lifecycles
     * LiveData
+    * Navigation
     * ViewModel
   * UI
     * Fragment
+    * Layout
 * Other
   * [Retrofit](https://square.github.io/retrofit/)
   * [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)

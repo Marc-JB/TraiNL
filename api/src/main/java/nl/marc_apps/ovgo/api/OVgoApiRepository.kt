@@ -7,8 +7,7 @@ import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class OVgoApiRepository(override var language: String = "en") :
-    PublicTransportDataRepository {
+class OVgoApiRepository(override var language: String = "en") : PublicTransportDataRepository {
     override suspend fun getDepartures(station: String) = coroutineScope {
         withContext(this.coroutineContext + Dispatchers.IO) {
             api.getDepartures(station, language).body() ?: emptyArray()
