@@ -22,8 +22,8 @@ android {
         versionName = "$major.$minor.$release"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
     }
+
     buildTypes {
         maybeCreate("release").apply {
             isMinifyEnabled = false
@@ -33,19 +33,22 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     dataBinding.isEnabled = true
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
     // File tree libraries
-    implementation(fileTree(mapOf(
-            "include" to listOf("*.jar"),
-            "dir" to "libs"
-    )))
+    implementation(fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
 
     // Modules
     implementation(project(":domain"))
@@ -55,8 +58,7 @@ dependencies {
     // General libraries
     implementation(kotlin("stdlib-jdk8", "1.3.50"))
 
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.vectordrawable:vectordrawable:1.1.0")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.1.0")
 
     implementation("org.koin:koin-android:2.0.1")
     implementation("org.koin:koin-android-scope:2.0.1")
@@ -65,6 +67,6 @@ dependencies {
     // Testing libraries
     testImplementation("junit:junit:4.12")
 
-    androidTestImplementation("androidx.test:runner:1.2.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
 }

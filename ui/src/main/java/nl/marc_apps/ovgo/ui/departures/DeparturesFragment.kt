@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.ui.fragments
+package nl.marc_apps.ovgo.ui.departures
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,16 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import nl.marc_apps.ovgo.ui.R
-import nl.marc_apps.ovgo.ui.adapters.GenericDataBindingAdapter
-import nl.marc_apps.ovgo.ui.databinding.DeparturesFragmentBinding
-import nl.marc_apps.ovgo.ui.viewmodels.DeparturesViewModel
+import nl.marc_apps.ovgo.ui.GenericDataBindingAdapter
+import nl.marc_apps.ovgo.ui.databinding.FragmentDeparturesBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DeparturesFragment : Fragment() {
-    companion object {
-        fun newInstance() = DeparturesFragment()
-    }
-
     private val viewModel by viewModel<DeparturesViewModel>()
 
     private val adapter by lazy {
@@ -24,7 +19,7 @@ class DeparturesFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return DataBindingUtil.inflate<DeparturesFragmentBinding>(layoutInflater, R.layout.departures_fragment, container, false).also {
+        return DataBindingUtil.inflate<FragmentDeparturesBinding>(layoutInflater, R.layout.fragment_departures, container, false).also {
             it.viewModel = viewModel
             it.adapter = adapter
             it.lifecycleOwner = this

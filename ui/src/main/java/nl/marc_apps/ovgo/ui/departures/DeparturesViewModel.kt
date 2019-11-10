@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.ui.viewmodels
+package nl.marc_apps.ovgo.ui.departures
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

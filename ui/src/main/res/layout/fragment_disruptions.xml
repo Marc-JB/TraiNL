@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="nl.marc_apps.ovgo.ui.viewmodels.DisruptionsViewModel" />
+            type="nl.marc_apps.ovgo.ui.disruptions.DisruptionsViewModel" />
 
         <variable
             name="adapter"
@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             app:adapter="@{adapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/departure"
+            tools:listitem="@layout/disruption"
             tools:visibility="visible" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

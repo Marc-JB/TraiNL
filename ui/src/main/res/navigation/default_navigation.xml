@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/default_navigation"
+    app:startDestination="@+id/navigation_trips">
+
+    <fragment
+        android:id="@+id/navigation_trips"
+        android:name="nl.marc_apps.ovgo.ui.trips.TripsFragment"
+        android:label="@string/trips"
+        tools:layout="@layout/fragment_trips" />
+
+    <fragment
+        android:id="@+id/navigation_departures"
+        android:name="nl.marc_apps.ovgo.ui.departures.DeparturesFragment"
+        android:label="@string/departures"
+        tools:layout="@layout/fragment_departures" />
+
+    <fragment
+        android:id="@+id/navigation_disruptions"
+        android:name="nl.marc_apps.ovgo.ui.disruptions.DisruptionsFragment"
+        android:label="@string/disruptions"
+        tools:layout="@layout/fragment_disruptions" />
+</navigation>
