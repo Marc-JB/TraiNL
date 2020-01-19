@@ -3,7 +3,7 @@ plugins {
     kotlin("android")
 }
 
-val minSdk = 21
+val minSdk = 23
 val targetAndCompileSdk = 29
 val appVersion = Triple(0, 1, 0)
 

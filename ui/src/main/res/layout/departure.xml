@@ -58,7 +58,7 @@
                     style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.direction}"
+                    android:text="@{viewModel.direction.toString()}"
                     android:textColor="@{viewModel.cancelled ? @color/colorError : @color/colorPrimary}"
                     android:textStyle="bold"
                     tools:text="Breda"
@@ -97,7 +97,7 @@
                 android:paddingEnd="8dp"
                 android:text="@{viewModel.operator + `\n` + viewModel.category}"
                 app:goneUnless="@{viewModel.cancelled}"
-                tools:text="Qbuzz\nR-NET Stoptrein"
+                tools:text="R-net door Qbuzz\nStoptrein"
                 tools:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -108,7 +108,7 @@
                 android:elevation="2dp"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="@{viewModel.platform}"
+                android:text="@{viewModel.actualPlatform}"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:autoSizeMaxTextSize="48sp"
@@ -130,14 +130,55 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextAppearance.MaterialComponents.Caption"
-                    android:layout_width="120dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:minWidth="160dp"
                     android:padding="8dp"
-                    android:text="@{viewModel.operator + `\n` + viewModel.category}"
-                    tools:text="Qbuzz\nR-NET Stoptrein" />
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextAppearance.MaterialComponents.Caption"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:paddingEnd="4dp"
+                        android:gravity="center_vertical"
+                        android:text="@{viewModel.operator + `\n` + viewModel.category}"
+                        tools:text="R-net door Qbuzz\nStoptrein" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:tint="@color/colorPrimary"
+                        app:goneUnless="@{viewModel.trainComposition.facilities.wheelchairAccessible}"
+                        app:srcCompat="@drawable/ic_accessible" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:tint="@color/colorPrimary"
+                        app:goneUnless="@{viewModel.trainComposition.facilities.bicycles}"
+                        app:srcCompat="@drawable/ic_bike" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:tint="@color/colorPrimary"
+                        app:goneUnless="@{viewModel.trainComposition.facilities.wifi}"
+                        app:srcCompat="@drawable/ic_wifi" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:tint="@color/colorPrimary"
+                        app:goneUnless="@{viewModel.trainComposition.facilities.powerSockets}"
+                        app:srcCompat="@drawable/ic_power" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"

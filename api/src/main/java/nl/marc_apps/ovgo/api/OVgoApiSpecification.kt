@@ -9,13 +9,13 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface OVgoApiSpecification {
-    @GET("stations/{id}/departures.json")
+    @GET("v0/stations/{id}/departures.json")
     suspend fun getDepartures(
         @Path("id") station: String,
         @Header("accept-language") language: String = "en"
     ): Response<Array<Departure>>
 
-    @GET("disruptions.json")
+    @GET("v1/disruptions.json")
     suspend fun getDisruptions(
         @Query("actual") actual: Boolean = true,
         @Header("accept-language") language: String = "en"
