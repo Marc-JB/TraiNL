@@ -6,5 +6,6 @@
     <color name="colorOK">#388E3C</color>
     <color name="colorError">#B00020</color>
     <color name="white">#FAFAFA</color>
+    <color name="backgroundColor">#F5F5F5</color>
     <color name="black">#212121</color>
 </resources>
