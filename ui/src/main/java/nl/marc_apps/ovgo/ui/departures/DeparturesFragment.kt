@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import nl.marc_apps.ovgo.ui.R
 import nl.marc_apps.ovgo.ui.GenericDataBindingAdapter
+import nl.marc_apps.ovgo.ui.R
 import nl.marc_apps.ovgo.ui.databinding.FragmentDeparturesBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -30,6 +30,6 @@ class DeparturesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewModel.languageCode = resources.getString(R.string.languageCode)
-        viewModel.stationCode = "bd"
+        viewModel.station = "Dordrecht"
     }
 }

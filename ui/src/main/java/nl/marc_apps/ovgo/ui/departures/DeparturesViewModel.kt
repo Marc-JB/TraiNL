@@ -23,7 +23,7 @@ class DeparturesViewModel(private val dataRepository: PublicTransportDataReposit
             dataRepository.language = value
         }
 
-    var stationCode: String? = null
+    var station: String? = null
         set(value){
             if(field != value && value != null) {
                 field = value
