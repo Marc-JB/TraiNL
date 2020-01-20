@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="8dp">
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextAppearance.MaterialComponents.Body2"
@@ -48,9 +49,9 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -69,6 +70,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:text="@{viewModel.routeStationsText}"
                     app:visibleUnless="@{viewModel.routeStationsText == `` || viewModel.cancelled}"
                     tools:text="Via Dordrecht"
@@ -92,13 +95,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="8dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
+                android:paddingHorizontal="4dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
                 android:text="@{viewModel.operator + `\n` + viewModel.category}"
                 app:goneUnless="@{viewModel.cancelled}"
-                tools:text="R-net door Qbuzz\nStoptrein"
-                tools:visibility="gone" />
+                tools:text="R-net door Qbuzz\nStoptrein" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextAppearance.MaterialComponents.Body2"
@@ -121,68 +123,114 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="2dp"
+                android:tint="@color/colorPrimary"
+                app:goneUnless="@{viewModel.trainComposition.facilities.wheelchairAccessible}"
+                app:srcCompat="@drawable/ic_accessible" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="2dp"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="WC"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                app:autoSizeMinTextSize="4sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"
+                app:goneUnless="@{viewModel.trainComposition.facilities.toilet}" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="2dp"
+                android:tint="@color/colorPrimary"
+                app:goneUnless="@{viewModel.trainComposition.facilities.bicycles}"
+                app:srcCompat="@drawable/ic_bike" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="2dp"
+                android:tint="@color/colorPrimary"
+                app:goneUnless="@{viewModel.trainComposition.facilities.wifi}"
+                app:srcCompat="@drawable/ic_wifi" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="2dp"
+                android:tint="@color/colorPrimary"
+                app:goneUnless="@{viewModel.trainComposition.facilities.powerSockets}"
+                app:srcCompat="@drawable/ic_power" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="2dp"
+                android:tint="@color/colorPrimary"
+                app:goneUnless="@{viewModel.trainComposition.facilities.silenceCompartment}"
+                app:srcCompat="@drawable/ic_silence" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="2dp"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="1"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                app:autoSizeMinTextSize="4sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"
+                app:goneUnless="@{viewModel.trainComposition.facilities.firstClas}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical|end"
+                android:maxLines="1"
+                android:paddingEnd="4dp"
+                android:singleLine="true"
+                android:text="@{viewModel.operator + ` • ` + viewModel.category}"
+                tools:text="R-net door Qbuzz • Stoptrein" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            app:visibleUnless="@{viewModel.cancelled}">
+            app:visibleUnless="@{viewModel.cancelled || viewModel.trainComposition.images[0] == null}">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:minWidth="160dp"
-                    android:padding="8dp"
-                    android:layout_height="match_parent">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextAppearance.MaterialComponents.Caption"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:paddingEnd="4dp"
-                        android:gravity="center_vertical"
-                        android:text="@{viewModel.operator + `\n` + viewModel.category}"
-                        tools:text="R-net door Qbuzz\nStoptrein" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="24dp"
-                        android:layout_height="match_parent"
-                        android:adjustViewBounds="true"
-                        android:tint="@color/colorPrimary"
-                        app:goneUnless="@{viewModel.trainComposition.facilities.wheelchairAccessible}"
-                        app:srcCompat="@drawable/ic_accessible" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="24dp"
-                        android:layout_height="match_parent"
-                        android:adjustViewBounds="true"
-                        android:tint="@color/colorPrimary"
-                        app:goneUnless="@{viewModel.trainComposition.facilities.bicycles}"
-                        app:srcCompat="@drawable/ic_bike" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="24dp"
-                        android:layout_height="match_parent"
-                        android:adjustViewBounds="true"
-                        android:tint="@color/colorPrimary"
-                        app:goneUnless="@{viewModel.trainComposition.facilities.wifi}"
-                        app:srcCompat="@drawable/ic_wifi" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="24dp"
-                        android:layout_height="match_parent"
-                        android:adjustViewBounds="true"
-                        android:tint="@color/colorPrimary"
-                        app:goneUnless="@{viewModel.trainComposition.facilities.powerSockets}"
-                        app:srcCompat="@drawable/ic_power" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="100dp"
                     android:adjustViewBounds="true"
                     app:url="@{viewModel.trainComposition.images[0]}" />
 
