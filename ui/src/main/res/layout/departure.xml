@@ -199,7 +199,7 @@
                 app:autoSizeMinTextSize="4sp"
                 app:autoSizeStepGranularity="1sp"
                 app:autoSizeTextType="uniform"
-                app:goneUnless="@{viewModel.trainComposition.facilities.firstClas}" />
+                app:goneUnless="@{viewModel.trainComposition.facilities.firstClass}" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextAppearance.MaterialComponents.Caption"

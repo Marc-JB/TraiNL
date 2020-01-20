@@ -8,5 +8,5 @@ data class TrainFacilities(
     val wheelchairAccessible: Boolean,
     val bicycles: Boolean,
     val bar: Boolean,
-    val firstClas: Boolean
+    val firstClass: Boolean
 )
