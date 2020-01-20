@@ -16,7 +16,7 @@ import org.koin.android.ext.android.inject
 class MainActivity : AppCompatActivity() {
     private val dataRepository: PublicTransportDataRepository by inject()
 
-    private val disruptionCount: MutableLiveData<Int> = MutableLiveData(0)
+    private val disruptionCount: MutableLiveData<Int> = MutableLiveData(-1)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         disruptionCount.observe(this@MainActivity) {
-            navView.getOrCreateBadge(R.id.navigation_disruptions).number = it
+            if(it != -1) navView.getOrCreateBadge(R.id.navigation_disruptions).number = it
         }
     }
 }
