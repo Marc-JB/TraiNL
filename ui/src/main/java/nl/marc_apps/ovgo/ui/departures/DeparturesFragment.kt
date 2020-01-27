@@ -6,12 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.observe
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.ui.GenericDataBindingAdapter
 import nl.marc_apps.ovgo.ui.R
 import nl.marc_apps.ovgo.ui.databinding.FragmentDeparturesBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class DeparturesFragment : Fragment() {
+class DeparturesFragment : Fragment(), CoroutineScope by MainScope() {
     private val viewModel by viewModel<DeparturesViewModel>()
 
     private val adapter by lazy {
@@ -30,6 +35,13 @@ class DeparturesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewModel.languageCode = resources.getString(R.string.languageCode)
-        viewModel.station = "Dordrecht"
+        viewModel.station.observe(viewLifecycleOwner) {
+            launch(Dispatchers.IO) {
+                viewModel.isLoading.postValue(true)
+                viewModel.departures.postValue(viewModel.dataRepository.getDepartures(it))
+                viewModel.isLoading.postValue(false)
+            }
+        }
+        viewModel.station.value = "Dordrecht"
     }
 }

@@ -9,11 +9,12 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
 import org.koin.android.ext.android.inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     private val dataRepository: PublicTransportDataRepository by inject()
 
     private val disruptionCount: MutableLiveData<Int> = MutableLiveData(-1)
@@ -21,8 +22,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: handle more nicely
-        CoroutineScope(Dispatchers.IO).launch {
+        launch(Dispatchers.IO) {
             disruptionCount.postValue(dataRepository.getDisruptions(true).size)
         }
 
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         navView.setupWithNavController(navController)
 
-        disruptionCount.observe(this@MainActivity) {
+        disruptionCount.observe(this) {
             if(it != -1) navView.getOrCreateBadge(R.id.navigation_disruptions).number = it
         }
     }
