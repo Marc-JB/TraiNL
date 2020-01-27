@@ -221,39 +221,14 @@
             android:layout_height="48dp"
             app:visibleUnless="@{viewModel.cancelled || viewModel.trainComposition.images[0] == null}">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <nl.marc_apps.ovgo.ui.ImageList
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:layout_gravity="end"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="2dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="100dp"
-                    android:adjustViewBounds="true"
-                    app:url="@{viewModel.trainComposition.images[0]}" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    app:url="@{viewModel.trainComposition.images[1]}" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    app:url="@{viewModel.trainComposition.images[2]}" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    app:url="@{viewModel.trainComposition.images[3]}" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                android:paddingStart="108dp"
+                android:paddingEnd="8dp"
+                android:paddingVertical="2dp"
+                android:layout_height="match_parent"
+                images="@{viewModel.trainComposition.images}"/>
 
         </HorizontalScrollView>
 

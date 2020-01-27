@@ -16,6 +16,5 @@ data class TrainComposition(
     val seats: Short,
     val seatsFirstClass: Short
 ){
-    val images
-        get() = Array(4){ parts.getOrNull(it)?.image }
+    val images get() = parts.map { it.image }
 }
