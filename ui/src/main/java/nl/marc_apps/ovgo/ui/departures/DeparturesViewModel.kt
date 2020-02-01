@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.observe
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.domain.models.Departure
 import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
@@ -13,7 +14,7 @@ import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
 class DeparturesViewModel(val dataRepository: PublicTransportDataRepository) : ViewModel(), DeparturesViewModelInf {
     override val departures: MutableLiveData<Array<Departure>> = MutableLiveData(emptyArray())
 
-    override val isLoading = MutableLiveData(true)
+    override val isLoading = MutableLiveData<Boolean>(true)
 
     override var languageCode: String = "en"
         set(value){
@@ -26,13 +27,17 @@ class DeparturesViewModel(val dataRepository: PublicTransportDataRepository) : V
     fun load(lifecycleOwner: LifecycleOwner) {
         station.observe(lifecycleOwner) {
             MainScope().launch {
-                isLoading.postValue(true)
-                val departuresList = async {
-                    dataRepository.getDepartures(it)
-                }
-                departures.postValue(departuresList.await())
-                isLoading.postValue(false)
+                loadStations(it)
             }
         }
+    }
+
+    suspend fun loadStations(stationId: String) = coroutineScope {
+        isLoading.postValue(true)
+        val departuresList = async(coroutineContext) {
+            dataRepository.getDepartures(stationId)
+        }
+        departures.postValue(departuresList.await())
+        isLoading.postValue(false)
     }
 }
