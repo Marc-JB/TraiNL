@@ -58,7 +58,7 @@ dependencies {
     // General libraries
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.61")
 
-    implementation("androidx.lifecycle:lifecycle-extensions:2.1.0")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     implementation("org.koin:koin-android:2.0.1")
     implementation("org.koin:koin-android-scope:2.0.1")
