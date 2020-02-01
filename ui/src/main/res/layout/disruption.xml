@@ -22,8 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:minHeight="160dp"
-            app:cardBackgroundColor="@{viewModel.warningLevel > 1 ? @color/colorError : @color/white}">
+            app:cardBackgroundColor="#FFFFFF"
+            android:minHeight="140dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -35,8 +35,11 @@
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawablePadding="8dp"
                     android:text="@{viewModel.title}"
-                    android:textColor="@{viewModel.warningLevel > 1 ? @color/white : viewModel.warningLevel == 1 ? @color/colorError : @color/black}"
+                    android:textColor="@{viewModel.warningLevel > 0 ? @color/colorError : @color/black}"
+                    android:drawableStart="@{viewModel.warningLevel > 0 ? @drawable/ic_error : @drawable/ic_warning}"
+                    tools:drawableStart="@drawable/ic_error"
                     tools:text="Arnhem Centraal-Düsseldorf Hbf" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -45,7 +48,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@{viewModel.description}"
-                    android:textColor="@{viewModel.warningLevel > 1 ? @color/white : @color/black}"
                     tools:text="Gewijzigd treinverkeer" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -56,7 +58,6 @@
                     android:drawablePadding="8dp"
                     android:gravity="center_vertical"
                     android:text="@{viewModel.startDateText + (viewModel.endDateText == null ? `` : `\n` + viewModel.endDateText)}"
-                    android:textColor="@{viewModel.warningLevel > 1 ? @color/white : @color/black}"
                     app:drawableStartCompat="@drawable/ic_date_range"
                     app:visibleUnless="@{viewModel.startDate == null}"
                     tools:text="26 mei 2019, 10:30\n28 mei 2019, 18:00" />

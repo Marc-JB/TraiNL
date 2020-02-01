@@ -3,7 +3,7 @@ plugins {
     kotlin("android")
 }
 
-val minSdk = 21
+val minSdk = 23
 val targetAndCompileSdk = 29
 val appVersion = Triple(0, 1, 0)
 
@@ -56,7 +56,7 @@ dependencies {
     implementation(project(":ui"))
 
     // General libraries
-    implementation(kotlin("stdlib-jdk8", "1.3.50"))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.61")
 
     implementation("androidx.lifecycle:lifecycle-extensions:2.1.0")
 
@@ -65,7 +65,7 @@ dependencies {
     implementation("org.koin:koin-android-viewmodel:2.0.1")
 
     // Testing libraries
-    testImplementation("junit:junit:4.12")
+    testImplementation("junit:junit:4.13")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")

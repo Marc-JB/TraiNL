@@ -31,7 +31,7 @@ class OVgoApiRepository(override var language: String = "en") : PublicTransportD
             .build()
 
         private val api: OVgoApiSpecification = Retrofit.Builder()
-            .baseUrl("https://ovgo.herokuapp.com/api/v1/")
+            .baseUrl("https://ovgo.herokuapp.com/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient)
             .build()

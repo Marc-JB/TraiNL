@@ -8,5 +8,5 @@ dependencies {
     implementation(fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
 
     // Other
-    implementation(kotlin("stdlib-jdk8", "1.3.50"))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.61")
 }

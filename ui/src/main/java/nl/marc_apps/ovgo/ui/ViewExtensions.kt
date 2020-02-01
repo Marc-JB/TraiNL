@@ -1,20 +1,36 @@
 package nl.marc_apps.ovgo.ui
 
+import android.content.Context
+import android.util.AttributeSet
+import android.view.Gravity
 import android.view.View
-import androidx.appcompat.widget.AppCompatImageView
+import android.widget.ImageView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
 
-/**
- * Loads the image from [url] into the [view] using Picasso.
- * When the [url] is null, the visibility of [view] will be set to [View.GONE].
- */
-@BindingAdapter("url")
-fun loadImage(view: AppCompatImageView, url: String?) {
-    view.visibility = if(url.isNullOrBlank()) View.GONE else View.VISIBLE
-    if(url != null) Picasso.get().load(url).into(view)
+class ImageList @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : LinearLayoutCompat(context, attrs, defStyleAttr)
+
+@BindingAdapter("images")
+fun loadImages(imageList: ImageList, list: List<String>?) {
+    imageList.removeAllViews()
+    list?.forEach {
+        val imageView = ImageView(imageList.context).apply {
+            layoutParams = LinearLayoutCompat.LayoutParams(
+                LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
+                LinearLayoutCompat.LayoutParams.WRAP_CONTENT
+            ).apply {
+                gravity = Gravity.CENTER_VERTICAL
+            }
+            adjustViewBounds = true
+        }
+        imageList.addView(imageView)
+        Picasso.get().load(it).into(imageView)
+    }
 }
 
 /**

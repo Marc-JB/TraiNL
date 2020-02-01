@@ -5,4 +5,7 @@
     <string name="languageCode">nl</string>
     <string name="trips">Reizen</string>
     <string name="cancelled">Rijdt niet</string>
+    <string name="from">Van</string>
+    <string name="to">Naar</string>
+    <string name="plan_trip">Reis plannen</string>
 </resources>
