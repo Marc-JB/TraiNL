@@ -11,13 +11,13 @@ import java.util.concurrent.TimeUnit
 
 class OVgoApiRepository(override var language: String = "en") : PublicTransportDataRepository {
     override suspend fun getDepartures(station: String) = coroutineScope {
-        withContext(this.coroutineContext + Dispatchers.IO) {
+        withContext(coroutineContext + Dispatchers.IO) {
             api.getDepartures(station, language).body() ?: emptyArray()
         }
     }
 
     override suspend fun getDisruptions(actual: Boolean) = coroutineScope {
-        withContext(this.coroutineContext + Dispatchers.IO) {
+        withContext(coroutineContext + Dispatchers.IO) {
             api.getDisruptions(actual, language).body() ?: emptyArray()
         }
     }
