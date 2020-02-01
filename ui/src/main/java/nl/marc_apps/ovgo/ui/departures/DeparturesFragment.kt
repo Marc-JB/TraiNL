@@ -6,11 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.observe
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.ui.GenericDataBindingAdapter
 import nl.marc_apps.ovgo.ui.R
 import nl.marc_apps.ovgo.ui.databinding.FragmentDeparturesBinding

@@ -1,17 +1,13 @@
 package nl.marc_apps.ovgo.ui.departures
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.observe
-import kotlinx.coroutines.MainScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.domain.models.Departure
 import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
 
-class DeparturesViewModel(val dataRepository: PublicTransportDataRepository) : ViewModel(), DeparturesViewModelInf {
+class DeparturesViewModel(private val dataRepository: PublicTransportDataRepository) : ViewModel(), DeparturesViewModelInf {
     override val departures: MutableLiveData<Array<Departure>> = MutableLiveData(emptyArray())
 
     override val isLoading = MutableLiveData<Boolean>(true)
@@ -26,7 +22,7 @@ class DeparturesViewModel(val dataRepository: PublicTransportDataRepository) : V
 
     fun load(lifecycleOwner: LifecycleOwner) {
         station.observe(lifecycleOwner) {
-            MainScope().launch {
+            viewModelScope.launch {
                 loadStations(it)
             }
         }
