@@ -22,11 +22,15 @@ data class Departure(
     val departureStatus: String,
     val trainComposition: TrainComposition
 ){
-    val isDelayed = delayInSeconds >= 30
+    val isDelayed
+        get() = delayInSeconds >= 30
 
-    val departureTimeText = plannedDepartureTime.format(getTimeInstance(SHORT))
+    val departureTimeText
+        get() = plannedDepartureTime.format(getTimeInstance(SHORT))
 
-    val delayText = "+${(delayInSeconds / 60.0).roundToInt()}"
+    val delayText
+        get() = "+${(delayInSeconds / 60.0).roundToInt()}"
 
-    val routeStationsText = if(majorStops.isNotEmpty()) "Via ${majorStops.joinToString()}" else ""
+    val routeStationsText
+        get() = if(majorStops.isNotEmpty()) "Via ${majorStops.joinToString()}" else ""
 }

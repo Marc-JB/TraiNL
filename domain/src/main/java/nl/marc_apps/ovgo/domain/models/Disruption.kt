@@ -15,15 +15,19 @@ data class Disruption (
     val startDate: Date?,
     val endDate: Date?
 ){
-    val warningLevel  = when(type) {
-        "warning" -> 2
-        "disruption" -> 1
-        else -> 0
-    }
+    val warningLevel
+        get() = when(type) {
+            "warning" -> 2
+            "disruption" -> 1
+            else -> 0
+        }
 
-    private val dateTimeFormat = getDateTimeInstance(MEDIUM, SHORT)
+    private val dateTimeFormat
+        get() = getDateTimeInstance(MEDIUM, SHORT)
 
-    val startDateText = startDate?.format(dateTimeFormat)
+    val startDateText
+        get() = startDate?.format(dateTimeFormat)
 
-    val endDateText = endDate?.format(dateTimeFormat)
+    val endDateText
+        get() = endDate?.format(dateTimeFormat)
 }
