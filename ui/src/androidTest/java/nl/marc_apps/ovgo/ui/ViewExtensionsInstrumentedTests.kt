@@ -21,6 +21,6 @@ class ViewExtensionsInstrumentedTests {
         loadImages(layout, emptyList())
 
         // Assert
-        assertEquals(layout.childCount, 0)
+        assertEquals(0, layout.childCount)
     }
 }

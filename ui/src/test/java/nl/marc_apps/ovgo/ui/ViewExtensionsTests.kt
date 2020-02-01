@@ -13,7 +13,7 @@ class ViewExtensionsTests {
         val actualResult = array.takeFirstOrNull { if(it >= 3) it * 3 else null }
 
         // Assert
-        assertEquals(actualResult, 9)
+        assertEquals(9, actualResult)
     }
 
     @Test
@@ -25,6 +25,6 @@ class ViewExtensionsTests {
         val actualResult = array.takeFirstOrNull { if(it >= 9) it * 3 else null }
 
         // Assert
-        assertEquals(actualResult, null)
+        assertEquals(null, actualResult)
     }
 }
