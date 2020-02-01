@@ -16,7 +16,7 @@ import nl.marc_apps.ovgo.ui.R
 import nl.marc_apps.ovgo.ui.databinding.FragmentDeparturesBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class DeparturesFragment : Fragment(), CoroutineScope by MainScope() {
+class DeparturesFragment : Fragment() {
     private val viewModel by viewModel<DeparturesViewModel>()
 
     private val adapter by lazy {
@@ -35,13 +35,7 @@ class DeparturesFragment : Fragment(), CoroutineScope by MainScope() {
         super.onActivityCreated(savedInstanceState)
 
         viewModel.languageCode = resources.getString(R.string.languageCode)
-        viewModel.station.observe(viewLifecycleOwner) {
-            launch(Dispatchers.IO) {
-                viewModel.isLoading.postValue(true)
-                viewModel.departures.postValue(viewModel.dataRepository.getDepartures(it))
-                viewModel.isLoading.postValue(false)
-            }
-        }
+        viewModel.load(viewLifecycleOwner)
         viewModel.station.value = "Dordrecht"
     }
 }
