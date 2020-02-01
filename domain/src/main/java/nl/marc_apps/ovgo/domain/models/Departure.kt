@@ -32,5 +32,5 @@ data class Departure(
         get() = "+${(delayInSeconds / 60.0).roundToInt()}"
 
     val routeStationsText
-        get() = if(majorStops.isNotEmpty()) "Via " + majorStops.joinToString { it.toString() } else ""
+        get() = if(majorStops.isNotEmpty()) "Via " + majorStops.joinToString() else ""
 }
