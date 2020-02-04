@@ -1,5 +1,6 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
         google()
@@ -21,10 +22,20 @@ allprojects {
         jcenter()
         mavenCentral()
     }
+
+    tasks {
+        withType<KotlinCompile>().configureEach {
+            kotlinOptions.jvmTarget = "1.8"
+        }
+    }
 }
 
 tasks {
     register("clean", Delete::class.java) {
         delete(rootProject.buildDir)
+    }
+
+    withType<KotlinCompile>().configureEach {
+        kotlinOptions.jvmTarget = "1.8"
     }
 }
