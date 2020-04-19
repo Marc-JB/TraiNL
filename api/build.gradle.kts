@@ -11,7 +11,7 @@ dependencies {
     implementation(project(":domain"))
 
     // Other
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.61")
+    implementation(kotlin("stdlib-jdk8"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3")
 

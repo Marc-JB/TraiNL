@@ -52,7 +52,7 @@ dependencies {
     implementation(project(":ui"))
 
     // General libraries
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.61")
+    implementation(kotlin("stdlib-jdk8"))
 
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
