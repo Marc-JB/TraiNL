@@ -1,4 +1,4 @@
-name: Android build
+name: Android tests
 
 on:
   push:
@@ -32,6 +32,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
     
-      # Build
-      - name: Build with Gradle
-        run: ./gradlew build
+      # Build & test
+      - name: Build & test with Gradle
+        run: ./gradlew test
