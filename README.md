@@ -2,14 +2,6 @@
 # OVgo
 Experimental public transport Android app that showcases various Android architecture patterns.
 
-## To do
-* Cache data using [Room](https://developer.android.com/topic/libraries/architecture/room) for offline use
-* Write [tests](https://developer.android.com/training/testing/)
-  * Unit tests
-* Add travel feature
-* Improve/expand existing features
-* Improve documentation & architecture
-
 ## Implemented
 * [Android Jetpack](https://developer.android.com/jetpack)
   * Foundation
