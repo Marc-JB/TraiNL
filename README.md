@@ -1,13 +1,7 @@
-# OVgo [![Java CI](https://github.com/Marc-JB/OVgo/workflows/Java%20CI/badge.svg)](https://github.com/Marc-JB/OVgo/actions?query=workflow%3A%22Java+CI%22)
+[![Android tests](https://github.com/Marc-JB/OVgo/workflows/Android%20tests/badge.svg)](https://github.com/Marc-JB/OVgo/actions)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Marc-JB_OVgo&metric=alert_status)](https://sonarcloud.io/dashboard?id=Marc-JB_OVgo)
+# OVgo
 Experimental public transport Android app that showcases various Android architecture patterns.
-
-## To do
-* Cache data using [Room](https://developer.android.com/topic/libraries/architecture/room) for offline use
-* Write [tests](https://developer.android.com/training/testing/)
-  * Unit tests
-* Add travel feature
-* Improve/expand existing features
-* Improve documentation & architecture
 
 ## Implemented
 * [Android Jetpack](https://developer.android.com/jetpack)
