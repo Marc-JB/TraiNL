@@ -1,6 +1,6 @@
 package nl.marc_apps.ovgo.domain.models
 
-import java.text.DateFormat
+import java.text.DateFormat.*
 import java.util.*
 
 data class Disruption (
@@ -23,11 +23,11 @@ data class Disruption (
         }
 
     private val dateTimeFormat
-        get() = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
+        get() = getDateTimeInstance(MEDIUM, SHORT)
 
     val startDateText
-        get() = if(startDate == null) null else dateTimeFormat.format(startDate)
+        get() = startDate?.format(dateTimeFormat)
 
     val endDateText
-        get() = if(endDate == null) null else dateTimeFormat.format(endDate)
+        get() = endDate?.format(dateTimeFormat)
 }

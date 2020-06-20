@@ -8,7 +8,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import nl.marc_apps.ovgo.ui.BR
 
 /**
  * A generic [RecyclerView.Adapter].

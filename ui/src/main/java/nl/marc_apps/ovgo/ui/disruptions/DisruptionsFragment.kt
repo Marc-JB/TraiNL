@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import nl.marc_apps.ovgo.ui.R
 import nl.marc_apps.ovgo.ui.GenericDataBindingAdapter
+import nl.marc_apps.ovgo.ui.R
 import nl.marc_apps.ovgo.ui.databinding.FragmentDisruptionsBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 

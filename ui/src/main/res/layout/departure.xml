@@ -218,13 +218,13 @@
 
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="40dp"
             app:visibleUnless="@{viewModel.cancelled || viewModel.trainComposition.images[0] == null}">
 
             <nl.marc_apps.ovgo.ui.ImageList
                 android:layout_width="wrap_content"
                 android:layout_gravity="end"
-                android:paddingStart="108dp"
+                android:paddingStart="104dp"
                 android:paddingEnd="8dp"
                 android:paddingVertical="2dp"
                 android:layout_height="match_parent"

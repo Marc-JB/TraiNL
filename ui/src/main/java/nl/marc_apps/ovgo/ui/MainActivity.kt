@@ -2,30 +2,19 @@ package nl.marc_apps.ovgo.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
-import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
-    private val dataRepository: PublicTransportDataRepository by inject()
-
-    private val disruptionCount: MutableLiveData<Int> = MutableLiveData(-1)
+    private val viewModel by viewModel<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        launch(Dispatchers.IO) {
-            disruptionCount.postValue(dataRepository.getDisruptions(true).size)
-        }
-
         setContentView(R.layout.activity_main)
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
@@ -33,7 +22,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
         navView.setupWithNavController(navController)
 
-        disruptionCount.observe(this) {
+        viewModel.disruptionCount.observe(this) {
             if(it != -1) navView.getOrCreateBadge(R.id.navigation_disruptions).number = it
         }
     }

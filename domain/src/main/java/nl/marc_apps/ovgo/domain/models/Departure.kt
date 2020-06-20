@@ -1,6 +1,6 @@
 package nl.marc_apps.ovgo.domain.models
 
-import java.text.DateFormat
+import java.text.DateFormat.*
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -26,11 +26,11 @@ data class Departure(
         get() = delayInSeconds >= 30
 
     val departureTimeText
-        get() = DateFormat.getTimeInstance(DateFormat.SHORT).format(plannedDepartureTime)
+        get() = plannedDepartureTime.format(getTimeInstance(SHORT))
 
     val delayText
         get() = "+${(delayInSeconds / 60.0).roundToInt()}"
 
     val routeStationsText
-        get() = if(majorStops.isNotEmpty()) "Via " + majorStops.joinToString { it.toString() } else ""
+        get() = if(majorStops.isNotEmpty()) "Via ${majorStops.joinToString()}" else ""
 }
