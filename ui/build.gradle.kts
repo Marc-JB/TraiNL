@@ -12,7 +12,6 @@ val appVersion = Triple(0, 1, 0)
 
 android {
     compileSdkVersion(targetAndCompileSdk)
-    buildToolsVersion = "29.0.2"
 
     defaultConfig {
         minSdkVersion(minSdk)
@@ -36,7 +35,9 @@ android {
         }
     }
 
-    dataBinding.isEnabled = true
+    dataBinding {
+        isEnabled = true
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -54,10 +55,10 @@ dependencies {
     // General libraries
     implementation(kotlin("stdlib-jdk8"))
 
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.core:core-ktx:1.3.0")
+    implementation("androidx.appcompat:appcompat:1.2.0")
+    implementation("androidx.core:core-ktx:1.3.1")
 
-    implementation("com.google.android.material:material:1.1.0")
+    implementation("com.google.android.material:material:1.2.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
@@ -68,7 +69,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3")
 
     implementation("com.squareup.picasso:picasso:2.71828")

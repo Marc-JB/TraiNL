@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_VARIABLE")
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -5,11 +7,26 @@ plugins {
 
 val minSdk = 23
 val targetAndCompileSdk = 29
-val appVersion = Triple(0, 1, 0)
+
+data class Version(val major: Int, val minor: Int, val patch: Int = 0) {
+    val code = major * 100 + minor * 10 + patch
+    val name = "$major.$minor.$patch"
+    override fun toString() = name
+}
+
+val appVersion = Version(0, 1, 0)
 
 android {
     compileSdkVersion(targetAndCompileSdk)
-    buildToolsVersion = "29.0.2"
+
+    packagingOptions {
+        exclude("kotlin/**")
+        exclude("**/*.kotlin_metadata")
+        exclude("DebugProbesKt.bin")
+        exclude("META-INF/*.kotlin_module")
+        exclude("META-INF/*.version")
+        exclude("build-data.properties")
+    }
 
     defaultConfig {
         applicationId = "nl.marc_apps.ovgo"
@@ -18,14 +35,14 @@ android {
         targetSdkVersion(targetAndCompileSdk)
 
         val (major, minor, release) = appVersion
-        versionCode = major * 100 + minor * 10 + release
-        versionName = "$major.$minor.$release"
+        versionCode = appVersion.code
+        versionName = appVersion.name
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-        maybeCreate("release").apply {
+        val release by getting {
             isMinifyEnabled = false
             isZipAlignEnabled = true
             isShrinkResources = false
