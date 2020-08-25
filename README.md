@@ -24,7 +24,7 @@ Experimental public transport Android app that showcases various Android archite
   * [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
   * Serialization of JSON objects retrieved from the API using [Retrofit GSON converter](https://github.com/square/retrofit/tree/master/retrofit-converters/gson)
   * Clean architecture
-  * Dependecy Injection using [Koin](https://insert-koin.io/)
+  * Dependency Injection using [Koin](https://insert-koin.io/)
 
 ## Screenshots of the app
 ![Trips](/docs/screenshots/trips-1.png?raw=true "Trips")
