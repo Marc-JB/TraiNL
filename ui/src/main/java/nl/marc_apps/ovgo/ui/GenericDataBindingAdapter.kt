@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -32,8 +31,14 @@ class GenericDataBindingAdapter<T>(private val myDataset: LiveData<Array<T>>, pr
     override fun getItemCount() = myDataset.value?.size ?: 0
 
     init {
-        if(lifecycleOwner != null) myDataset.observe(lifecycleOwner, Observer {
-            notifyDataSetChanged()
-        })
+        if(lifecycleOwner != null) {
+            myDataset.observe(lifecycleOwner) {
+                notifyDataSetChanged()
+            }
+        } else {
+            myDataset.observeForever {
+                notifyDataSetChanged()
+            }
+        }
     }
 }

@@ -1,6 +1,9 @@
 package nl.marc_apps.ovgo.ui.departures
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -10,7 +13,7 @@ import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
 class DeparturesViewModel(private val dataRepository: PublicTransportDataRepository) : ViewModel(), DeparturesViewModelInf {
     override val departures: MutableLiveData<Array<Departure>> = MutableLiveData(emptyArray())
 
-    override val isLoading = MutableLiveData<Boolean>(true)
+    override val isLoading = MutableLiveData(true)
 
     override var languageCode: String = "en"
         set(value){

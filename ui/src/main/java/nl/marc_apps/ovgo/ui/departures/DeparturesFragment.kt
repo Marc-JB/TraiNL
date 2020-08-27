@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import nl.marc_apps.ovgo.ui.GenericDataBindingAdapter
 import nl.marc_apps.ovgo.ui.R
 import nl.marc_apps.ovgo.ui.databinding.FragmentDeparturesBinding
@@ -14,7 +15,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class DeparturesFragment : Fragment() {
     private val viewModel by viewModel<DeparturesViewModel>()
 
-    private val adapter by lazy {
+    private val adapter: RecyclerView.Adapter<*> by lazy {
         GenericDataBindingAdapter(viewModel.departures, R.layout.departure, this)
     }
 
