@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_VARIABLE")
+
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -8,35 +10,51 @@ plugins {
 
 val minSdk = 21
 val targetAndCompileSdk = 29
-val appVersion = Triple(0, 1, 0)
+
+data class Version(val major: Int, val minor: Int, val patch: Int = 0) {
+    val code = major * 100 + minor * 10 + patch
+    val name = "$major.$minor.$patch"
+
+    override fun toString() = name
+}
+
+val libVersion = Version(0, 1)
 
 android {
     compileSdkVersion(targetAndCompileSdk)
-    buildToolsVersion = "29.0.2"
 
     defaultConfig {
         minSdkVersion(minSdk)
         targetSdkVersion(targetAndCompileSdk)
 
-        val (major, minor, release) = appVersion
-        versionCode = major * 100 + minor * 10 + release
-        versionName = "$major.$minor.$release"
+        versionCode = libVersion.code
+        versionName = libVersion.name
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
+    buildFeatures {
+        dataBinding = true
+    }
+
     buildTypes {
-        maybeCreate("release").apply {
+        val release by getting {
             isMinifyEnabled = false
             isZipAlignEnabled = true
             isShrinkResources = false
             isCrunchPngs = true
+
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
-    }
 
-    dataBinding.isEnabled = true
+        val debug by getting {
+            isMinifyEnabled = false
+            isZipAlignEnabled = true
+            isShrinkResources = false
+            isCrunchPngs = true
+        }
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -54,22 +72,22 @@ dependencies {
     // General libraries
     implementation(kotlin("stdlib-jdk8"))
 
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.core:core-ktx:1.2.0")
+    implementation("androidx.appcompat:appcompat:1.2.0")
+    implementation("androidx.core:core-ktx:1.3.1")
 
-    implementation("com.google.android.material:material:1.1.0")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
+    implementation("com.google.android.material:material:1.2.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
-    implementation("androidx.navigation:navigation-fragment-ktx:2.2.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.2.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.3.0")
+    implementation("androidx.navigation:navigation-ui-ktx:2.3.0")
 
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5")
 
     implementation("com.squareup.picasso:picasso:2.71828")
 
@@ -78,9 +96,9 @@ dependencies {
     implementation("org.koin:koin-android-viewmodel:2.0.1")
 
     // Testing libraries
-    testImplementation("junit:junit:4.13")
     testImplementation(kotlin("test-junit"))
 
-    androidTestImplementation("androidx.test.ext:junit:1.1.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+    androidTestImplementation(kotlin("test-junit"))
+    androidTestImplementation("androidx.test:runner:1.2.0")
+    androidTestImplementation("androidx.test:rules:1.2.0")
 }

@@ -1,15 +1,35 @@
+@file:Suppress("UNUSED_VARIABLE")
+
 plugins {
     id("com.android.application")
     kotlin("android")
 }
 
-val minSdk = 23
+val minSdk = 21
 val targetAndCompileSdk = 29
-val appVersion = Triple(0, 1, 0)
+
+data class Version(val major: Int, val minor: Int, val patch: Int = 0) {
+    val code = major * 100 + minor * 10 + patch
+    val name = "$major.$minor.$patch"
+
+    infix fun flavor(code: Int) = this.code * 10 + code
+
+    override fun toString() = name
+}
+
+val appVersion = Version(0, 1)
 
 android {
     compileSdkVersion(targetAndCompileSdk)
-    buildToolsVersion = "29.0.2"
+
+    packagingOptions {
+        exclude("kotlin/**")
+        exclude("**/*.kotlin_metadata")
+        exclude("DebugProbesKt.bin")
+        exclude("META-INF/*.kotlin_module")
+        exclude("META-INF/*.version")
+        exclude("build-data.properties")
+    }
 
     defaultConfig {
         applicationId = "nl.marc_apps.ovgo"
@@ -17,24 +37,79 @@ android {
         minSdkVersion(minSdk)
         targetSdkVersion(targetAndCompileSdk)
 
-        val (major, minor, release) = appVersion
-        versionCode = major * 100 + minor * 10 + release
-        versionName = "$major.$minor.$release"
+        versionCode = appVersion.code
+        versionName = appVersion.name
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
+
+    signingConfigs {
+        val release by creating {
+            storeFile = file("key.jks")
+            storePassword = project.findProperty("android.store.password") as? String ?: System.getenv("ANDROID_STORE_PASSWORD")
+            keyAlias = project.findProperty("android.key.alias") as? String ?: System.getenv("ANDROID_KEY_ALIAS")
+            keyPassword = project.findProperty("android.key.password") as? String ?: System.getenv("ANDROID_KEY_PASSWORD")
+        }
     }
 
     buildTypes {
-        maybeCreate("release").apply {
+        val release by getting {
+            signingConfig = signingConfigs.getByName("release")
+
+            isMinifyEnabled = true
+            isZipAlignEnabled = true
+            isShrinkResources = true
+            isCrunchPngs = true
+
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+
+        val debug by getting {
+            applicationIdSuffix = ".debug"
+
             isMinifyEnabled = false
             isZipAlignEnabled = true
             isShrinkResources = false
             isCrunchPngs = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
-    dataBinding.isEnabled = true
+    flavorDimensions("api")
+
+    productFlavors {
+        val minApi21 by creating {
+            minSdkVersion(21)
+            versionCode = appVersion flavor 0
+        }
+
+        val minApi26 by creating {
+            minSdkVersion(26)
+            versionCode = appVersion flavor 1
+        }
+    }
+
+    bundle {
+        abi {
+            enableSplit = true
+        }
+
+        language {
+            enableSplit = true
+        }
+
+        density {
+            enableSplit = true
+        }
+
+        texture {
+            enableSplit = true
+        }
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
