@@ -11,7 +11,9 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:4.0.1")
-        classpath(kotlin("gradle-plugin", "1.4.0"))
+        val kotlinVersion = "1.4.0"
+        classpath(kotlin("gradle-plugin", version = kotlinVersion))
+        classpath(kotlin("serialization", version = kotlinVersion))
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.0")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

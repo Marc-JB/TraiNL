@@ -57,3 +57,13 @@
 
 # OkHttp platform used only on JVM and when Conscrypt dependency is available.
 -dontwarn okhttp3.internal.platform.ConscryptPlatform
+
+-keepattributes *Annotation*, InnerClasses
+-dontnote kotlinx.serialization.SerializationKt
+-keep,includedescriptorclasses class nl.marc_apps.ovgo.**$$serializer { *; } # <-- change package name to your app's
+-keepclassmembers class nl.marc_apps.ovgo.** { # <-- change package name to your app's
+    *** Companion;
+}
+-keepclasseswithmembers class nl.marc_apps.ovgo.** { # <-- change package name to your app's
+    kotlinx.serialization.KSerializer serializer(...);
+}
