@@ -1,8 +1,9 @@
 package nl.marc_apps.ovgo.ui.disruptions
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.domain.models.Disruption
@@ -17,17 +18,27 @@ class DisruptionsViewModel(private val dataRepository: PublicTransportDataReposi
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    var languageCode: String = "en"
+    var languageCode: String? = null
         set(value){
             field = value
-            dataRepository.language = value
+            if (value != null) {
+                dataRepository.language = value
+                loadDisruptions()
+            }
         }
 
-    fun loadDisruptions() {
-        viewModelScope.launch {
-            _isLoading.postValue(true)
-            _disruptions.postValue(dataRepository.getDisruptions())
-            _isLoading.postValue(false)
+    private fun loadDisruptions() {
+        if (languageCode != null && disruptions.value.isNullOrEmpty()) {
+            Log.w("APP", "(Re)loading disruptions")
+            viewModelScope.launch {
+                _isLoading.postValue(true)
+                _disruptions.postValue(dataRepository.getDisruptions())
+                _isLoading.postValue(false)
+            }
         }
+    }
+
+    init {
+        loadDisruptions()
     }
 }

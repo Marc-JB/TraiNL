@@ -3,6 +3,7 @@ package nl.marc_apps.ovgo.ui.departures
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import nl.marc_apps.ovgo.domain.models.Departure
+import nl.marc_apps.ovgo.domain.models.TrainStation
 
 interface DeparturesViewModelInf {
     val departures: LiveData<Array<Departure>>

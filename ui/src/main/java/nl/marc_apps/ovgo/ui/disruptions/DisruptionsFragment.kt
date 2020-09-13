@@ -29,7 +29,8 @@ class DisruptionsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.languageCode = resources.getString(R.string.languageCode)
-        viewModel.loadDisruptions()
+        if (viewModel.languageCode == null) {
+            viewModel.languageCode = resources.getString(R.string.languageCode)
+        }
     }
 }

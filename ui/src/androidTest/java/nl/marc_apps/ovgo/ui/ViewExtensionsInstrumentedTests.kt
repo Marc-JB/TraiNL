@@ -3,6 +3,8 @@ package nl.marc_apps.ovgo.ui
 import android.widget.ImageView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import nl.marc_apps.ovgo.ui.extensions.ImageList
+import nl.marc_apps.ovgo.ui.extensions.loadImages
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

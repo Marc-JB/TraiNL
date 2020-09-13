@@ -6,7 +6,7 @@ plugins {
 }
 
 val minSdk = 21
-val targetAndCompileSdk = 29
+val targetAndCompileSdk = 30
 
 data class Version(val major: Int, val minor: Int, val patch: Int = 0) {
     val code = major * 100 + minor * 10 + patch
@@ -42,6 +42,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("String", "NSR_KEYS_TRAVEL_API", project.findProperty("nsr.keys.travelApi") as String? ?: System.getenv("NSR_KEYS_TRAVEL_API"))
+        buildConfigField("String", "NSR_KEYS_APP_API", project.findProperty("nsr.keys.travelApi") as String? ?: System.getenv("NSR_KEYS_APP_API"))
     }
 
     buildFeatures {

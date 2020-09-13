@@ -2,13 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_trips"
-        android:enabled="false"
-        android:icon="@drawable/ic_compass"
-        android:title="@string/trips"
-        android:visible="false" />
-
-    <item
         android:id="@+id/navigation_departures"
         android:icon="@drawable/ic_departure_board"
         android:title="@string/departures" />

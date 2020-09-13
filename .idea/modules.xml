@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Apps-OVgo.iml" filepath="$PROJECT_DIR$/.idea/modules/Apps-OVgo.iml" group="OVgo" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/OVgo.iml" filepath="$PROJECT_DIR$/.idea/modules/OVgo.iml" group="OVgo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api/OVgo-api.iml" filepath="$PROJECT_DIR$/.idea/modules/api/OVgo-api.iml" group="OVgo/api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/OVgo-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/OVgo-app.iml" group="OVgo/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/OVgo-domain.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/OVgo-domain.iml" group="OVgo/domain" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui/OVgo-ui.iml" filepath="$PROJECT_DIR$/.idea/modules/ui/OVgo-ui.iml" group="OVgo/ui" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/api/api.iml" filepath="$PROJECT_DIR$/.idea/modules/api/api.iml" group="OVgo/api" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="OVgo/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/domain.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/domain.iml" group="OVgo/domain" />

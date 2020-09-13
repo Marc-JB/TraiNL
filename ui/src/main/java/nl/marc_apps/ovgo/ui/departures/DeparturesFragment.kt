@@ -30,8 +30,9 @@ class DeparturesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.languageCode = resources.getString(R.string.languageCode)
-        viewModel.load(viewLifecycleOwner)
-        viewModel.station.value = "Dordrecht"
+        if (viewModel.departures.value.isNullOrEmpty()) {
+            viewModel.languageCode = resources.getString(R.string.languageCode)
+            viewModel.station.value = "Dordrecht"
+        }
     }
 }

@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.ui
+package nl.marc_apps.ovgo.ui.extensions
 
 import android.content.Context
 import android.util.AttributeSet
