@@ -5,22 +5,8 @@ plugins {
     kotlin("android")
 }
 
-val minSdk = 21
-val targetAndCompileSdk = 30
-
-data class Version(val major: Int, val minor: Int, val patch: Int = 0) {
-    val code = major * 100 + minor * 10 + patch
-    val name = "$major.$minor.$patch"
-
-    infix fun flavor(code: Int) = this.code * 10 + code
-
-    override fun toString() = name
-}
-
-val appVersion = Version(0, 1)
-
 android {
-    compileSdkVersion(targetAndCompileSdk)
+    compileSdkVersion(Versions.SDK.Android.compile)
 
     packagingOptions {
         exclude("kotlin/**")
@@ -34,11 +20,11 @@ android {
     defaultConfig {
         applicationId = "nl.marc_apps.ovgo"
 
-        minSdkVersion(minSdk)
-        targetSdkVersion(targetAndCompileSdk)
+        minSdkVersion(Versions.SDK.Android.min)
+        targetSdkVersion(Versions.SDK.Android.target)
 
-        versionCode = appVersion.code
-        versionName = appVersion.name
+        versionCode = Versions.app.code
+        versionName = Versions.app.name
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -83,12 +69,12 @@ android {
     productFlavors {
         val minApi21 by creating {
             minSdkVersion(21)
-            versionCode = appVersion flavor 0
+            versionCode = Versions.app flavor 0
         }
 
         val minApi26 by creating {
             minSdkVersion(26)
-            versionCode = appVersion flavor 1
+            versionCode = Versions.app flavor 1
         }
     }
 
@@ -111,8 +97,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = Versions.SDK.jvm
+        targetCompatibility = Versions.SDK.jvm
     }
 }
 
@@ -126,11 +112,10 @@ dependencies {
     implementation(project(":ui"))
 
     // General libraries
-    implementation(kotlin("stdlib-jdk8"))
+    `kotlin-stdlib`
 
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     implementation("org.koin:koin-android:2.0.1")
-    implementation("org.koin:koin-android-scope:2.0.1")
     implementation("org.koin:koin-android-viewmodel:2.0.1")
 }
