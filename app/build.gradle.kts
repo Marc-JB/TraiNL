@@ -47,10 +47,6 @@ android {
         buildConfigField("String", "NSR_KEYS_APP_API", project.findProperty("nsr.keys.travelApi") as String? ?: System.getenv("NSR_KEYS_APP_API"))
     }
 
-    buildFeatures {
-        dataBinding = true
-    }
-
     signingConfigs {
         val release by creating {
             storeFile = file("key.jks")

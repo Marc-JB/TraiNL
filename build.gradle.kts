@@ -10,8 +10,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.0.1")
-        val kotlinVersion = "1.4.0"
+        classpath("com.android.tools.build:gradle:4.0.2")
+        val kotlinVersion = "1.4.10"
         classpath(kotlin("gradle-plugin", version = kotlinVersion))
         classpath(kotlin("serialization", version = kotlinVersion))
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.0")
@@ -29,8 +29,13 @@ allprojects {
 
     tasks {
         withType<KotlinCompile>().configureEach {
+            val jvmVersion = JavaVersion.VERSION_1_8.toString()
+            sourceCompatibility = jvmVersion
+            targetCompatibility = jvmVersion
+
             kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_1_8.toString()
+                useIR = true
+                jvmTarget = jvmVersion
             }
         }
     }

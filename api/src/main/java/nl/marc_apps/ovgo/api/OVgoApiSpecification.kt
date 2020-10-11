@@ -13,11 +13,11 @@ interface OVgoApiSpecification {
     suspend fun getDepartures(
         @Path("id") station: String,
         @Header("accept-language") language: String = "en"
-    ): Response<Array<Departure>>
+    ): Response<Set<Departure>>
 
     @GET("v1/disruptions.json")
     suspend fun getDisruptions(
         @Query("actual") actual: Boolean = true,
         @Header("accept-language") language: String = "en"
-    ): Response<Array<Disruption>>
+    ): Response<Set<Disruption>>
 }

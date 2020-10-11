@@ -5,6 +5,6 @@ import nl.marc_apps.ovgo.domain.models.Disruption
 
 interface PublicTransportDataRepository {
     var language: String
-    suspend fun getDepartures(station: String): Array<Departure>
-    suspend fun getDisruptions(actual: Boolean = true): Array<Disruption>
+    suspend fun getDepartures(station: String): Set<Departure>
+    suspend fun getDisruptions(actual: Boolean = true): Set<Disruption>
 }

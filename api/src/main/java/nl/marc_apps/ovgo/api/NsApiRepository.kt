@@ -6,24 +6,25 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import nl.marc_apps.ovgo.api.models.asStation
+import nl.marc_apps.ovgo.domain.models.TrainStation
 import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepositoryV2
-import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
 class NsApiRepository(var rioApiKey: String) : PublicTransportDataRepositoryV2 {
-    override suspend fun getAllStations() = coroutineScope {
+    override suspend fun getAllStations(): List<TrainStation> {
         val response = withContext(Dispatchers.IO) {
             api.getStations(rioApiKey)
         }
 
-        if(response.isSuccessful) response.body()?.payload?.map { it.asStation() } ?: emptyList()
+        return if(response.isSuccessful) response.body()?.payload?.map { it.asStation() } ?: emptyList()
         else emptyList()
     }
 
     companion object {
-        private val contentType = "application/json".toMediaType()
+        private val contentType = MediaType.get("application/json")
 
         private val httpClient: OkHttpClient = OkHttpClient.Builder()
             .callTimeout(1, TimeUnit.MINUTES)

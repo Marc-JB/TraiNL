@@ -8,37 +8,35 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.domain.models.Disruption
 import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
+import nl.marc_apps.ovgo.domain.services.UserPreferences
 
-class DisruptionsViewModel(private val dataRepository: PublicTransportDataRepository) : ViewModel() {
-    private val _disruptions: MutableLiveData<Array<Disruption>> = MutableLiveData(emptyArray())
-    val disruptions: LiveData<Array<Disruption>>
-        get() = _disruptions
+class DisruptionsViewModel(
+    private val dataRepository: PublicTransportDataRepository,
+    private val userPreferences: UserPreferences
+) : ViewModel() {
+    private val mutableDisruptions = MutableLiveData(emptySet<Disruption>())
 
-    private val _isLoading = MutableLiveData(true)
+    val disruptions: LiveData<Set<Disruption>>
+        get() = mutableDisruptions
+
+    private val mutableIsLoading = MutableLiveData(true)
+
     val isLoading: LiveData<Boolean>
-        get() = _isLoading
-
-    var languageCode: String? = null
-        set(value){
-            field = value
-            if (value != null) {
-                dataRepository.language = value
-                loadDisruptions()
-            }
-        }
+        get() = mutableIsLoading
 
     private fun loadDisruptions() {
-        if (languageCode != null && disruptions.value.isNullOrEmpty()) {
+        if (disruptions.value.isNullOrEmpty()) {
             Log.w("APP", "(Re)loading disruptions")
             viewModelScope.launch {
-                _isLoading.postValue(true)
-                _disruptions.postValue(dataRepository.getDisruptions())
-                _isLoading.postValue(false)
+                mutableIsLoading.postValue(true)
+                mutableDisruptions.postValue(dataRepository.getDisruptions())
+                mutableIsLoading.postValue(false)
             }
         }
     }
 
     init {
+        dataRepository.language = userPreferences.language
         loadDisruptions()
     }
 }

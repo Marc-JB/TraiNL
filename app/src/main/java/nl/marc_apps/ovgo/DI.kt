@@ -4,9 +4,12 @@ import nl.marc_apps.ovgo.api.NsApiRepository
 import nl.marc_apps.ovgo.api.OVgoApiRepository
 import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
 import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepositoryV2
+import nl.marc_apps.ovgo.domain.services.UserPreferences
 import nl.marc_apps.ovgo.ui.MainViewModel
+import nl.marc_apps.ovgo.ui.UserPreferencesProvider
 import nl.marc_apps.ovgo.ui.departures.DeparturesViewModel
 import nl.marc_apps.ovgo.ui.disruptions.DisruptionsViewModel
+import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -15,12 +18,16 @@ val appModule = module {
 
     single<PublicTransportDataRepositoryV2> { NsApiRepository(BuildConfig.NSR_KEYS_TRAVEL_API) }
 
-    viewModel {
-        DeparturesViewModel(get())
+    single<UserPreferences> {
+        UserPreferencesProvider(get())
     }
 
     viewModel {
-        DisruptionsViewModel(get())
+        DeparturesViewModel(get(), get())
+    }
+
+    viewModel {
+        DisruptionsViewModel(get(), get())
     }
 
     viewModel {

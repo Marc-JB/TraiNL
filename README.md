@@ -11,7 +11,7 @@ Experimental public transport Android app that showcases various Android archite
     * Android KTX
     * AppCompat
   * [Architecture](https://developer.android.com/topic/libraries/architecture/)
-    * Data Binding
+    * View Binding
     * Lifecycles
     * LiveData
     * Navigation

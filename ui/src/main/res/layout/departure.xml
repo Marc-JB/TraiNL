@@ -1,243 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="viewModel"
-            type="nl.marc_apps.ovgo.domain.models.Departure" />
-
-    </data>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/departureTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textStyle="bold"
+            tools:text="12:45"
+            tools:textColor="@color/colorOK" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/delay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/colorError"
+            android:textStyle="bold"
+            tools:text="+1"
+            tools:visibility="visible" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="2dp">
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/direction"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.departureTimeText}"
-                android:textColor="@{viewModel.delayed || viewModel.cancelled ? @color/colorError : @color/colorOK}"
+                android:textAppearance="?attr/textAppearanceBody2"
                 android:textStyle="bold"
-                tools:text="12:45"
-                tools:textColor="@color/colorOK" />
+                tools:text="Breda"
+                tools:textColor="@color/colorPrimary" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/routeStations"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.delayText}"
-                android:textColor="@color/colorError"
-                android:textStyle="bold"
-                app:invisibleUnless="@{viewModel.delayed}"
-                tools:text="+1"
+                android:layout_marginTop="2dp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textAppearance="?attr/textAppearanceCaption"
+                tools:text="Via Dordrecht"
                 tools:visibility="visible" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="0dp"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/cancelled"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="4dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextAppearance.MaterialComponents.Body2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.direction.toString()}"
-                    android:textColor="@{viewModel.cancelled ? @color/colorError : @color/colorPrimary}"
-                    android:textStyle="bold"
-                    tools:text="Breda"
-                    tools:textColor="@color/colorPrimary" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextAppearance.MaterialComponents.Caption"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="@{viewModel.routeStationsText}"
-                    app:visibleUnless="@{viewModel.routeStationsText == `` || viewModel.cancelled}"
-                    tools:text="Via Dordrecht"
-                    tools:visibility="visible" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextAppearance.MaterialComponents.Caption"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="@string/cancelled"
-                    android:textColor="@color/colorError"
-                    android:textStyle="bold"
-                    app:goneUnless="@{viewModel.cancelled}"
-                    tools:visibility="visible" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextAppearance.MaterialComponents.Caption"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="4dp"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
-                android:text="@{viewModel.operator + `\n` + viewModel.category}"
-                app:goneUnless="@{viewModel.cancelled}"
-                tools:text="R-net door Qbuzz\nStoptrein" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextAppearance.MaterialComponents.Body2"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="@{viewModel.platformChanged || viewModel.cancelled ? @drawable/platform_background_style_red : @drawable/platform_background_style}"
-                android:elevation="2dp"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="@{viewModel.actualPlatform}"
-                android:textColor="@color/white"
+                android:layout_marginTop="2dp"
+                android:text="@string/cancelled"
+                android:textAppearance="?attr/textAppearanceCaption"
+                android:textColor="@color/colorError"
                 android:textStyle="bold"
-                app:autoSizeMaxTextSize="48sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeStepGranularity="4sp"
-                app:autoSizeTextType="uniform"
-                app:visibleUnless="@{viewModel.cancelled}"
-                tools:background="@drawable/platform_background_style"
-                tools:text="4b" />
+                tools:visibility="visible" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/operator"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="2dp"
-            app:visibleUnless="@{viewModel.cancelled}">
+            android:paddingHorizontal="4dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:textAppearance="?attr/textAppearanceCaption"
+            tools:text="R-net door Qbuzz\nStoptrein" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_marginEnd="2dp"
-                android:tint="@color/colorPrimary"
-                app:goneUnless="@{viewModel.trainComposition.facilities.wheelchairAccessible}"
-                app:srcCompat="@drawable/ic_accessible" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextAppearance.MaterialComponents.Caption"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_marginEnd="2dp"
-                android:gravity="center"
-                android:padding="2dp"
-                android:text="WC"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                app:autoSizeMinTextSize="4sp"
-                app:autoSizeStepGranularity="1sp"
-                app:autoSizeTextType="uniform"
-                app:goneUnless="@{viewModel.trainComposition.facilities.toilet}" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_marginEnd="2dp"
-                android:tint="@color/colorPrimary"
-                app:goneUnless="@{viewModel.trainComposition.facilities.bicycles}"
-                app:srcCompat="@drawable/ic_bike" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_marginEnd="2dp"
-                android:tint="@color/colorPrimary"
-                app:goneUnless="@{viewModel.trainComposition.facilities.wifi}"
-                app:srcCompat="@drawable/ic_wifi" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_marginEnd="2dp"
-                android:tint="@color/colorPrimary"
-                app:goneUnless="@{viewModel.trainComposition.facilities.powerSockets}"
-                app:srcCompat="@drawable/ic_power" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_marginEnd="2dp"
-                android:tint="@color/colorPrimary"
-                app:goneUnless="@{viewModel.trainComposition.facilities.silenceCompartment}"
-                app:srcCompat="@drawable/ic_silence" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextAppearance.MaterialComponents.Caption"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_marginEnd="2dp"
-                android:gravity="center"
-                android:padding="2dp"
-                android:text="1"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                app:autoSizeMinTextSize="4sp"
-                app:autoSizeStepGranularity="1sp"
-                app:autoSizeTextType="uniform"
-                app:goneUnless="@{viewModel.trainComposition.facilities.firstClass}" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextAppearance.MaterialComponents.Caption"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:maxLines="1"
-                android:paddingEnd="4dp"
-                android:singleLine="true"
-                android:text="@{viewModel.operator + ` • ` + viewModel.category}"
-                tools:text="R-net door Qbuzz • Stoptrein" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            app:visibleUnless="@{viewModel.cancelled || viewModel.trainComposition.images[0] == null}">
-
-            <nl.marc_apps.ovgo.ui.extensions.ImageList
-                android:layout_width="wrap_content"
-                android:layout_gravity="end"
-                android:paddingStart="104dp"
-                android:paddingEnd="8dp"
-                android:paddingVertical="2dp"
-                android:layout_height="match_parent"
-                images="@{viewModel.trainComposition.images}"/>
-
-        </HorizontalScrollView>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="#50888888" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/platform"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:autoSizeMaxTextSize="48sp"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeStepGranularity="4sp"
+            app:autoSizeTextType="uniform"
+            tools:background="@drawable/platform_background_style"
+            tools:text="4b" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-</layout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/facilities"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/wheelchairAccessible"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="2dp"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_accessible" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/toilet"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="2dp"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="WC"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            app:autoSizeMinTextSize="4sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/bicycles"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="2dp"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_bike" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/wifi"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="2dp"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_wifi" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/powerSockets"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="2dp"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_power" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/silenceCompartment"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="2dp"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_silence" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/firstClass"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="2dp"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="1"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            app:autoSizeMinTextSize="4sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/operatorAndCategory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical|end"
+            android:maxLines="1"
+            android:paddingEnd="4dp"
+            android:singleLine="true"
+            android:textAppearance="?attr/textAppearanceCaption"
+            tools:text="R-net door Qbuzz • Stoptrein" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <HorizontalScrollView
+        android:id="@+id/trainImagesScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/trainImagesContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:paddingVertical="2dp"
+            android:paddingStart="104dp"
+            android:paddingEnd="8dp" />
+
+    </HorizontalScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#50888888" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

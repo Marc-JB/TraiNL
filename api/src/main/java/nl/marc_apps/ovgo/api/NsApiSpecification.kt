@@ -10,5 +10,5 @@ interface NsApiSpecification {
     @GET("/reisinformatie-api/api/v2/stations")
     suspend fun getStations(
         @Header("Ocp-Apim-Subscription-Key") apiKey: String
-    ): Response<NsResponse<Collection<NsStation>>>
+    ): Response<NsResponse<Set<NsStation>>>
 }
