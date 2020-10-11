@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingVertical="2dp">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -200,24 +201,19 @@
     <HorizontalScrollView
         android:id="@+id/trainImagesScrollView"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:paddingVertical="2dp"
+        android:scrollbarThumbHorizontal="@null"
+        android:scrollbarTrackHorizontal="@null">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/trainImagesContainer"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:paddingVertical="2dp"
             android:paddingStart="104dp"
             android:paddingEnd="8dp" />
 
     </HorizontalScrollView>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#50888888" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
