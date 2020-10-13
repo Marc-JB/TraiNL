@@ -7,14 +7,16 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:titleTextColor="@color/white"
+            app:menu="@menu/departures_menu"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
             tools:title="Dordrecht" />
 
     </com.google.android.material.appbar.AppBarLayout>

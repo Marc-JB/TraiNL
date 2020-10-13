@@ -9,7 +9,6 @@ import nl.marc_apps.ovgo.ui.MainViewModel
 import nl.marc_apps.ovgo.ui.UserPreferencesProvider
 import nl.marc_apps.ovgo.ui.departures.DeparturesViewModel
 import nl.marc_apps.ovgo.ui.disruptions.DisruptionsViewModel
-import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
