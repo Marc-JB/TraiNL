@@ -23,17 +23,21 @@ class DeparturesViewModel(
 
     val station = MutableLiveData(userPreferences.station)
 
+    private var lastStation: String? = null
+
     init {
         dataRepository.language = userPreferences.language
     }
 
     fun loadDepartures() {
-        if(departures.value.isNullOrEmpty() && isLoading.value == false) {
+        val stationToLoad = station.value
+        if(lastStation != stationToLoad && stationToLoad != null && isLoading.value == false) {
             Log.w("APP", "(Re)loading departures")
             mutableIsLoading.postValue(true)
             viewModelScope.launch {
-                val departuresList = dataRepository.getDepartures(station.value!!)
+                val departuresList = dataRepository.getDepartures(stationToLoad)
                 mutableDepartures.postValue(departuresList)
+                lastStation = stationToLoad
                 mutableIsLoading.postValue(false)
             }
         }
