@@ -27,8 +27,6 @@ Experimental public transport Android app that showcases various Android archite
   * Dependency Injection using [Koin](https://insert-koin.io/)
 
 ## Screenshots of the app
-![Trips](/docs/screenshots/trips-1.png?raw=true "Trips")
 ![Departures](/docs/screenshots/departures-1.png?raw=true "Departures")
-![Departures](/docs/screenshots/departures-2.png?raw=true "Departures")
 ![Disruptions](/docs/screenshots/disruptions-1.png?raw=true "Disruptions")
 ![Disruptions](/docs/screenshots/disruptions-2.png?raw=true "Disruptions")
