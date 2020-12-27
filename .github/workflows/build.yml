@@ -34,6 +34,8 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build bundleRelease
         env:
+          NSR_KEYS_TRAVEL_API: ${{ secrets.NSR_KEYS_TRAVEL_API }}
+          NSR_KEYS_APP_API: ${{ secrets.NSR_KEYS_APP_API }}
           ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
