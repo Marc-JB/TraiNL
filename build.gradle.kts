@@ -10,7 +10,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.1.0")
+        classpath("com.android.tools.build:gradle:4.1.1")
         classpath(kotlin("gradle-plugin", version = Versions.Libs.kotlin))
         classpath(kotlin("serialization", version = Versions.Libs.kotlin))
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.0")

@@ -29,8 +29,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
-        buildConfigField("String", "NSR_KEYS_TRAVEL_API", project.findProperty("nsr.keys.travelApi") as String? ?: System.getenv("NSR_KEYS_TRAVEL_API"))
-        buildConfigField("String", "NSR_KEYS_APP_API", project.findProperty("nsr.keys.appApi") as String? ?: System.getenv("NSR_KEYS_APP_API"))
+        buildConfigField("String", "NSR_KEYS_TRAVEL_API", project.findProperty("nsr.keys.travelApi") as? String ?: System.getenv("NSR_KEYS_TRAVEL_API"))
+        buildConfigField("String", "NSR_KEYS_APP_API", project.findProperty("nsr.keys.appApi") as? String ?: System.getenv("NSR_KEYS_APP_API"))
     }
 
     signingConfigs {
