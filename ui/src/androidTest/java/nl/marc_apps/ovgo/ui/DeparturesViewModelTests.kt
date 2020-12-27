@@ -1,17 +1,15 @@
 package nl.marc_apps.ovgo.ui
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.*
 import nl.marc_apps.ovgo.domain.models.Departure
 import nl.marc_apps.ovgo.domain.models.Disruption
 import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
 import nl.marc_apps.ovgo.ui.departures.DeparturesViewModel
-import org.junit.Assert.assertTrue
-import org.junit.Assert.assertFalse
-import org.junit.Test
-import org.junit.runner.RunWith
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
-@RunWith(AndroidJUnit4::class)
 class DeparturesViewModelTests {
     @Test
     fun loadStationUpdatesIsLoadingProperly(){
@@ -19,16 +17,17 @@ class DeparturesViewModelTests {
         val dataRepository = object : PublicTransportDataRepository {
             override var language = "en"
 
-            override suspend fun getDepartures(station: String): Array<Departure> {
-                delay(75)
-                return emptyArray()
+            override suspend fun getDepartures(station: String): Set<Departure> {
+                delay(50)
+                return emptySet()
             }
 
-            override suspend fun getDisruptions(actual: Boolean) = emptyArray<Disruption>()
+            override suspend fun getDisruptions(actual: Boolean) = emptySet<Disruption>()
 
         }
 
-        val viewModel = DeparturesViewModel(dataRepository)
+        val context = InstrumentationRegistry.getInstrumentation().context
+        val viewModel = DeparturesViewModel(dataRepository, UserPreferencesProvider(context))
 
         var isLoadingBefore: Boolean? = null
         var isLoadingAfter: Boolean? = null
@@ -36,7 +35,7 @@ class DeparturesViewModelTests {
         // Act
         runBlocking {
             launch {
-                viewModel.loadStations("Test")
+                viewModel.loadDepartures()
             }
 
             delay(25)

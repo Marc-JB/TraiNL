@@ -1,5 +1,6 @@
 package nl.marc_apps.ovgo.domain.models
 
+import nl.marc_apps.ovgo.domain.utils.format
 import java.text.DateFormat.*
 import java.util.*
 import kotlin.math.roundToInt

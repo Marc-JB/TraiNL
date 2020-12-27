@@ -1,39 +1,45 @@
 package nl.marc_apps.ovgo.ui.departures
 
+import android.util.Log
 import androidx.lifecycle.*
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.domain.models.Departure
 import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
+import nl.marc_apps.ovgo.domain.services.UserPreferences
 
-class DeparturesViewModel(private val dataRepository: PublicTransportDataRepository) : ViewModel(), DeparturesViewModelInf {
-    override val departures: MutableLiveData<Array<Departure>> = MutableLiveData(emptyArray())
+class DeparturesViewModel(
+    private val dataRepository: PublicTransportDataRepository,
+    private val userPreferences: UserPreferences
+) : ViewModel() {
+    private val mutableDepartures = MutableLiveData(emptySet<Departure>())
 
-    override val isLoading = MutableLiveData<Boolean>(true)
+    val departures: LiveData<Set<Departure>>
+        get() = mutableDepartures
 
-    override var languageCode: String = "en"
-        set(value){
-            field = value
-            dataRepository.language = value
-        }
+    private val mutableIsLoading = MutableLiveData(false)
 
-    override val station: MutableLiveData<String> = MutableLiveData()
+    val isLoading: LiveData<Boolean>
+        get() = mutableIsLoading
 
-    fun load(lifecycleOwner: LifecycleOwner) {
-        station.observe(lifecycleOwner) {
-            viewModelScope.launch {
-                loadStations(it)
-            }
-        }
+    val station = MutableLiveData(userPreferences.station)
+
+    private var lastStation: String? = null
+
+    init {
+        dataRepository.language = userPreferences.language
     }
 
-    suspend fun loadStations(stationId: String) = coroutineScope {
-        isLoading.postValue(true)
-        val departuresList = async(coroutineContext) {
-            dataRepository.getDepartures(stationId)
+    fun loadDepartures() {
+        val stationToLoad = station.value
+        if(lastStation != stationToLoad && stationToLoad != null && isLoading.value == false) {
+            Log.w("APP", "(Re)loading departures")
+            mutableIsLoading.postValue(true)
+            viewModelScope.launch {
+                val departuresList = dataRepository.getDepartures(stationToLoad)
+                mutableDepartures.postValue(departuresList)
+                lastStation = stationToLoad
+                mutableIsLoading.postValue(false)
+            }
         }
-        departures.postValue(departuresList.await())
-        isLoading.postValue(false)
     }
 }

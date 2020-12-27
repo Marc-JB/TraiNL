@@ -3,23 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/default_navigation"
-    app:startDestination="@+id/navigation_trips">
+    app:startDestination="@+id/navigation_departures">
 
-    <fragment
-        android:id="@+id/navigation_trips"
-        android:name="nl.marc_apps.ovgo.ui.trips.TripsFragment"
-        android:label="@string/trips"
-        tools:layout="@layout/fragment_trips" />
-
-    <fragment
+    <keep_state_fragment
         android:id="@+id/navigation_departures"
         android:name="nl.marc_apps.ovgo.ui.departures.DeparturesFragment"
         android:label="@string/departures"
-        tools:layout="@layout/fragment_departures" />
+        tools:layout="@layout/fragment_departures">
 
-    <fragment
+        <action
+            android:id="@+id/navigate_to_disruptions"
+            app:destination="@id/navigation_disruptions" />
+
+    </keep_state_fragment>
+
+    <keep_state_fragment
         android:id="@+id/navigation_disruptions"
         android:name="nl.marc_apps.ovgo.ui.disruptions.DisruptionsFragment"
         android:label="@string/disruptions"
-        tools:layout="@layout/fragment_disruptions" />
+        tools:layout="@layout/fragment_disruptions">
+
+        <action
+            android:id="@+id/navigate_to_departures"
+            app:destination="@id/navigation_departures" />
+
+    </keep_state_fragment>
 </navigation>

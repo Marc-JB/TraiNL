@@ -1,5 +1,6 @@
 package nl.marc_apps.ovgo.ui
 
+import nl.marc_apps.ovgo.ui.extensions.takeFirstOrNull
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

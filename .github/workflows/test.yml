@@ -35,3 +35,6 @@ jobs:
       # Build & test
       - name: Build & test with Gradle
         run: ./gradlew test
+        env:
+          NSR_KEYS_TRAVEL_API: ${{ secrets.NSR_KEYS_TRAVEL_API }}
+          NSR_KEYS_APP_API: ${{ secrets.NSR_KEYS_APP_API }}

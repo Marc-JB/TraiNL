@@ -1,6 +1,7 @@
 plugins {
     id("java-library")
     kotlin("jvm")
+    kotlin("plugin.serialization")
 }
 
 dependencies {
@@ -8,5 +9,6 @@ dependencies {
     implementation(fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
 
     // Other
-    implementation(kotlin("stdlib-jdk8"))
+    `kotlin-stdlib`
+    `kotlin-json-serialization`
 }

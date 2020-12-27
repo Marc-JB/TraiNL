@@ -1,6 +1,7 @@
 plugins {
     id("java-library")
     kotlin("jvm")
+    kotlin("plugin.serialization")
 }
 
 dependencies {
@@ -11,11 +12,12 @@ dependencies {
     implementation(project(":domain"))
 
     // Other
-    implementation(kotlin("stdlib-jdk8"))
+    `kotlin-stdlib`
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
+    `kotlin-coroutines`
+    `kotlin-json-serialization`
 
-    implementation("com.squareup.okhttp3:okhttp:4.8.1")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
 }

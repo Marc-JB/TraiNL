@@ -1,5 +1,4 @@
 <resources>
-    <string name="trips">Trips</string>
     <string name="disruptions">Disruptions</string>
     <string name="departures">Departures</string>
     <string name="languageCode">en</string>
@@ -7,4 +6,5 @@
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="plan_trip">Plan trip</string>
+    <string name="change_station">Change station</string>
 </resources>

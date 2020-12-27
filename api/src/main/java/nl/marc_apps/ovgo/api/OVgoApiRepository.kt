@@ -1,8 +1,9 @@
 package nl.marc_apps.ovgo.api
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
+import nl.marc_apps.ovgo.domain.models.Departure
+import nl.marc_apps.ovgo.domain.models.Disruption
 import nl.marc_apps.ovgo.domain.services.PublicTransportDataRepository
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -10,15 +11,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class OVgoApiRepository(override var language: String = "en") : PublicTransportDataRepository {
-    override suspend fun getDepartures(station: String) = coroutineScope {
-        withContext(coroutineContext + Dispatchers.IO) {
-            api.getDepartures(station, language).body() ?: emptyArray()
+    override suspend fun getDepartures(station: String): Set<Departure> {
+        return withContext(Dispatchers.IO) {
+            api.getDepartures(station, language).body() ?: emptySet()
         }
     }
 
-    override suspend fun getDisruptions(actual: Boolean) = coroutineScope {
-        withContext(coroutineContext + Dispatchers.IO) {
-            api.getDisruptions(actual, language).body() ?: emptyArray()
+    override suspend fun getDisruptions(actual: Boolean): Set<Disruption> {
+        return withContext(Dispatchers.IO) {
+            api.getDisruptions(actual, language).body() ?: emptySet()
         }
     }
 
@@ -35,6 +36,6 @@ class OVgoApiRepository(override var language: String = "en") : PublicTransportD
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient)
             .build()
-            .create<OVgoApiSpecification>(OVgoApiSpecification::class.java)
+            .create(OVgoApiSpecification::class.java)
     }
 }
