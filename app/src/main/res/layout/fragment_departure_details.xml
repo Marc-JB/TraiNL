@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="8dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_departure_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textAppearance="@style/TextAppearance.OVgo.Departure.Time"
+        app:layout_constraintBottom_toBottomOf="@id/label_platform"
+        app:layout_constraintEnd_toStartOf="@+id/label_direction"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/label_platform"
+        tools:text="12:45" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_direction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.OVgo.Departure.Destination"
+        app:layout_constraintBottom_toBottomOf="@id/label_platform"
+        app:layout_constraintEnd_toStartOf="@+id/label_platform"
+        app:layout_constraintStart_toEndOf="@+id/label_departure_time"
+        app:layout_constraintTop_toTopOf="@id/label_platform"
+        tools:text="Breda" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_platform"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:elevation="2dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textAppearance="@style/TextAppearance.OVgo.Departure.Platform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/label_direction"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:background="@drawable/platform_background_style"
+        tools:text="4b" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="label_direction,label_platform" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_upcoming_stations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.OVgo.Departure.RouteStations.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier_header"
+        tools:layout_constraintBottom_toTopOf="@+id/label_cancelled"
+        tools:text="Via Dordrecht"
+        tools:visibility="visible" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_cancelled"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/departure_cancelled"
+        android:textAppearance="@style/TextAppearance.OVgo.Departure.Cancelled"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_upcoming_stations"
+        tools:layout_constraintTop_toBottomOf="@+id/label_upcoming_stations"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_main_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="label_direction,label_upcoming_stations,label_cancelled,label_platform" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_facilities"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="12dp" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_wheelchair_accessible"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:tint="@color/colorPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/icon_toilet"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/guideline_facilities"
+        app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
+        app:srcCompat="@drawable/ic_accessible" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_toilet"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:tint="@color/colorPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/icon_bicycles"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_wheelchair_accessible"
+        app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
+        app:srcCompat="@drawable/ic_toilet" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_bicycles"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:tint="@color/colorPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/icon_wifi"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_toilet"
+        app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
+        app:srcCompat="@drawable/ic_bike" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_wifi"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:tint="@color/colorPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/icon_power_sockets"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_bicycles"
+        app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
+        app:srcCompat="@drawable/ic_wifi" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_power_sockets"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:tint="@color/colorPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/icon_silence_compartment"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_wifi"
+        app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
+        app:srcCompat="@drawable/ic_power" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_silence_compartment"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:tint="@color/colorPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/label_first_class"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_power_sockets"
+        app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
+        app:srcCompat="@drawable/ic_silence" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_first_class"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="1"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:autoSizeMinTextSize="4sp"
+        app:autoSizeStepGranularity="1sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_silence_compartment"
+        app:layout_constraintTop_toBottomOf="@id/barrier_main_info" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_facilities"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="icon_wheelchair_accessible,icon_toilet,icon_bicycles,icon_wifi,icon_power_sockets,icon_silence_compartment,label_first_class" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_operator_and_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.OVgo.Departure.OperatorAndCategory.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier_facilities"
+        tools:text="R-net door Qbuzz • Stoptrein" />
+
+    <HorizontalScrollView
+        android:id="@+id/holder_train_images_scrollable"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/train_image_height"
+        android:layout_marginTop="8dp"
+        android:paddingVertical="2dp"
+        android:scrollbarThumbHorizontal="@null"
+        android:scrollbarTrackHorizontal="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_operator_and_type">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/holder_train_images"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:paddingStart="32dp"
+            android:paddingEnd="8dp" />
+
+    </HorizontalScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

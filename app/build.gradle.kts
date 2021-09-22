@@ -1,80 +1,92 @@
-@file:Suppress("UNUSED_VARIABLE")
+import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
     id("com.android.application")
     kotlin("android")
+
+    // TODO: Migrate from KAPT to KSP
+    kotlin("kapt")
+    // id("com.google.devtools.ksp")
+
+    // Firebase crashlytics
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+
+    // Testing
+    id("de.mannodermaus.android-junit5")
+
+    // Navigation
+    id("androidx.navigation.safeargs.kotlin")
+
+    // API
+    kotlin("plugin.serialization")
+}
+
+fun getLocalProperties(): Properties {
+    return Properties().also { properties ->
+        file("../local.properties").inputStream().use {
+            properties.load(it)
+        }
+    }
 }
 
 android {
-    compileSdkVersion(Versions.SDK.Android.compile)
+    compileSdk = 30
+    buildToolsVersion = "31.0.0"
 
     packagingOptions {
-        exclude("kotlin/**")
-        exclude("**/*.kotlin_metadata")
-        exclude("DebugProbesKt.bin")
-        exclude("META-INF/*.kotlin_module")
-        exclude("META-INF/*.version")
-        exclude("build-data.properties")
+        resources {
+            excludes += "kotlin/**"
+            excludes += "**/*.kotlin_metadata"
+            excludes += "DebugProbesKt.bin"
+            excludes += "META-INF/*.kotlin_module"
+            excludes += "META-INF/*.version"
+            excludes += "build-data.properties"
+        }
     }
+
+    val keys = getLocalProperties()
 
     defaultConfig {
         applicationId = "nl.marc_apps.ovgo"
-
-        minSdkVersion(Versions.SDK.Android.min)
-        targetSdkVersion(Versions.SDK.Android.target)
-
-        versionCode = Versions.app.code
-        versionName = Versions.app.name
+        minSdk = 26
+        targetSdk = 30
+        versionCode = 1
+        versionName = "0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+        testInstrumentationRunnerArguments["runnerBuilder"] = "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
-        buildConfigField("String", "NSR_KEYS_TRAVEL_API", project.findProperty("nsr.keys.travelApi") as? String ?: System.getenv("NSR_KEYS_TRAVEL_API"))
-        buildConfigField("String", "NSR_KEYS_APP_API", project.findProperty("nsr.keys.appApi") as? String ?: System.getenv("NSR_KEYS_APP_API"))
+        buildConfigField("String", "DUTCH_RAILWAYS_TRAVEL_INFO_API_KEY", "\"${keys.getProperty("dutchRailways.travelInfoApi.key")}\"")
     }
 
     signingConfigs {
-        val release by creating {
+        create("release") {
             storeFile = file("key.jks")
-            storePassword = project.findProperty("android.store.password") as? String ?: System.getenv("ANDROID_STORE_PASSWORD")
-            keyAlias = project.findProperty("android.key.alias") as? String ?: System.getenv("ANDROID_KEY_ALIAS")
-            keyPassword = project.findProperty("android.key.password") as? String ?: System.getenv("ANDROID_KEY_PASSWORD")
+            storePassword = keys.getProperty("android.store.password") ?: System.getenv("ANDROID_STORE_PASSWORD")
+            keyAlias = keys.getProperty("android.key.alias") ?: System.getenv("ANDROID_KEY_ALIAS")
+            keyPassword = keys.getProperty("android.key.password") ?: System.getenv("ANDROID_KEY_PASSWORD")
+        }
+    }
+
+    applicationVariants.all {
+        val variantName = name
+        sourceSets {
+            getByName("main") {
+                java.srcDir(File("build/generated/ksp/$variantName/kotlin"))
+            }
         }
     }
 
     buildTypes {
-        val release by getting {
+        getByName("release") {
             signingConfig = signingConfigs.getByName("release")
 
-            isMinifyEnabled = true
-            isZipAlignEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
+            isShrinkResources = false
             isCrunchPngs = true
 
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-
-        val debug by getting {
-            applicationIdSuffix = ".debug"
-
-            isMinifyEnabled = false
-            isZipAlignEnabled = true
-            isShrinkResources = false
-            isCrunchPngs = true
-        }
-    }
-
-    flavorDimensions("api")
-
-    productFlavors {
-        val minApi21 by creating {
-            minSdkVersion(21)
-            versionCode = Versions.app flavor 0
-        }
-
-        val minApi26 by creating {
-            minSdkVersion(26)
-            versionCode = Versions.app flavor 1
         }
     }
 
@@ -97,25 +109,69 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = Versions.SDK.jvm
-        targetCompatibility = Versions.SDK.jvm
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildFeatures {
+        viewBinding = true
+        // compose = true
     }
 }
 
 dependencies {
-    // File tree libraries
-    implementation(fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
+    // Firebase crashlytics
+    implementation(platform("com.google.firebase:firebase-bom:26.8.0"))
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
 
-    // Modules
-    implementation(project(":domain"))
-    implementation(project(":api"))
-    implementation(project(":ui"))
+    // Navigation
+    val androidxNavigationVersion = rootProject.extra["androidxNavigationVersion"]
+    implementation("androidx.navigation:navigation-fragment-ktx:${androidxNavigationVersion}")
+    implementation("androidx.navigation:navigation-ui-ktx:$androidxNavigationVersion")
 
-    // General libraries
-    `kotlin-stdlib`
+    // API
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
 
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    // Database
+    val roomVersion = "2.3.0"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    // TODO: Migrate from KAPT to KSP
+    kapt("androidx.room:room-compiler:$roomVersion")
 
-    implementation("org.koin:koin-android:2.0.1")
-    implementation("org.koin:koin-android-viewmodel:2.0.1")
+    // Dependency Injection
+    val koinVersion = "3.1.2"
+    implementation("io.insert-koin:koin-android:$koinVersion")
+    testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
+    androidTestImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
+
+    // Backward compatibility & utilities
+    implementation("androidx.core:core-ktx:1.6.0")
+    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("androidx.fragment:fragment-ktx:1.3.6")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("io.coil-kt:coil:1.3.2")
+
+    // Design
+    implementation("com.google.android.material:material:1.4.0")
+
+    // Test base
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.0")
+    testImplementation(kotlin("test-junit5"))
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.0")
+
+    // Android test base
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.test:runner:1.4.0")
+    androidTestImplementation("org.junit.jupiter:junit-jupiter-api:5.8.0")
+    androidTestImplementation(kotlin("test-junit5"))
+    androidTestImplementation("de.mannodermaus.junit5:android-test-core:1.3.0")
+    androidTestRuntimeOnly("de.mannodermaus.junit5:android-test-runner:1.3.0")
 }

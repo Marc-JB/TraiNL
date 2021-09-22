@@ -1,0 +1,15 @@
+{
+    "data": [
+        {
+            "direction": "Breda",
+            "upcoming_stations": "Via Lage Zwaluwe",
+            "operator_and_type": "NS • Sprinter",
+            "image": "@sample/sng_4"
+        }, {
+            "direction": "Geldermalsen",
+            "upcoming_stations": "Via Gorinchem",
+            "operator_and_type": "R-net door Qbuzz • Stoptrein",
+            "image": "@sample/gtw_qbuzz_28"
+        }
+    ]
+}
