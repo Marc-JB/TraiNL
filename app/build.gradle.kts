@@ -146,6 +146,9 @@ dependencies {
     // TODO: Migrate from KAPT to KSP
     kapt("androidx.room:room-compiler:$roomVersion")
 
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
     // Dependency Injection
     val koinVersion = "3.1.2"
     implementation("io.insert-koin:koin-android:$koinVersion")

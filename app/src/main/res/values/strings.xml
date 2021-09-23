@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OVgo</string>
+    <string name="app_name">TraiNL</string>
     <string name="departure_cancelled">Cancelled</string>
     <string name="departure_operator_and_type_single_line">%1$s • %2$s</string>
     <string name="departure_operator_and_type_multi_line">%1$s\n%2$s</string>

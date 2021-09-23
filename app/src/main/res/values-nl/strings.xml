@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OVgo</string>
     <string name="departure_cancelled">Rijdt niet</string>
     <string name="departure_operator_and_type_single_line">%1$s • %2$s</string>
     <string name="departure_operator_and_type_multi_line">%1$s\n%2$s</string>
@@ -13,4 +12,5 @@
     <string name="departure_board">Vertrekbord</string>
     <string name="departure_via_stations">Via %1$s</string>
     <string name="dutch_railways_api_language_code">nl</string>
+    <string name="app_name">TreiNL</string>
 </resources>

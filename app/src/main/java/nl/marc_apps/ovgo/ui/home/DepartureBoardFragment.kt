@@ -1,7 +1,6 @@
 package nl.marc_apps.ovgo.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,8 +31,8 @@ class DepartureBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.currentStationName.observe(viewLifecycleOwner) {
-            binding.labelStation.text = it
+        viewModel.currentStation.observe(viewLifecycleOwner) {
+            binding.labelStation.text = it.name
         }
 
         binding.actionChangeStation.setOnClickListener {
@@ -64,11 +63,7 @@ class DepartureBoardFragment : Fragment() {
         if (station != null) {
             viewModel.loadDepartures(station)
         } else {
-            viewModel.loadDepartures(DEFAULT_STATION_NAME)
+            viewModel.loadDeparturesForLastKnownStation()
         }
-    }
-
-    companion object {
-        private const val DEFAULT_STATION_NAME = "Dordrecht"
     }
 }
