@@ -49,6 +49,11 @@ class SearchStationFragment : Fragment() {
 
         viewModel.stationSuggestions.observe(viewLifecycleOwner) {
             stationSuggestionsAdapter.submitList(it.toList())
+            binding.listStationSuggestions.layoutManager?.scrollToPosition(FIRST_ELEMENT_IN_LIST_POSITION)
         }
+    }
+
+    companion object {
+        private const val FIRST_ELEMENT_IN_LIST_POSITION = 0
     }
 }
