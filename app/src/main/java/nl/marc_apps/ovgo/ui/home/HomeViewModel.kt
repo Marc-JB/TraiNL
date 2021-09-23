@@ -85,17 +85,16 @@ class HomeViewModel(
         viewModelScope.launch {
             val departuresResult = dutchRailwaysApi.getDeparturesForStation(station.uicCode)
             if (departuresResult is ApiResult.Success) {
-                val map = mutableSetOf<Pair<DutchRailwaysDeparture, DutchRailwaysTrainInfo?>>()
-                delay(100)
                 val trainInfoResult = dutchRailwaysApi.getTrainInfo(departuresResult.body.map { it.product.number.toInt() }.toSet())
                 if (trainInfoResult is ApiResult.Success) {
-                    for (item in departuresResult.body) {
-                        val journeyId = item.product.number.toInt()
-                        map += item to if (!item.cancelled) {
-                            trainInfoResult.body.firstOrNull { it.journeyNumber == journeyId }
+                    val associatedDepartures = departuresResult.body.associateWith { departure ->
+                        if (!departure.cancelled) {
+                            trainInfoResult.body.firstOrNull {
+                                it.journeyNumber == departure.product.number.toInt()
+                            }
                         } else null
                     }
-                    mutableDepartures.postValue(map)
+                    mutableDepartures.postValue(associatedDepartures.entries.map { it.key to it.value }.toSet())
                 } else if (trainInfoResult is ApiResult.Failure) {
                     Firebase.crashlytics.recordException(trainInfoResult.apiError.error)
                     trainInfoResult.apiError.error.printStackTrace()
