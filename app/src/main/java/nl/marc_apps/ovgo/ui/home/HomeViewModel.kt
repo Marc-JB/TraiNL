@@ -18,6 +18,7 @@ import nl.marc_apps.ovgo.data.TrainStationRepository
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
+import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption.DisruptionType
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysTrainInfo
 import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.utils.ApiResult
@@ -85,25 +86,20 @@ class HomeViewModel(
             val departuresResult = dutchRailwaysApi.getDeparturesForStation(station.uicCode)
             if (departuresResult is ApiResult.Success) {
                 val map = mutableSetOf<Pair<DutchRailwaysDeparture, DutchRailwaysTrainInfo?>>()
-                for (item in departuresResult.body.take(12)) {
-                    if (item.cancelled) {
-                        map += item to null
-                    } else {
-                        delay(100)
-                        val trainInfoResult = dutchRailwaysApi.getTrainInfo(item.product.number.toInt())
-
-                        if (trainInfoResult is ApiResult.Success) {
-                            map += item to trainInfoResult.body
-                        } else if (trainInfoResult is ApiResult.Failure) {
-                            trainInfoResult.apiError.error.printStackTrace()
-                        }
-
-                        trainInfoResult.bodyOrNull?.let {
-                            map += item to it
-                        }
+                delay(100)
+                val trainInfoResult = dutchRailwaysApi.getTrainInfo(departuresResult.body.map { it.product.number.toInt() }.toSet())
+                if (trainInfoResult is ApiResult.Success) {
+                    for (item in departuresResult.body) {
+                        val journeyId = item.product.number.toInt()
+                        map += item to if (!item.cancelled) {
+                            trainInfoResult.body.firstOrNull { it.journeyNumber == journeyId }
+                        } else null
                     }
+                    mutableDepartures.postValue(map)
+                } else if (trainInfoResult is ApiResult.Failure) {
+                    Firebase.crashlytics.recordException(trainInfoResult.apiError.error)
+                    trainInfoResult.apiError.error.printStackTrace()
                 }
-                mutableDepartures.postValue(map)
             } else if (departuresResult is ApiResult.Failure) {
                 Firebase.crashlytics.recordException(departuresResult.apiError.error)
                 departuresResult.apiError.error.printStackTrace()
@@ -111,28 +107,47 @@ class HomeViewModel(
         }
     }
 
-    fun loadDisruptionsAndMaintenance(allowReload: Boolean = false) {
-        if (!allowReload && (!mutableDisruptions.value.isNullOrEmpty() || !mutableMaintenanceList.value.isNullOrEmpty())) {
+    fun loadMaintenance(allowReload: Boolean = false) {
+        if (!allowReload && !mutableMaintenanceList.value.isNullOrEmpty()) {
             return
         }
 
-        mutableDisruptions.postValue(null)
         mutableMaintenanceList.postValue(null)
 
         viewModelScope.launch {
-            val disruptionResult = dutchRailwaysApi.getDisruptions(isActive = true)
+            val disruptionResult = dutchRailwaysApi.getDisruptions(
+                isActive = true,
+                type = setOf(DisruptionType.MAINTENANCE)
+            )
 
             if(disruptionResult is ApiResult.Success) {
                 val disruptions = disruptionResult.body
                 val disruptionOrMaintenanceList = disruptions.filterIsInstance<DutchRailwaysDisruption.DisruptionOrMaintenance>()
+                mutableMaintenanceList.postValue(disruptionOrMaintenanceList.toSet())
+            } else if (disruptionResult is ApiResult.Failure) {
+                Firebase.crashlytics.recordException(disruptionResult.apiError.error)
+                disruptionResult.apiError.error.printStackTrace()
+            }
+        }
+    }
 
-                mutableDisruptions.postValue(disruptionOrMaintenanceList.filter {
-                    it.type == DutchRailwaysDisruption.DisruptionType.DISRUPTION
-                }.toSet())
+    fun loadDisruptions(allowReload: Boolean = false) {
+        if (!allowReload && !mutableDisruptions.value.isNullOrEmpty()) {
+            return
+        }
 
-                mutableMaintenanceList.postValue(disruptionOrMaintenanceList.filter {
-                    it.type == DutchRailwaysDisruption.DisruptionType.MAINTENANCE
-                }.toSet())
+        mutableDisruptions.postValue(null)
+
+        viewModelScope.launch {
+            val disruptionResult = dutchRailwaysApi.getDisruptions(
+                isActive = true,
+                type = setOf(DisruptionType.CALAMITY, DisruptionType.DISRUPTION)
+            )
+
+            if(disruptionResult is ApiResult.Success) {
+                val disruptions = disruptionResult.body
+                val disruptionOrMaintenanceList = disruptions.filterIsInstance<DutchRailwaysDisruption.DisruptionOrMaintenance>()
+                mutableDisruptions.postValue(disruptionOrMaintenanceList.toSet())
             } else if (disruptionResult is ApiResult.Failure) {
                 Firebase.crashlytics.recordException(disruptionResult.apiError.error)
                 disruptionResult.apiError.error.printStackTrace()

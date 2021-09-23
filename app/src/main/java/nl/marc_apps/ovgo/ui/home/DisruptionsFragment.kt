@@ -44,6 +44,6 @@ class DisruptionsFragment : Fragment() {
             }
         }
 
-        viewModel.loadDisruptionsAndMaintenance()
+        viewModel.loadDisruptions()
     }
 }

@@ -44,6 +44,6 @@ class MaintenanceFragment : Fragment() {
             }
         }
 
-        viewModel.loadDisruptionsAndMaintenance()
+        viewModel.loadMaintenance()
     }
 }

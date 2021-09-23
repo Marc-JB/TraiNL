@@ -21,7 +21,7 @@ interface DutchRailwaysTrainInfoApi {
         @Query("ids") ids: String,
         @Query("features") features: String? = null,
         @Query("all") informationAboutAllStations: Boolean? = null
-    ): Call<DutchRailwaysTrainInfo>
+    ): Call<Set<DutchRailwaysTrainInfo>>
 
     companion object {
         const val BASE_URL = "https://gateway.apiportal.ns.nl/virtual-train-api/api/"

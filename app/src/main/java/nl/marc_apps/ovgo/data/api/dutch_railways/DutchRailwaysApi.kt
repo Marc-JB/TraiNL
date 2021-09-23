@@ -31,11 +31,11 @@ class DutchRailwaysApi(
         type: Set<DutchRailwaysDisruption.DisruptionType>? = null,
         isActive: Boolean? = null
     ): ApiResult<Set<DutchRailwaysDisruption>> {
-        // TODO: Add implementation for the type parameter
         return travelInfoApi.getDisruptions(
             dutchRailwaysTravelInfoApiKey,
             language = language,
-            isActive = isActive
+            isActive = isActive,
+            type = type?.joinToString(separator = ",") { it.name }
         ).awaitResult()
     }
 
@@ -64,6 +64,13 @@ class DutchRailwaysApi(
         return trainInfoApi.getTrainInfo(
             dutchRailwaysTravelInfoApiKey,
             journeyNumber = journeyNumber
+        ).awaitResult()
+    }
+
+    suspend fun getTrainInfo(journeys: Set<Int>): ApiResult<Set<DutchRailwaysTrainInfo>> {
+        return trainInfoApi.getTrainInfo(
+            dutchRailwaysTravelInfoApiKey,
+            ids = journeys.joinToString(separator = ",")
         ).awaitResult()
     }
 }
