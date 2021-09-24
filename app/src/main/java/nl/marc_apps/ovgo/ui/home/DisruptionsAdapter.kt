@@ -2,13 +2,10 @@ package nl.marc_apps.ovgo.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
-import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysTrainInfo
 import nl.marc_apps.ovgo.databinding.ListItemDisruptionBinding
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat

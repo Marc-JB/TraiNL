@@ -2,19 +2,17 @@ package nl.marc_apps.ovgo
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
-import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import nl.marc_apps.ovgo.data.TrainStationRepository
 import nl.marc_apps.ovgo.data.api.HttpClient
 import nl.marc_apps.ovgo.data.api.HttpClientImpl
-import nl.marc_apps.ovgo.ui.home.HomeViewModel
-import nl.marc_apps.ovgo.ui.search_station.SearchStationViewModel
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.db.AppDatabase
-import nl.marc_apps.ovgo.data.TrainStationRepository
 import nl.marc_apps.ovgo.search.JaroWinklerStringSimilarity
 import nl.marc_apps.ovgo.search.StringSimilarity
+import nl.marc_apps.ovgo.ui.home.HomeViewModel
+import nl.marc_apps.ovgo.ui.search_station.SearchStationViewModel
 import nl.marc_apps.ovgo.utils.buildRoomDatabase
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module

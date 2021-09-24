@@ -1,11 +1,10 @@
-package nl.marc_apps.ovgo.ui
+package nl.marc_apps.ovgo.ui.home
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IntDef
 import androidx.core.content.ContextCompat
-import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -17,7 +16,6 @@ import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysTrainInfo
 import nl.marc_apps.ovgo.databinding.ListItemDepartureBinding
 import nl.marc_apps.ovgo.databinding.ListItemDepartureCancelledBinding
 import nl.marc_apps.ovgo.databinding.PartialTrainImageBinding
-import nl.marc_apps.ovgo.ui.home.DepartureBoardFragmentDirections
 
 class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, DutchRailwaysTrainInfo?>, DeparturesAdapter.DepartureViewHolder>(DiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, @Type viewType: Int): DepartureViewHolder {

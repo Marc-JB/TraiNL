@@ -9,9 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import coil.load
 import nl.marc_apps.ovgo.R
+import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
+import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysTrainInfo
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysTrainInfo.TrainPart.Facility.*
 import nl.marc_apps.ovgo.databinding.FragmentDepartureDetailsBinding
 import nl.marc_apps.ovgo.databinding.PartialTrainImageBinding
+import nl.marc_apps.ovgo.domain.TrainInfo
 
 class DepartureDetailsFragment : Fragment() {
     private lateinit var binding: FragmentDepartureDetailsBinding
@@ -73,6 +76,14 @@ class DepartureDetailsFragment : Fragment() {
         binding.labelPlatform.text = departure.actualTrack
         binding.labelPlatform.visibility = if(departure.cancelled) View.GONE else View.VISIBLE
 
+        loadFacilities(departure, trainInfo)
+
+        binding.labelOperatorAndType.text = getString(R.string.departure_operator_and_type_single_line, departure.product.correctedOperatorName, departure.product.longCategoryName)
+
+        loadTrainImages(departure, trainInfo)
+    }
+
+    private fun loadFacilities(departure: DutchRailwaysDeparture, trainInfo: DutchRailwaysTrainInfo) {
         binding.iconWheelchairAccessible.visibility =
             if(!departure.cancelled && trainInfo.actualTrainParts.any { WHEELCHAIR_ACCESSIBLE in it.facilities }) View.VISIBLE
             else View.GONE
@@ -100,9 +111,9 @@ class DepartureDetailsFragment : Fragment() {
         binding.labelFirstClass.visibility =
             if(!departure.cancelled && trainInfo.seatCountFirstClass > 0) View.VISIBLE
             else View.GONE
+    }
 
-        binding.labelOperatorAndType.text = getString(R.string.departure_operator_and_type_single_line, departure.product.correctedOperatorName, departure.product.longCategoryName)
-
+    private fun loadTrainImages(departure: DutchRailwaysDeparture, trainInfo: DutchRailwaysTrainInfo) {
         binding.holderTrainImagesScrollable.visibility =
             if(departure.cancelled || trainInfo.actualTrainParts.firstOrNull()?.imageUrl == null) View.GONE
             else View.VISIBLE

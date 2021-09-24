@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import nl.marc_apps.ovgo.databinding.FragmentDepartureBoardBinding
-import nl.marc_apps.ovgo.ui.DeparturesAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DepartureBoardFragment : Fragment() {
