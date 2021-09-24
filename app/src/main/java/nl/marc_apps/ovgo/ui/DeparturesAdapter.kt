@@ -60,11 +60,13 @@ class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, DutchRailways
         val binding = holder.binding
         val context = binding.root.context
 
-        binding.labelDepartureTime.text = if(departure.isDelayed) {
+        val departureTimeWithDelayText = if(departure.isDelayed) {
             context.getString(R.string.departure_time_delayed, departure.departureTimeText, departure.delayInMinutesRounded)
         } else {
             departure.departureTimeText
         }
+        binding.labelDepartureTime.text = departureTimeWithDelayText
+        binding.labelDepartureTimeAlignment.text = departureTimeWithDelayText
 
         binding.labelDepartureTime.setTextColor(
             ContextCompat.getColor(
