@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.konan.properties.Properties
+import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 
 plugins {
     id("com.android.application")
@@ -47,6 +48,10 @@ android {
 
     val keys = getLocalProperties()
 
+    fun getProperty(key: String): String {
+        return keys.getProperty(key) ?: System.getenv(key.toUpperCaseAsciiOnly().replace(".", "_"))
+    }
+
     defaultConfig {
         applicationId = "nl.marc_apps.ovgo"
         minSdk = 26
@@ -57,15 +62,15 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["runnerBuilder"] = "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
-        buildConfigField("String", "DUTCH_RAILWAYS_TRAVEL_INFO_API_KEY", "\"${keys.getProperty("dutchRailways.travelInfoApi.key")}\"")
+        buildConfigField("String", "DUTCH_RAILWAYS_TRAVEL_INFO_API_KEY", "\"${getProperty("dutchRailways.travelInfoApi.key")}\"")
     }
 
     signingConfigs {
         create("release") {
             storeFile = file("key.jks")
-            storePassword = keys.getProperty("android.store.password") ?: System.getenv("ANDROID_STORE_PASSWORD")
-            keyAlias = keys.getProperty("android.key.alias") ?: System.getenv("ANDROID_KEY_ALIAS")
-            keyPassword = keys.getProperty("android.key.password") ?: System.getenv("ANDROID_KEY_PASSWORD")
+            storePassword = getProperty("android.store.password")
+            keyAlias = getProperty("android.key.alias")
+            keyPassword = getProperty("android.key.password")
         }
     }
 
@@ -152,8 +157,8 @@ dependencies {
     // Dependency Injection
     val koinVersion = "3.1.2"
     implementation("io.insert-koin:koin-android:$koinVersion")
-    testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
-    androidTestImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
+    // testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
+    // androidTestImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
 
     // Backward compatibility & utilities
     implementation("androidx.core:core-ktx:1.6.0")
