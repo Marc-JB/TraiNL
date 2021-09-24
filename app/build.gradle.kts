@@ -50,7 +50,7 @@ android {
 
     val keys = getLocalProperties()
 
-    fun getProperty(key: String): String {
+    fun getProperty(key: String): String? {
         return keys.getProperty(key) ?: System.getenv(key.toUpperCaseAsciiOnly().replace(".", "_"))
     }
 
@@ -58,8 +58,8 @@ android {
         applicationId = "nl.marc_apps.ovgo"
         minSdk = 26
         targetSdk = 30
-        versionCode = 1
-        versionName = "0.1"
+        versionCode = getProperty("version.code")?.toInt() ?: 1
+        versionName = getProperty("version.name") ?: "0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["runnerBuilder"] = "de.mannodermaus.junit5.AndroidJUnit5Builder"
