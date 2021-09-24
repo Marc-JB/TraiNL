@@ -14,28 +14,11 @@ import java.util.*
 object DateSerializer : KSerializer<Date> {
     private const val UTC_TIMEZONE_ID = "UTC"
 
-    private const val JSON_DATE_AND_TIME_PATTERN_UTC = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-
-    private const val JSON_DATE_AND_TIME_PATTERN_LOCAL = "yyyy-MM-dd'T'HH:mm:ssZ"
-
-    private const val JSON_DATE_AND_TIME_PATTERN_UTC_PRECISE = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-
-    private const val JSON_DATE_AND_TIME_PATTERN_LOCAL_PRECISE = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-
-    private val defaultParser = SimpleDateFormat(JSON_DATE_AND_TIME_PATTERN_UTC_PRECISE, Locale.US)
-
-    private val parsers = arrayOf(
-        defaultParser,
-        SimpleDateFormat(JSON_DATE_AND_TIME_PATTERN_LOCAL_PRECISE, Locale.US),
-        SimpleDateFormat(JSON_DATE_AND_TIME_PATTERN_UTC, Locale.US),
-        SimpleDateFormat(JSON_DATE_AND_TIME_PATTERN_LOCAL, Locale.US)
-    )
-
     override val descriptor: SerialDescriptor
         get() = PrimitiveSerialDescriptor("Date", PrimitiveKind.STRING)
 
     init {
-        for (parser in parsers) {
+        for (parser in JsonDateTime.parsers) {
             parser.calendar = Calendar.getInstance(TimeZone.getTimeZone(UTC_TIMEZONE_ID), Locale.getDefault())
         }
     }
@@ -50,7 +33,7 @@ object DateSerializer : KSerializer<Date> {
         }
 
         if (dateString != null) {
-            for (parser in parsers) {
+            for (parser in JsonDateTime.parsers) {
                 val parsedDate = try {
                     parser.parse(dateString)
                 } catch (parseException: ParseException) {
@@ -67,6 +50,6 @@ object DateSerializer : KSerializer<Date> {
     }
 
     override fun serialize(encoder: Encoder, value: Date) {
-        encoder.encodeString(defaultParser.format(value))
+        encoder.encodeString(JsonDateTime.defaultParser.format(value))
     }
 }
