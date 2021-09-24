@@ -14,7 +14,6 @@ import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysTrainInfo
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysTrainInfo.TrainPart.Facility.*
 import nl.marc_apps.ovgo.databinding.FragmentDepartureDetailsBinding
 import nl.marc_apps.ovgo.databinding.PartialTrainImageBinding
-import nl.marc_apps.ovgo.domain.TrainInfo
 
 class DepartureDetailsFragment : Fragment() {
     private lateinit var binding: FragmentDepartureDetailsBinding
