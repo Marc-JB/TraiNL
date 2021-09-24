@@ -25,8 +25,12 @@ plugins {
 
 fun getLocalProperties(): Properties {
     return Properties().also { properties ->
-        file("../local.properties").inputStream().use {
-            properties.load(it)
+        try {
+            file("../local.properties").inputStream().use {
+                properties.load(it)
+            }
+        } catch (error: Exception) {
+            error.printStackTrace()
         }
     }
 }
