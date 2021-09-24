@@ -29,9 +29,7 @@ fun getLocalProperties(): Properties {
             file("../local.properties").inputStream().use {
                 properties.load(it)
             }
-        } catch (error: Exception) {
-            error.printStackTrace()
-        }
+        } catch (ignored: java.io.FileNotFoundException) {}
     }
 }
 
