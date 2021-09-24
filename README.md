@@ -6,9 +6,9 @@
 ![Disruptions](/docs/screenshots/disruptions-1.png?raw=true "Disruptions")
 ![Disruptions](/docs/screenshots/disruptions-2.png?raw=true "Disruptions")
 
-Experimental public transport Android app that showcases various Android architecture patterns.
+Experimental public transport Android app that showcases various Android architecture patterns. The app is fully written in Kotlin and uses MVVM, dependency injection and various libraries for data access. 
 
-## Implemented
+## Components/libraries used
 * [Android Jetpack](https://developer.android.com/jetpack)
   * Data
     * Room
