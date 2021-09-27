@@ -12,12 +12,13 @@ import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import nl.marc_apps.ovgo.data.TrainInfoRepository
 import nl.marc_apps.ovgo.data.TrainStationRepository
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption.DisruptionType
-import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysTrainInfo
+import nl.marc_apps.ovgo.domain.TrainInfo
 import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.utils.ApiResult
 import java.util.*
@@ -25,6 +26,7 @@ import java.util.*
 class HomeViewModel(
     private val dutchRailwaysApi: DutchRailwaysApi,
     private val trainStationRepository: TrainStationRepository,
+    private val trainInfoRepository: TrainInfoRepository,
     private val preferences: DataStore<Preferences>
 ) : ViewModel() {
     private val mutableCurrentStation = MutableLiveData<TrainStation>()
@@ -32,9 +34,9 @@ class HomeViewModel(
     val currentStation: LiveData<TrainStation>
         get() = mutableCurrentStation
 
-    private val mutableDepartures = MutableLiveData<Set<Pair<DutchRailwaysDeparture, DutchRailwaysTrainInfo?>>?>()
+    private val mutableDepartures = MutableLiveData<Set<Pair<DutchRailwaysDeparture, TrainInfo?>>?>()
 
-    val departures: LiveData<Set<Pair<DutchRailwaysDeparture, DutchRailwaysTrainInfo?>>?>
+    val departures: LiveData<Set<Pair<DutchRailwaysDeparture, TrainInfo?>>?>
         get() = mutableDepartures
 
     private val mutableDisruptions = MutableLiveData<Set<DutchRailwaysDisruption.DisruptionOrMaintenance>?>()
@@ -83,20 +85,15 @@ class HomeViewModel(
         viewModelScope.launch {
             val departuresResult = dutchRailwaysApi.getDeparturesForStation(station.uicCode)
             if (departuresResult is ApiResult.Success) {
-                val trainInfoResult = dutchRailwaysApi.getTrainInfo(departuresResult.body.map { it.product.number.toInt() }.toSet())
-                if (trainInfoResult is ApiResult.Success) {
-                    val associatedDepartures = departuresResult.body.associateWith { departure ->
-                        if (!departure.cancelled) {
-                            trainInfoResult.body.firstOrNull {
-                                it.journeyNumber == departure.product.number.toInt()
-                            }
-                        } else null
-                    }
-                    mutableDepartures.postValue(associatedDepartures.entries.map { it.key to it.value }.toSet())
-                } else if (trainInfoResult is ApiResult.Failure) {
-                    Firebase.crashlytics.recordException(trainInfoResult.apiError.error)
-                    trainInfoResult.apiError.error.printStackTrace()
+                val trainInfo = trainInfoRepository.getTrainInfo(departuresResult.body.map { it.product.number.toInt() }.toSet())
+                val associatedDepartures = departuresResult.body.associateWith { departure ->
+                    if (!departure.cancelled) {
+                        trainInfo.firstOrNull {
+                            it.journeyId == departure.product.number.toInt()
+                        }
+                    } else null
                 }
+                mutableDepartures.postValue(associatedDepartures.entries.map { it.key to it.value }.toSet())
             } else if (departuresResult is ApiResult.Failure) {
                 Firebase.crashlytics.recordException(departuresResult.apiError.error)
                 departuresResult.apiError.error.printStackTrace()

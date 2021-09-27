@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
-import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysTrainInfo
 import nl.marc_apps.ovgo.databinding.ListItemDepartureBinding
 import nl.marc_apps.ovgo.databinding.ListItemDepartureCancelledBinding
 import nl.marc_apps.ovgo.databinding.PartialTrainImageBinding
+import nl.marc_apps.ovgo.domain.TrainInfo
 
-class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, DutchRailwaysTrainInfo?>, DeparturesAdapter.DepartureViewHolder>(DiffCallback) {
+class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, TrainInfo?>, DeparturesAdapter.DepartureViewHolder>(DiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, @Type viewType: Int): DepartureViewHolder {
         return when(viewType) {
             TYPE_REGULAR -> {
@@ -52,7 +52,7 @@ class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, DutchRailways
 
     private fun onBindRegularDepartureViewHolder(
         departure: DutchRailwaysDeparture,
-        trainInfo: DutchRailwaysTrainInfo,
+        trainInfo: TrainInfo,
         holder: DepartureViewHolder.RegularDepartureViewHolder
     ) {
         val binding = holder.binding
@@ -103,8 +103,8 @@ class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, DutchRailways
         }
     }
 
-    private fun loadTrainImages(binding: ListItemDepartureBinding, trainInfo: DutchRailwaysTrainInfo) {
-        binding.holderTrainImagesScrollable.visibility = if(trainInfo.actualTrainParts.firstOrNull()?.imageUrl == null) {
+    private fun loadTrainImages(binding: ListItemDepartureBinding, trainInfo: TrainInfo) {
+        binding.holderTrainImagesScrollable.visibility = if(trainInfo.trainParts.firstOrNull()?.imageUrl == null) {
             View.GONE
         } else {
             View.VISIBLE
@@ -114,7 +114,7 @@ class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, DutchRailways
             binding.holderTrainImages.removeViews(LAYOUT_CHILD_COUNT_SINGLE_VIEW, binding.holderTrainImages.childCount - LAYOUT_CHILD_COUNT_SINGLE_VIEW)
         }
 
-        trainInfo.actualTrainParts.forEach {
+        trainInfo.trainParts.forEach {
             val imageView = PartialTrainImageBinding.inflate(
                 LayoutInflater.from(binding.holderTrainImages.context),
                 binding.holderTrainImages,
@@ -172,17 +172,17 @@ class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, DutchRailways
         private annotation class Type
     }
 
-    object DiffCallback : DiffUtil.ItemCallback<Pair<DutchRailwaysDeparture, DutchRailwaysTrainInfo?>>() {
+    object DiffCallback : DiffUtil.ItemCallback<Pair<DutchRailwaysDeparture, TrainInfo?>>() {
         override fun areItemsTheSame(
-            oldItem: Pair<DutchRailwaysDeparture, DutchRailwaysTrainInfo?>,
-            newItem: Pair<DutchRailwaysDeparture, DutchRailwaysTrainInfo?>
+            oldItem: Pair<DutchRailwaysDeparture, TrainInfo?>,
+            newItem: Pair<DutchRailwaysDeparture, TrainInfo?>
         ): Boolean {
             return oldItem.first.product.number == newItem.first.product.number
         }
 
         override fun areContentsTheSame(
-            oldItem: Pair<DutchRailwaysDeparture, DutchRailwaysTrainInfo?>,
-            newItem: Pair<DutchRailwaysDeparture, DutchRailwaysTrainInfo?>
+            oldItem: Pair<DutchRailwaysDeparture, TrainInfo?>,
+            newItem: Pair<DutchRailwaysDeparture, TrainInfo?>
         ): Boolean {
             return oldItem.first == newItem.first && newItem.second == oldItem.second
         }

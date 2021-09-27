@@ -2,6 +2,7 @@ package nl.marc_apps.ovgo.data.api.dutch_railways.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import nl.marc_apps.ovgo.domain.TrainInfo
 
 @Serializable
 data class DutchRailwaysTrainInfo (
@@ -29,12 +30,29 @@ data class DutchRailwaysTrainInfo (
     val plannedAmountOfCoaches: Int? = null,
     @SerialName("rijrichting")
     val direction: Direction? = null
-) : java.io.Serializable {
-    val seatCountFirstClass: Int
-        get() = actualTrainParts.sumOf { (it.seats?.foldingChairsFirstClass ?: 0) + (it.seats?.seatsFirstClass ?: 0) }
-
-    val seatCountSecondClass: Int
-        get() = actualTrainParts.sumOf { (it.seats?.foldingChairsSecondClass ?: 0) + (it.seats?.seatsSecondClass ?: 0) }
+) {
+    fun asTrainInfo(): TrainInfo {
+        return TrainInfo(
+            journeyNumber,
+            actualTrainParts.map {
+                TrainInfo.TrainPart(
+                    it.id,
+                    TrainInfo.TrainFacilities(
+                        (it.seats?.foldingChairsFirstClass ?: 0) + (it.seats?.seatsFirstClass ?: 0),
+                        (it.seats?.foldingChairsSecondClass ?: 0) + (it.seats?.seatsSecondClass ?: 0),
+                        TrainPart.Facility.TOILET in it.facilities,
+                        TrainPart.Facility.SILENCE_COMPARTMENT in it.facilities,
+                        TrainPart.Facility.POWER_SOCKETS in it.facilities,
+                        TrainPart.Facility.WHEELCHAIR_ACCESSIBLE in it.facilities,
+                        TrainPart.Facility.BICYCLE_COMPARTMENT in it.facilities,
+                        TrainPart.Facility.WIFI in it.facilities,
+                        TrainPart.Facility.BISTRO in it.facilities,
+                    ),
+                    it.imageUrl
+                )
+            }
+        )
+    }
 
     @Serializable
     data class TrainPart(

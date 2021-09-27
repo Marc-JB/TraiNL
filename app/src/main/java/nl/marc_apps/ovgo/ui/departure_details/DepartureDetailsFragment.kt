@@ -10,10 +10,9 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
-import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysTrainInfo
-import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysTrainInfo.TrainPart.Facility.*
 import nl.marc_apps.ovgo.databinding.FragmentDepartureDetailsBinding
 import nl.marc_apps.ovgo.databinding.PartialTrainImageBinding
+import nl.marc_apps.ovgo.domain.TrainInfo
 
 class DepartureDetailsFragment : Fragment() {
     private lateinit var binding: FragmentDepartureDetailsBinding
@@ -82,43 +81,43 @@ class DepartureDetailsFragment : Fragment() {
         loadTrainImages(departure, trainInfo)
     }
 
-    private fun loadFacilities(departure: DutchRailwaysDeparture, trainInfo: DutchRailwaysTrainInfo) {
+    private fun loadFacilities(departure: DutchRailwaysDeparture, trainInfo: TrainInfo) {
         binding.iconWheelchairAccessible.visibility =
-            if(!departure.cancelled && trainInfo.actualTrainParts.any { WHEELCHAIR_ACCESSIBLE in it.facilities }) View.VISIBLE
+            if(!departure.cancelled && trainInfo.facilities.isWheelChairAccessible) View.VISIBLE
             else View.GONE
 
         binding.iconToilet.visibility =
-            if(!departure.cancelled && trainInfo.actualTrainParts.any { TOILET in it.facilities }) View.VISIBLE
+            if(!departure.cancelled && trainInfo.facilities.hasToilet) View.VISIBLE
             else View.GONE
 
         binding.iconBicycles.visibility =
-            if(!departure.cancelled && trainInfo.actualTrainParts.any { BICYCLE_COMPARTMENT in it.facilities }) View.VISIBLE
+            if(!departure.cancelled && trainInfo.facilities.hasBicycleCompartment) View.VISIBLE
             else View.GONE
 
         binding.iconWifi.visibility =
-            if(!departure.cancelled && trainInfo.actualTrainParts.any { WIFI in it.facilities }) View.VISIBLE
+            if(!departure.cancelled && trainInfo.facilities.hasFreeWifi) View.VISIBLE
             else View.GONE
 
         binding.iconPowerSockets.visibility =
-            if(!departure.cancelled && trainInfo.actualTrainParts.any { POWER_SOCKETS in it.facilities }) View.VISIBLE
+            if(!departure.cancelled && trainInfo.facilities.hasPowerSockets) View.VISIBLE
             else View.GONE
 
         binding.iconSilenceCompartment.visibility =
-            if(!departure.cancelled && trainInfo.actualTrainParts.any { SILENCE_COMPARTMENT in it.facilities }) View.VISIBLE
+            if(!departure.cancelled && trainInfo.facilities.hasSilenceCompartment) View.VISIBLE
             else View.GONE
 
         binding.labelFirstClass.visibility =
-            if(!departure.cancelled && trainInfo.seatCountFirstClass > 0) View.VISIBLE
+            if(!departure.cancelled && trainInfo.facilities.hasFirstClass) View.VISIBLE
             else View.GONE
     }
 
-    private fun loadTrainImages(departure: DutchRailwaysDeparture, trainInfo: DutchRailwaysTrainInfo) {
+    private fun loadTrainImages(departure: DutchRailwaysDeparture, trainInfo: TrainInfo) {
         binding.holderTrainImagesScrollable.visibility =
-            if(departure.cancelled || trainInfo.actualTrainParts.firstOrNull()?.imageUrl == null) View.GONE
+            if(departure.cancelled || trainInfo.trainParts.firstOrNull()?.imageUrl == null) View.GONE
             else View.VISIBLE
 
         binding.holderTrainImages.removeAllViews()
-        trainInfo.actualTrainParts.forEach {
+        trainInfo.trainParts.forEach {
             val imageView = PartialTrainImageBinding.inflate(
                 LayoutInflater.from(binding.holderTrainImages.context),
                 binding.holderTrainImages,
