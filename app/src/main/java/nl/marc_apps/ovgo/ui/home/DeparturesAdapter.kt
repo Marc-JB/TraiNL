@@ -41,12 +41,12 @@ class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, TrainInfo?>, 
     }
 
     override fun onBindViewHolder(holder: DepartureViewHolder, position: Int) {
-        val departure = currentList.elementAtOrNull(position) ?: return
+        val (departure, trainInfo) = currentList.elementAtOrNull(position) ?: return
 
-        if (holder is DepartureViewHolder.RegularDepartureViewHolder) {
-            onBindRegularDepartureViewHolder(departure.first, departure.second!!, holder)
+        if (holder is DepartureViewHolder.RegularDepartureViewHolder && trainInfo != null) {
+            onBindRegularDepartureViewHolder(departure, trainInfo, holder)
         } else if (holder is DepartureViewHolder.CancelledDepartureViewHolder) {
-            onBindCancelledDepartureViewHolder(departure.first, holder)
+            onBindCancelledDepartureViewHolder(departure, holder)
         }
     }
 
