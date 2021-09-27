@@ -2,6 +2,8 @@ package nl.marc_apps.ovgo.data
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -9,6 +11,7 @@ import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.db.TrainStationEntity
 import nl.marc_apps.ovgo.data.db.TrainStationDao
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.utils.ApiResult
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -54,21 +57,27 @@ class TrainStationRepository(
     }
 
     private suspend fun getTrainStationsFromApi(): Set<TrainStation>? {
-        val apiTrainStations = dutchRailwaysApi.getTrainStations().bodyOrNull ?: return null
-
-        val finalList = apiTrainStations.map {
-            it.asTrainStation()
-        }
-
-        coroutineScope {
-            launch {
-                updateTrainStationDatabase(finalList)
+        val trainStationResult = dutchRailwaysApi.getTrainStations()
+        if (trainStationResult is ApiResult.Success) {
+            val finalList = trainStationResult.body.map {
+                it.asTrainStation()
             }
+
+            coroutineScope {
+                launch {
+                    updateTrainStationDatabase(finalList)
+                }
+            }
+
+            return finalList.toSet().also {
+                trainStationsCache = it
+            }
+        } else if (trainStationResult is ApiResult.Failure) {
+            Firebase.crashlytics.recordException(trainStationResult.apiError.error)
+            trainStationResult.apiError.error.printStackTrace()
         }
 
-        return finalList.toSet().also {
-            trainStationsCache = it
-        }
+        return null
     }
 
     private suspend fun isDatabaseOutdated(): Boolean {
