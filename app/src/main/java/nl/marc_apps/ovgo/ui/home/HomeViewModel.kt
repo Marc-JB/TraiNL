@@ -39,14 +39,14 @@ class HomeViewModel(
     val departures: LiveData<Set<Pair<DutchRailwaysDeparture, TrainInfo?>>?>
         get() = mutableDepartures
 
-    private val mutableDisruptions = MutableLiveData<Set<DutchRailwaysDisruption.DisruptionOrMaintenance>?>()
+    private val mutableDisruptions = MutableLiveData<Set<DutchRailwaysDisruption>?>()
 
-    val disruptions: LiveData<Set<DutchRailwaysDisruption.DisruptionOrMaintenance>?>
+    val disruptions: LiveData<Set<DutchRailwaysDisruption>?>
         get() = mutableDisruptions
 
-    private val mutableMaintenanceList = MutableLiveData<Set<DutchRailwaysDisruption.DisruptionOrMaintenance>?>()
+    private val mutableMaintenanceList = MutableLiveData<Set<DutchRailwaysDisruption>?>()
 
-    val maintenanceList: LiveData<Set<DutchRailwaysDisruption.DisruptionOrMaintenance>?>
+    val maintenanceList: LiveData<Set<DutchRailwaysDisruption>?>
         get() = mutableMaintenanceList
 
     fun loadDeparturesForLastKnownStation() {
@@ -115,9 +115,7 @@ class HomeViewModel(
             )
 
             if(disruptionResult is ApiResult.Success) {
-                val disruptions = disruptionResult.body
-                val disruptionOrMaintenanceList = disruptions.filterIsInstance<DutchRailwaysDisruption.DisruptionOrMaintenance>()
-                mutableMaintenanceList.postValue(disruptionOrMaintenanceList.toSet())
+                mutableMaintenanceList.postValue(disruptionResult.body)
             } else if (disruptionResult is ApiResult.Failure) {
                 Firebase.crashlytics.recordException(disruptionResult.apiError.error)
                 disruptionResult.apiError.error.printStackTrace()
@@ -139,9 +137,7 @@ class HomeViewModel(
             )
 
             if(disruptionResult is ApiResult.Success) {
-                val disruptions = disruptionResult.body
-                val disruptionOrMaintenanceList = disruptions.filterIsInstance<DutchRailwaysDisruption.DisruptionOrMaintenance>()
-                mutableDisruptions.postValue(disruptionOrMaintenanceList.toSet())
+                mutableDisruptions.postValue(disruptionResult.body)
             } else if (disruptionResult is ApiResult.Failure) {
                 Firebase.crashlytics.recordException(disruptionResult.apiError.error)
                 disruptionResult.apiError.error.printStackTrace()
