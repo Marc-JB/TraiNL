@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import nl.marc_apps.ovgo.data.DepartureRepository
 import nl.marc_apps.ovgo.data.TrainInfoRepository
 import nl.marc_apps.ovgo.data.TrainStationRepository
 import nl.marc_apps.ovgo.data.api.HttpClient
@@ -51,10 +52,14 @@ object DiModules {
         single {
             TrainInfoRepository(get())
         }
+
+        single {
+            DepartureRepository(get(), get(), get())
+        }
     }
 
     val viewModelsModule = module {
-        viewModel { DepartureBoardViewModel(get(), get(), get(), get()) }
+        viewModel { DepartureBoardViewModel(get(), get(), get()) }
         viewModel { DisruptionsViewModel(get()) }
         viewModel { MaintenanceViewModel(get()) }
         viewModel { SearchStationViewModel(get(), get()) }

@@ -51,11 +51,7 @@
 
         <argument
             android:name="departure"
-            app:argType="nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture" />
-
-        <argument
-            android:name="trainInfo"
-            app:argType="nl.marc_apps.ovgo.domain.TrainInfo" />
+            app:argType="nl.marc_apps.ovgo.domain.Departure" />
 
     </fragment>
 

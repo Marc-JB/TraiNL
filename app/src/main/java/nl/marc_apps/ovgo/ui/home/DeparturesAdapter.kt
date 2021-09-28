@@ -11,13 +11,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import nl.marc_apps.ovgo.R
-import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
 import nl.marc_apps.ovgo.databinding.ListItemDepartureBinding
 import nl.marc_apps.ovgo.databinding.ListItemDepartureCancelledBinding
 import nl.marc_apps.ovgo.databinding.PartialTrainImageBinding
+import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
+import nl.marc_apps.ovgo.utils.format
+import java.text.DateFormat
 
-class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, TrainInfo?>, DeparturesAdapter.DepartureViewHolder>(DiffCallback) {
+class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureViewHolder>(DiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, @Type viewType: Int): DepartureViewHolder {
         return when(viewType) {
             TYPE_REGULAR -> {
@@ -41,27 +43,30 @@ class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, TrainInfo?>, 
     }
 
     override fun onBindViewHolder(holder: DepartureViewHolder, position: Int) {
-        val (departure, trainInfo) = currentList.elementAtOrNull(position) ?: return
+        val departure = currentList.elementAtOrNull(position) ?: return
 
-        if (holder is DepartureViewHolder.RegularDepartureViewHolder && trainInfo != null) {
-            onBindRegularDepartureViewHolder(departure, trainInfo, holder)
+        if (holder is DepartureViewHolder.RegularDepartureViewHolder) {
+            onBindRegularDepartureViewHolder(departure, holder)
         } else if (holder is DepartureViewHolder.CancelledDepartureViewHolder) {
             onBindCancelledDepartureViewHolder(departure, holder)
         }
     }
 
     private fun onBindRegularDepartureViewHolder(
-        departure: DutchRailwaysDeparture,
-        trainInfo: TrainInfo,
+        departure: Departure,
         holder: DepartureViewHolder.RegularDepartureViewHolder
     ) {
         val binding = holder.binding
         val context = binding.root.context
 
         val departureTimeWithDelayText = if(departure.isDelayed) {
-            context.getString(R.string.departure_time_delayed, departure.departureTimeText, departure.delayInMinutesRounded)
+            context.getString(
+                R.string.departure_time_delayed,
+                departure.actualDepartureTime.format(timeStyle = DateFormat.SHORT),
+                departure.delayInMinutesRounded
+            )
         } else {
-            departure.departureTimeText
+            departure.actualDepartureTime.format(timeStyle = DateFormat.SHORT)
         }
         binding.labelDepartureTime.text = departureTimeWithDelayText
         binding.labelDepartureTimeAlignment.text = departureTimeWithDelayText
@@ -73,18 +78,18 @@ class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, TrainInfo?>, 
             )
         )
 
-        binding.labelDirection.text = (departure.direction ?: departure.routeStations.lastOrNull()?.mediumName)?.toString()
+        binding.labelDirection.text = departure.direction?.name
 
-        val upcomingStations = departure.routeStations.joinToString(limit = MAX_STATIONS_DISPLAYED_ON_ROUTE) {
-            it.mediumName
+        val upcomingStations = departure.stationsOnRoute.joinToString(limit = MAX_STATIONS_DISPLAYED_ON_ROUTE) {
+            it.name
         }
-        binding.labelUpcomingStations.text = if(departure.routeStations.isNotEmpty()) {
+        binding.labelUpcomingStations.text = if(departure.stationsOnRoute.isNotEmpty()) {
             context.getString(R.string.departure_via_stations, upcomingStations)
         } else {
             ""
         }
         binding.labelUpcomingStations.visibility =
-            if(departure.routeStations.isEmpty()) View.GONE
+            if(departure.stationsOnRoute.isEmpty()) View.GONE
             else View.VISIBLE
 
         binding.labelPlatform.setBackgroundResource(
@@ -93,18 +98,26 @@ class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, TrainInfo?>, 
         )
         binding.labelPlatform.text = departure.actualTrack
 
-        binding.labelOperatorAndType.text = binding.root.resources.getString(R.string.departure_operator_and_type_multi_line, departure.product.correctedOperatorName, departure.product.longCategoryName)
+        binding.labelOperatorAndType.text = if (departure.operator == departure.categoryName) {
+            departure.operator
+        } else {
+            binding.root.resources.getString(
+                R.string.departure_operator_and_type_multi_line,
+                departure.operator,
+                departure.categoryName
+            )
+        }
 
-        loadTrainImages(binding, trainInfo)
+        loadTrainImages(binding, departure.trainInfo)
 
         binding.root.setOnClickListener {
-            val action = DepartureBoardFragmentDirections.actionDepartureBoardToDetails(departure, trainInfo)
+            val action = DepartureBoardFragmentDirections.actionDepartureBoardToDetails(departure)
             binding.root.findNavController().navigate(action)
         }
     }
 
-    private fun loadTrainImages(binding: ListItemDepartureBinding, trainInfo: TrainInfo) {
-        binding.holderTrainImagesScrollable.visibility = if(trainInfo.trainParts.firstOrNull()?.imageUrl == null) {
+    private fun loadTrainImages(binding: ListItemDepartureBinding, trainInfo: TrainInfo?) {
+        binding.holderTrainImagesScrollable.visibility = if(trainInfo?.trainParts?.firstOrNull()?.imageUrl == null) {
             View.GONE
         } else {
             View.VISIBLE
@@ -114,7 +127,7 @@ class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, TrainInfo?>, 
             binding.holderTrainImages.removeViews(LAYOUT_CHILD_COUNT_SINGLE_VIEW, binding.holderTrainImages.childCount - LAYOUT_CHILD_COUNT_SINGLE_VIEW)
         }
 
-        trainInfo.trainParts.forEach {
+        trainInfo?.trainParts?.forEach {
             val imageView = PartialTrainImageBinding.inflate(
                 LayoutInflater.from(binding.holderTrainImages.context),
                 binding.holderTrainImages,
@@ -124,34 +137,42 @@ class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, TrainInfo?>, 
         }
     }
 
-    private fun onBindCancelledDepartureViewHolder(departure: DutchRailwaysDeparture, holder: DepartureViewHolder.CancelledDepartureViewHolder) {
+    private fun onBindCancelledDepartureViewHolder(departure: Departure, holder: DepartureViewHolder.CancelledDepartureViewHolder) {
         val binding = holder.binding
 
-        binding.labelDepartureTime.text = departure.departureTimeText
+        binding.labelDepartureTime.text = departure.actualDepartureTime.format(timeStyle = DateFormat.SHORT)
         binding.labelDepartureTime.setTextColor(
             ContextCompat.getColor(
                 binding.labelDepartureTime.context,
-                if(departure.isDelayed || departure.cancelled) R.color.colorError else R.color.colorOK
+                if(departure.isDelayed || departure.isCancelled) R.color.colorError else R.color.colorOK
             )
         )
 
-        binding.labelDirection.text = (departure.direction ?: departure.routeStations.lastOrNull()?.mediumName).toString()
+        binding.labelDirection.text = departure.direction?.name
         binding.labelDirection.setTextColor(
             ContextCompat.getColor(
                 binding.labelDirection.context,
-                if(departure.cancelled) R.color.colorError else R.color.colorPrimary
+                if(departure.isCancelled) R.color.colorError else R.color.colorPrimary
             )
         )
 
-        binding.labelCancelled.visibility = if(departure.cancelled) View.VISIBLE else View.GONE
+        binding.labelCancelled.visibility = if(departure.isCancelled) View.VISIBLE else View.GONE
 
-        binding.labelOperatorAndType.text = binding.root.resources.getString(R.string.departure_operator_and_type_multi_line, departure.product.correctedOperatorName, departure.product.longCategoryName)
+        binding.labelOperatorAndType.text = if (departure.operator == departure.categoryName) {
+            departure.operator
+        } else {
+            binding.root.resources.getString(
+                R.string.departure_operator_and_type_multi_line,
+                departure.operator,
+                departure.categoryName
+            )
+        }
     }
 
     @Type
     override fun getItemViewType(position: Int): Int {
-        val departure = currentList.elementAtOrNull(position)?.first
-        return if(departure?.cancelled == false) TYPE_REGULAR else TYPE_CANCELLED
+        val departure = currentList.elementAtOrNull(position)
+        return if(departure?.isCancelled == false) TYPE_REGULAR else TYPE_CANCELLED
     }
 
     sealed class DepartureViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -172,19 +193,13 @@ class DeparturesAdapter : ListAdapter<Pair<DutchRailwaysDeparture, TrainInfo?>, 
         private annotation class Type
     }
 
-    object DiffCallback : DiffUtil.ItemCallback<Pair<DutchRailwaysDeparture, TrainInfo?>>() {
-        override fun areItemsTheSame(
-            oldItem: Pair<DutchRailwaysDeparture, TrainInfo?>,
-            newItem: Pair<DutchRailwaysDeparture, TrainInfo?>
-        ): Boolean {
-            return oldItem.first.product.number == newItem.first.product.number
+    object DiffCallback : DiffUtil.ItemCallback<Departure>() {
+        override fun areItemsTheSame(oldItem: Departure, newItem: Departure): Boolean {
+            return oldItem.journeyId == newItem.journeyId
         }
 
-        override fun areContentsTheSame(
-            oldItem: Pair<DutchRailwaysDeparture, TrainInfo?>,
-            newItem: Pair<DutchRailwaysDeparture, TrainInfo?>
-        ): Boolean {
-            return oldItem.first == newItem.first && newItem.second == oldItem.second
+        override fun areContentsTheSame(oldItem: Departure, newItem: Departure): Boolean {
+            return oldItem == newItem
         }
     }
 }
