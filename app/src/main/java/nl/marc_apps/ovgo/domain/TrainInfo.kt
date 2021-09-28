@@ -9,17 +9,19 @@ data class TrainInfo(
     val journeyId: Int,
     val trainParts: Collection<TrainPart>
 ): Parcelable {
-    val facilities = TrainFacilities(
-        trainParts.sumOf { it.facilities.seatsFirstClass },
-        trainParts.sumOf { it.facilities.seatsSecondClass },
-        trainParts.any { it.facilities.hasToilet },
-        trainParts.any { it.facilities.hasSilenceCompartment },
-        trainParts.any { it.facilities.hasPowerSockets },
-        trainParts.any { it.facilities.isWheelChairAccessible },
-        trainParts.any { it.facilities.hasBicycleCompartment },
-        trainParts.any { it.facilities.hasFreeWifi },
-        trainParts.any { it.facilities.hasBistro },
-    )
+    val facilities by lazy {
+        TrainFacilities(
+            trainParts.sumOf { it.facilities.seatsFirstClass },
+            trainParts.sumOf { it.facilities.seatsSecondClass },
+            trainParts.any { it.facilities.hasToilet },
+            trainParts.any { it.facilities.hasSilenceCompartment },
+            trainParts.any { it.facilities.hasPowerSockets },
+            trainParts.any { it.facilities.isWheelChairAccessible },
+            trainParts.any { it.facilities.hasBicycleCompartment },
+            trainParts.any { it.facilities.hasFreeWifi },
+            trainParts.any { it.facilities.hasBistro },
+        )
+    }
 
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
