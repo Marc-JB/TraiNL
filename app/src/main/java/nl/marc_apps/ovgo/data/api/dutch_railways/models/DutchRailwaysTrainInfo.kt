@@ -32,24 +32,54 @@ data class DutchRailwaysTrainInfo (
     val direction: Direction? = null
 ) {
     fun asTrainInfo(): TrainInfo {
+        val isQbuzzDMG = operator == "R-net" && actualTrainParts.none { it.type == "Flirt 2 TAG" }
         return TrainInfo(
             journeyNumber,
             actualTrainParts.map {
-                TrainInfo.TrainPart(
-                    it.id,
-                    TrainInfo.TrainFacilities(
-                        (it.seats?.foldingChairsFirstClass ?: 0) + (it.seats?.seatsFirstClass ?: 0),
-                        (it.seats?.foldingChairsSecondClass ?: 0) + (it.seats?.seatsSecondClass ?: 0),
-                        TrainPart.Facility.TOILET in it.facilities,
-                        TrainPart.Facility.SILENCE_COMPARTMENT in it.facilities,
-                        TrainPart.Facility.POWER_SOCKETS in it.facilities,
-                        TrainPart.Facility.WHEELCHAIR_ACCESSIBLE in it.facilities,
-                        TrainPart.Facility.BICYCLE_COMPARTMENT in it.facilities,
-                        TrainPart.Facility.WIFI in it.facilities,
-                        TrainPart.Facility.BISTRO in it.facilities,
-                    ),
-                    it.imageUrl
-                )
+                if (isQbuzzDMG) {
+                    val isLongTrainPart = "8" in it.type
+                    TrainInfo.TrainPart(
+                        it.id,
+                        TrainInfo.TrainFacilities(
+                            seatsFirstClass = 0,
+                            seatsSecondClass = if (isLongTrainPart) 172 else 113,
+                            hasToilet = false,
+                            hasSilenceCompartment = false,
+                            hasPowerSockets = true,
+                            isWheelChairAccessible = true,
+                            hasBicycleCompartment = true,
+                            hasFreeWifi = true,
+                            hasBistro = false,
+                        ),
+                        if (isLongTrainPart) {
+                            "https://marc-jb.github.io/OVgo-api/gtw_qbuzz_28.png"
+                        } else {
+                            "https://marc-jb.github.io/OVgo-api/gtw_qbuzz_26.png"
+                        }
+                    )
+                } else {
+                    TrainInfo.TrainPart(
+                        it.id,
+                        TrainInfo.TrainFacilities(
+                            (it.seats?.foldingChairsFirstClass ?: 0) + (it.seats?.seatsFirstClass
+                                ?: 0),
+                            (it.seats?.foldingChairsSecondClass ?: 0) + (it.seats?.seatsSecondClass
+                                ?: 0),
+                            TrainPart.Facility.TOILET in it.facilities,
+                            TrainPart.Facility.SILENCE_COMPARTMENT in it.facilities,
+                            TrainPart.Facility.POWER_SOCKETS in it.facilities,
+                            TrainPart.Facility.WHEELCHAIR_ACCESSIBLE in it.facilities,
+                            TrainPart.Facility.BICYCLE_COMPARTMENT in it.facilities,
+                            TrainPart.Facility.WIFI in it.facilities,
+                            TrainPart.Facility.BISTRO in it.facilities,
+                        ),
+                        if (it.type == "eurostar") {
+                            "https://marc-jb.github.io/OVgo-api/eurostar_e320.png"
+                        } else {
+                            it.imageUrl
+                        }
+                    )
+                }
             }
         )
     }
