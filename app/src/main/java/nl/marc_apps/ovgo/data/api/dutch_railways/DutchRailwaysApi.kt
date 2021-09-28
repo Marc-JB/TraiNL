@@ -1,13 +1,14 @@
 package nl.marc_apps.ovgo.data.api.dutch_railways
 
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import nl.marc_apps.ovgo.data.api.HttpClient
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysStation
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysTrainInfo
-import nl.marc_apps.ovgo.utils.ApiResult
-import nl.marc_apps.ovgo.utils.awaitResult
 import nl.marc_apps.ovgo.utils.retrofit
+import retrofit2.await
 
 class DutchRailwaysApi(
     private val httpClient: HttpClient,
@@ -30,47 +31,71 @@ class DutchRailwaysApi(
         language: String? = defaultLanguageCode,
         type: Set<DutchRailwaysDisruption.DisruptionType>? = null,
         isActive: Boolean? = null
-    ): ApiResult<Set<DutchRailwaysDisruption>> {
-        return travelInfoApi.getDisruptions(
-            dutchRailwaysTravelInfoApiKey,
-            language = language,
-            isActive = isActive,
-            type = type?.joinToString(separator = ",") { it.name }
-        ).awaitResult()
+    ): Set<DutchRailwaysDisruption> {
+        try {
+            return travelInfoApi.getDisruptions(
+                dutchRailwaysTravelInfoApiKey,
+                language = language,
+                isActive = isActive,
+                type = type?.joinToString(separator = ",") { it.name }
+            ).await()
+        } catch (error: Throwable) {
+            Firebase.crashlytics.recordException(error)
+            error.printStackTrace()
+            throw error
+        }
     }
 
-    suspend fun getTrainStations(): ApiResult<Set<DutchRailwaysStation>> {
-        return travelInfoApi.getStations(dutchRailwaysTravelInfoApiKey)
-            .awaitResult()
-            .mapSuccess {
-                it.payload
-            }
+    suspend fun getTrainStations(): Set<DutchRailwaysStation> {
+        try {
+            return travelInfoApi.getStations(dutchRailwaysTravelInfoApiKey).await().payload
+        } catch (error: Throwable) {
+            Firebase.crashlytics.recordException(error)
+            error.printStackTrace()
+            throw error
+        }
     }
 
     suspend fun getDeparturesForStation(
         uicCode: String,
         language: String? = defaultLanguageCode
-    ): ApiResult<Set<DutchRailwaysDeparture>> {
-        return travelInfoApi.getDeparturesByUicCode(
-            dutchRailwaysTravelInfoApiKey,
-            uicCode = uicCode,
-            language = language
-        ).awaitResult().mapSuccess {
-            it.payload.departures
+    ): Set<DutchRailwaysDeparture> {
+        try {
+            return travelInfoApi.getDeparturesByUicCode(
+                dutchRailwaysTravelInfoApiKey,
+                uicCode = uicCode,
+                language = language
+            ).await().payload.departures
+        } catch (error: Throwable) {
+            Firebase.crashlytics.recordException(error)
+            error.printStackTrace()
+            throw error
         }
     }
 
-    suspend fun getTrainInfo(journeyNumber: Int): ApiResult<DutchRailwaysTrainInfo> {
-        return trainInfoApi.getTrainInfo(
-            dutchRailwaysTravelInfoApiKey,
-            journeyNumber = journeyNumber
-        ).awaitResult()
+    suspend fun getTrainInfo(journeyNumber: Int): DutchRailwaysTrainInfo {
+        try {
+            return trainInfoApi.getTrainInfo(
+                dutchRailwaysTravelInfoApiKey,
+                journeyNumber = journeyNumber
+            ).await()
+        } catch (error: Throwable) {
+            Firebase.crashlytics.recordException(error)
+            error.printStackTrace()
+            throw error
+        }
     }
 
-    suspend fun getTrainInfo(journeys: Set<Int>): ApiResult<Set<DutchRailwaysTrainInfo>> {
-        return trainInfoApi.getTrainInfo(
-            dutchRailwaysTravelInfoApiKey,
-            ids = journeys.joinToString(separator = ",")
-        ).awaitResult()
+    suspend fun getTrainInfo(journeys: Set<Int>): Set<DutchRailwaysTrainInfo> {
+        try {
+            return trainInfoApi.getTrainInfo(
+                dutchRailwaysTravelInfoApiKey,
+                ids = journeys.joinToString(separator = ",")
+            ).await()
+        } catch (error: Throwable) {
+            Firebase.crashlytics.recordException(error)
+            error.printStackTrace()
+            throw error
+        }
     }
 }

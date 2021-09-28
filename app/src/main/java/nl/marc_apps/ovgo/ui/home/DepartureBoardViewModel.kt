@@ -18,7 +18,6 @@ import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
 import nl.marc_apps.ovgo.domain.TrainInfo
 import nl.marc_apps.ovgo.domain.TrainStation
-import nl.marc_apps.ovgo.utils.ApiResult
 import java.util.*
 
 class DepartureBoardViewModel(
@@ -71,21 +70,21 @@ class DepartureBoardViewModel(
         mutableDepartures.postValue(null)
 
         viewModelScope.launch {
-            val departuresResult = dutchRailwaysApi.getDeparturesForStation(station.uicCode)
-            if (departuresResult is ApiResult.Success) {
-                val trainInfo = trainInfoRepository.getTrainInfo(departuresResult.body.map { it.product.number.toInt() }.toSet())
-                val associatedDepartures = departuresResult.body.associateWith { departure ->
-                    if (!departure.cancelled) {
-                        trainInfo.firstOrNull {
-                            it.journeyId == departure.product.number.toInt()
-                        }
-                    } else null
-                }
-                mutableDepartures.postValue(associatedDepartures.entries.map { it.key to it.value }.toSet())
-            } else if (departuresResult is ApiResult.Failure) {
-                Firebase.crashlytics.recordException(departuresResult.apiError.error)
-                departuresResult.apiError.error.printStackTrace()
+            val departures = try {
+                dutchRailwaysApi.getDeparturesForStation(station.uicCode)
+            } catch (error: Throwable) {
+                emptySet()
             }
+
+            val trainInfo = trainInfoRepository.getTrainInfo(departures.map { it.product.number.toInt() }.toSet())
+            val associatedDepartures = departures.associateWith { departure ->
+                if (!departure.cancelled) {
+                    trainInfo.firstOrNull {
+                        it.journeyId == departure.product.number.toInt()
+                    }
+                } else null
+            }
+            mutableDepartures.postValue(associatedDepartures.entries.map { it.key to it.value }.toSet())
         }
     }
 

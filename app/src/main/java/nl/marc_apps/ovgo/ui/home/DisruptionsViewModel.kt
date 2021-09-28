@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption.DisruptionType
-import nl.marc_apps.ovgo.utils.ApiResult
 
 class DisruptionsViewModel(
     private val dutchRailwaysApi: DutchRailwaysApi
@@ -28,17 +27,16 @@ class DisruptionsViewModel(
         mutableDisruptions.postValue(null)
 
         viewModelScope.launch {
-            val disruptionResult = dutchRailwaysApi.getDisruptions(
-                isActive = true,
-                type = setOf(DisruptionType.CALAMITY, DisruptionType.DISRUPTION)
-            )
-
-            if(disruptionResult is ApiResult.Success) {
-                mutableDisruptions.postValue(disruptionResult.body)
-            } else if (disruptionResult is ApiResult.Failure) {
-                Firebase.crashlytics.recordException(disruptionResult.apiError.error)
-                disruptionResult.apiError.error.printStackTrace()
+            val disruptions = try {
+                dutchRailwaysApi.getDisruptions(
+                    isActive = true,
+                    type = setOf(DisruptionType.CALAMITY, DisruptionType.DISRUPTION)
+                )
+            } catch (error: Throwable) {
+                emptySet()
             }
+
+            mutableDisruptions.postValue(disruptions)
         }
     }
 }
