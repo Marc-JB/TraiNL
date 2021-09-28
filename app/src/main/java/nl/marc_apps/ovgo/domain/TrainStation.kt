@@ -30,7 +30,7 @@ data class TrainStation(
         GERMANY,
         FRANCE,
         GREAT_BRITAIN,
-        THE_NETHERLANDS,
+        THE_NETHERLANDS
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
