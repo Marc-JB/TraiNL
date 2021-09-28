@@ -10,7 +10,7 @@ import nl.marc_apps.ovgo.databinding.FragmentDisruptionsBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DisruptionsFragment : Fragment() {
-    private val viewModel by viewModel<HomeViewModel>()
+    private val viewModel by viewModel<DisruptionsViewModel>()
 
     private lateinit var binding: FragmentDisruptionsBinding
 

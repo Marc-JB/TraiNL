@@ -10,7 +10,7 @@ import nl.marc_apps.ovgo.databinding.FragmentMaintenanceBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MaintenanceFragment : Fragment() {
-    private val viewModel by viewModel<HomeViewModel>()
+    private val viewModel by viewModel<MaintenanceViewModel>()
 
     private lateinit var binding: FragmentMaintenanceBinding
 

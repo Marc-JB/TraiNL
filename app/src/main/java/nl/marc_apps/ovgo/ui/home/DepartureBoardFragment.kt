@@ -12,7 +12,7 @@ import nl.marc_apps.ovgo.databinding.FragmentDepartureBoardBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DepartureBoardFragment : Fragment() {
-    private val viewModel by viewModel<HomeViewModel>()
+    private val viewModel by viewModel<DepartureBoardViewModel>()
 
     private lateinit var binding: FragmentDepartureBoardBinding
 

@@ -16,14 +16,12 @@ import nl.marc_apps.ovgo.data.TrainInfoRepository
 import nl.marc_apps.ovgo.data.TrainStationRepository
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
-import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
-import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption.DisruptionType
 import nl.marc_apps.ovgo.domain.TrainInfo
 import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.utils.ApiResult
 import java.util.*
 
-class HomeViewModel(
+class DepartureBoardViewModel(
     private val dutchRailwaysApi: DutchRailwaysApi,
     private val trainStationRepository: TrainStationRepository,
     private val trainInfoRepository: TrainInfoRepository,
@@ -38,16 +36,6 @@ class HomeViewModel(
 
     val departures: LiveData<Set<Pair<DutchRailwaysDeparture, TrainInfo?>>?>
         get() = mutableDepartures
-
-    private val mutableDisruptions = MutableLiveData<Set<DutchRailwaysDisruption>?>()
-
-    val disruptions: LiveData<Set<DutchRailwaysDisruption>?>
-        get() = mutableDisruptions
-
-    private val mutableMaintenanceList = MutableLiveData<Set<DutchRailwaysDisruption>?>()
-
-    val maintenanceList: LiveData<Set<DutchRailwaysDisruption>?>
-        get() = mutableMaintenanceList
 
     fun loadDeparturesForLastKnownStation() {
         viewModelScope.launch {
@@ -97,50 +85,6 @@ class HomeViewModel(
             } else if (departuresResult is ApiResult.Failure) {
                 Firebase.crashlytics.recordException(departuresResult.apiError.error)
                 departuresResult.apiError.error.printStackTrace()
-            }
-        }
-    }
-
-    fun loadMaintenance(allowReload: Boolean = false) {
-        if (!allowReload && !mutableMaintenanceList.value.isNullOrEmpty()) {
-            return
-        }
-
-        mutableMaintenanceList.postValue(null)
-
-        viewModelScope.launch {
-            val disruptionResult = dutchRailwaysApi.getDisruptions(
-                isActive = true,
-                type = setOf(DisruptionType.MAINTENANCE)
-            )
-
-            if(disruptionResult is ApiResult.Success) {
-                mutableMaintenanceList.postValue(disruptionResult.body)
-            } else if (disruptionResult is ApiResult.Failure) {
-                Firebase.crashlytics.recordException(disruptionResult.apiError.error)
-                disruptionResult.apiError.error.printStackTrace()
-            }
-        }
-    }
-
-    fun loadDisruptions(allowReload: Boolean = false) {
-        if (!allowReload && !mutableDisruptions.value.isNullOrEmpty()) {
-            return
-        }
-
-        mutableDisruptions.postValue(null)
-
-        viewModelScope.launch {
-            val disruptionResult = dutchRailwaysApi.getDisruptions(
-                isActive = true,
-                type = setOf(DisruptionType.CALAMITY, DisruptionType.DISRUPTION)
-            )
-
-            if(disruptionResult is ApiResult.Success) {
-                mutableDisruptions.postValue(disruptionResult.body)
-            } else if (disruptionResult is ApiResult.Failure) {
-                Firebase.crashlytics.recordException(disruptionResult.apiError.error)
-                disruptionResult.apiError.error.printStackTrace()
             }
         }
     }
