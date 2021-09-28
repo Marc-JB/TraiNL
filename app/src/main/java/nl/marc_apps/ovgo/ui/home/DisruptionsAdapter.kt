@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
 import nl.marc_apps.ovgo.databinding.ListItemDisruptionBinding
@@ -32,11 +33,13 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
             val currentDate = Date()
             val activeTimeSpans = disruption.timespans.filterNot { currentDate.after(it.start) && currentDate.before(it.end) }
 
-            holder.binding.labelDescription.text = listOfNotNull(
+            val description = listOfNotNull(
                 activeTimeSpans.firstOrNull()?.situation?.label,
                 disruption.summaryAdditionalTravelTime?.label,
                 disruption.expectedDuration?.description
             ).joinToString(separator = " ")
+
+            holder.binding.labelDescription.text = description
 
             holder.binding.labelTimerange.visibility = View.VISIBLE
 
@@ -45,12 +48,32 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
             } else {
                 disruption.start.format(DateFormat.MEDIUM, DateFormat.SHORT) + "\n" + disruption.end.format(DateFormat.MEDIUM, DateFormat.SHORT)
             }
+
+            holder.binding.root.setOnClickListener {
+                MaterialAlertDialogBuilder(context)
+                    .setTitle(disruption.title)
+                    .setMessage(description)
+                    .setPositiveButton(R.string.ok) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
         } else if (disruption is DutchRailwaysDisruption.Calamity) {
             holder.binding.labelTitle.setTextColor(context.getColor(R.color.colorError))
 
             holder.binding.labelDescription.text = disruption.description
 
             holder.binding.labelTimerange.visibility = View.GONE
+
+            holder.binding.root.setOnClickListener {
+                MaterialAlertDialogBuilder(context)
+                    .setTitle(disruption.title)
+                    .setMessage(disruption.description)
+                    .setPositiveButton(R.string.ok) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
         }
     }
 

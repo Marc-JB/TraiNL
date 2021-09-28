@@ -13,4 +13,5 @@
     <string name="departure_board">Departures</string>
     <string name="departure_via_stations">Via %1$s</string>
     <string name="dutch_railways_api_language_code">en</string>
+    <string name="ok">OK</string>
 </resources>
