@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.db.TrainStationDao
 import nl.marc_apps.ovgo.data.db.TrainStationEntity
+import nl.marc_apps.ovgo.data.type_conversions.TrainStationConversions
 import nl.marc_apps.ovgo.domain.TrainStation
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -61,7 +62,7 @@ class TrainStationRepository(
     private suspend fun getTrainStationsFromApi(): List<TrainStation>? {
         val trainStations = try {
             dutchRailwaysApi.getTrainStations().map {
-                it.asTrainStation()
+                TrainStationConversions.convertApiToDomainModel(it)
             }
         } catch (error: Throwable) {
             return null

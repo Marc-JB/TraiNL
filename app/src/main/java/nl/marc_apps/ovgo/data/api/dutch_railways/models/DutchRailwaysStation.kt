@@ -39,20 +39,7 @@ data class DutchRailwaysStation(
     @SerialName("ingangsDatum")
     @Serializable(with = DateSerializer::class)
     val sinceDate: Date
-) : java.io.Serializable {
-    // TODO: Remove this from model
-    fun asTrainStation(): TrainStation {
-        return TrainStation(
-            uicCode,
-            names.long,
-            customNames,
-            setOf(dutchRailwaysCode, names.middle, names.short),
-            hasDepartureTimesBoard,
-            hasTravelAssistance,
-            TrainStation.Country.valueOf(country.name)
-        )
-    }
-
+) {
     @Serializable
     data class Names(
         @SerialName("lang")
@@ -61,13 +48,13 @@ data class DutchRailwaysStation(
         val middle: String,
         @SerialName("kort")
         val short: String
-    ) : java.io.Serializable
+    )
 
     @Serializable
     data class Platform(
         @SerialName("spoorNummer")
         val name: String
-    ) : java.io.Serializable
+    )
 
     @Serializable
     enum class StationType {
