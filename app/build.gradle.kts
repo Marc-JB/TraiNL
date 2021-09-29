@@ -58,8 +58,8 @@ android {
         applicationId = "nl.marc_apps.ovgo"
         minSdk = 26
         targetSdk = 30
-        versionCode = getProperty("version.code")?.toInt() ?: 2
-        versionName = getProperty("version.name") ?: "0.2"
+        versionCode = getProperty("version.code")?.toInt() ?: 3
+        versionName = getProperty("version.name") ?: "0.2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["runnerBuilder"] = "de.mannodermaus.junit5.AndroidJUnit5Builder"

@@ -6,11 +6,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class DutchRailwaysTrainInfo (
     @SerialName("bron")
-    val dataSource: DataSource? = null,
+    val dataSource: String? = null,
     @SerialName("ritnummer")
     val journeyNumber: Int,
     val station: String? = null,
-    val type: String,
+    val type: String? = null,
     @SerialName("vervoerder")
     val operator: String,
     @SerialName("spoor")
@@ -77,10 +77,6 @@ data class DutchRailwaysTrainInfo (
             @SerialName("klapstoelTweedeKlas")
             val foldingChairsSecondClass: Int = 0,
         )
-    }
-
-    enum class DataSource {
-        DVS, KV6, OBIS, DAGPLAN, NMBS
     }
 
     @Serializable
