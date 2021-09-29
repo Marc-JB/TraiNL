@@ -2,7 +2,6 @@ package nl.marc_apps.ovgo.data.api.dutch_railways.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import nl.marc_apps.ovgo.domain.TrainInfo
 
 @Serializable
 data class DutchRailwaysTrainInfo (

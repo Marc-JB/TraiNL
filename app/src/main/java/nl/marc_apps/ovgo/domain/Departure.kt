@@ -3,11 +3,11 @@ package nl.marc_apps.ovgo.domain
 import android.os.Parcel
 import android.os.Parcelable
 import nl.marc_apps.ovgo.utils.format
+import nl.marc_apps.ovgo.utils.readParcelable
+import nl.marc_apps.ovgo.utils.readTypedList
 import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import nl.marc_apps.ovgo.utils.readParcelable
-import nl.marc_apps.ovgo.utils.readTypedList
 
 data class Departure(
     val journeyId: String,

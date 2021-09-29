@@ -1,7 +1,8 @@
 package nl.marc_apps.ovgo.utils
 
 import okhttp3.OkHttpClient
-import retrofit2.*
+import retrofit2.Retrofit
+import retrofit2.create
 
 inline fun <reified T> retrofit(block: Retrofit.Builder.() -> Unit): T {
     return Retrofit.Builder().also(block).build().create()
