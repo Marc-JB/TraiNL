@@ -94,7 +94,7 @@ object TrainInfoConversions {
                 DutchRailwaysFacility.WIFI in model.facilities,
                 DutchRailwaysFacility.BISTRO in model.facilities,
             ),
-            if (model.type == TRAIN_TYPE_EUROSTAR.lowercase()) {
+            if (model.type.equals(TRAIN_TYPE_EUROSTAR, ignoreCase = true)) {
                 TRAIN_IMAGE_URL_EUROSTAR
             } else {
                 model.imageUrl
