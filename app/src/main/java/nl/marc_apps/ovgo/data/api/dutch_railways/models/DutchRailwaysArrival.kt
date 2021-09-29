@@ -15,8 +15,7 @@ data class DutchRailwaysArrival(
     val plannedTrack: String = "-",
     val actualTrack: String = plannedTrack,
     val product: DutchRailwaysProduct,
-    val cancelled: Boolean = false,
-    val routeStations: Set<DutchRailwaysRouteStation> = emptySet()
+    val cancelled: Boolean = false
 ) {
     @Serializable
     data class DutchRailwaysProduct(
