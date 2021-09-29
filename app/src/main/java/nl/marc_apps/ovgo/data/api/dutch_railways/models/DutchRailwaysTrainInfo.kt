@@ -12,7 +12,7 @@ data class DutchRailwaysTrainInfo (
     val station: String? = null,
     val type: String? = null,
     @SerialName("vervoerder")
-    val operator: String,
+    val operator: String? = null,
     @SerialName("spoor")
     val platform: String = "-",
     @SerialName("materieeldelen")
@@ -22,7 +22,7 @@ data class DutchRailwaysTrainInfo (
     @SerialName("ingekort")
     val shortened: Boolean = false,
     @SerialName("lengte")
-    val actualAmountOfCoaches: Int,
+    val actualAmountOfCoaches: Int? = null,
     @SerialName("lengteInMeters")
     val lengthInMeters: Int? = null,
     @SerialName("geplandeLengte")

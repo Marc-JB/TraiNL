@@ -15,8 +15,6 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Time.Disabled"
-        app:layout_constraintEnd_toStartOf="@+id/label_direction"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="12:45" />
@@ -29,9 +27,8 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Destination.Disabled"
-        app:layout_constraintBottom_toTopOf="@+id/label_cancelled"
-        app:layout_constraintEnd_toStartOf="@+id/label_operator_and_type"
-        app:layout_constraintStart_toEndOf="@+id/label_departure_time"
+        app:layout_constraintEnd_toStartOf="@id/label_departure_time_alignment"
+        app:layout_constraintStart_toEndOf="@id/label_departure_time"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Breda" />
 
@@ -40,26 +37,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
+        android:layout_marginBottom="4dp"
         android:gravity="center_horizontal"
         android:text="@string/departure_cancelled"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Cancelled"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/label_direction"
         app:layout_constraintStart_toStartOf="@id/label_direction"
         app:layout_constraintTop_toBottomOf="@+id/label_direction"
+        app:layout_constraintVertical_bias="0"
         tools:visibility="visible" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label_operator_and_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:textAppearance="@style/TextAppearance.OVgo.Departure.OperatorAndCategory.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/label_direction"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        tools:text="R-net door Qbuzz\nStoptrein" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_departure_time_alignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="4dp"
-        android:gravity="end"
-        android:textAppearance="@style/TextAppearance.OVgo.Departure.OperatorAndCategory.Medium"
+        android:textAppearance="@style/TextAppearance.OVgo.Departure.Time.Disabled"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/label_direction"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="R-net door Qbuzz\nStoptrein" />
+        tools:text="12:45" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

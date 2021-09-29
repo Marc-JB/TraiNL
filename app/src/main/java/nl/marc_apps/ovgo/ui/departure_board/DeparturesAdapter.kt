@@ -140,21 +140,11 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
     private fun onBindCancelledDepartureViewHolder(departure: Departure, holder: DepartureViewHolder.CancelledDepartureViewHolder) {
         val binding = holder.binding
 
-        binding.labelDepartureTime.text = departure.actualDepartureTime.format(timeStyle = DateFormat.SHORT)
-        binding.labelDepartureTime.setTextColor(
-            ContextCompat.getColor(
-                binding.labelDepartureTime.context,
-                if(departure.isDelayed || departure.isCancelled) R.color.colorError else R.color.colorOK
-            )
-        )
+        val departureTimeText = departure.actualDepartureTime.format(timeStyle = DateFormat.SHORT)
+        binding.labelDepartureTime.text = departureTimeText
+        binding.labelDepartureTimeAlignment.text = departureTimeText
 
         binding.labelDirection.text = departure.direction?.name
-        binding.labelDirection.setTextColor(
-            ContextCompat.getColor(
-                binding.labelDirection.context,
-                if(departure.isCancelled) R.color.colorError else R.color.colorPrimary
-            )
-        )
 
         binding.labelCancelled.visibility = if(departure.isCancelled) View.VISIBLE else View.GONE
 

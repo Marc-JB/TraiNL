@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DesignSurface">
-    <option name="filePathToZoomLevelMap">
-      <map>
-        <entry key="..\:/Users/Marc/Documents/Apps/OVgo NextGen/app/src/main/res/layout/list_item_departure.xml" value="0.1279128672745694" />
-        <entry key="..\:/Users/Marc/Documents/Apps/OVgo NextGen/app/src/main/res/layout/list_item_departure_cancelled.xml" value="0.1279128672745694" />
-        <entry key="..\:/Users/Marc/Documents/Apps/OVgo NextGen/app/src/main/res/layout/partial_train_image.xml" value="0.14356884057971014" />
-        <entry key="..\:/Users/Marc/Documents/Apps/OVgo/app/src/main/res/layout/fragment_maintenance.xml" value="0.1279128672745694" />
-        <entry key="..\:/Users/Marc/Documents/Apps/OVgo/app/src/main/res/layout/list_item_departure.xml" value="0.2222222222222222" />
-        <entry key="..\:/Users/Marc/Documents/Apps/OVgo/app/src/main/res/layout/list_item_departure_cancelled.xml" value="0.2977777777777778" />
-        <entry key="..\:/Users/Marc/Documents/Apps/OVgo/app/src/main/res/layout/list_item_disruption.xml" value="0.1279128672745694" />
-      </map>
-    </option>
-  </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

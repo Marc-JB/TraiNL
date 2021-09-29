@@ -12,38 +12,53 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Time"
-        app:layout_constraintBottom_toBottomOf="@id/label_platform"
-        app:layout_constraintEnd_toStartOf="@+id/label_direction"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintBottom_toTopOf="@id/label_platform"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/label_platform"
+        app:layout_constraintTop_toBottomOf="@id/label_platform"
         tools:text="12:45" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label_direction"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:maxLines="1"
+        android:singleLine="true"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Destination"
         app:layout_constraintBottom_toBottomOf="@id/label_platform"
-        app:layout_constraintEnd_toStartOf="@+id/label_platform"
+        app:layout_constraintEnd_toStartOf="@+id/label_departure_time_alignment"
         app:layout_constraintStart_toEndOf="@+id/label_departure_time"
         app:layout_constraintTop_toTopOf="@id/label_platform"
-        tools:text="Breda" />
+        tools:text="@sample/departures.json/data/direction" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_departure_time_alignment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:minWidth="36dp"
+        android:textAppearance="@style/TextAppearance.OVgo.Departure.Time"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/label_platform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/label_platform"
+        tools:text="12:45" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label_platform"
         android:layout_width="36dp"
         android:layout_height="36dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="4dp"
         android:elevation="2dp"
         android:gravity="center"
         android:padding="8dp"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Platform"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/label_direction"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         tools:background="@drawable/platform_background_style"
         tools:text="4b" />
 

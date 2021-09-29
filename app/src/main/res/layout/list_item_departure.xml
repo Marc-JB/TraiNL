@@ -14,12 +14,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Time"
-        app:layout_constraintBottom_toTopOf="@id/barrier_main_info"
+        app:layout_constraintBottom_toTopOf="@id/label_platform"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_platform"
         tools:text="12:45" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -27,7 +25,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:ellipsize="end"
         android:gravity="center_horizontal"
@@ -59,15 +56,13 @@
         android:id="@+id/label_departure_time_alignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="4dp"
         android:minWidth="36dp"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Time"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@id/barrier_main_info"
+        app:layout_constraintBottom_toBottomOf="@id/label_platform"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/label_platform"
         tools:text="12:45" />
 
     <com.google.android.material.textview.MaterialTextView
