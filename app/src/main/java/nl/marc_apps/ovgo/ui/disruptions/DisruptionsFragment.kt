@@ -41,7 +41,7 @@ class DisruptionsFragment : Fragment() {
                 binding.placeholderListDisruptions.visibility = View.GONE
                 binding.listDisruptions.visibility = View.VISIBLE
                 binding.listDisruptions.scheduleLayoutAnimation()
-                disruptionsAdapter.submitList(it.toList())
+                disruptionsAdapter.submitList(it)
             }
         }
 

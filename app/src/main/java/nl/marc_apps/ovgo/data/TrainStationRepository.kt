@@ -19,13 +19,13 @@ class TrainStationRepository(
     private val dutchRailwaysApi: DutchRailwaysApi,
     private val preferences: DataStore<Preferences>
 ) {
-    private var trainStationsCache: Set<TrainStation>? = null
+    private var trainStationsCache: List<TrainStation>? = null
 
-    suspend fun getTrainStations(): Set<TrainStation> {
+    suspend fun getTrainStations(): List<TrainStation> {
         return getTrainStationsFromCache()
             ?: getTrainStationsFromDatabase()
             ?: getTrainStationsFromApi()
-            ?: emptySet()
+            ?: emptyList()
     }
 
     suspend fun getTrainStationById(uicCode: String): TrainStation? {
@@ -34,14 +34,17 @@ class TrainStationRepository(
             ?: getTrainStationsFromApi()?.find { it.uicCode == uicCode }
     }
 
-    private fun getTrainStationsFromCache(): Set<TrainStation>? {
+    private fun getTrainStationsFromCache(): List<TrainStation>? {
         val cachedTrainStations = trainStationsCache
         return if (!cachedTrainStations.isNullOrEmpty()) cachedTrainStations else null
     }
 
-    private suspend fun getTrainStationsFromDatabase(): Set<TrainStation>? {
+    private suspend fun getTrainStationsFromDatabase(): List<TrainStation>? {
         if (isDatabaseOutdated()) {
-            return getTrainStationsFromApi()
+            val stations = getTrainStationsFromApi()
+            if (!stations.isNullOrEmpty()) {
+                return stations
+            }
         }
 
         val databaseTrainStations = trainStationDao.getAll()
@@ -49,13 +52,13 @@ class TrainStationRepository(
         return if (!databaseTrainStations.isNullOrEmpty()) {
             databaseTrainStations.map {
                 it.asTrainStation()
-            }.toSet().also {
+            }.also {
                 trainStationsCache = it
             }
         } else null
     }
 
-    private suspend fun getTrainStationsFromApi(): Set<TrainStation>? {
+    private suspend fun getTrainStationsFromApi(): List<TrainStation>? {
         val trainStations = try {
             dutchRailwaysApi.getTrainStations().map {
                 it.asTrainStation()
@@ -70,7 +73,7 @@ class TrainStationRepository(
             }
         }
 
-        return trainStations.toSet().also {
+        return trainStations.also {
             trainStationsCache = it
         }
     }
@@ -83,9 +86,9 @@ class TrainStationRepository(
     }
 
     private suspend fun updateTrainStationDatabase(updatedTrainStations: Collection<TrainStation>) {
-        trainStationDao.insert(*updatedTrainStations.map {
+        trainStationDao.insert(updatedTrainStations.map {
             TrainStationEntity.fromTrainStation(it)
-        }.toTypedArray())
+        })
 
         preferences.edit {
             it[trainStationCacheDatePreference] = Date().time

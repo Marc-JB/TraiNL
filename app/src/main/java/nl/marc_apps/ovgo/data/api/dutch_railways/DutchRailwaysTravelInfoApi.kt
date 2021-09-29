@@ -13,14 +13,14 @@ interface DutchRailwaysTravelInfoApi {
         @Header("Accept-Language") language: String? = null,
         @Query("type") type: String? = null,
         @Query("isActive") isActive: Boolean? = null
-    ): Call<Set<DutchRailwaysDisruption>>
+    ): Call<List<DutchRailwaysDisruption>>
 
     @GET("v2/departures")
     fun getDeparturesByUicCode(
         @Header("Ocp-Apim-Subscription-Key") apiKey: String,
         @Query("uicCode") uicCode: String,
         @Query("lang") language: String? = null
-    ): Call<Payload<Departures<Set<DutchRailwaysDeparture>>>>
+    ): Call<Payload<Departures<List<DutchRailwaysDeparture?>>>>
 
     @GET("v2/arrivals")
     fun getArrivalsByUicCode(
@@ -32,7 +32,7 @@ interface DutchRailwaysTravelInfoApi {
     @GET("v2/stations")
     fun getStations(
         @Header("Ocp-Apim-Subscription-Key") apiKey: String
-    ): Call<Payload<Set<DutchRailwaysStation>>>
+    ): Call<Payload<List<DutchRailwaysStation>>>
 
     companion object {
         const val BASE_URL = "https://gateway.apiportal.ns.nl/reisinformatie-api/api/"

@@ -9,11 +9,11 @@ class DepartureRepository(
     private val trainInfoRepository: TrainInfoRepository,
     private val trainStationRepository: TrainStationRepository
 ) {
-    suspend fun getDepartures(station: TrainStation): Set<Departure> {
+    suspend fun getDepartures(station: TrainStation): List<Departure> {
         val departuresList = try {
             dutchRailwaysApi.getDeparturesForStation(station.uicCode)
         } catch (error: Throwable) {
-            return emptySet()
+            return emptyList()
         }
         val stationsList = trainStationRepository.getTrainStations()
         val trainInfoList = trainInfoRepository.getTrainInfo(departuresList.map { it.product.number.toInt() }.toSet())
@@ -34,6 +34,6 @@ class DepartureRepository(
                     trainInfoList.find { it.journeyId == journeyId.toInt() }
                 }
             )
-        }.toSet()
+        }
     }
 }

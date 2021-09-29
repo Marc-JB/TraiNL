@@ -12,9 +12,9 @@ import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption.
 class DisruptionsViewModel(
     private val dutchRailwaysApi: DutchRailwaysApi
 ) : ViewModel() {
-    private val mutableDisruptions = MutableLiveData<Set<DutchRailwaysDisruption>?>()
+    private val mutableDisruptions = MutableLiveData<List<DutchRailwaysDisruption>?>()
 
-    val disruptions: LiveData<Set<DutchRailwaysDisruption>?>
+    val disruptions: LiveData<List<DutchRailwaysDisruption>?>
         get() = mutableDisruptions
 
     fun loadDisruptions(allowReload: Boolean = false) {
@@ -31,7 +31,7 @@ class DisruptionsViewModel(
                     type = setOf(DisruptionType.CALAMITY, DisruptionType.DISRUPTION)
                 )
             } catch (error: Throwable) {
-                emptySet()
+                emptyList()
             }
 
             mutableDisruptions.postValue(disruptions)

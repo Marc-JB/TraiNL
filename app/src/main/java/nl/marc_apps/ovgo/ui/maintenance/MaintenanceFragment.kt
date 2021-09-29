@@ -41,7 +41,7 @@ class MaintenanceFragment : Fragment() {
                 binding.placeholderListMaintenance.visibility = View.GONE
                 binding.listMaintenance.visibility = View.VISIBLE
                 binding.listMaintenance.scheduleLayoutAnimation()
-                maintenanceAdapter.submitList(it.toList())
+                maintenanceAdapter.submitList(it)
             }
         }
 

@@ -31,7 +31,7 @@ class DutchRailwaysApi(
         language: String? = defaultLanguageCode,
         type: Set<DutchRailwaysDisruption.DisruptionType>? = null,
         isActive: Boolean? = null
-    ): Set<DutchRailwaysDisruption> {
+    ): List<DutchRailwaysDisruption> {
         try {
             return travelInfoApi.getDisruptions(
                 dutchRailwaysTravelInfoApiKey,
@@ -46,7 +46,7 @@ class DutchRailwaysApi(
         }
     }
 
-    suspend fun getTrainStations(): Set<DutchRailwaysStation> {
+    suspend fun getTrainStations(): List<DutchRailwaysStation> {
         try {
             return travelInfoApi.getStations(dutchRailwaysTravelInfoApiKey).await().payload
         } catch (error: Throwable) {
@@ -59,13 +59,13 @@ class DutchRailwaysApi(
     suspend fun getDeparturesForStation(
         uicCode: String,
         language: String? = defaultLanguageCode
-    ): Set<DutchRailwaysDeparture> {
+    ): List<DutchRailwaysDeparture> {
         try {
             return travelInfoApi.getDeparturesByUicCode(
                 dutchRailwaysTravelInfoApiKey,
                 uicCode = uicCode,
                 language = language
-            ).await().payload.departures
+            ).await().payload.departures.filterNotNull()
         } catch (error: Throwable) {
             Firebase.crashlytics.recordException(error)
             error.printStackTrace()
@@ -73,7 +73,7 @@ class DutchRailwaysApi(
         }
     }
 
-    suspend fun getTrainInfo(journeyNumber: Int): DutchRailwaysTrainInfo {
+    suspend fun getTrainInfo(journeyNumber: Int): DutchRailwaysTrainInfo? {
         try {
             return trainInfoApi.getTrainInfo(
                 dutchRailwaysTravelInfoApiKey,
@@ -86,12 +86,12 @@ class DutchRailwaysApi(
         }
     }
 
-    suspend fun getTrainInfo(journeys: Set<Int>): Set<DutchRailwaysTrainInfo> {
+    suspend fun getTrainInfo(journeys: Set<Int>): List<DutchRailwaysTrainInfo> {
         try {
             return trainInfoApi.getTrainInfo(
                 dutchRailwaysTravelInfoApiKey,
                 ids = journeys.joinToString(separator = ",")
-            ).await()
+            ).await().filterNotNull()
         } catch (error: Throwable) {
             Firebase.crashlytics.recordException(error)
             error.printStackTrace()

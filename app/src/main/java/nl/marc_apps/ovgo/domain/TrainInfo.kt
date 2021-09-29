@@ -7,7 +7,7 @@ import nl.marc_apps.ovgo.utils.readTypedList
 
 data class TrainInfo(
     val journeyId: Int,
-    val trainParts: Collection<TrainPart>
+    val trainParts: List<TrainPart>
 ): Parcelable {
     val facilities by lazy {
         TrainFacilities(
@@ -106,7 +106,7 @@ data class TrainInfo(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(journeyId)
-        parcel.writeTypedList(trainParts.toList())
+        parcel.writeTypedList(trainParts)
     }
 
     override fun describeContents() = 0

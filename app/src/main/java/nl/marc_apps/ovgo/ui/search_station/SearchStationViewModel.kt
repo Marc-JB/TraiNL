@@ -13,16 +13,16 @@ class SearchStationViewModel(
     private val trainStationRepository: TrainStationRepository,
     private val stringSimilarity: StringSimilarity
 ) : ViewModel() {
-    private var allStations = setOf<TrainStation>()
+    private var allStations = emptyList<TrainStation>()
 
     private val mutableIsLoadingData = MutableLiveData(true)
 
     val isLoadingData: LiveData<Boolean>
         get() = mutableIsLoadingData
 
-    private val mutableStationSuggestions = MutableLiveData(setOf<TrainStation>())
+    private val mutableStationSuggestions = MutableLiveData(emptyList<TrainStation>())
 
-    val stationSuggestions: LiveData<Set<TrainStation>>
+    val stationSuggestions: LiveData<List<TrainStation>>
         get() = mutableStationSuggestions
 
     init {
@@ -45,7 +45,7 @@ class SearchStationViewModel(
             allNames.maxOf {
                 stringSimilarity.calculateSimilarity(stationQuery, it)
             }
-        }.take(AUTOCOMPLETE_SUGGESTION_LIST_SIZE).toSet())
+        }.take(AUTOCOMPLETE_SUGGESTION_LIST_SIZE))
     }
 
     companion object {

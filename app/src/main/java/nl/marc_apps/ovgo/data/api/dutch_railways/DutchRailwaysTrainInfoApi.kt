@@ -13,7 +13,7 @@ interface DutchRailwaysTrainInfoApi {
         @Header("Ocp-Apim-Subscription-Key") apiKey: String,
         @Path("journeyNumber") journeyNumber: Int,
         @Query("features") features: String? = null
-    ): Call<DutchRailwaysTrainInfo>
+    ): Call<DutchRailwaysTrainInfo?>
 
     @GET("v1/trein")
     fun getTrainInfo(
@@ -21,7 +21,7 @@ interface DutchRailwaysTrainInfoApi {
         @Query("ids") ids: String,
         @Query("features") features: String? = null,
         @Query("all") informationAboutAllStations: Boolean? = null
-    ): Call<Set<DutchRailwaysTrainInfo>>
+    ): Call<List<DutchRailwaysTrainInfo?>>
 
     companion object {
         const val BASE_URL = "https://gateway.apiportal.ns.nl/virtual-train-api/api/"

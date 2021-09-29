@@ -6,19 +6,19 @@ import nl.marc_apps.ovgo.domain.TrainInfo
 class TrainInfoRepository(
     private val dutchRailwaysApi: DutchRailwaysApi
 ) {
-    suspend fun getTrainInfo(ids: Set<Int>): Set<TrainInfo> {
+    suspend fun getTrainInfo(ids: Set<Int>): List<TrainInfo> {
         if (ids.isEmpty()) {
-            return emptySet()
+            return emptyList()
         }
 
         val trainInfoList = try {
             dutchRailwaysApi.getTrainInfo(ids)
         } catch (error: Throwable) {
-            emptySet()
+            emptyList()
         }
 
         return trainInfoList.map {
             it.asTrainInfo()
-        }.toSet()
+        }
     }
 }

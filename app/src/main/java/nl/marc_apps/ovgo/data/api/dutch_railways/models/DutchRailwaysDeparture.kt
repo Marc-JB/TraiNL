@@ -50,7 +50,7 @@ data class DutchRailwaysDeparture(
             cancelled,
             routeStations.mapNotNull {
                 resolveUicCode(it.uicCode) ?: resolveStationName(it.mediumName)
-            }.toSet()
+            }
         )
     }
 

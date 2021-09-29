@@ -26,9 +26,9 @@ class DepartureBoardViewModel(
     val currentStation: LiveData<TrainStation>
         get() = mutableCurrentStation
 
-    private val mutableDepartures = MutableLiveData<Set<Departure>?>()
+    private val mutableDepartures = MutableLiveData<List<Departure>?>()
 
-    val departures: LiveData<Set<Departure>?>
+    val departures: LiveData<List<Departure>?>
         get() = mutableDepartures
 
     fun loadDeparturesForLastKnownStation() {

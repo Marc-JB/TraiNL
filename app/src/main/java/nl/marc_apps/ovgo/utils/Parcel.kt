@@ -9,7 +9,7 @@ fun Parcel.readStringCollection(): Collection<String> {
     return list
 }
 
-fun <T : Parcelable> Parcel.readTypedList(creator: Parcelable.Creator<T>): Collection<T> {
+fun <T : Parcelable> Parcel.readTypedList(creator: Parcelable.Creator<T>): List<T> {
     val list = mutableListOf<T>()
     readTypedList(list, creator)
     return list

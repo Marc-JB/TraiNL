@@ -14,7 +14,7 @@ interface TrainStationDao {
     suspend fun getByUicCode(uicCode: String): TrainStationEntity?
 
     @Insert
-    suspend fun insert(vararg trainStations: TrainStationEntity)
+    suspend fun insert(trainStations: Collection<TrainStationEntity>)
 
     @Delete
     suspend fun delete(trainStation: TrainStationEntity)

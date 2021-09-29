@@ -52,7 +52,7 @@ class DepartureBoardFragment : Fragment() {
             } else {
                 binding.placeholderListDepartures.visibility = View.GONE
                 binding.listDepartures.visibility = View.VISIBLE
-                departuresAdapter.submitList(it.toList()) {
+                departuresAdapter.submitList(it) {
                     binding.listDepartures.scheduleLayoutAnimation()
                 }
             }
