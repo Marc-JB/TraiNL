@@ -14,4 +14,6 @@
     <string name="dutch_railways_api_language_code">nl</string>
     <string name="app_name">TreiNL</string>
     <string name="ok">Oké</string>
+    <string name="operator_rnet_by_qbuzz">R-net door Qbuzz</string>
+    <string name="operator_rnet_by_ns">R-net door NS</string>
 </resources>

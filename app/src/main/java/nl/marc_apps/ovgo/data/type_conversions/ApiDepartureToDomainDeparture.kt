@@ -1,14 +1,20 @@
 package nl.marc_apps.ovgo.data.type_conversions
 
+import android.content.Context
+import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
 import nl.marc_apps.ovgo.domain.TrainStation
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class ApiDepartureToDomainDeparture(
     private val stations: List<TrainStation>,
     private val resolveTrainInfo: (String) -> TrainInfo?
-) {
+): KoinComponent {
+    private val applicationContext by inject<Context>()
+
     private fun resolveUicCode(uicCode: String) = stations.find { it.uicCode == uicCode  }
 
     private fun resolveStationName(stationName: String): TrainStation? {
@@ -19,12 +25,16 @@ class ApiDepartureToDomainDeparture(
         }
     }
 
-    private fun getOperator(model: DutchRailwaysDeparture) = when {
-        model.product.longCategoryName == TRAIN_SERVICE_THALYS -> TRAIN_SERVICE_THALYS
-        model.product.longCategoryName == TRAIN_SERVICE_EUROSTAR -> TRAIN_SERVICE_EUROSTAR
-        !model.product.operatorName.equals(OPERATOR_RNET, ignoreCase = true) -> model.product.operatorName
-        model.product.longCategoryName.equals(TRAIN_CATEGORY_SPRINTER, ignoreCase = true) -> OPERATOR_RNET_BY_NS
-        else -> OPERATOR_RNET_BY_QBUZZ
+    private fun getOperator(model: DutchRailwaysDeparture): String {
+        val isRnet = model.product.operatorName.equals(OPERATOR_RNET, ignoreCase = true)
+        val isSprinterTrain = model.product.longCategoryName.equals(TRAIN_CATEGORY_SPRINTER, ignoreCase = true)
+        return when {
+            model.product.longCategoryName == TRAIN_SERVICE_THALYS -> TRAIN_SERVICE_THALYS
+            model.product.longCategoryName == TRAIN_SERVICE_EUROSTAR -> TRAIN_SERVICE_EUROSTAR
+            !isRnet -> model.product.operatorName
+            isSprinterTrain -> applicationContext.getString(R.string.operator_rnet_by_ns)
+            else -> applicationContext.getString(R.string.operator_rnet_by_qbuzz)
+        }
     }
 
     private fun getDirectionStation(model: DutchRailwaysDeparture): TrainStation? {
@@ -59,11 +69,5 @@ class ApiDepartureToDomainDeparture(
         private const val OPERATOR_RNET = "R-net"
 
         private const val TRAIN_CATEGORY_SPRINTER = "Sprinter"
-
-        // TODO: Migrate this constant to a string resource
-        private const val OPERATOR_RNET_BY_QBUZZ = "R-net door Qbuzz"
-
-        // TODO: Migrate this constant to a string resource
-        private const val OPERATOR_RNET_BY_NS = "R-net door NS"
     }
 }
