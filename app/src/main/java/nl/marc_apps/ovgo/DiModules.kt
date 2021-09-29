@@ -45,17 +45,9 @@ object DiModules {
             get<AppDatabase>().trainStationDao()
         }
 
-        single {
-            TrainStationRepository(get(), get(), get())
-        }
-
-        single {
-            TrainInfoRepository(get())
-        }
-
-        single {
-            DepartureRepository(get(), get(), get())
-        }
+        single { TrainStationRepository(get(), get(), get()) }
+        single { TrainInfoRepository(get()) }
+        single { DepartureRepository(get(), get(), get()) }
     }
 
     val viewModelsModule = module {
