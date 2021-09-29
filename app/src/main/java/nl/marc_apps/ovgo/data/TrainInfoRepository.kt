@@ -1,6 +1,7 @@
 package nl.marc_apps.ovgo.data
 
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
+import nl.marc_apps.ovgo.data.type_conversions.TrainInfoConversions
 import nl.marc_apps.ovgo.domain.TrainInfo
 
 class TrainInfoRepository(
@@ -18,7 +19,7 @@ class TrainInfoRepository(
         }
 
         return trainInfoList.map {
-            it.asTrainInfo()
+            TrainInfoConversions.convertApiToDomainModel(it)
         }
     }
 }
