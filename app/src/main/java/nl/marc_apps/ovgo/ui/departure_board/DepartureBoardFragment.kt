@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.ui.home
+package nl.marc_apps.ovgo.ui.departure_board
 
 import android.os.Bundle
 import android.view.LayoutInflater

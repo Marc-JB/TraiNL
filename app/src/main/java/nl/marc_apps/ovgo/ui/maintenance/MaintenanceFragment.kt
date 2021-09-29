@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.ui.home
+package nl.marc_apps.ovgo.ui.maintenance
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import nl.marc_apps.ovgo.databinding.FragmentMaintenanceBinding
+import nl.marc_apps.ovgo.ui.DisruptionsAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MaintenanceFragment : Fragment() {

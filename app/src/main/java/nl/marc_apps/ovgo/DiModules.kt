@@ -13,9 +13,9 @@ import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.db.AppDatabase
 import nl.marc_apps.ovgo.search.JaroWinklerStringSimilarity
 import nl.marc_apps.ovgo.search.StringSimilarity
-import nl.marc_apps.ovgo.ui.home.DepartureBoardViewModel
-import nl.marc_apps.ovgo.ui.home.DisruptionsViewModel
-import nl.marc_apps.ovgo.ui.home.MaintenanceViewModel
+import nl.marc_apps.ovgo.ui.departure_board.DepartureBoardViewModel
+import nl.marc_apps.ovgo.ui.disruptions.DisruptionsViewModel
+import nl.marc_apps.ovgo.ui.maintenance.MaintenanceViewModel
 import nl.marc_apps.ovgo.ui.search_station.SearchStationViewModel
 import nl.marc_apps.ovgo.utils.buildRoomDatabase
 import org.koin.androidx.viewmodel.dsl.viewModel

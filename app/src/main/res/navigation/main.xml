@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/departure_board"
-        android:name="nl.marc_apps.ovgo.ui.home.DepartureBoardFragment"
+        android:name="nl.marc_apps.ovgo.ui.departure_board.DepartureBoardFragment"
         android:label="Departure board"
         tools:layout="@layout/fragment_departure_board">
 
@@ -33,13 +33,13 @@
 
     <fragment
         android:id="@+id/disruptions"
-        android:name="nl.marc_apps.ovgo.ui.home.DisruptionsFragment"
+        android:name="nl.marc_apps.ovgo.ui.disruptions.DisruptionsFragment"
         android:label="Disruptions"
         tools:layout="@layout/fragment_disruptions" />
 
     <fragment
         android:id="@+id/maintenance"
-        android:name="nl.marc_apps.ovgo.ui.home.MaintenanceFragment"
+        android:name="nl.marc_apps.ovgo.ui.maintenance.MaintenanceFragment"
         android:label="Maintenance"
         tools:layout="@layout/fragment_maintenance" />
 

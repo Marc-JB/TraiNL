@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.ui.home
+package nl.marc_apps.ovgo.ui.maintenance
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
