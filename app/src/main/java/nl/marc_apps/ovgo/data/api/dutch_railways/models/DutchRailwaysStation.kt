@@ -40,6 +40,7 @@ data class DutchRailwaysStation(
     @Serializable(with = DateSerializer::class)
     val sinceDate: Date
 ) : java.io.Serializable {
+    // TODO: Remove this from model
     fun asTrainStation(): TrainStation {
         return TrainStation(
             uicCode,
