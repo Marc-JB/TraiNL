@@ -25,7 +25,7 @@ data class Departure(
     val platformChanged: Boolean
         get() = actualTrack != plannedTrack
 
-    val delayInMs: Long
+    private val delayInMs: Long
         get() = actualDepartureTime.time - plannedDepartureTime.time
 
     val delayInMinutesRounded
@@ -33,9 +33,6 @@ data class Departure(
 
     val isDelayed
         get() = delayInMinutesRounded > 0
-
-    val departureTimeText
-        get() = actualDepartureTime.format(timeStyle = DateFormat.SHORT)
 
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
