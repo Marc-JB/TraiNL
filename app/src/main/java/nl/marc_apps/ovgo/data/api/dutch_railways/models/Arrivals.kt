@@ -3,7 +3,7 @@ package nl.marc_apps.ovgo.data.api.dutch_railways.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Departures(
+data class Arrivals(
     val source: String? = null,
-    val departures: List<DutchRailwaysDeparture?>
+    val arrivals: List<DutchRailwaysArrival?>
 )

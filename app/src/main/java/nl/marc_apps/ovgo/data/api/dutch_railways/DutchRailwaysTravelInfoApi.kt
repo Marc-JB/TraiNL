@@ -20,14 +20,14 @@ interface DutchRailwaysTravelInfoApi {
         @Header("Ocp-Apim-Subscription-Key") apiKey: String,
         @Query("uicCode") uicCode: String,
         @Query("lang") language: String? = null
-    ): Call<Payload<Departures<List<DutchRailwaysDeparture?>>>>
+    ): Call<Payload<Departures>>
 
     @GET("v2/arrivals")
     fun getArrivalsByUicCode(
         @Header("Ocp-Apim-Subscription-Key") apiKey: String,
         @Query("uicCode") uicCode: String,
         @Query("lang") language: String? = null
-    ): Call<Any> // TODO: Implement response type
+    ): Call<Payload<Arrivals>>
 
     @GET("v2/stations")
     fun getStations(
