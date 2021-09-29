@@ -7,6 +7,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "OVgo"
+rootProject.name = "TraiNL"
 
 include(":app")
