@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/departure_board"
+        android:enabled="true"
+        android:icon="@drawable/ic_departure_board"
+        android:title="@string/departure_board" />
+
+    <item
+        android:id="@+id/disruptions"
+        android:enabled="true"
+        android:icon="@drawable/ic_error"
+        android:title="@string/disruptions" />
+
+    <item
+        android:id="@+id/maintenance"
+        android:enabled="true"
+        android:icon="@drawable/ic_warning"
+        android:title="@string/maintenance" />
+
+</menu>

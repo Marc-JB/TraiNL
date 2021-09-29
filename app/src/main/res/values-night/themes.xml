@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Base application theme. -->
+  <!--<style name="Theme.OVgo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+      &lt;!&ndash; Primary brand color. &ndash;&gt;
+      <item name="colorPrimary">@color/colorPrimaryLight</item>
+      <item name="colorPrimaryVariant">@color/colorPrimary</item>
+      <item name="colorOnPrimary">@color/colorOnPrimaryLight</item>
+      &lt;!&ndash; Secondary brand color. &ndash;&gt;
+      <item name="colorSecondary">@color/colorAccentLight</item>
+      <item name="colorSecondaryVariant">@color/colorAccent</item>
+      <item name="colorOnSecondary">@color/colorOnAccent</item>
+      &lt;!&ndash; Status bar color. &ndash;&gt;
+      <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+      &lt;!&ndash; Customize your theme here. &ndash;&gt;
+      <item name="android:windowBackground">#212121</item>
+  </style>-->
+</resources>

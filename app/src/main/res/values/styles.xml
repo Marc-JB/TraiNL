@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Shapes -->
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- Main text styles -->
+
+    <style name="TextAppearance.OVgo.SectionTitle" parent="@style/TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.OVgo.SectionTitle.Disabled" parent="@style/TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.OVgo.SectionText.Medium" parent="@style/TextAppearance.MaterialComponents.Caption" />
+
+    <style name="TextAppearance.OVgo.SectionText.Small" parent="@style/TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <!-- Specific text styles -->
+
+    <style name="TextAppearance.OVgo.Departure.Destination" parent="@style/TextAppearance.OVgo.SectionTitle" />
+
+    <style name="TextAppearance.OVgo.Departure.Destination.Disabled" parent="@style/TextAppearance.OVgo.SectionTitle.Disabled" />
+
+    <style name="TextAppearance.OVgo.Departure.Time" parent="@style/TextAppearance.OVgo.SectionTitle" />
+
+    <style name="TextAppearance.OVgo.Departure.Time.Disabled" parent="@style/TextAppearance.OVgo.SectionTitle.Disabled" />
+
+    <style name="TextAppearance.OVgo.Departure.RouteStations.Medium" parent="@style/TextAppearance.OVgo.SectionText.Medium" />
+
+    <style name="TextAppearance.OVgo.Departure.OperatorAndCategory.Medium" parent="@style/TextAppearance.OVgo.SectionText.Medium" />
+
+    <style name="TextAppearance.OVgo.Departure.Cancelled" parent="@style/TextAppearance.OVgo.SectionText.Medium">
+        <item name="android:textColor">@color/colorError</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.OVgo.Departure.RouteStations.Small" parent="@style/TextAppearance.OVgo.SectionText.Small" />
+
+    <style name="TextAppearance.OVgo.Departure.OperatorAndCategory.Small" parent="@style/TextAppearance.OVgo.SectionText.Small" />
+
+    <style name="TextAppearance.OVgo.Departure.Platform" parent="@style/TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@color/colorOnPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="autoSizeMaxTextSize">48sp</item>
+        <item name="autoSizeMinTextSize">10sp</item>
+        <item name="autoSizeStepGranularity">4sp</item>
+        <item name="autoSizeTextType">uniform</item>
+    </style>
+
+    <style name="TextAppearance.OVgo.StationSearch.Item.Title" parent="@style/TextAppearance.OVgo.SectionTitle" />
+
+    <style name="TextAppearance.OVgo.StationSearch.Item.SubText" parent="@style/TextAppearance.OVgo.SectionText.Medium" />
+
+    <style name="TextAppearance.OVgo.Disruption.Title" parent="@style/TextAppearance.OVgo.SectionTitle" />
+
+    <style name="TextAppearance.OVgo.Disruption.SubText" parent="@style/TextAppearance.OVgo.SectionText.Medium" />
+
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="train_image_spacing_start">104dp</dimen>
+    <dimen name="train_image_height">40dp</dimen>
+</resources>

@@ -3,6 +3,7 @@ name: Android build
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,10 +15,10 @@ jobs:
         uses: actions/checkout@v2
 
       # Set up JDK
-      - name: Set up JDK 1.8
+      - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
+          java-version: 11
 
       # Cache
       - uses: actions/cache@v2
@@ -30,27 +31,33 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      # Add Google Services File
+      - name: Add google-services.json
+        run: |
+          cd app
+          cat > google-services.json << ENDOFFILE 
+          ${{ secrets.GOOGLE_SERVICES_JSON }} 
+          ENDOFFILE
+          cd ..
+
       # Build
       - name: Build with Gradle
-        run: ./gradlew build bundleRelease
+        run: ./gradlew bundleRelease assembleRelease
         env:
-          NSR_KEYS_TRAVEL_API: ${{ secrets.NSR_KEYS_TRAVEL_API }}
-          NSR_KEYS_APP_API: ${{ secrets.NSR_KEYS_APP_API }}
+          DUTCHRAILWAYS_TRAVELINFOAPI_KEY: ${{ secrets.DUTCHRAILWAYS_TRAVELINFOAPI_KEY }}
           ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
 
-      # Move artifacts
-      - name: Move artifacts
-        run: |
-          cd app/build/outputs
-          mkdir out
-          find bundle -type f -exec sh -c 'mv "$@" out' _ {} +
-          cd ../../..
-
       # Upload artifacts
       - uses: actions/upload-artifact@v2
         with:
-          name: app-release
-          path: app/build/outputs/out/app-*-release.aab
+          name: TraiNL-release.aab
+          path: app/build/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: TraiNL-release.apk
+          path: app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error

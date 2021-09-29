@@ -1,6 +1,12 @@
-rootProject.name = "OVgo"
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 
-include(":domain")
-include(":ui")
-include(":api")
+rootProject.name = "TraiNL"
+
 include(":app")
