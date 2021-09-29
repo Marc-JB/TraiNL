@@ -1,6 +1,7 @@
 package nl.marc_apps.ovgo.data
 
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
+import nl.marc_apps.ovgo.data.type_conversions.ApiDepartureToDomainDeparture
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainStation
 
@@ -18,22 +19,12 @@ class DepartureRepository(
         val stationsList = trainStationRepository.getTrainStations()
         val trainInfoList = trainInfoRepository.getTrainInfo(departuresList.map { it.product.number.toInt() }.toSet())
 
+        val converter = ApiDepartureToDomainDeparture(stationsList, resolveTrainInfo = { journeyId ->
+            trainInfoList.find { it.journeyId == journeyId.toInt() }
+        })
+
         return departuresList.map {
-            it.asDeparture(
-                resolveUicCode = { uicCode ->
-                    stationsList.find { it.uicCode == uicCode  }
-                },
-                resolveStationName = { stationName ->
-                    stationsList.find {
-                        it.name == stationName
-                                || stationName in station.alternativeNames
-                                || stationName in station.alternativeSearches
-                    }
-                },
-                resolveTrainInfo = { journeyId ->
-                    trainInfoList.find { it.journeyId == journeyId.toInt() }
-                }
-            )
+            converter.convert(it)
         }
     }
 }

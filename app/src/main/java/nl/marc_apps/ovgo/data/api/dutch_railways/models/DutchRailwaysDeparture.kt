@@ -21,41 +21,6 @@ data class DutchRailwaysDeparture(
     val cancelled: Boolean = false,
     val routeStations: Set<DutchRailwaysRouteStation> = emptySet()
 ) {
-    // TODO: Remove this from model
-    fun asDeparture(
-        resolveUicCode: (String) -> TrainStation?,
-        resolveStationName: (String) -> TrainStation?,
-        resolveTrainInfo: (String) -> TrainInfo?
-    ): Departure {
-        val resolvedDirection = direction?.let(resolveStationName)
-            ?: routeStations.lastOrNull()?.uicCode?.let(resolveUicCode)
-            ?: routeStations.lastOrNull()?.mediumName?.let(resolveStationName)
-
-        val operator = when {
-            product.longCategoryName == TRAIN_SERVICE_THALYS -> TRAIN_SERVICE_THALYS
-            product.longCategoryName == TRAIN_SERVICE_EUROSTAR -> TRAIN_SERVICE_EUROSTAR
-            !product.operatorName.equals(OPERATOR_RNET, ignoreCase = true) -> product.operatorName
-            product.longCategoryName.equals(TRAIN_CATEGORY_SPRINTER, ignoreCase = true) -> OPERATOR_RNET_BY_NS
-            else -> OPERATOR_RNET_BY_QBUZZ
-        }
-
-        return Departure(
-            product.number,
-            resolvedDirection,
-            plannedDateTime,
-            actualDateTime,
-            plannedTrack,
-            actualTrack,
-            resolveTrainInfo(product.number),
-            operator,
-            product.longCategoryName,
-            cancelled,
-            routeStations.mapNotNull {
-                resolveUicCode(it.uicCode) ?: resolveStationName(it.mediumName)
-            }
-        )
-    }
-
     @Serializable
     data class DutchRailwaysProduct(
         val number: String,
@@ -68,20 +33,4 @@ data class DutchRailwaysDeparture(
         val uicCode: String,
         val mediumName: String
     )
-
-    companion object {
-        private const val TRAIN_SERVICE_THALYS = "Thalys"
-
-        private const val TRAIN_SERVICE_EUROSTAR = "Eurostar"
-
-        private const val OPERATOR_RNET = "R-net"
-
-        private const val TRAIN_CATEGORY_SPRINTER = "Sprinter"
-
-        // TODO: Migrate this constant to a string resource
-        private const val OPERATOR_RNET_BY_QBUZZ = "R-net door Qbuzz"
-
-        // TODO: Migrate this constant to a string resource
-        private const val OPERATOR_RNET_BY_NS = "R-net door NS"
-    }
 }
