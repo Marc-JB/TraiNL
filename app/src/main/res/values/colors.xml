@@ -17,4 +17,6 @@
     <color name="colorOK">#388E3C</color>
 
     <color name="colorError">#B00020</color>
+
+    <color name="backgroundColor">#FAFAFA</color>
 </resources>
