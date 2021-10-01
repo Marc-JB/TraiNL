@@ -35,7 +35,7 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
 
             val description = listOfNotNull(
                 activeTimeSpans.firstOrNull()?.situation?.label,
-                disruption.summaryAdditionalTravelTime?.label,
+                disruption.summaryAdditionalTravelTime?.label ?: activeTimeSpans.firstOrNull()?.additionalTravelTime?.label,
                 disruption.expectedDuration?.description
             ).joinToString(separator = " ")
 
