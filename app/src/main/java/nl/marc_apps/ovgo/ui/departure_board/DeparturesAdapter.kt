@@ -1,5 +1,6 @@
 package nl.marc_apps.ovgo.ui.departure_board
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,8 @@ import nl.marc_apps.ovgo.databinding.ListItemDepartureCancelledBinding
 import nl.marc_apps.ovgo.databinding.PartialTrainImageBinding
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
+import nl.marc_apps.ovgo.ui.TrainImageBorderTransformation
+import nl.marc_apps.ovgo.ui.TrainImages
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
 
@@ -127,13 +130,8 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
             binding.holderTrainImages.removeViews(LAYOUT_CHILD_COUNT_SINGLE_VIEW, binding.holderTrainImages.childCount - LAYOUT_CHILD_COUNT_SINGLE_VIEW)
         }
 
-        trainInfo?.trainParts?.forEach {
-            val imageView = PartialTrainImageBinding.inflate(
-                LayoutInflater.from(binding.holderTrainImages.context),
-                binding.holderTrainImages,
-                true
-            )
-            imageView.root.load(it.imageUrl)
+        trainInfo?.trainParts?.mapNotNull { it.imageUrl }?.let {
+            TrainImages.loadView(binding.holderTrainImages, it)
         }
     }
 

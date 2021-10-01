@@ -2,6 +2,6 @@
 <resources>
     <color name="backgroundColor">#212121</color>
 
-    <color name="sectionTitleWarningColor">@color/colorError</color>
+    <color name="sectionTitleWarningColor">@color/colorErrorLight</color>
     <color name="sectionTitleColor">@color/colorPrimaryLight</color>
 </resources>

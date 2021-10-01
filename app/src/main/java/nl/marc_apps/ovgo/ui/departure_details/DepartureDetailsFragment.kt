@@ -13,6 +13,8 @@ import nl.marc_apps.ovgo.databinding.FragmentDepartureDetailsBinding
 import nl.marc_apps.ovgo.databinding.PartialTrainImageBinding
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
+import nl.marc_apps.ovgo.ui.TrainImageBorderTransformation
+import nl.marc_apps.ovgo.ui.TrainImages
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
 
@@ -128,13 +130,9 @@ class DepartureDetailsFragment : Fragment() {
             else View.VISIBLE
 
         binding.holderTrainImages.removeAllViews()
-        trainInfo?.trainParts?.forEach {
-            val imageView = PartialTrainImageBinding.inflate(
-                LayoutInflater.from(binding.holderTrainImages.context),
-                binding.holderTrainImages,
-                true
-            )
-            imageView.root.load(it.imageUrl)
+
+        trainInfo?.trainParts?.mapNotNull { it.imageUrl }?.let {
+            TrainImages.loadView(binding.holderTrainImages, it)
         }
     }
 }

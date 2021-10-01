@@ -27,4 +27,7 @@ c
     <color name="sectionTitleWarningColor">@color/colorError</color>
     <color name="sectionTitleColor">@color/colorPrimary</color>
 
+    <color name="trainImageBorder">#FAFAFA</color>
+    <color name="trainImageBorderAlternative">@color/colorPrimary</color>
+
 </resources>
