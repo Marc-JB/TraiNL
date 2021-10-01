@@ -24,9 +24,9 @@ object TrainInfoConversions {
     private const val TRAIN_TYPE_EUROSTAR = "Eurostar"
 
     private fun isQbuzzDMG(model: DutchRailwaysTrainInfo): Boolean {
-        return model.operator == OPERATOR_NAME_RNET && model.actualTrainParts.none {
+        return model.journeyNumber in 7100..7299 || (model.operator == OPERATOR_NAME_RNET && model.actualTrainParts.none {
             it.type == TRAIN_TYPE_RNET_BY_NS
-        }
+        })
     }
 
     fun convertApiToDomainModel(model: DutchRailwaysTrainInfo): TrainInfo {
