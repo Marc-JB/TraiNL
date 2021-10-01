@@ -49,7 +49,7 @@ class DepartureDetailsFragment : Fragment() {
         binding.labelDepartureTime.setTextColor(
             ContextCompat.getColor(
                 view.context,
-                if(departure.isDelayed || departure.isCancelled) R.color.colorError else R.color.colorPrimary
+                if(departure.isDelayed || departure.isCancelled) R.color.sectionTitleWarningColor else R.color.sectionTitleColor
             )
         )
 
@@ -57,7 +57,7 @@ class DepartureDetailsFragment : Fragment() {
         binding.labelDirection.setTextColor(
             ContextCompat.getColor(
                 binding.labelDirection.context,
-                if(departure.isCancelled) R.color.colorError else R.color.colorPrimary
+                if(departure.isCancelled) R.color.sectionTitleWarningColor else R.color.sectionTitleColor
             )
         )
 

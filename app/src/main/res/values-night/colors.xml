@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="backgroundColor">#212121</color>
+
+    <color name="sectionTitleWarningColor">@color/colorError</color>
+    <color name="sectionTitleColor">@color/colorPrimaryLight</color>
 </resources>

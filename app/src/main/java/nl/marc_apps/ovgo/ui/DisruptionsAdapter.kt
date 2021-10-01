@@ -59,7 +59,7 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
                     .show()
             }
         } else if (disruption is DutchRailwaysDisruption.Calamity) {
-            holder.binding.labelTitle.setTextColor(context.getColor(R.color.colorError))
+            holder.binding.labelTitle.setTextColor(context.getColor(R.color.sectionTitleWarningColor))
 
             holder.binding.labelDescription.text = disruption.description
 

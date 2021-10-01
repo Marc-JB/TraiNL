@@ -74,7 +74,7 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
         binding.labelDepartureTime.setTextColor(
             ContextCompat.getColor(
                 binding.labelDepartureTime.context,
-                if(departure.isDelayed) R.color.colorError else R.color.colorPrimary
+                if(departure.isDelayed) R.color.sectionTitleWarningColor else R.color.sectionTitleColor
             )
         )
 
