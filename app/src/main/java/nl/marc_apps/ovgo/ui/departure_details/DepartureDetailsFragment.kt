@@ -38,7 +38,7 @@ class DepartureDetailsFragment : Fragment() {
         val departure = navigationArgs.departure
         val trainInfo = departure.trainInfo
 
-        binding.labelDepartureTime.text = if(departure.isDelayed) {
+        binding.labelDepartureTime.text = if (departure.isDelayed) {
             view.context.getString(
                 R.string.departure_time_delayed,
                 departure.actualDepartureTime.format(timeStyle = DateFormat.SHORT),
@@ -51,7 +51,7 @@ class DepartureDetailsFragment : Fragment() {
         binding.labelDepartureTime.setTextColor(
             ContextCompat.getColor(
                 view.context,
-                if(departure.isDelayed || departure.isCancelled) R.color.sectionTitleWarningColor else R.color.sectionTitleColor
+                if (departure.isDelayed || departure.isCancelled) R.color.sectionTitleWarningColor else R.color.sectionTitleColor
             )
         )
 
@@ -59,28 +59,28 @@ class DepartureDetailsFragment : Fragment() {
         binding.labelDirection.setTextColor(
             ContextCompat.getColor(
                 binding.labelDirection.context,
-                if(departure.isCancelled) R.color.sectionTitleWarningColor else R.color.sectionTitleColor
+                if (departure.isCancelled) R.color.sectionTitleWarningColor else R.color.sectionTitleColor
             )
         )
 
         val upcomingStations = departure.stationsOnRoute.joinToString { it.name }
-        binding.labelUpcomingStations.text = if(departure.stationsOnRoute.isNotEmpty()) {
+        binding.labelUpcomingStations.text = if (departure.stationsOnRoute.isNotEmpty()) {
             view.context.getString(R.string.departure_via_stations, upcomingStations)
         } else {
             ""
         }
         binding.labelUpcomingStations.visibility =
-            if(departure.stationsOnRoute.isEmpty() || departure.isCancelled) View.GONE
+            if (departure.stationsOnRoute.isEmpty() || departure.isCancelled) View.GONE
             else View.VISIBLE
 
-        binding.labelCancelled.visibility = if(departure.isCancelled) View.VISIBLE else View.GONE
+        binding.labelCancelled.visibility = if (departure.isCancelled) View.VISIBLE else View.GONE
 
         binding.labelPlatform.setBackgroundResource(
-            if(departure.platformChanged || departure.isCancelled) R.drawable.platform_background_style_red
+            if (departure.platformChanged || departure.isCancelled) R.drawable.platform_background_style_red
             else R.drawable.platform_background_style
         )
         binding.labelPlatform.text = departure.actualTrack
-        binding.labelPlatform.visibility = if(departure.isCancelled) View.GONE else View.VISIBLE
+        binding.labelPlatform.visibility = if (departure.isCancelled) View.GONE else View.VISIBLE
 
         loadFacilities(departure, trainInfo)
 
@@ -96,37 +96,37 @@ class DepartureDetailsFragment : Fragment() {
     private fun loadFacilities(departure: Departure, trainInfo: TrainInfo?) {
         val facilities = trainInfo?.facilities ?: TrainInfo.TrainFacilities()
         binding.iconWheelchairAccessible.visibility =
-            if(!departure.isCancelled && facilities.isWheelChairAccessible) View.VISIBLE
+            if (!departure.isCancelled && facilities.isWheelChairAccessible) View.VISIBLE
             else View.GONE
 
         binding.iconToilet.visibility =
-            if(!departure.isCancelled && facilities.hasToilet) View.VISIBLE
+            if (!departure.isCancelled && facilities.hasToilet) View.VISIBLE
             else View.GONE
 
         binding.iconBicycles.visibility =
-            if(!departure.isCancelled && facilities.hasBicycleCompartment) View.VISIBLE
+            if (!departure.isCancelled && facilities.hasBicycleCompartment) View.VISIBLE
             else View.GONE
 
         binding.iconWifi.visibility =
-            if(!departure.isCancelled && facilities.hasFreeWifi) View.VISIBLE
+            if (!departure.isCancelled && facilities.hasFreeWifi) View.VISIBLE
             else View.GONE
 
         binding.iconPowerSockets.visibility =
-            if(!departure.isCancelled && facilities.hasPowerSockets) View.VISIBLE
+            if (!departure.isCancelled && facilities.hasPowerSockets) View.VISIBLE
             else View.GONE
 
         binding.iconSilenceCompartment.visibility =
-            if(!departure.isCancelled && facilities.hasSilenceCompartment) View.VISIBLE
+            if (!departure.isCancelled && facilities.hasSilenceCompartment) View.VISIBLE
             else View.GONE
 
         binding.labelFirstClass.visibility =
-            if(!departure.isCancelled && facilities.hasFirstClass) View.VISIBLE
+            if (!departure.isCancelled && facilities.hasFirstClass) View.VISIBLE
             else View.GONE
     }
 
     private fun loadTrainImages(departure: Departure, trainInfo: TrainInfo?) {
         binding.holderTrainImagesScrollable.visibility =
-            if(departure.isCancelled || trainInfo?.trainParts?.firstOrNull()?.imageUrl == null) View.GONE
+            if (departure.isCancelled || trainInfo?.trainParts?.firstOrNull()?.imageUrl == null) View.GONE
             else View.VISIBLE
 
         binding.holderTrainImages.removeAllViews()

@@ -20,7 +20,7 @@ object HttpClientImpl : HttpClient {
     }
 
     override val okHttpClient = httpClient {
-        if(BuildConfig.DEBUG && LOG_HTTP_REQUESTS_ON_DEBUG) {
+        if (BuildConfig.DEBUG && LOG_HTTP_REQUESTS_ON_DEBUG) {
             addInterceptor(logger)
         }
         callTimeout(1, TimeUnit.MINUTES)

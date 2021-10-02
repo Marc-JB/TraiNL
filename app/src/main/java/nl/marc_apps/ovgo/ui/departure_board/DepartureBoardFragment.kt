@@ -59,10 +59,10 @@ class DepartureBoardFragment : Fragment() {
         }
 
         val station = navigationArgs.station
-        if (station != null) {
-            viewModel.loadDepartures(station)
-        } else {
+        if (station == null) {
             viewModel.loadDeparturesForLastKnownStation()
+        } else {
+            viewModel.loadDepartures(station)
         }
     }
 }
