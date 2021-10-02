@@ -1,5 +1,6 @@
 package nl.marc_apps.ovgo.ui
 
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,8 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
 
             holder.binding.labelDescription.text = description
 
+            holder.binding.labelLastUpdate.visibility = View.GONE
+
             holder.binding.labelTimerange.visibility = View.VISIBLE
 
             holder.binding.labelTimerange.text = if (disruption.end == null) {
@@ -64,6 +67,17 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
             holder.binding.labelDescription.text = disruption.description
 
             holder.binding.labelTimerange.visibility = View.GONE
+
+            if (disruption.lastUpdated == null) {
+                holder.binding.labelLastUpdate.visibility = View.GONE
+            } else {
+                holder.binding.labelLastUpdate.visibility = View.VISIBLE
+                holder.binding.labelLastUpdate.text = DateUtils.getRelativeTimeSpanString(
+                    disruption.lastUpdated.time,
+                    System.currentTimeMillis(),
+                    DateUtils.MINUTE_IN_MILLIS
+                )
+            }
 
             holder.binding.root.setOnClickListener {
                 MaterialAlertDialogBuilder(context)
