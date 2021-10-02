@@ -82,6 +82,8 @@ class TrainStationRepository(
     }
 
     private suspend fun updateTrainStationDatabase(updatedTrainStations: Collection<TrainStation>) {
+        trainStationDao.deleteAll()
+
         trainStationDao.insert(updatedTrainStations.map {
             TrainStationEntity.fromTrainStation(it)
         })
