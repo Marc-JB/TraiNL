@@ -23,7 +23,7 @@
 
     <!-- Specific colors -->
     <color name="backgroundColor">#FAFAFA</color>
-c
+
     <color name="sectionTitleWarningColor">@color/colorError</color>
     <color name="sectionTitleColor">@color/colorPrimary</color>
 
