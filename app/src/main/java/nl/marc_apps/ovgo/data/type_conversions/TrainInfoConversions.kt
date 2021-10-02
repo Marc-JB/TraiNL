@@ -5,11 +5,11 @@ import nl.marc_apps.ovgo.domain.TrainInfo
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysTrainInfo.TrainPart.Facility as DutchRailwaysFacility
 
 object TrainInfoConversions {
-    private const val TRAIN_IMAGE_URL_QBUZZ_GTW_6 = "https://marc-jb.github.io/OVgo-api/gtw_qbuzz_26.png"
+    private const val TRAIN_IMAGE_URL_QBUZZ_GTW_6 = "https://marc-jb.github.io/TraiNL-resources/gtw_qbuzz_26.png"
 
-    private const val TRAIN_IMAGE_URL_QBUZZ_GTW_8 = "https://marc-jb.github.io/OVgo-api/gtw_qbuzz_28.png"
+    private const val TRAIN_IMAGE_URL_QBUZZ_GTW_8 = "https://marc-jb.github.io/TraiNL-resources/gtw_qbuzz_28.png"
 
-    private const val TRAIN_IMAGE_URL_EUROSTAR = "https://marc-jb.github.io/OVgo-api/eurostar_e320.png"
+    private const val TRAIN_IMAGE_URL_EUROSTAR = "https://marc-jb.github.io/TraiNL-resources/eurostar_e320.png"
 
     private const val TRAIN_SEAT_COUNT_QBUZZ_GTW_6 = 113
 
@@ -24,9 +24,9 @@ object TrainInfoConversions {
     private const val TRAIN_TYPE_EUROSTAR = "Eurostar"
 
     private fun isQbuzzDMG(model: DutchRailwaysTrainInfo): Boolean {
-        return model.operator == OPERATOR_NAME_RNET && model.actualTrainParts.none {
+        return model.journeyNumber in 7100..7299 || (model.operator == OPERATOR_NAME_RNET && model.actualTrainParts.none {
             it.type == TRAIN_TYPE_RNET_BY_NS
-        }
+        })
     }
 
     fun convertApiToDomainModel(model: DutchRailwaysTrainInfo): TrainInfo {

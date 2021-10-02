@@ -10,7 +10,7 @@
     <!-- Main text styles -->
 
     <style name="TextAppearance.OVgo.SectionTitle" parent="@style/TextAppearance.MaterialComponents.Body2">
-        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textColor">@color/sectionTitleColor</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -40,7 +40,7 @@
     <style name="TextAppearance.OVgo.Departure.OperatorAndCategory.Medium" parent="@style/TextAppearance.OVgo.SectionText.Medium" />
 
     <style name="TextAppearance.OVgo.Departure.Cancelled" parent="@style/TextAppearance.OVgo.SectionText.Medium">
-        <item name="android:textColor">@color/colorError</item>
+        <item name="android:textColor">@color/sectionTitleWarningColor</item>
         <item name="android:textStyle">bold</item>
     </style>
 

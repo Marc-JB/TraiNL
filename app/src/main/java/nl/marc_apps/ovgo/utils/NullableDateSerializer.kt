@@ -50,7 +50,7 @@ object NullableDateSerializer : KSerializer<Date?> {
 
     @ExperimentalSerializationApi
     override fun serialize(encoder: Encoder, value: Date?) {
-        if(value == null) {
+        if (value == null) {
             encoder.encodeNull()
         } else {
             encoder.encodeString(JsonDateTime.defaultParser.format(value))

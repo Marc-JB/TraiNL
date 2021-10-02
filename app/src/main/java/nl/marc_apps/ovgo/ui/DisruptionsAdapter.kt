@@ -1,5 +1,6 @@
 package nl.marc_apps.ovgo.ui
 
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,18 +29,20 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
         holder.binding.labelTitle.text = disruption.title
 
         if (disruption is DutchRailwaysDisruption.DisruptionOrMaintenance) {
-            holder.binding.labelTitle.setTextColor(context.getColor(R.color.colorPrimary))
+            holder.binding.labelTitle.setTextColor(context.getColor(R.color.sectionTitleColor))
 
             val currentDate = Date()
             val activeTimeSpans = disruption.timespans.filterNot { currentDate.after(it.start) && currentDate.before(it.end) }
 
             val description = listOfNotNull(
                 activeTimeSpans.firstOrNull()?.situation?.label,
-                disruption.summaryAdditionalTravelTime?.label,
+                disruption.summaryAdditionalTravelTime?.label ?: activeTimeSpans.firstOrNull()?.additionalTravelTime?.label,
                 disruption.expectedDuration?.description
             ).joinToString(separator = " ")
 
             holder.binding.labelDescription.text = description
+
+            holder.binding.labelLastUpdate.visibility = View.GONE
 
             holder.binding.labelTimerange.visibility = View.VISIBLE
 
@@ -59,11 +62,22 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
                     .show()
             }
         } else if (disruption is DutchRailwaysDisruption.Calamity) {
-            holder.binding.labelTitle.setTextColor(context.getColor(R.color.colorError))
+            holder.binding.labelTitle.setTextColor(context.getColor(R.color.sectionTitleWarningColor))
 
             holder.binding.labelDescription.text = disruption.description
 
             holder.binding.labelTimerange.visibility = View.GONE
+
+            if (disruption.lastUpdated == null) {
+                holder.binding.labelLastUpdate.visibility = View.GONE
+            } else {
+                holder.binding.labelLastUpdate.visibility = View.VISIBLE
+                holder.binding.labelLastUpdate.text = DateUtils.getRelativeTimeSpanString(
+                    disruption.lastUpdated.time,
+                    System.currentTimeMillis(),
+                    DateUtils.MINUTE_IN_MILLIS
+                )
+            }
 
             holder.binding.root.setOnClickListener {
                 MaterialAlertDialogBuilder(context)

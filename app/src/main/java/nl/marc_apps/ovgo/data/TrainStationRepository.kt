@@ -37,7 +37,7 @@ class TrainStationRepository(
 
     private fun getTrainStationsFromCache(): List<TrainStation>? {
         val cachedTrainStations = trainStationsCache
-        return if (!cachedTrainStations.isNullOrEmpty()) cachedTrainStations else null
+        return if (cachedTrainStations.isNullOrEmpty()) null else cachedTrainStations
     }
 
     private suspend fun getTrainStationsFromDatabase(): List<TrainStation>? {
@@ -50,13 +50,15 @@ class TrainStationRepository(
 
         val databaseTrainStations = trainStationDao.getAll()
 
-        return if (!databaseTrainStations.isNullOrEmpty()) {
+        return if (databaseTrainStations.isNullOrEmpty()) {
+            null
+        } else {
             databaseTrainStations.map {
                 it.asTrainStation()
             }.also {
                 trainStationsCache = it
             }
-        } else null
+        }
     }
 
     private suspend fun getTrainStationsFromApi(): List<TrainStation>? {

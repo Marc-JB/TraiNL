@@ -25,7 +25,7 @@ class StationSuggestionsAdapter : ListAdapter<TrainStation, StationSuggestionsAd
 
         holder.binding.labelPrimaryName.text = stationSuggestion.name
 
-        if(stationSuggestion.alternativeNames.isEmpty()) {
+        if (stationSuggestion.alternativeNames.isEmpty()) {
             holder.binding.labelSecondaryNames.visibility = View.GONE
         } else {
             holder.binding.labelSecondaryNames.text = stationSuggestion.alternativeNames.joinToString()

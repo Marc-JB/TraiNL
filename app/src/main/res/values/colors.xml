@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Application color palette -->
     <color name="colorPrimaryLight">#63a4ff</color>
     <color name="colorOnPrimaryLight">#000000</color>
     <color name="colorPrimary">#1976d2</color>
@@ -15,8 +16,18 @@
     <color name="colorOnAccentDark">#000000</color>
 
     <color name="colorOK">#388E3C</color>
+    <color name="colorOKLight">#6ABF69</color>
 
     <color name="colorError">#B00020</color>
+    <color name="colorErrorLight">#E94948</color>
 
+    <!-- Specific colors -->
     <color name="backgroundColor">#FAFAFA</color>
+
+    <color name="sectionTitleWarningColor">@color/colorError</color>
+    <color name="sectionTitleColor">@color/colorPrimary</color>
+
+    <color name="trainImageBorder">#FAFAFA</color>
+    <color name="trainImageBorderAlternative">@color/colorPrimary</color>
+
 </resources>

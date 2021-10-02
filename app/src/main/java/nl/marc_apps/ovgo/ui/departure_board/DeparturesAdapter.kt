@@ -9,13 +9,12 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.ListItemDepartureBinding
 import nl.marc_apps.ovgo.databinding.ListItemDepartureCancelledBinding
-import nl.marc_apps.ovgo.databinding.PartialTrainImageBinding
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
+import nl.marc_apps.ovgo.ui.TrainImages
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
 
@@ -59,7 +58,7 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
         val binding = holder.binding
         val context = binding.root.context
 
-        val departureTimeWithDelayText = if(departure.isDelayed) {
+        val departureTimeWithDelayText = if (departure.isDelayed) {
             context.getString(
                 R.string.departure_time_delayed,
                 departure.actualDepartureTime.format(timeStyle = DateFormat.SHORT),
@@ -74,7 +73,7 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
         binding.labelDepartureTime.setTextColor(
             ContextCompat.getColor(
                 binding.labelDepartureTime.context,
-                if(departure.isDelayed) R.color.colorError else R.color.colorPrimary
+                if (departure.isDelayed) R.color.sectionTitleWarningColor else R.color.sectionTitleColor
             )
         )
 
@@ -83,17 +82,17 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
         val upcomingStations = departure.stationsOnRoute.joinToString(limit = MAX_STATIONS_DISPLAYED_ON_ROUTE) {
             it.name
         }
-        binding.labelUpcomingStations.text = if(departure.stationsOnRoute.isNotEmpty()) {
+        binding.labelUpcomingStations.text = if (departure.stationsOnRoute.isNotEmpty()) {
             context.getString(R.string.departure_via_stations, upcomingStations)
         } else {
             ""
         }
         binding.labelUpcomingStations.visibility =
-            if(departure.stationsOnRoute.isEmpty()) View.GONE
+            if (departure.stationsOnRoute.isEmpty()) View.GONE
             else View.VISIBLE
 
         binding.labelPlatform.setBackgroundResource(
-            if(departure.platformChanged) R.drawable.platform_background_style_red
+            if (departure.platformChanged) R.drawable.platform_background_style_red
             else R.drawable.platform_background_style
         )
         binding.labelPlatform.text = departure.actualTrack
@@ -117,7 +116,7 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
     }
 
     private fun loadTrainImages(binding: ListItemDepartureBinding, trainInfo: TrainInfo?) {
-        binding.holderTrainImagesScrollable.visibility = if(trainInfo?.trainParts?.firstOrNull()?.imageUrl == null) {
+        binding.holderTrainImagesScrollable.visibility = if (trainInfo?.trainParts?.firstOrNull()?.imageUrl == null) {
             View.GONE
         } else {
             View.VISIBLE
@@ -127,13 +126,8 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
             binding.holderTrainImages.removeViews(LAYOUT_CHILD_COUNT_SINGLE_VIEW, binding.holderTrainImages.childCount - LAYOUT_CHILD_COUNT_SINGLE_VIEW)
         }
 
-        trainInfo?.trainParts?.forEach {
-            val imageView = PartialTrainImageBinding.inflate(
-                LayoutInflater.from(binding.holderTrainImages.context),
-                binding.holderTrainImages,
-                true
-            )
-            imageView.root.load(it.imageUrl)
+        trainInfo?.trainParts?.mapNotNull { it.imageUrl }?.let {
+            TrainImages.loadView(binding.holderTrainImages, it)
         }
     }
 
@@ -146,7 +140,7 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
 
         binding.labelDirection.text = departure.direction?.name
 
-        binding.labelCancelled.visibility = if(departure.isCancelled) View.VISIBLE else View.GONE
+        binding.labelCancelled.visibility = if (departure.isCancelled) View.VISIBLE else View.GONE
 
         binding.labelOperatorAndType.text = if (departure.operator == departure.categoryName) {
             departure.operator
@@ -162,7 +156,7 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
     @Type
     override fun getItemViewType(position: Int): Int {
         val departure = currentList.elementAtOrNull(position)
-        return if(departure?.isCancelled == false) TYPE_REGULAR else TYPE_CANCELLED
+        return if (departure?.isCancelled == true) TYPE_CANCELLED else TYPE_REGULAR
     }
 
     sealed class DepartureViewHolder(view: View) : RecyclerView.ViewHolder(view) {
