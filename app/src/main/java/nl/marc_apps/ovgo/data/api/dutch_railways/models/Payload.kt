@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Payload<T>(
-    val payload: T
+    val payload: T? = null
 )

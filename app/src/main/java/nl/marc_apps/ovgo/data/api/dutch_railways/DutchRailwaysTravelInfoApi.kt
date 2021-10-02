@@ -32,7 +32,7 @@ interface DutchRailwaysTravelInfoApi {
     @GET("v2/stations")
     fun getStations(
         @Header("Ocp-Apim-Subscription-Key") apiKey: String
-    ): Call<Payload<List<DutchRailwaysStation>>>
+    ): Call<Payload<List<DutchRailwaysStation?>>>
 
     companion object {
         const val BASE_URL = "https://gateway.apiportal.ns.nl/reisinformatie-api/api/"

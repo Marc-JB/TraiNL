@@ -52,7 +52,9 @@ class DutchRailwaysApi(
 
     suspend fun getTrainStations(): List<DutchRailwaysStation> {
         try {
-            return travelInfoApi.getStations(dutchRailwaysTravelInfoApiKey).await().payload
+            return travelInfoApi.getStations(
+                apiKey = dutchRailwaysTravelInfoApiKey
+            ).await().payload?.filterNotNull() ?: emptyList()
         } catch (error: Throwable) {
             Firebase.crashlytics.recordException(error)
             error.printStackTrace()
@@ -69,7 +71,7 @@ class DutchRailwaysApi(
                 dutchRailwaysTravelInfoApiKey,
                 uicCode = uicCode,
                 language = language
-            ).await().payload.departures.filterNotNull()
+            ).await().payload?.departures?.filterNotNull() ?: emptyList()
         } catch (error: Throwable) {
             Firebase.crashlytics.recordException(error)
             error.printStackTrace()

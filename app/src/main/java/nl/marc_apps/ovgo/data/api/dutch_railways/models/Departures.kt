@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Departures(
     val source: String? = null,
-    val departures: List<DutchRailwaysDeparture?>
+    val departures: List<DutchRailwaysDeparture?> = emptyList()
 )
