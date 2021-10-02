@@ -33,7 +33,7 @@ data class Departure(
         get() = delayInMinutesRounded > 0
 
     constructor(parcel: Parcel) : this(
-        parcel.readString()!!,
+        parcel.readInt().toString(),
         parcel.readParcelable<TrainStation>(),
         Date(parcel.readLong()),
         Date(parcel.readLong()),
@@ -47,7 +47,7 @@ data class Departure(
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(journeyId)
+        parcel.writeInt(journeyId.toInt())
         parcel.writeParcelable(direction, flags)
         parcel.writeLong(plannedDepartureTime.time)
         parcel.writeLong(actualDepartureTime.time)
