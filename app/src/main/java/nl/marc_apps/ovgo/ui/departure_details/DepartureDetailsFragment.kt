@@ -7,13 +7,10 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import coil.load
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentDepartureDetailsBinding
-import nl.marc_apps.ovgo.databinding.PartialTrainImageBinding
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
-import nl.marc_apps.ovgo.ui.TrainImageBorderTransformation
 import nl.marc_apps.ovgo.ui.TrainImages
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat

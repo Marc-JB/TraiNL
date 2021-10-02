@@ -1,6 +1,5 @@
 package nl.marc_apps.ovgo.ui.departure_board
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +9,11 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.ListItemDepartureBinding
 import nl.marc_apps.ovgo.databinding.ListItemDepartureCancelledBinding
-import nl.marc_apps.ovgo.databinding.PartialTrainImageBinding
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
-import nl.marc_apps.ovgo.ui.TrainImageBorderTransformation
 import nl.marc_apps.ovgo.ui.TrainImages
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
