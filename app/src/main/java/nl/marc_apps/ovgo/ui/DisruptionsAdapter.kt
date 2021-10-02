@@ -28,7 +28,7 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
         holder.binding.labelTitle.text = disruption.title
 
         if (disruption is DutchRailwaysDisruption.DisruptionOrMaintenance) {
-            holder.binding.labelTitle.setTextColor(context.getColor(R.color.colorPrimary))
+            holder.binding.labelTitle.setTextColor(context.getColor(R.color.sectionTitleColor))
 
             val currentDate = Date()
             val activeTimeSpans = disruption.timespans.filterNot { currentDate.after(it.start) && currentDate.before(it.end) }
