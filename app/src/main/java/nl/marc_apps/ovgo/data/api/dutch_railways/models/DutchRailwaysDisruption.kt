@@ -36,7 +36,8 @@ sealed class DutchRailwaysDisruption {
         val phase: Phase? = null,
         val impact: Impact? = null,
         val expectedDuration: ExpectedDuration? = null,
-        val summaryAdditionalTravelTime: SummaryAdditionalTravelTime? = null
+        val summaryAdditionalTravelTime: SummaryAdditionalTravelTime? = null,
+        val alternativeTransportTimespans: List<AlternativeTransportTimespan> = emptyList()
     ) : DutchRailwaysDisruption() {
         @Serializable
         data class Phase(
@@ -138,13 +139,22 @@ sealed class DutchRailwaysDisruption {
                 val minimumDurationInMinutes: Long? = null,
                 val maximumDurationInMinutes: Long? = null
             )
-
-            @Serializable
-            data class AlternativeTransport(
-                val label: String,
-                val shortLabel: String? = null
-            )
         }
+
+        @Serializable
+        data class AlternativeTransport(
+            val label: String,
+            val shortLabel: String? = null
+        )
+
+        @Serializable
+        data class AlternativeTransportTimespan(
+            @Serializable(with = NullableDateSerializer::class)
+            val start: Date? = null,
+            @Serializable(with = NullableDateSerializer::class)
+            val end: Date? = null,
+            val alternativeTransport: AlternativeTransport
+        )
     }
 
     @Serializable

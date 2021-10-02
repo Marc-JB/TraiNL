@@ -32,12 +32,18 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
             holder.binding.labelTitle.setTextColor(context.getColor(R.color.sectionTitleColor))
 
             val currentDate = Date()
-            val activeTimeSpans = disruption.timespans.filterNot { currentDate.after(it.start) && currentDate.before(it.end) }
+            val activeTimeSpans = disruption.timespans.filterNot {
+                currentDate.after(it.start) && currentDate.before(it.end)
+            }
+            val activeAlternativeTransportTimeSpans = disruption.alternativeTransportTimespans.filterNot {
+                (it.start == null || currentDate.after(it.start)) && (it.end == null || currentDate.before(it.end))
+            }
 
             val description = listOfNotNull(
                 activeTimeSpans.firstOrNull()?.situation?.label,
                 disruption.summaryAdditionalTravelTime?.label ?: activeTimeSpans.firstOrNull()?.additionalTravelTime?.label,
-                disruption.expectedDuration?.description
+                disruption.expectedDuration?.description,
+                activeAlternativeTransportTimeSpans.firstOrNull()?.alternativeTransport?.label ?: activeTimeSpans.firstOrNull()?.alternativeTransport?.label
             ).joinToString(separator = " ")
 
             holder.binding.labelDescription.text = description
