@@ -7,9 +7,17 @@ object BitwiseOperations {
         }
 
         var number = 0
-        for (bool in booleans) {
+        for (bool in booleans.reversed()) {
             number = number shl 1 or bool.asBit
         }
         return number
+    }
+
+    fun getBooleanFromInt(booleanStore: Int, position: Int): Boolean {
+        return if (position == 0) {
+            booleanStore and 1 == true.asBit
+        } else {
+            booleanStore shr position and 1 == true.asBit
+        }
     }
 }

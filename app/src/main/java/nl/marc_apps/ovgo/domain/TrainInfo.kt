@@ -3,7 +3,6 @@ package nl.marc_apps.ovgo.domain
 import android.os.Parcel
 import android.os.Parcelable
 import nl.marc_apps.ovgo.utils.BitwiseOperations
-import nl.marc_apps.ovgo.utils.asBit
 import nl.marc_apps.ovgo.utils.readParcelable
 import nl.marc_apps.ovgo.utils.readTypedList
 
@@ -32,25 +31,25 @@ data class TrainInfo(
         val hasFirstClass = seatsFirstClass > 0 && seatsSecondClass > 0
 
         val hasToilet
-            get() = features shr 6 and 1 == true.asBit
+            get() = BitwiseOperations.getBooleanFromInt(features, 0)
 
         val hasSilenceCompartment
-            get() = features shr 5 and 1 == true.asBit
+            get() = BitwiseOperations.getBooleanFromInt(features, 1)
 
         val hasPowerSockets
-            get() = features shr 4 and 1 == true.asBit
+            get() = BitwiseOperations.getBooleanFromInt(features, 2)
 
         val isWheelChairAccessible
-            get() = features shr 3 and 1 == true.asBit
+            get() = BitwiseOperations.getBooleanFromInt(features, 3)
 
         val hasBicycleCompartment
-            get() = features shr 2 and 1 == true.asBit
+            get() = BitwiseOperations.getBooleanFromInt(features, 4)
 
         val hasFreeWifi
-            get() = features shr 1 and 1 == true.asBit
+            get() = BitwiseOperations.getBooleanFromInt(features, 5)
 
         val hasBistro
-            get() = features and 1 == true.asBit
+            get() = BitwiseOperations.getBooleanFromInt(features, 6)
 
         constructor(parcel: Parcel) : this(
             parcel.readInt(),
