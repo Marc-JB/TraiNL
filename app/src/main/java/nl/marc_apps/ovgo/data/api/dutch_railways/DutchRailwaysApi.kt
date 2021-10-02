@@ -32,6 +32,10 @@ class DutchRailwaysApi(
         type: Set<DutchRailwaysDisruption.DisruptionType>? = null,
         isActive: Boolean? = null
     ): List<DutchRailwaysDisruption> {
+        if (type?.isEmpty() == true) {
+            return emptyList()
+        }
+
         try {
             return travelInfoApi.getDisruptions(
                 dutchRailwaysTravelInfoApiKey,
@@ -73,7 +77,7 @@ class DutchRailwaysApi(
         }
     }
 
-    suspend fun getTrainInfo(journeyNumber: Int): DutchRailwaysTrainInfo? {
+    suspend fun getTrainInfo(journeyNumber: String): DutchRailwaysTrainInfo? {
         try {
             return trainInfoApi.getTrainInfo(
                 dutchRailwaysTravelInfoApiKey,
@@ -86,7 +90,11 @@ class DutchRailwaysApi(
         }
     }
 
-    suspend fun getTrainInfo(journeys: Set<Int>): List<DutchRailwaysTrainInfo> {
+    suspend fun getTrainInfo(journeys: Set<String>): List<DutchRailwaysTrainInfo> {
+        if (journeys.isEmpty()) {
+            return emptyList()
+        }
+
         try {
             return trainInfoApi.getTrainInfo(
                 dutchRailwaysTravelInfoApiKey,

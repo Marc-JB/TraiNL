@@ -11,6 +11,7 @@ import nl.marc_apps.ovgo.data.api.HttpClient
 import nl.marc_apps.ovgo.data.api.HttpClientImpl
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.db.AppDatabase
+import nl.marc_apps.ovgo.domain.DeviceConfiguration
 import nl.marc_apps.ovgo.search.JaroWinklerStringSimilarity
 import nl.marc_apps.ovgo.search.StringSimilarity
 import nl.marc_apps.ovgo.ui.departure_board.DepartureBoardViewModel
@@ -18,6 +19,7 @@ import nl.marc_apps.ovgo.ui.disruptions.DisruptionsViewModel
 import nl.marc_apps.ovgo.ui.maintenance.MaintenanceViewModel
 import nl.marc_apps.ovgo.ui.search_station.SearchStationViewModel
 import nl.marc_apps.ovgo.utils.buildRoomDatabase
+import nl.marc_apps.ovgo.utils.isLowRamDevice
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -27,6 +29,12 @@ object DiModules {
     val dataRepositoriesModule = module {
         single {
             get<Context>().dataStore
+        }
+
+        single {
+            DeviceConfiguration(
+                get<Context>().isLowRamDevice ?: false
+            )
         }
 
         single {
@@ -46,7 +54,7 @@ object DiModules {
         }
 
         single { TrainStationRepository(get(), get(), get()) }
-        single { TrainInfoRepository(get()) }
+        single { TrainInfoRepository(get(), get()) }
         single { DepartureRepository(get(), get(), get()) }
     }
 
