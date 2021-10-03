@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="backgroundColor">#212121</color>
+    <color name="backgroundColorTransparent">#00212121</color>
+
+    <color name="dividerColor">#52FFFFFF</color>
 
     <color name="sectionTitleWarningColor">@color/colorErrorLight</color>
-    <color name="sectionTitleColor">#FFFFFF</color>
+    <color name="sectionTitleOkColor">@color/colorOKLight</color>
+    <color name="sectionTitleColor">@color/colorPrimaryLight</color>
 </resources>
 

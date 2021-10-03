@@ -2,7 +2,8 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Marc-JB_OVgo&metric=alert_status)](https://sonarcloud.io/dashboard?id=Marc-JB_OVgo) 
 [![License: CC BY-NC-ND 4.0](https://badgen.net/badge/license/CC%20BY-NC-ND%204.0/blue)](https://creativecommons.org/licenses/by-nc-nd/4.0/) 
 # TraiNL (previously "OVgo")
-![Departures](/docs/screenshots/departures-1.png?raw=true "Departures")
+![Departures](/docs/screenshots/departures-1.png?raw=true "Departures (light mode)")
+![Departures](/docs/screenshots/departures-2.png?raw=true "Departures (dark mode)")
 ![Disruptions](/docs/screenshots/disruptions-1.png?raw=true "Disruptions")
 ![Disruptions](/docs/screenshots/disruptions-2.png?raw=true "Disruptions")
 

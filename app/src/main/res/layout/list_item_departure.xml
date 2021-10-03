@@ -7,7 +7,7 @@
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:paddingVertical="4dp">
+    android:paddingVertical="8dp">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label_departure_time"
@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Time"
+        android:textColor="@color/sectionTitleOkColor"
         app:layout_constraintBottom_toTopOf="@id/label_platform"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/label_platform"
@@ -67,13 +68,13 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label_platform"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
-        android:elevation="2dp"
+        android:elevation="4dp"
         android:gravity="center"
-        android:padding="8dp"
+        android:padding="2dp"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Platform"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
