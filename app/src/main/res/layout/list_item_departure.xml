@@ -13,7 +13,7 @@
         android:id="@+id/label_departure_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/departure_board_horizontal_spacing"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Time"
         android:textColor="@color/sectionTitleOkColor"
         app:layout_constraintBottom_toTopOf="@id/label_platform"
@@ -57,7 +57,7 @@
         android:id="@+id/label_departure_time_alignment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/departure_board_horizontal_spacing"
         android:minWidth="36dp"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Time"
         android:visibility="invisible"
@@ -71,7 +71,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/departure_board_horizontal_spacing"
         android:elevation="4dp"
         android:gravity="center"
         android:padding="2dp"
@@ -106,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:paddingEnd="8dp"
+            android:paddingEnd="@dimen/departure_board_horizontal_spacing"
             tools:background="@sample/departures.json/data/image"
             tools:layout_marginStart="@dimen/train_image_spacing_start">
 
@@ -118,9 +118,10 @@
                 android:gravity="center_vertical"
                 android:maxLines="2"
                 android:minWidth="@dimen/train_image_spacing_start"
-                android:paddingHorizontal="16dp"
+                android:paddingStart="@dimen/departure_board_horizontal_spacing"
+                android:paddingEnd="16dp"
                 android:textAppearance="@style/TextAppearance.OVgo.Departure.OperatorAndCategory.Small"
-                tools:layout_marginStart="-104dp"
+                tools:layout_marginStart="@dimen/train_image_spacing_start_negative"
                 tools:text="@sample/departures.json/data/operator_and_type" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

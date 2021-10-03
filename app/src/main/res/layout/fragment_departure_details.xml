@@ -113,11 +113,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icon_wheelchair_accessible"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:tint="@color/colorPrimary"
+        style="@style/Widget.App.Departure.Facility.Icon"
         app:layout_constraintEnd_toStartOf="@+id/icon_toilet"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@id/guideline_facilities"
@@ -126,11 +122,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icon_toilet"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:tint="@color/colorPrimary"
+        style="@style/Widget.App.Departure.Facility.Icon"
         app:layout_constraintEnd_toStartOf="@+id/icon_bicycles"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/icon_wheelchair_accessible"
@@ -139,11 +131,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icon_bicycles"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:tint="@color/colorPrimary"
+        style="@style/Widget.App.Departure.Facility.Icon"
         app:layout_constraintEnd_toStartOf="@+id/icon_wifi"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/icon_toilet"
@@ -152,11 +140,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icon_wifi"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:tint="@color/colorPrimary"
+        style="@style/Widget.App.Departure.Facility.Icon"
         app:layout_constraintEnd_toStartOf="@+id/icon_power_sockets"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/icon_bicycles"
@@ -165,11 +149,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icon_power_sockets"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:tint="@color/colorPrimary"
+        style="@style/Widget.App.Departure.Facility.Icon"
         app:layout_constraintEnd_toStartOf="@+id/icon_silence_compartment"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/icon_wifi"
@@ -178,11 +158,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icon_silence_compartment"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:tint="@color/colorPrimary"
+        style="@style/Widget.App.Departure.Facility.Icon"
         app:layout_constraintEnd_toStartOf="@+id/label_first_class"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/icon_power_sockets"
@@ -191,19 +167,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label_first_class"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:padding="2dp"
-        android:text="1"
-        android:textAppearance="?attr/textAppearanceCaption"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
-        app:autoSizeMinTextSize="4sp"
-        app:autoSizeStepGranularity="1sp"
-        app:autoSizeTextType="uniform"
+        style="@style/Widget.App.Departure.Facility.Label"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/icon_silence_compartment"
         app:layout_constraintTop_toBottomOf="@id/barrier_main_info" />
