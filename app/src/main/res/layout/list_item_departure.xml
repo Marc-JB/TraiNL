@@ -68,14 +68,9 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label_platform"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        style="@style/Widget.App.Departure.Platform"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="@dimen/departure_board_horizontal_spacing"
-        android:elevation="4dp"
-        android:gravity="center"
-        android:padding="2dp"
-        android:textAppearance="@style/TextAppearance.OVgo.Departure.Platform"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:background="@drawable/platform_background_style"
@@ -90,13 +85,10 @@
 
     <HorizontalScrollView
         android:id="@+id/holder_train_images_scrollable"
+        style="@style/Widget.App.Departure.TrainImages.ScrollableHolder"
         android:layout_width="0dp"
         android:layout_height="@dimen/train_image_height"
         android:layout_marginTop="8dp"
-        android:fillViewport="true"
-        android:paddingVertical="2dp"
-        android:scrollbarThumbHorizontal="@null"
-        android:scrollbarTrackHorizontal="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier_main_info">

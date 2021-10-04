@@ -2,7 +2,6 @@
 <resources>
 
     <!-- Shapes -->
-
     <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
         <item name="cornerSize">50%</item>
     </style>
@@ -32,8 +31,23 @@
         <item name="autoSizeTextType">uniform</item>
     </style>
 
-    <!-- Main text styles -->
+    <style name="Widget.App.Departure.TrainImages.ScrollableHolder" parent="">
+        <item name="android:fillViewport">true</item>
+        <item name="android:paddingVertical">2dp</item>
+        <item name="android:scrollbarThumbHorizontal">@null</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+    </style>
 
+    <style name="Widget.App.Departure.Platform" parent="">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.OVgo.Departure.Platform</item>
+    </style>
+
+    <!-- Main text styles -->
     <style name="TextAppearance.OVgo.SectionTitle" parent="@style/TextAppearance.MaterialComponents.Body2">
         <item name="fontFamily">@font/roboto_bold</item>
         <item name="android:fontFamily">@font/roboto_bold</item>
@@ -61,7 +75,6 @@
     </style>
 
     <!-- Specific text styles -->
-
     <style name="TextAppearance.OVgo.Departure.Destination" parent="@style/TextAppearance.OVgo.SectionTitle" />
 
     <style name="TextAppearance.OVgo.Departure.Destination.Disabled" parent="@style/TextAppearance.OVgo.SectionTitle.Disabled" />
