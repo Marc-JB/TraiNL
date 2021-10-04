@@ -23,14 +23,14 @@ data class TrainStation(
         Country.valueOf(parcel.readString()!!)
     )
 
-    enum class Country {
-        AUSTRIA,
-        BELGIUM,
-        SWITZERLAND,
-        GERMANY,
-        FRANCE,
-        GREAT_BRITAIN,
-        THE_NETHERLANDS
+    enum class Country(val flag: String) {
+        AUSTRIA("\uD83C\uDDE6\uD83C\uDDF9"),
+        BELGIUM("\uD83C\uDDE7\uD83C\uDDEA"),
+        SWITZERLAND("\uD83C\uDDE8\uD83C\uDDED"),
+        GERMANY("\uD83C\uDDE9\uD83C\uDDEA"),
+        FRANCE("\uD83C\uDDEB\uD83C\uDDF7"),
+        GREAT_BRITAIN("\uD83C\uDDEC\uD83C\uDDE7"),
+        THE_NETHERLANDS("\uD83C\uDDF3\uD83C\uDDF1")
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

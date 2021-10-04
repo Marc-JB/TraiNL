@@ -14,6 +14,7 @@ import nl.marc_apps.ovgo.databinding.ListItemDepartureBinding
 import nl.marc_apps.ovgo.databinding.ListItemDepartureCancelledBinding
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
+import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.ui.TrainImages
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
@@ -77,10 +78,18 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
             )
         )
 
-        binding.labelDirection.text = departure.direction?.name
+        binding.labelDirection.text = if (departure.direction != null && departure.direction.country != TrainStation.Country.THE_NETHERLANDS) {
+            departure.direction.name + " " + departure.direction.country.flag
+        } else {
+            departure.direction?.name
+        }
 
         val upcomingStations = departure.stationsOnRoute.joinToString(limit = MAX_STATIONS_DISPLAYED_ON_ROUTE) {
-            it.name
+            if (it.country != TrainStation.Country.THE_NETHERLANDS) {
+                it.name + " " + it.country.flag
+            } else {
+                it.name
+            }
         }
         binding.labelUpcomingStations.text = if (departure.stationsOnRoute.isNotEmpty()) {
             context.getString(R.string.departure_via_stations, upcomingStations)
