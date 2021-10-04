@@ -16,4 +16,6 @@
     <string name="ok">Oké</string>
     <string name="operator_rnet_by_qbuzz">R-net door Qbuzz</string>
     <string name="operator_rnet_by_ns">R-net door NS</string>
+    <string name="disruption_end_time">Dit duurt tot ongeveer %1$s</string>
+    <string name="disruption_end_time_unknown">Het is nog niet bekend hoe lang dit gaat duren</string>
 </resources>

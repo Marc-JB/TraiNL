@@ -114,7 +114,7 @@ sealed class DutchRailwaysDisruption {
             @Serializable(with = DateSerializer::class)
             val start: Date,
             val situation: Situation,
-            val advices: List<String>,
+            val advices: List<String> = emptyList(),
             @Serializable(with = NullableDateSerializer::class)
             val end: Date? = null,
             val period: String? = null,
