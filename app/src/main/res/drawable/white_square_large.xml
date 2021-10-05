@@ -3,8 +3,8 @@
     <solid android:color="#FFFFFF" />
 
     <size
-        android:width="10dp"
-        android:height="10dp" />
+        android:width="16dp"
+        android:height="16dp" />
 
     <corners android:topLeftRadius="2dp" />
 </shape>

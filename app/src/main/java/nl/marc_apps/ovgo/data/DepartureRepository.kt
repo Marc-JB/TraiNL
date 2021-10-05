@@ -17,7 +17,7 @@ class DepartureRepository(
             return emptyList()
         }
         val stationsList = trainStationRepository.getTrainStations()
-        val trainInfoList = trainInfoRepository.getTrainInfo(departuresList.map { it.product.number.toInt() }.toSet())
+        val trainInfoList = trainInfoRepository.getTrainInfo(departuresList.map { it.product.number }.toSet())
 
         val converter = ApiDepartureToDomainDeparture(stationsList, resolveTrainInfo = { journeyId ->
             trainInfoList.find { it.journeyId == journeyId.toInt() }

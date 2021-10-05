@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
+import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentDepartureBoardBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -42,7 +44,9 @@ class DepartureBoardFragment : Fragment() {
         val departuresAdapter = DeparturesAdapter()
         binding.listDepartures.adapter = departuresAdapter
         binding.listDepartures.addItemDecoration(
-            DividerItemDecoration(binding.listDepartures.context, DividerItemDecoration.VERTICAL)
+            DividerItemDecoration(binding.listDepartures.context, DividerItemDecoration.VERTICAL).apply {
+                AppCompatResources.getDrawable(view.context, R.drawable.divider)?.let { setDrawable(it) }
+            }
         )
 
         viewModel.departures.observe(viewLifecycleOwner) {

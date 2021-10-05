@@ -11,7 +11,7 @@ interface DutchRailwaysTrainInfoApi {
     @GET("v1/trein/{journeyNumber}")
     fun getTrainInfo(
         @Header("Ocp-Apim-Subscription-Key") apiKey: String,
-        @Path("journeyNumber") journeyNumber: Int,
+        @Path("journeyNumber") journeyNumber: String,
         @Query("features") features: String? = null
     ): Call<DutchRailwaysTrainInfo?>
 

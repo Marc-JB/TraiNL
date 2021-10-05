@@ -2,31 +2,79 @@
 <resources>
 
     <!-- Shapes -->
-
     <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
         <item name="cornerSize">50%</item>
     </style>
 
-    <!-- Main text styles -->
+    <!-- Component styles -->
+    <style name="Widget.App.Departure.Facility.Icon" parent="">
+        <item name="android:layout_width">22dp</item>
+        <item name="android:layout_height">22dp</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:tint">@color/colorPrimary</item>
+    </style>
 
-    <style name="TextAppearance.OVgo.SectionTitle" parent="@style/TextAppearance.MaterialComponents.Body2">
-        <item name="android:textColor">@color/sectionTitleColor</item>
+    <style name="Widget.App.Departure.Facility.Label" parent="">
+        <item name="android:layout_width">22dp</item>
+        <item name="android:layout_height">22dp</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:text">1</item>
+        <item name="android:textAppearance">?attr/textAppearanceCaption</item>
         <item name="android:textStyle">bold</item>
+        <item name="autoSizeMinTextSize">4sp</item>
+        <item name="autoSizeStepGranularity">1sp</item>
+        <item name="autoSizeTextType">uniform</item>
+    </style>
+
+    <style name="Widget.App.Departure.TrainImages.ScrollableHolder" parent="">
+        <item name="android:fillViewport">true</item>
+        <item name="android:paddingVertical">2dp</item>
+        <item name="android:scrollbarThumbHorizontal">@null</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+    </style>
+
+    <style name="Widget.App.Departure.Platform" parent="">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.OVgo.Departure.Platform</item>
+    </style>
+
+    <!-- Main text styles -->
+    <style name="TextAppearance.OVgo.SectionTitle" parent="@style/TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textColor">@color/sectionTitleColor</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="TextAppearance.OVgo.SectionTitle.Disabled" parent="@style/TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="TextAppearance.OVgo.SectionText.Medium" parent="@style/TextAppearance.MaterialComponents.Caption" />
+    <style name="TextAppearance.OVgo.SectionText.Medium" parent="@style/TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 
     <style name="TextAppearance.OVgo.SectionText.Small" parent="@style/TextAppearance.MaterialComponents.Caption">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
     </style>
 
     <!-- Specific text styles -->
-
     <style name="TextAppearance.OVgo.Departure.Destination" parent="@style/TextAppearance.OVgo.SectionTitle" />
 
     <style name="TextAppearance.OVgo.Departure.Destination.Disabled" parent="@style/TextAppearance.OVgo.SectionTitle.Disabled" />
@@ -41,7 +89,8 @@
 
     <style name="TextAppearance.OVgo.Departure.Cancelled" parent="@style/TextAppearance.OVgo.SectionText.Medium">
         <item name="android:textColor">@color/sectionTitleWarningColor</item>
-        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
     </style>
 
     <style name="TextAppearance.OVgo.Departure.RouteStations.Small" parent="@style/TextAppearance.OVgo.SectionText.Small" />
@@ -50,9 +99,10 @@
 
     <style name="TextAppearance.OVgo.Departure.Platform" parent="@style/TextAppearance.MaterialComponents.Body2">
         <item name="android:textColor">@color/colorOnPrimary</item>
-        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
         <item name="autoSizeMaxTextSize">48sp</item>
-        <item name="autoSizeMinTextSize">10sp</item>
+        <item name="autoSizeMinTextSize">14sp</item>
         <item name="autoSizeStepGranularity">4sp</item>
         <item name="autoSizeTextType">uniform</item>
     </style>

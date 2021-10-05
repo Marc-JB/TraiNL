@@ -91,34 +91,25 @@ class DepartureDetailsFragment : Fragment() {
     }
 
     private fun loadFacilities(departure: Departure, trainInfo: TrainInfo?) {
-        val facilities = trainInfo?.facilities ?: TrainInfo.TrainFacilities()
-        binding.iconWheelchairAccessible.visibility =
-            if (!departure.isCancelled && facilities.isWheelChairAccessible) View.VISIBLE
-            else View.GONE
+        val facilities = if (departure.isCancelled) {
+            null
+        } else {
+            trainInfo?.facilities
+        } ?: TrainInfo.TrainFacilities()
 
-        binding.iconToilet.visibility =
-            if (!departure.isCancelled && facilities.hasToilet) View.VISIBLE
-            else View.GONE
+        binding.iconWheelchairAccessible.visibility = if (facilities.isWheelChairAccessible) View.VISIBLE else View.GONE
 
-        binding.iconBicycles.visibility =
-            if (!departure.isCancelled && facilities.hasBicycleCompartment) View.VISIBLE
-            else View.GONE
+        binding.iconToilet.visibility = if (facilities.hasToilet) View.VISIBLE else View.GONE
 
-        binding.iconWifi.visibility =
-            if (!departure.isCancelled && facilities.hasFreeWifi) View.VISIBLE
-            else View.GONE
+        binding.iconBicycles.visibility = if (facilities.hasBicycleCompartment) View.VISIBLE else View.GONE
 
-        binding.iconPowerSockets.visibility =
-            if (!departure.isCancelled && facilities.hasPowerSockets) View.VISIBLE
-            else View.GONE
+        binding.iconWifi.visibility = if (facilities.hasFreeWifi) View.VISIBLE else View.GONE
 
-        binding.iconSilenceCompartment.visibility =
-            if (!departure.isCancelled && facilities.hasSilenceCompartment) View.VISIBLE
-            else View.GONE
+        binding.iconPowerSockets.visibility = if (facilities.hasPowerSockets) View.VISIBLE else View.GONE
 
-        binding.labelFirstClass.visibility =
-            if (!departure.isCancelled && facilities.hasFirstClass) View.VISIBLE
-            else View.GONE
+        binding.iconSilenceCompartment.visibility = if (facilities.hasSilenceCompartment) View.VISIBLE else View.GONE
+
+        binding.labelFirstClass.visibility = if (facilities.hasFirstClass) View.VISIBLE else View.GONE
     }
 
     private fun loadTrainImages(departure: Departure, trainInfo: TrainInfo?) {

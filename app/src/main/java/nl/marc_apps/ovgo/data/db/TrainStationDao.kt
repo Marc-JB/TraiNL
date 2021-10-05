@@ -13,6 +13,9 @@ interface TrainStationDao {
     @Query("SELECT * FROM trainstation WHERE uicCode LIKE :uicCode LIMIT 1")
     suspend fun getByUicCode(uicCode: String): TrainStationEntity?
 
+    @Query("SELECT count(*) FROM trainstation")
+    suspend fun getSize(): Int
+
     @Insert
     suspend fun insert(trainStations: Collection<TrainStationEntity>)
 

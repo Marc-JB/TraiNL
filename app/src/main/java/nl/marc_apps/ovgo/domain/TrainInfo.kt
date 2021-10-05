@@ -2,6 +2,7 @@ package nl.marc_apps.ovgo.domain
 
 import android.os.Parcel
 import android.os.Parcelable
+import nl.marc_apps.ovgo.utils.BitwiseOperations
 import nl.marc_apps.ovgo.utils.readParcelable
 import nl.marc_apps.ovgo.utils.readTypedList
 
@@ -13,13 +14,7 @@ data class TrainInfo(
         TrainFacilities(
             trainParts.sumOf { it.facilities.seatsFirstClass },
             trainParts.sumOf { it.facilities.seatsSecondClass },
-            trainParts.any { it.facilities.hasToilet },
-            trainParts.any { it.facilities.hasSilenceCompartment },
-            trainParts.any { it.facilities.hasPowerSockets },
-            trainParts.any { it.facilities.isWheelChairAccessible },
-            trainParts.any { it.facilities.hasBicycleCompartment },
-            trainParts.any { it.facilities.hasFreeWifi },
-            trainParts.any { it.facilities.hasBistro },
+            trainParts.map { it.facilities.features }.reduce { first, second -> first or second }
         )
     }
 
@@ -31,47 +26,70 @@ data class TrainInfo(
     data class TrainFacilities(
         val seatsFirstClass: Int = 0,
         val seatsSecondClass: Int = 0,
-        val hasToilet: Boolean = false,
-        val hasSilenceCompartment: Boolean = false,
-        val hasPowerSockets: Boolean = false,
-        val isWheelChairAccessible: Boolean = false,
-        val hasBicycleCompartment: Boolean = false,
-        val hasFreeWifi: Boolean = false,
-        val hasBistro: Boolean = false
+        val features: Int = 0
     ): Parcelable {
         val hasFirstClass = seatsFirstClass > 0 && seatsSecondClass > 0
+
+        val hasToilet
+            get() = BitwiseOperations.getBooleanFromInt(features, 0)
+
+        val hasSilenceCompartment
+            get() = BitwiseOperations.getBooleanFromInt(features, 1)
+
+        val hasPowerSockets
+            get() = BitwiseOperations.getBooleanFromInt(features, 2)
+
+        val isWheelChairAccessible
+            get() = BitwiseOperations.getBooleanFromInt(features, 3)
+
+        val hasBicycleCompartment
+            get() = BitwiseOperations.getBooleanFromInt(features, 4)
+
+        val hasFreeWifi
+            get() = BitwiseOperations.getBooleanFromInt(features, 5)
+
+        val hasBistro
+            get() = BitwiseOperations.getBooleanFromInt(features, 6)
 
         constructor(parcel: Parcel) : this(
             parcel.readInt(),
             parcel.readInt(),
-            parcel.readByte() == TRUE_AS_BYTE,
-            parcel.readByte() == TRUE_AS_BYTE,
-            parcel.readByte() == TRUE_AS_BYTE,
-            parcel.readByte() == TRUE_AS_BYTE,
-            parcel.readByte() == TRUE_AS_BYTE,
-            parcel.readByte() == TRUE_AS_BYTE,
-            parcel.readByte() == TRUE_AS_BYTE
+            parcel.readInt()
+        )
+
+        constructor(
+            seatsFirstClass: Int = 0,
+            seatsSecondClass: Int = 0,
+            hasToilet: Boolean = false,
+            hasSilenceCompartment: Boolean = false,
+            hasPowerSockets: Boolean = false,
+            isWheelChairAccessible: Boolean = false,
+            hasBicycleCompartment: Boolean = false,
+            hasFreeWifi: Boolean = false,
+            hasBistro: Boolean = false
+        ): this(
+            seatsFirstClass,
+            seatsSecondClass,
+            BitwiseOperations.constructBooleanInt(
+                hasToilet,
+                hasSilenceCompartment,
+                hasPowerSockets,
+                isWheelChairAccessible,
+                hasBicycleCompartment,
+                hasFreeWifi,
+                hasBistro
+            )
         )
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
             parcel.writeInt(seatsFirstClass)
             parcel.writeInt(seatsSecondClass)
-            parcel.writeByte(if (hasToilet) TRUE_AS_BYTE else FALSE_AS_BYTE)
-            parcel.writeByte(if (hasSilenceCompartment) TRUE_AS_BYTE else FALSE_AS_BYTE)
-            parcel.writeByte(if (hasPowerSockets) TRUE_AS_BYTE else FALSE_AS_BYTE)
-            parcel.writeByte(if (isWheelChairAccessible) TRUE_AS_BYTE else FALSE_AS_BYTE)
-            parcel.writeByte(if (hasBicycleCompartment) TRUE_AS_BYTE else FALSE_AS_BYTE)
-            parcel.writeByte(if (hasFreeWifi) TRUE_AS_BYTE else FALSE_AS_BYTE)
-            parcel.writeByte(if (hasBistro) TRUE_AS_BYTE else FALSE_AS_BYTE)
+            parcel.writeInt(features)
         }
 
         override fun describeContents() = 0
 
         companion object CREATOR : Parcelable.Creator<TrainFacilities> {
-            private const val FALSE_AS_BYTE = 0.toByte()
-
-            private const val TRUE_AS_BYTE = 1.toByte()
-
             override fun createFromParcel(parcel: Parcel) = TrainFacilities(parcel)
 
             override fun newArray(size: Int) = arrayOfNulls<TrainFacilities>(size)

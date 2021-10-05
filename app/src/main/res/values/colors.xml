@@ -23,8 +23,12 @@
 
     <!-- Specific colors -->
     <color name="backgroundColor">#FAFAFA</color>
+    <color name="backgroundColorTransparent">#00FAFAFA</color>
+
+    <color name="dividerColor">#52000000</color>
 
     <color name="sectionTitleWarningColor">@color/colorError</color>
+    <color name="sectionTitleOkColor">@color/colorOK</color>
     <color name="sectionTitleColor">@color/colorPrimary</color>
 
     <color name="trainImageBorder">#FAFAFA</color>

@@ -32,6 +32,10 @@ class DutchRailwaysApi(
         type: Set<DutchRailwaysDisruption.DisruptionType>? = null,
         isActive: Boolean? = null
     ): List<DutchRailwaysDisruption> {
+        if (type?.isEmpty() == true) {
+            return emptyList()
+        }
+
         try {
             return travelInfoApi.getDisruptions(
                 dutchRailwaysTravelInfoApiKey,
@@ -48,7 +52,9 @@ class DutchRailwaysApi(
 
     suspend fun getTrainStations(): List<DutchRailwaysStation> {
         try {
-            return travelInfoApi.getStations(dutchRailwaysTravelInfoApiKey).await().payload
+            return travelInfoApi.getStations(
+                apiKey = dutchRailwaysTravelInfoApiKey
+            ).await().payload?.filterNotNull() ?: emptyList()
         } catch (error: Throwable) {
             Firebase.crashlytics.recordException(error)
             error.printStackTrace()
@@ -65,7 +71,7 @@ class DutchRailwaysApi(
                 dutchRailwaysTravelInfoApiKey,
                 uicCode = uicCode,
                 language = language
-            ).await().payload.departures.filterNotNull()
+            ).await().payload?.departures?.filterNotNull() ?: emptyList()
         } catch (error: Throwable) {
             Firebase.crashlytics.recordException(error)
             error.printStackTrace()
@@ -73,7 +79,7 @@ class DutchRailwaysApi(
         }
     }
 
-    suspend fun getTrainInfo(journeyNumber: Int): DutchRailwaysTrainInfo? {
+    suspend fun getTrainInfo(journeyNumber: String): DutchRailwaysTrainInfo? {
         try {
             return trainInfoApi.getTrainInfo(
                 dutchRailwaysTravelInfoApiKey,
@@ -86,7 +92,11 @@ class DutchRailwaysApi(
         }
     }
 
-    suspend fun getTrainInfo(journeys: Set<Int>): List<DutchRailwaysTrainInfo> {
+    suspend fun getTrainInfo(journeys: Set<String>): List<DutchRailwaysTrainInfo> {
+        if (journeys.isEmpty()) {
+            return emptyList()
+        }
+
         try {
             return trainInfoApi.getTrainInfo(
                 dutchRailwaysTravelInfoApiKey,

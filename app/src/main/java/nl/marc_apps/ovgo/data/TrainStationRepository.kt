@@ -12,7 +12,6 @@ import nl.marc_apps.ovgo.data.db.TrainStationDao
 import nl.marc_apps.ovgo.data.db.TrainStationEntity
 import nl.marc_apps.ovgo.data.type_conversions.TrainStationConversions
 import nl.marc_apps.ovgo.domain.TrainStation
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 class TrainStationRepository(
@@ -22,11 +21,29 @@ class TrainStationRepository(
 ) {
     private var trainStationsCache: List<TrainStation>? = null
 
+    private fun updateCache(trainStations: List<TrainStation>) {
+        trainStationsCache = trainStations
+    }
+
     suspend fun getTrainStations(): List<TrainStation> {
-        return getTrainStationsFromCache()
-            ?: getTrainStationsFromDatabase()
-            ?: getTrainStationsFromApi()
-            ?: emptyList()
+        val trainStationsFromCache = getTrainStationsFromCache()
+        if (trainStationsFromCache != null) {
+            return trainStationsFromCache
+        }
+
+        if (!isDatabaseOutdatedOrEmpty()) {
+            return getTrainStationsFromDatabase() ?: emptyList()
+        }
+
+        val apiTrainStations = getTrainStationsFromApi()
+        return if (apiTrainStations.isNullOrEmpty()) {
+            if (hasCacheInDatabase()){
+                getTrainStationsFromDatabase()?.also(::updateCache) ?: emptyList()
+            } else emptyList()
+        } else {
+            updateTrainStationDatabaseInBackground(apiTrainStations)
+            apiTrainStations.also(::updateCache)
+        }
     }
 
     suspend fun getTrainStationById(uicCode: String): TrainStation? {
@@ -41,13 +58,6 @@ class TrainStationRepository(
     }
 
     private suspend fun getTrainStationsFromDatabase(): List<TrainStation>? {
-        if (isDatabaseOutdated()) {
-            val stations = getTrainStationsFromApi()
-            if (!stations.isNullOrEmpty()) {
-                return stations
-            }
-        }
-
         val databaseTrainStations = trainStationDao.getAll()
 
         return if (databaseTrainStations.isNullOrEmpty()) {
@@ -55,10 +65,39 @@ class TrainStationRepository(
         } else {
             databaseTrainStations.map {
                 it.asTrainStation()
-            }.also {
-                trainStationsCache = it
             }
         }
+    }
+
+    private suspend fun hasCacheInDatabase(): Boolean {
+        return trainStationDao.getSize() >= 0
+    }
+
+    private suspend fun updateTrainStationDatabaseInBackground(updatedTrainStations: Collection<TrainStation>) {
+        coroutineScope {
+            launch {
+                updateTrainStationDatabase(updatedTrainStations)
+            }
+        }
+    }
+
+    private suspend fun updateTrainStationDatabase(updatedTrainStations: Collection<TrainStation>) {
+        trainStationDao.deleteAll()
+
+        trainStationDao.insert(updatedTrainStations.map {
+            TrainStationEntity.fromTrainStation(it)
+        })
+
+        preferences.edit {
+            it[trainStationCacheDatePreference] = System.currentTimeMillis()
+        }
+    }
+
+    private suspend fun isDatabaseOutdatedOrEmpty(): Boolean {
+        val lastCacheDate = preferences.data.first()[trainStationCacheDatePreference] ?: return true
+        val expirationTimeMs = TimeUnit.MILLISECONDS.convert(10, TimeUnit.DAYS)
+        val currentDate = System.currentTimeMillis()
+        return currentDate - lastCacheDate > expirationTimeMs
     }
 
     private suspend fun getTrainStationsFromApi(): List<TrainStation>? {
@@ -70,32 +109,7 @@ class TrainStationRepository(
             return null
         }
 
-        coroutineScope {
-            launch {
-                updateTrainStationDatabase(trainStations)
-            }
-        }
-
-        return trainStations.also {
-            trainStationsCache = it
-        }
-    }
-
-    private suspend fun isDatabaseOutdated(): Boolean {
-        val currentDate = Date().time
-        val lastCacheDate = preferences.data.first()[trainStationCacheDatePreference] ?: currentDate
-        val expirationTimeMs = TimeUnit.MILLISECONDS.convert(10, TimeUnit.DAYS)
-        return currentDate - lastCacheDate > expirationTimeMs
-    }
-
-    private suspend fun updateTrainStationDatabase(updatedTrainStations: Collection<TrainStation>) {
-        trainStationDao.insert(updatedTrainStations.map {
-            TrainStationEntity.fromTrainStation(it)
-        })
-
-        preferences.edit {
-            it[trainStationCacheDatePreference] = Date().time
-        }
+        return trainStations
     }
 
     companion object {

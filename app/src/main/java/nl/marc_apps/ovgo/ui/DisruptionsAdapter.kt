@@ -32,12 +32,22 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
             holder.binding.labelTitle.setTextColor(context.getColor(R.color.sectionTitleColor))
 
             val currentDate = Date()
-            val activeTimeSpans = disruption.timespans.filterNot { currentDate.after(it.start) && currentDate.before(it.end) }
+            val activeTimeSpans = disruption.timespans.filter {
+                currentDate.before(it.end)
+            }.sortedBy {
+                if (currentDate.after(it.start)) 0 else 1
+            }
+            val activeAlternativeTransportTimeSpans = disruption.alternativeTransportTimespans.filter {
+                (it.end == null && it.start != null && currentDate.after(it.start)) || currentDate.before(it.end)
+            }.sortedBy {
+                if (it.start != null && currentDate.after(it.start)) 0 else 1
+            }
 
             val description = listOfNotNull(
                 activeTimeSpans.firstOrNull()?.situation?.label,
                 disruption.summaryAdditionalTravelTime?.label ?: activeTimeSpans.firstOrNull()?.additionalTravelTime?.label,
-                disruption.expectedDuration?.description
+                disruption.expectedDuration?.description,
+                activeAlternativeTransportTimeSpans.firstOrNull()?.alternativeTransport?.label ?: activeTimeSpans.firstOrNull()?.alternativeTransport?.label
             ).joinToString(separator = " ")
 
             holder.binding.labelDescription.text = description
@@ -46,7 +56,11 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
 
             holder.binding.labelTimerange.visibility = View.VISIBLE
 
-            holder.binding.labelTimerange.text = if (disruption.end == null) {
+            holder.binding.labelTimerange.text = if (disruption.end == null && currentDate.after(disruption.start)) {
+                context.getString(R.string.disruption_end_time_unknown)
+            } else if (disruption.end != null && currentDate.after(disruption.start)) {
+                context.getString(R.string.disruption_end_time, disruption.end.format(DateFormat.MEDIUM, DateFormat.SHORT))
+            } else if (disruption.end == null) {
                 disruption.start.format(DateFormat.MEDIUM, DateFormat.SHORT)
             } else {
                 disruption.start.format(DateFormat.MEDIUM, DateFormat.SHORT) + "\n" + disruption.end.format(DateFormat.MEDIUM, DateFormat.SHORT)
@@ -62,7 +76,10 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
                     .show()
             }
         } else if (disruption is DutchRailwaysDisruption.Calamity) {
-            holder.binding.labelTitle.setTextColor(context.getColor(R.color.sectionTitleWarningColor))
+            holder.binding.labelTitle.setTextColor(context.getColor(
+                if (disruption.priority == DutchRailwaysDisruption.Calamity.Priority.PRIO_1) R.color.sectionTitleWarningColor
+                else R.color.sectionTitleColor
+            ))
 
             holder.binding.labelDescription.text = disruption.description
 
