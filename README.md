@@ -27,7 +27,7 @@ Experimental public transport Android app that showcases various Android archite
   * Dependency Injection using [Koin](https://insert-koin.io/)
 
 ## Downloads
-New versions of this app are uploaded to the [releases page](/releases/).
+New versions of this app are uploaded to the [releases page](https://github.com/Marc-JB/TraiNL/releases/).
 
 ## Building & running this project
 To build or run this project, both Firebase Crashlytics and a Dutch Railways API key are required. The setup is as follows:
