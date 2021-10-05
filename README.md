@@ -26,6 +26,9 @@ Experimental public transport Android app that showcases various Android archite
   * Serialization of JSON objects retrieved from the API using [Kotlin Serialization](https://kotlinlang.org/docs/serialization.html)
   * Dependency Injection using [Koin](https://insert-koin.io/)
 
+## Downloads
+New versions of this app are uploaded to the [releases page](/releases/).
+
 ## Building & running this project
 To build or run this project, both Firebase Crashlytics and a Dutch Railways API key are required. The setup is as follows:
 
