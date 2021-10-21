@@ -34,7 +34,7 @@ fun getLocalProperties(): Properties {
 }
 
 android {
-    compileSdk = 30
+    compileSdk = 31
     buildToolsVersion = "31.0.0"
 
     packagingOptions {
@@ -57,7 +57,7 @@ android {
     defaultConfig {
         applicationId = "nl.marc_apps.ovgo"
         minSdk = 26
-        targetSdk = 30
+        targetSdk = 31
         versionCode = getProperty("version.code")?.toInt() ?: 7
         versionName = getProperty("version.name") ?: "0.5"
 
@@ -142,7 +142,7 @@ dependencies {
 
     // API
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
 
@@ -173,14 +173,14 @@ dependencies {
     implementation("com.google.android.material:material:1.4.0")
 
     // Test base
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testImplementation(kotlin("test-junit5"))
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 
     // Android test base
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.test:runner:1.4.0")
-    androidTestImplementation("org.junit.jupiter:junit-jupiter-api:5.8.0")
+    androidTestImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     androidTestImplementation(kotlin("test-junit5"))
     androidTestImplementation("de.mannodermaus.junit5:android-test-core:1.3.0")
     androidTestRuntimeOnly("de.mannodermaus.junit5:android-test-runner:1.3.0")
