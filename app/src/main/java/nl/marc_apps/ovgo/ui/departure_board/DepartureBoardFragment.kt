@@ -48,11 +48,18 @@ class DepartureBoardFragment : Fragment() {
                 AppCompatResources.getDrawable(view.context, R.drawable.divider)?.let { setDrawable(it) }
             }
         )
-        binding.listDepartures.addItemDecoration(
-            DividerItemDecoration(binding.listDepartures.context, DividerItemDecoration.HORIZONTAL).apply {
-                AppCompatResources.getDrawable(view.context, R.drawable.divider_vertical)?.let { setDrawable(it) }
-            }
-        )
+
+        if (resources.getBoolean(R.bool.is_large_screen_device)) {
+            binding.listDepartures.addItemDecoration(
+                DividerItemDecoration(
+                    binding.listDepartures.context,
+                    DividerItemDecoration.HORIZONTAL
+                ).apply {
+                    AppCompatResources.getDrawable(view.context, R.drawable.divider_vertical)
+                        ?.let { setDrawable(it) }
+                }
+            )
+        }
 
         viewModel.departures.observe(viewLifecycleOwner) {
             if (it == null) {
