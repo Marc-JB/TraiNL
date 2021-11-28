@@ -9,11 +9,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.data.DepartureRepository
 import nl.marc_apps.ovgo.data.TrainStationRepository
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.utils.getOrNull
 import java.util.*
 
 class DepartureBoardViewModel(
@@ -33,7 +35,7 @@ class DepartureBoardViewModel(
 
     fun loadDeparturesForLastKnownStation() {
         viewModelScope.launch {
-            val lastKnownStationId = preferences.data.first()[lastTrainStation]
+            val lastKnownStationId = preferences.getOrNull(lastTrainStation)
             if (lastKnownStationId != null) {
                 val station = trainStationRepository.getTrainStationById(lastKnownStationId)
                 if (station != null) {

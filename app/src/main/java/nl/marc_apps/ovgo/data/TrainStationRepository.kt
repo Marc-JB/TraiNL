@@ -12,6 +12,7 @@ import nl.marc_apps.ovgo.data.db.TrainStationDao
 import nl.marc_apps.ovgo.data.db.TrainStationEntity
 import nl.marc_apps.ovgo.data.type_conversions.TrainStationConversions
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.utils.getOrNull
 import java.util.concurrent.TimeUnit
 
 class TrainStationRepository(
@@ -94,7 +95,7 @@ class TrainStationRepository(
     }
 
     private suspend fun isDatabaseOutdatedOrEmpty(): Boolean {
-        val lastCacheDate = preferences.data.first()[trainStationCacheDatePreference] ?: return true
+        val lastCacheDate = preferences.getOrNull(trainStationCacheDatePreference) ?: return true
         val expirationTimeMs = TimeUnit.MILLISECONDS.convert(10, TimeUnit.DAYS)
         val currentDate = System.currentTimeMillis()
         return currentDate - lastCacheDate > expirationTimeMs
