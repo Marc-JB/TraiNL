@@ -5,9 +5,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
 
-    // TODO: Migrate from KAPT to KSP
-    kotlin("kapt")
-    // id("com.google.devtools.ksp")
+    id("com.google.devtools.ksp") version "1.6.0-1.0.1"
 
     // Firebase crashlytics
     id("com.google.gms.google-services")
@@ -138,11 +136,10 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
 
     // Database
-    val roomVersion = "2.3.0"
+    val roomVersion = "2.4.0-beta02"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
-    // TODO: Migrate from KAPT to KSP
-    kapt("androidx.room:room-compiler:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
 
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
