@@ -33,6 +33,16 @@ class DepartureBoardViewModel(
     val departures: LiveData<List<Departure>?>
         get() = mutableDepartures
 
+    fun saveCurrentStation(station: TrainStation? = currentStation.value) {
+        if (station == null) return
+
+        viewModelScope.launch {
+            preferences.edit {
+                it[lastTrainStation] = station.uicCode
+            }
+        }
+    }
+
     fun loadDeparturesForLastKnownStation() {
         viewModelScope.launch {
             val lastKnownStationId = preferences.getOrNull(lastTrainStation)
@@ -59,11 +69,7 @@ class DepartureBoardViewModel(
         }
 
         mutableCurrentStation.postValue(station)
-        viewModelScope.launch {
-            preferences.edit {
-                it[lastTrainStation] = station.uicCode
-            }
-        }
+        saveCurrentStation(station)
         mutableDepartures.postValue(null)
 
         viewModelScope.launch {

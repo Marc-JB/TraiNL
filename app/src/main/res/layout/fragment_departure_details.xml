@@ -70,13 +70,26 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:text="@string/departure_via"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.RouteStations.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier_header"
-        tools:layout_constraintBottom_toTopOf="@+id/label_cancelled"
-        tools:text="Via Dordrecht"
+        tools:layout_constraintBottom_toTopOf="@+id/list_upcoming_stations"
         tools:visibility="visible" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_upcoming_stations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/label_cancelled"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_upcoming_stations"
+        tools:listitem="@layout/list_item_station_button" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label_cancelled"
@@ -88,8 +101,7 @@
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Cancelled"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_upcoming_stations"
-        tools:layout_constraintTop_toBottomOf="@+id/label_upcoming_stations"
+        app:layout_constraintTop_toBottomOf="@id/list_upcoming_stations"
         tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.Barrier

@@ -4,14 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentDepartureDetailsBinding
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
+import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.ui.TrainImages
+import nl.marc_apps.ovgo.ui.departure_board.DeparturesAdapter
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
 
@@ -48,7 +54,8 @@ class DepartureDetailsFragment : Fragment() {
         binding.labelDepartureTime.setTextColor(
             ContextCompat.getColor(
                 view.context,
-                if (departure.isDelayed || departure.isCancelled) R.color.sectionTitleWarningColor else R.color.sectionTitleColor
+                if (departure.isDelayed || departure.isCancelled) R.color.sectionTitleWarningColor
+                else R.color.sectionTitleColor
             )
         )
 
@@ -56,19 +63,20 @@ class DepartureDetailsFragment : Fragment() {
         binding.labelDirection.setTextColor(
             ContextCompat.getColor(
                 binding.labelDirection.context,
-                if (departure.isCancelled) R.color.sectionTitleWarningColor else R.color.sectionTitleColor
+                if (departure.isCancelled) R.color.sectionTitleWarningColor
+                else R.color.sectionTitleColor
             )
         )
 
-        val upcomingStations = departure.stationsOnRoute.joinToString { it.name }
-        binding.labelUpcomingStations.text = if (departure.stationsOnRoute.isNotEmpty()) {
-            view.context.getString(R.string.departure_via_stations, upcomingStations)
-        } else {
-            ""
+        binding.labelDirection.setOnClickListener {
+            if (departure.direction != null) {
+                val action = DepartureDetailsFragmentDirections
+                    .actionDepartureDetailsToStationDepartureBoard(departure.direction)
+                findNavController().navigate(action)
+            }
         }
-        binding.labelUpcomingStations.visibility =
-            if (departure.stationsOnRoute.isEmpty() || departure.isCancelled) View.GONE
-            else View.VISIBLE
+
+        loadUpcomingStations(departure)
 
         binding.labelCancelled.visibility = if (departure.isCancelled) View.VISIBLE else View.GONE
 
@@ -88,6 +96,19 @@ class DepartureDetailsFragment : Fragment() {
         )
 
         loadTrainImages(departure, trainInfo)
+    }
+
+    private fun loadUpcomingStations(departure: Departure) {
+        val upcomingTrainStationAdapter = UpcomingTrainStationAdapter()
+        binding.listUpcomingStations.adapter = upcomingTrainStationAdapter
+        upcomingTrainStationAdapter.submitList(departure.stationsOnRoute)
+
+        binding.labelUpcomingStations.visibility =
+            if (departure.stationsOnRoute.isEmpty() || departure.isCancelled) View.GONE
+            else View.VISIBLE
+        binding.listUpcomingStations.visibility =
+            if (departure.stationsOnRoute.isEmpty() || departure.isCancelled) View.GONE
+            else View.VISIBLE
     }
 
     private fun loadFacilities(departure: Departure, trainInfo: TrainInfo?) {

@@ -81,4 +81,10 @@ class DepartureBoardFragment : Fragment() {
             viewModel.loadDepartures(station)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.saveCurrentStation()
+    }
 }
