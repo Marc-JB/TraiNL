@@ -10,6 +10,7 @@ import kotlinx.serialization.encoding.Encoder
 import java.text.ParseException
 import java.util.*
 
+@ExperimentalSerializationApi
 object NullableDateSerializer : KSerializer<Date?> {
     private const val UTC_TIMEZONE_ID = "UTC"
 
@@ -22,7 +23,6 @@ object NullableDateSerializer : KSerializer<Date?> {
         }
     }
 
-    @ExperimentalSerializationApi
     override fun deserialize(decoder: Decoder): Date? {
         val dateString = if (decoder.decodeNotNullMark()) {
             decoder.decodeString()
@@ -48,7 +48,6 @@ object NullableDateSerializer : KSerializer<Date?> {
         return null
     }
 
-    @ExperimentalSerializationApi
     override fun serialize(encoder: Encoder, value: Date?) {
         if (value == null) {
             encoder.encodeNull()
