@@ -133,7 +133,7 @@ dependencies {
 
     // API
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
 
@@ -148,15 +148,15 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     // Dependency Injection
-    val koinVersion = "3.1.2"
+    val koinVersion = "3.1.4"
     implementation("io.insert-koin:koin-android:$koinVersion")
     // testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
     // androidTestImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
 
     // Backward compatibility & utilities
-    implementation("androidx.core:core-ktx:1.6.0")
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("androidx.fragment:fragment-ktx:1.3.6")
+    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.appcompat:appcompat:1.4.0")
+    implementation("androidx.fragment:fragment-ktx:1.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation("io.coil-kt:coil:1.3.2")
 

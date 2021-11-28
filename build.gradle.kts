@@ -16,7 +16,7 @@ buildscript {
 
         // Firebase crashlytics
         classpath("com.google.gms:google-services:4.3.10")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:2.7.1")
+        classpath("com.google.firebase:firebase-crashlytics-gradle:2.8.0")
 
         // Testing
         classpath("de.mannodermaus.gradle.plugins:android-junit5:1.7.1.1")
