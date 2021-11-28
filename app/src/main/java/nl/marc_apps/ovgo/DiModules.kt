@@ -66,7 +66,7 @@ object DiModules {
     }
 
     val utilitiesModule = module {
-        single<HttpClient> { HttpClientImpl }
+        single<HttpClient> { HttpClientImpl(get()) }
         single<StringSimilarity> { JaroWinklerStringSimilarity }
     }
 }
