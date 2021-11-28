@@ -95,24 +95,24 @@ android {
 
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
+
+        getByName("debug") {
+            applicationIdSuffix = ".debug"
+
+            isMinifyEnabled = false
+            isShrinkResources = false
+            isCrunchPngs = true
+
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
     }
 
     bundle {
-        abi {
-            enableSplit = true
-        }
-
-        language {
-            enableSplit = true
-        }
-
-        density {
-            enableSplit = true
-        }
-
-        texture {
-            enableSplit = true
-        }
+        abi.enableSplit = true
+        language.enableSplit = true
+        density.enableSplit = true
+        texture.enableSplit = true
+        deviceTier.enableSplit = true
     }
 
     compileOptions {
