@@ -2,11 +2,13 @@ package nl.marc_apps.ovgo.domain
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.Keep
 import nl.marc_apps.ovgo.utils.readParcelable
 import nl.marc_apps.ovgo.utils.readTypedList
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+@Keep
 data class Departure(
     val journeyId: String,
     val direction: TrainStation? = null,

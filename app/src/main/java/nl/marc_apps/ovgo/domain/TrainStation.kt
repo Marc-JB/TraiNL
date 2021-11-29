@@ -2,8 +2,10 @@ package nl.marc_apps.ovgo.domain
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.Keep
 import nl.marc_apps.ovgo.utils.readStringCollection
 
+@Keep
 data class TrainStation(
     val uicCode: String,
     val name: String,
