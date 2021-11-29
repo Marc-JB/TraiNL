@@ -33,10 +33,10 @@ class DepartureBoardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.currentStation.observe(viewLifecycleOwner) {
-            binding.labelStation.text = it.name
+            binding.partialDepartureBoardActionBar.labelStation.text = it.name
         }
 
-        binding.actionChangeStation.setOnClickListener {
+        binding.partialDepartureBoardActionBar.actionChangeStation.setOnClickListener {
             val action = DepartureBoardFragmentDirections.actionHomeToStationSearch()
             findNavController().navigate(action)
         }
