@@ -5,7 +5,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.db.TrainStationDao
@@ -13,6 +12,7 @@ import nl.marc_apps.ovgo.data.db.TrainStationEntity
 import nl.marc_apps.ovgo.data.type_conversions.TrainStationConversions
 import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.utils.getOrNull
+import nl.marc_apps.ovgo.utils.println
 import java.util.concurrent.TimeUnit
 
 class TrainStationRepository(
@@ -22,28 +22,36 @@ class TrainStationRepository(
 ) {
     private var trainStationsCache: List<TrainStation>? = null
 
-    private fun updateCache(trainStations: List<TrainStation>) {
+    private fun updateMemoryCache(trainStations: List<TrainStation>) {
         trainStationsCache = trainStations
+    }
+
+    private fun logSource(source: String, remark: String? = null) {
+        println(TAG, "Train stations fetched from $source." + if (remark == null) "" else " $remark.")
     }
 
     suspend fun getTrainStations(): List<TrainStation> {
         val trainStationsFromCache = getTrainStationsFromCache()
         if (trainStationsFromCache != null) {
+            logSource("MEMORY_CACHE")
             return trainStationsFromCache
         }
 
         if (!isDatabaseOutdatedOrEmpty()) {
-            return getTrainStationsFromDatabase() ?: emptyList()
+            logSource("DB")
+            return getTrainStationsFromDatabase()?.also(::updateMemoryCache) ?: emptyList()
         }
 
         val apiTrainStations = getTrainStationsFromApi()
         return if (apiTrainStations.isNullOrEmpty()) {
             if (hasCacheInDatabase()){
-                getTrainStationsFromDatabase()?.also(::updateCache) ?: emptyList()
+                logSource("DB", "API call has failed")
+                getTrainStationsFromDatabase()?.also(::updateMemoryCache) ?: emptyList()
             } else emptyList()
         } else {
+            logSource("API")
             updateTrainStationDatabaseInBackground(apiTrainStations)
-            apiTrainStations.also(::updateCache)
+            apiTrainStations.also(::updateMemoryCache)
         }
     }
 
@@ -115,5 +123,7 @@ class TrainStationRepository(
 
     companion object {
         private val trainStationCacheDatePreference = longPreferencesKey("TRAIN_STATION_CACHE_DATE")
+
+        private const val TAG = "TRAIN_STATION_REPO"
     }
 }

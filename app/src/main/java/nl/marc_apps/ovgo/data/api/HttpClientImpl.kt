@@ -13,14 +13,18 @@ import java.util.concurrent.TimeUnit
 
 @ExperimentalSerializationApi
 class HttpClientImpl(val context: Context) : HttpClient {
-    private val logger = HttpLoggingInterceptor()
-
-    init {
-        logger.setLevel(HttpLoggingInterceptor.Level.BODY)
+    private val logger by lazy {
+        HttpLoggingInterceptor().also {
+            it.setLevel(if (LOG_FULL_HTTP_REQUESTS_ON_DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.BASIC
+            })
+        }
     }
 
     override val okHttpClient = httpClient {
-        if (BuildConfig.DEBUG && LOG_HTTP_REQUESTS_ON_DEBUG) {
+        if (BuildConfig.DEBUG) {
             addInterceptor(logger)
         }
         callTimeout(1, TimeUnit.MINUTES)
@@ -39,7 +43,7 @@ class HttpClientImpl(val context: Context) : HttpClient {
     override val jsonConverter = json.asConverterFactory(JSON_MEDIA_TYPE.toMediaType())
 
     companion object {
-        private const val LOG_HTTP_REQUESTS_ON_DEBUG = true
+        private const val LOG_FULL_HTTP_REQUESTS_ON_DEBUG = false
 
         private const val JSON_MEDIA_TYPE = "application/json"
     }
