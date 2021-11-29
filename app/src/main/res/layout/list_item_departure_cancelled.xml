@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingVertical="8dp">
+    android:paddingVertical="@dimen/departure_board_vertical_spacing">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label_departure_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/departure_board_horizontal_spacing"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Time.Disabled"
@@ -53,7 +53,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/departure_board_horizontal_spacing"
         android:layout_marginBottom="4dp"
         android:ellipsize="end"
         android:gravity="end"
@@ -70,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/departure_board_horizontal_spacing"
         android:layout_marginBottom="4dp"
         android:textAppearance="@style/TextAppearance.OVgo.Departure.Time.Disabled"
         android:visibility="invisible"
