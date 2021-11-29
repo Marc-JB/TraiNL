@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 plugins {
     id("com.android.application")
     kotlin("android")
-
     id("com.google.devtools.ksp") version "1.6.0-1.0.1"
 
     // Firebase crashlytics
