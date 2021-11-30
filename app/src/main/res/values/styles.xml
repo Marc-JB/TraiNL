@@ -12,23 +12,7 @@
         <item name="android:layout_height">22dp</item>
         <item name="android:layout_marginStart">4dp</item>
         <item name="android:layout_marginTop">8dp</item>
-        <item name="android:tint">@color/colorPrimary</item>
-    </style>
-
-    <style name="Widget.App.Departure.Facility.Label" parent="">
-        <item name="android:layout_width">22dp</item>
-        <item name="android:layout_height">22dp</item>
-        <item name="android:layout_marginStart">4dp</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:gravity">center</item>
-        <item name="android:padding">2dp</item>
-        <item name="android:text">1</item>
-        <item name="android:textAppearance">?attr/textAppearanceCaption</item>
-        <item name="android:textStyle">bold</item>
-        <item name="autoSizeMinTextSize">4sp</item>
-        <item name="autoSizeStepGranularity">1sp</item>
-        <item name="autoSizeTextType">uniform</item>
+        <item name="android:tint">?attr/colorPrimary</item>
     </style>
 
     <style name="Widget.App.Departure.TrainImages.ScrollableHolder" parent="">

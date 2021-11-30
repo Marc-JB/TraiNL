@@ -130,7 +130,9 @@ class DepartureDetailsFragment : Fragment() {
 
         binding.iconSilenceCompartment.visibility = if (facilities.hasSilenceCompartment) View.VISIBLE else View.GONE
 
-        binding.labelFirstClass.visibility = if (facilities.hasFirstClass) View.VISIBLE else View.GONE
+        binding.iconFirstClass.visibility = if (facilities.hasFirstClass) View.VISIBLE else View.GONE
+
+        binding.iconBistro.visibility = if (facilities.hasBistro) View.VISIBLE else View.GONE
     }
 
     private fun loadTrainImages(departure: Departure, trainInfo: TrainInfo?) {

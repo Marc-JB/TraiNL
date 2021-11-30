@@ -166,25 +166,35 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icon_silence_compartment"
         style="@style/Widget.App.Departure.Facility.Icon"
-        app:layout_constraintEnd_toStartOf="@+id/label_first_class"
+        app:layout_constraintEnd_toStartOf="@+id/icon_first_class"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/icon_power_sockets"
         app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
         app:srcCompat="@drawable/ic_silence" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/label_first_class"
-        style="@style/Widget.App.Departure.Facility.Label"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_first_class"
+        style="@style/Widget.App.Departure.Facility.Icon"
+        app:layout_constraintEnd_toStartOf="@+id/icon_bistro"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/icon_silence_compartment"
-        app:layout_constraintTop_toBottomOf="@id/barrier_main_info" />
+        app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
+        app:srcCompat="@drawable/ic_first_class" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_bistro"
+        style="@style/Widget.App.Departure.Facility.Icon"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_first_class"
+        app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
+        app:srcCompat="@drawable/ic_bistro" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier_facilities"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="icon_wheelchair_accessible,icon_toilet,icon_bicycles,icon_wifi,icon_power_sockets,icon_silence_compartment,label_first_class" />
+        app:constraint_referenced_ids="icon_wheelchair_accessible,icon_toilet,icon_bicycles,icon_wifi,icon_power_sockets,icon_silence_compartment,icon_first_class,icon_bistro" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label_operator_and_type"
