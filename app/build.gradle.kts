@@ -160,14 +160,15 @@ dependencies {
     implementation("com.google.android.material:material:1.4.0")
 
     // Test base
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    val junitVersion = "5.8.2"
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testImplementation(kotlin("test-junit5"))
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
 
     // Android test base
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.test:runner:1.4.0")
-    androidTestImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    androidTestImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     androidTestImplementation(kotlin("test-junit5"))
     androidTestImplementation("de.mannodermaus.junit5:android-test-core:1.3.0")
     androidTestRuntimeOnly("de.mannodermaus.junit5:android-test-runner:1.3.0")
