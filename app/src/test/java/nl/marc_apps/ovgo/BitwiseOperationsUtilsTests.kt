@@ -140,7 +140,8 @@ class BitwiseOperationsUtilsTests {
 
     @Test
     fun randomlyConstructedBooleanArraysConvertedToIntAndBackShouldBeEqualToOriginal() {
-        for (i in 0 until 20) {
+        val testRuns = 20
+        for (i in 0 until testRuns) {
             // Arrange
             val arraySize = Int.SIZE_BITS
             val booleanInput = BooleanArray(arraySize) { booleanArrayOf(true, false).random() }
