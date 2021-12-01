@@ -8,8 +8,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.data.DepartureRepository
 import nl.marc_apps.ovgo.data.TrainStationRepository
@@ -55,7 +53,7 @@ class DepartureBoardViewModel(
             }
 
             val station = trainStationRepository.getTrainStations().firstOrNull {
-                it.name == DEFAULT_STATION_NAME
+                it.fullName == DEFAULT_STATION_NAME
             }
             if (station != null) {
                 loadDepartures(station)

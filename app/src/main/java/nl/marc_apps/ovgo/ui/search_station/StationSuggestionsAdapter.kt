@@ -23,7 +23,7 @@ class StationSuggestionsAdapter : ListAdapter<TrainStation, StationSuggestionsAd
     override fun onBindViewHolder(holder: StationSuggestionViewHolder, position: Int) {
         val stationSuggestion = currentList.elementAtOrNull(position) ?: return
 
-        holder.binding.labelPrimaryName.text = stationSuggestion.name
+        holder.binding.labelPrimaryName.text = stationSuggestion.fullName
 
         if (stationSuggestion.alternativeNames.isEmpty()) {
             holder.binding.labelSecondaryNames.visibility = View.GONE

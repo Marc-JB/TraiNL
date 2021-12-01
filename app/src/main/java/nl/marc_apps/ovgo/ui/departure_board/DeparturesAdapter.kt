@@ -52,6 +52,33 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
         }
     }
 
+    private fun isForeignStation(trainStation: TrainStation): Boolean {
+        return trainStation.country != TrainStation.Country.THE_NETHERLANDS
+    }
+
+    private fun createDisplayName(trainStation: TrainStation, characterLimit: Int): String {
+        val effectiveCharacterLimit = if (isForeignStation(trainStation)) {
+            characterLimit - STATION_NAME_FLAG_CHARACTER_COUNT
+        } else {
+            characterLimit
+        }
+
+        return buildString {
+            append(
+                if (trainStation.fullName.length > effectiveCharacterLimit) {
+                    trainStation.shortenedName
+                } else {
+                    trainStation.fullName
+                }
+            )
+
+            if (isForeignStation(trainStation)) {
+                append(" ")
+                append(trainStation.country.flag)
+            }
+        }
+    }
+
     private fun onBindRegularDepartureViewHolder(
         departure: Departure,
         holder: DepartureViewHolder.RegularDepartureViewHolder
@@ -78,18 +105,12 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
             )
         )
 
-        binding.labelDirection.text = if (departure.direction != null && departure.direction.country != TrainStation.Country.THE_NETHERLANDS) {
-            departure.direction.name + " " + departure.direction.country.flag
-        } else {
-            departure.direction?.name
+        binding.labelDirection.text = departure.direction?.let {
+            createDisplayName(it, STATION_NAME_CHARACTER_LIMIT)
         }
 
         val upcomingStations = departure.stationsOnRoute.joinToString(limit = MAX_STATIONS_DISPLAYED_ON_ROUTE) {
-            if (it.country != TrainStation.Country.THE_NETHERLANDS) {
-                it.name + " " + it.country.flag
-            } else {
-                it.name
-            }
+            createDisplayName(it, STATION_NAME_CHARACTER_LIMIT)
         }
         binding.labelUpcomingStations.text = if (departure.stationsOnRoute.isNotEmpty()) {
             context.getString(R.string.departure_via_stations, upcomingStations)
@@ -147,7 +168,7 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
         binding.labelDepartureTime.text = departureTimeText
         binding.labelDepartureTimeAlignment.text = departureTimeText
 
-        binding.labelDirection.text = departure.direction?.name
+        binding.labelDirection.text = departure.direction?.fullName
 
         binding.labelCancelled.visibility = if (departure.isCancelled) View.VISIBLE else View.GONE
 
@@ -180,6 +201,10 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
         private const val LAYOUT_CHILD_COUNT_SINGLE_VIEW = 1
 
         private const val MAX_STATIONS_DISPLAYED_ON_ROUTE = 2
+
+        private const val STATION_NAME_CHARACTER_LIMIT = 18
+
+        private const val STATION_NAME_FLAG_CHARACTER_COUNT = 2
 
         @IntDef(TYPE_REGULAR, TYPE_CANCELLED)
         @Retention(AnnotationRetention.SOURCE)

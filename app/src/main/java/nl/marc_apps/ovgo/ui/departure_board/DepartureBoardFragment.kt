@@ -33,7 +33,7 @@ class DepartureBoardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.currentStation.observe(viewLifecycleOwner) {
-            binding.partialDepartureBoardActionBar.labelStation.text = it.name
+            binding.partialDepartureBoardActionBar.labelStation.text = it.fullName
         }
 
         binding.partialDepartureBoardActionBar.actionChangeStation.setOnClickListener {

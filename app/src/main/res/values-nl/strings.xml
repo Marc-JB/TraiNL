@@ -19,4 +19,15 @@
     <string name="operator_rnet_by_ns">R-net door NS</string>
     <string name="disruption_end_time">Dit duurt tot ongeveer %1$s</string>
     <string name="disruption_end_time_unknown">Het is nog niet bekend hoe lang dit gaat duren</string>
+    <string name="traintype_and_facilities"><![CDATA[Treintype & faciliteiten]]></string>
+    <string name="route">Route</string>
+    <string name="direction">Richting:</string>
+    <string name="departure_information">Vertrekinformatie</string>
+    <string name="platform">Spoor %1$s</string>
+    <string name="departure_info_title">%1$s %2$s</string>
+    <string name="departure_time_long_text_no_delay">Vertrektijd: %1$s (geen vertraging)</string>
+    <plurals name="departure_time_long_text_delayed">
+        <item quantity="one">Vertrektijd: %1$s, +%2$d minuut</item>
+        <item quantity="other">Vertrektijd: %1$s, +%2$d minuten</item>
+    </plurals>
 </resources>

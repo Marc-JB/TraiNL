@@ -19,7 +19,8 @@ class ApiDepartureToDomainDeparture(
 
     private fun resolveStationName(stationName: String): TrainStation? {
         return stations.find {
-            it.name == stationName
+            it.fullName == stationName
+                    || it.shortenedName == stationName
                     || stationName in it.alternativeNames
                     || stationName in it.alternativeSearches
         }

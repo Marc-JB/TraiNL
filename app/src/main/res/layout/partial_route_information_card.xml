@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_flat_card"
+    android:paddingVertical="24dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_section_route_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:text="@string/route"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_direction"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:gravity="center_vertical"
+        android:text="@string/direction"
+        app:layout_constraintBottom_toBottomOf="@id/action_show_destination_station"
+        app:layout_constraintEnd_toStartOf="@id/action_show_destination_station"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/action_show_destination_station" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/action_show_destination_station"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/label_direction"
+        app:layout_constraintTop_toBottomOf="@id/label_section_route_info"
+        tools:text="Arnhem Centraal" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_upcoming_stations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/departure_via"
+        android:textAppearance="@style/TextAppearance.OVgo.Departure.RouteStations.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/action_show_destination_station"
+        tools:layout_constraintBottom_toTopOf="@+id/list_upcoming_stations"
+        tools:visibility="visible" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_upcoming_stations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="24dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_upcoming_stations"
+        tools:listitem="@layout/list_item_station_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

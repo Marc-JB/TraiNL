@@ -40,7 +40,7 @@ class SearchStationViewModel(
 
     fun updateAutocompleteList(stationQuery: String) {
         mutableStationSuggestions.postValue(allStations.sortedByDescending { station ->
-            val allNames = station.alternativeNames + station.alternativeSearches + station.name
+            val allNames = station.alternativeNames + station.alternativeSearches + station.fullName + station.shortenedName
 
             allNames.maxOf {
                 stringSimilarity.calculateSimilarity(stationQuery, it)
