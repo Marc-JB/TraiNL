@@ -104,9 +104,8 @@ class TrainStationRepository(
 
     private suspend fun isDatabaseOutdatedOrEmpty(): Boolean {
         val lastCacheDate = preferences.getOrNull(trainStationCacheDatePreference) ?: return true
-        val expirationTimeMs = TimeUnit.MILLISECONDS.convert(10, TimeUnit.DAYS)
         val currentDate = System.currentTimeMillis()
-        return currentDate - lastCacheDate > expirationTimeMs
+        return currentDate - lastCacheDate > databaseCacheExpirationTimeMs
     }
 
     private suspend fun getTrainStationsFromApi(): List<TrainStation>? {
@@ -125,5 +124,7 @@ class TrainStationRepository(
         private val trainStationCacheDatePreference = longPreferencesKey("TRAIN_STATION_CACHE_DATE")
 
         private const val TAG = "TRAIN_STATION_REPO"
+
+        private val databaseCacheExpirationTimeMs = TimeUnit.MILLISECONDS.convert(10, TimeUnit.DAYS)
     }
 }
