@@ -12,41 +12,10 @@ import java.util.*
 
 @ExperimentalSerializationApi
 object DateSerializer : KSerializer<Date> {
-    private const val UTC_TIMEZONE_ID = "UTC"
-
     override val descriptor: SerialDescriptor
         get() = PrimitiveSerialDescriptor("Date", PrimitiveKind.STRING)
 
-    init {
-        for (parser in JsonDateTime.parsers) {
-            parser.calendar = Calendar.getInstance(TimeZone.getTimeZone(UTC_TIMEZONE_ID), Locale.getDefault())
-        }
-    }
-
-    override fun deserialize(decoder: Decoder): Date {
-        val dateString = if (decoder.decodeNotNullMark()) {
-            decoder.decodeString()
-        } else {
-            decoder.decodeNull()
-            null
-        }
-
-        if (dateString != null) {
-            for (parser in JsonDateTime.parsers) {
-                val parsedDate = try {
-                    parser.parse(dateString)
-                } catch (parseException: ParseException) {
-                    null
-                }
-
-                if (parsedDate != null) {
-                    return parsedDate
-                }
-            }
-        }
-
-        return Date()
-    }
+    override fun deserialize(decoder: Decoder) = decoder.decodeDateOrNull() ?: Date()
 
     override fun serialize(encoder: Encoder, value: Date) {
         encoder.encodeString(JsonDateTime.defaultParser.format(value))
