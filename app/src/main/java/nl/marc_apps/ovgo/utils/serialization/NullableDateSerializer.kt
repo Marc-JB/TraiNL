@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.utils
+package nl.marc_apps.ovgo.utils.serialization
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
@@ -11,7 +11,7 @@ import java.text.ParseException
 import java.util.*
 
 @ExperimentalSerializationApi
-object DateSerializer : KSerializer<Date> {
+object NullableDateSerializer : KSerializer<Date?> {
     private const val UTC_TIMEZONE_ID = "UTC"
 
     override val descriptor: SerialDescriptor
@@ -23,7 +23,7 @@ object DateSerializer : KSerializer<Date> {
         }
     }
 
-    override fun deserialize(decoder: Decoder): Date {
+    override fun deserialize(decoder: Decoder): Date? {
         val dateString = if (decoder.decodeNotNullMark()) {
             decoder.decodeString()
         } else {
@@ -45,10 +45,14 @@ object DateSerializer : KSerializer<Date> {
             }
         }
 
-        return Date()
+        return null
     }
 
-    override fun serialize(encoder: Encoder, value: Date) {
-        encoder.encodeString(JsonDateTime.defaultParser.format(value))
+    override fun serialize(encoder: Encoder, value: Date?) {
+        if (value == null) {
+            encoder.encodeNull()
+        } else {
+            encoder.encodeString(JsonDateTime.defaultParser.format(value))
+        }
     }
 }

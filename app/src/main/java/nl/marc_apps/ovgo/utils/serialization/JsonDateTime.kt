@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.utils
+package nl.marc_apps.ovgo.utils.serialization
 
 import java.text.SimpleDateFormat
 import java.util.*

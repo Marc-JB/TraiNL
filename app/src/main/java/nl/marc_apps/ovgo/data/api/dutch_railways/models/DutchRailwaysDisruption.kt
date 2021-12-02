@@ -2,8 +2,8 @@ package nl.marc_apps.ovgo.data.api.dutch_railways.models
 
 import kotlinx.serialization.Serializable
 import nl.marc_apps.ovgo.data.api.dutch_railways.utils.DutchRailwaysDisruptionSerializer
-import nl.marc_apps.ovgo.utils.DateSerializer
-import nl.marc_apps.ovgo.utils.NullableDateSerializer
+import nl.marc_apps.ovgo.utils.serialization.DateSerializer
+import nl.marc_apps.ovgo.utils.serialization.NullableDateSerializer
 import java.util.*
 
 @Serializable(with = DutchRailwaysDisruptionSerializer::class)
