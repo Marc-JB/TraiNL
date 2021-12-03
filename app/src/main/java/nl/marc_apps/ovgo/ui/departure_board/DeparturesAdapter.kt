@@ -89,11 +89,11 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
         val departureTimeWithDelayText = if (departure.isDelayed) {
             context.getString(
                 R.string.departure_time_delayed,
-                departure.actualDepartureTime.format(timeStyle = DateFormat.SHORT),
+                departure.plannedDepartureTime.format(timeStyle = DateFormat.SHORT),
                 departure.delayInMinutesRounded
             )
         } else {
-            departure.actualDepartureTime.format(timeStyle = DateFormat.SHORT)
+            departure.plannedDepartureTime.format(timeStyle = DateFormat.SHORT)
         }
         binding.labelDepartureTime.text = departureTimeWithDelayText
         binding.labelDepartureTimeAlignment.text = departureTimeWithDelayText

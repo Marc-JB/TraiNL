@@ -40,13 +40,13 @@ class DepartureDetailsFragment : Fragment() {
             view.context.resources.getQuantityString(
                 R.plurals.departure_time_long_text_delayed,
                 departure.delayInMinutesRounded,
-                departure.actualDepartureTime.format(timeStyle = DateFormat.SHORT),
+                departure.plannedDepartureTime.format(timeStyle = DateFormat.SHORT),
                 departure.delayInMinutesRounded
             )
         } else {
             view.context.getString(
                 R.string.departure_time_long_text_no_delay,
-                departure.actualDepartureTime.format(timeStyle = DateFormat.SHORT)
+                departure.plannedDepartureTime.format(timeStyle = DateFormat.SHORT)
             )
         }
 
