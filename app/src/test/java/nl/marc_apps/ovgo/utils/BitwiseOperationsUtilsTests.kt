@@ -1,6 +1,5 @@
-package nl.marc_apps.ovgo
+package nl.marc_apps.ovgo.utils
 
-import nl.marc_apps.ovgo.utils.BitwiseOperations
 import kotlin.test.*
 
 class BitwiseOperationsUtilsTests {

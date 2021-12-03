@@ -1,6 +1,5 @@
-package nl.marc_apps.ovgo
+package nl.marc_apps.ovgo.utils
 
-import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
 import java.util.*
 import kotlin.test.*

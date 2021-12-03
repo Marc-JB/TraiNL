@@ -1,8 +1,5 @@
-package nl.marc_apps.ovgo
+package nl.marc_apps.ovgo.utils.serialization
 
-import nl.marc_apps.ovgo.utils.format
-import nl.marc_apps.ovgo.utils.serialization.JsonDateTime
-import java.text.DateFormat
 import java.util.*
 import kotlin.test.*
 
