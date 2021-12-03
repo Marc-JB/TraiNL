@@ -43,7 +43,7 @@ class SearchStationViewModel(
             val allNames = station.alternativeNames + station.alternativeSearches + station.fullName + station.shortenedName
 
             allNames.maxOf {
-                stringSimilarity.calculateSimilarity(stationQuery, it)
+                stringSimilarity.calculateSimilarity(stationQuery.lowercase(), it.lowercase())
             }
         }.take(AUTOCOMPLETE_SUGGESTION_LIST_SIZE))
     }
