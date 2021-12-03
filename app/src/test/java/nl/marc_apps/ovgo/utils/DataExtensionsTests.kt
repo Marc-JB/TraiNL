@@ -11,7 +11,7 @@ class DataExtensionsTests {
         val timeZone = TimeZone.getTimeZone(TIMEZONE_ID_UTC)
         val locale = Locale.UK
         val calendar = GregorianCalendar.getInstance(timeZone, locale)
-        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35)
+        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
         val date = Date.from(calendar.toInstant())
 
         // Act
@@ -32,7 +32,7 @@ class DataExtensionsTests {
         val timeZone = TimeZone.getTimeZone(TIMEZONE_ID_UTC)
         val locale = Locale.UK
         val calendar = GregorianCalendar.getInstance(timeZone, locale)
-        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35)
+        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
         val date = Date.from(calendar.toInstant())
 
         // Act
@@ -53,7 +53,7 @@ class DataExtensionsTests {
         val timeZone = TimeZone.getTimeZone(TIMEZONE_ID_UTC)
         val locale = Locale.UK
         val calendar = GregorianCalendar.getInstance(timeZone, locale)
-        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35)
+        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
         val date = Date.from(calendar.toInstant())
 
         // Act
@@ -75,7 +75,7 @@ class DataExtensionsTests {
         val outputTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_CET)
         val locale = Locale.UK
         val calendar = GregorianCalendar.getInstance(inputTimeZone, locale)
-        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35)
+        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
         val date = Date.from(calendar.toInstant())
 
         // Act
@@ -95,7 +95,7 @@ class DataExtensionsTests {
         val outputTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_CEST)
         val locale = Locale.UK
         val calendar = GregorianCalendar.getInstance(inputTimeZone, locale)
-        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35)
+        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
         val date = Date.from(calendar.toInstant())
 
         // Act
@@ -115,7 +115,7 @@ class DataExtensionsTests {
         val outputTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_UTC)
         val locale = Locale.UK
         val calendar = GregorianCalendar.getInstance(inputTimeZone, locale)
-        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35)
+        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
         val date = Date.from(calendar.toInstant())
 
         // Act
@@ -135,7 +135,7 @@ class DataExtensionsTests {
         val outputTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_UTC)
         val locale = Locale.UK
         val calendar = GregorianCalendar.getInstance(inputTimeZone, locale)
-        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35)
+        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
         val date = Date.from(calendar.toInstant())
 
         // Act
