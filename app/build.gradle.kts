@@ -133,6 +133,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    implementation("com.squareup.okhttp3:okhttp-brotli:4.9.3")
+    implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.3")
 
     // Database
     val roomVersion = "2.4.0-beta02"
