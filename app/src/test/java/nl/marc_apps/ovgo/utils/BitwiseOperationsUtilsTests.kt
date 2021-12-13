@@ -34,7 +34,7 @@ class BitwiseOperationsUtilsTests {
         fun booleanArrayToIntShouldThrowWhenInputIsLargerThanBitSize() {
             // Arrange
             val booleanInput = BooleanArray(Int.SIZE_BITS + 1) {
-                if (it == 0) true else booleanArrayOf(true, false).random()
+                it == 0 || booleanArrayOf(true, false).random()
             }
 
             // Act & Assert
