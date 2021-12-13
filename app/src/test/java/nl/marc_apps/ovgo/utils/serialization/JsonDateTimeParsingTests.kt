@@ -6,6 +6,23 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class JsonDateTimeParsingTests {
+    private fun assertCalendarEquals(
+        year: Int,
+        month: Int,
+        dayOfMonth: Int,
+        hourOfDay: Int,
+        minute: Int,
+        second: Int,
+        calendar: Calendar
+    ) {
+        assertEquals(year, calendar.get(Calendar.YEAR))
+        assertEquals(month, calendar.get(Calendar.MONTH))
+        assertEquals(dayOfMonth, calendar.get(Calendar.DAY_OF_MONTH))
+        assertEquals(hourOfDay, calendar.get(Calendar.HOUR_OF_DAY))
+        assertEquals(minute, calendar.get(Calendar.MINUTE))
+        assertEquals(second, calendar.get(Calendar.SECOND))
+    }
+
     @Test
     fun parsingJsonUtcTimestampShouldReturnCorrectDate() {
         // Arrange
@@ -20,12 +37,7 @@ class JsonDateTimeParsingTests {
         // Assert
         assertNotNull(parsedDate)
         calendar.time = parsedDate
-        assertEquals(2021, calendar.get(Calendar.YEAR))
-        assertEquals(Calendar.DECEMBER, calendar.get(Calendar.MONTH))
-        assertEquals(2, calendar.get(Calendar.DAY_OF_MONTH))
-        assertEquals(16, calendar.get(Calendar.HOUR_OF_DAY))
-        assertEquals(35, calendar.get(Calendar.MINUTE))
-        assertEquals(49, calendar.get(Calendar.SECOND))
+        assertCalendarEquals(2021, Calendar.DECEMBER, 2, 16, 35, 49, calendar)
     }
 
     @Test
@@ -42,12 +54,7 @@ class JsonDateTimeParsingTests {
         // Assert
         assertNotNull(parsedDate)
         calendar.time = parsedDate
-        assertEquals(2021, calendar.get(Calendar.YEAR))
-        assertEquals(Calendar.DECEMBER, calendar.get(Calendar.MONTH))
-        assertEquals(2, calendar.get(Calendar.DAY_OF_MONTH))
-        assertEquals(15, calendar.get(Calendar.HOUR_OF_DAY))
-        assertEquals(35, calendar.get(Calendar.MINUTE))
-        assertEquals(49, calendar.get(Calendar.SECOND))
+        assertCalendarEquals(2021, Calendar.DECEMBER, 2, 15, 35, 49, calendar)
     }
 
     @Test
@@ -64,12 +71,7 @@ class JsonDateTimeParsingTests {
         // Assert
         assertNotNull(parsedDate)
         calendar.time = parsedDate
-        assertEquals(2021, calendar.get(Calendar.YEAR))
-        assertEquals(Calendar.DECEMBER, calendar.get(Calendar.MONTH))
-        assertEquals(2, calendar.get(Calendar.DAY_OF_MONTH))
-        assertEquals(14, calendar.get(Calendar.HOUR_OF_DAY))
-        assertEquals(35, calendar.get(Calendar.MINUTE))
-        assertEquals(49, calendar.get(Calendar.SECOND))
+        assertCalendarEquals(2021, Calendar.DECEMBER, 2, 14, 35, 49, calendar)
     }
     @Test
     fun parsingJsonUtcTimestampWithMillisecondsShouldReturnCorrectDate() {
@@ -85,12 +87,7 @@ class JsonDateTimeParsingTests {
         // Assert
         assertNotNull(parsedDate)
         calendar.time = parsedDate
-        assertEquals(2021, calendar.get(Calendar.YEAR))
-        assertEquals(Calendar.DECEMBER, calendar.get(Calendar.MONTH))
-        assertEquals(2, calendar.get(Calendar.DAY_OF_MONTH))
-        assertEquals(16, calendar.get(Calendar.HOUR_OF_DAY))
-        assertEquals(35, calendar.get(Calendar.MINUTE))
-        assertEquals(49, calendar.get(Calendar.SECOND))
+        assertCalendarEquals(2021, Calendar.DECEMBER, 2, 16, 35, 49, calendar)
     }
 
     @Test
@@ -107,12 +104,7 @@ class JsonDateTimeParsingTests {
         // Assert
         assertNotNull(parsedDate)
         calendar.time = parsedDate
-        assertEquals(2021, calendar.get(Calendar.YEAR))
-        assertEquals(Calendar.DECEMBER, calendar.get(Calendar.MONTH))
-        assertEquals(2, calendar.get(Calendar.DAY_OF_MONTH))
-        assertEquals(15, calendar.get(Calendar.HOUR_OF_DAY))
-        assertEquals(35, calendar.get(Calendar.MINUTE))
-        assertEquals(49, calendar.get(Calendar.SECOND))
+        assertCalendarEquals(2021, Calendar.DECEMBER, 2, 15, 35, 49, calendar)
     }
 
     @Test
@@ -129,12 +121,7 @@ class JsonDateTimeParsingTests {
         // Assert
         assertNotNull(parsedDate)
         calendar.time = parsedDate
-        assertEquals(2021, calendar.get(Calendar.YEAR))
-        assertEquals(Calendar.DECEMBER, calendar.get(Calendar.MONTH))
-        assertEquals(2, calendar.get(Calendar.DAY_OF_MONTH))
-        assertEquals(14, calendar.get(Calendar.HOUR_OF_DAY))
-        assertEquals(35, calendar.get(Calendar.MINUTE))
-        assertEquals(49, calendar.get(Calendar.SECOND))
+        assertCalendarEquals(2021, Calendar.DECEMBER, 2, 14, 35, 49, calendar)
     }
 
     companion object {
