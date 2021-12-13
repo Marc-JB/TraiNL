@@ -37,7 +37,6 @@ class HttpClientImpl(val context: Context) : HttpClient {
         val dns = dnsHttpClient {
             client(bootstrapClient)
             url(CloudflareDns.RESOLVER_URL.toHttpUrl())
-            bootstrapDnsHosts(*CloudflareDns.alternativeHosts)
         }
 
         httpClient(bootstrapClient) {
