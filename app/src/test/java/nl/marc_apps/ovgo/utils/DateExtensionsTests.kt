@@ -4,15 +4,19 @@ import java.text.DateFormat
 import java.util.*
 import kotlin.test.*
 
-class DataExtensionsTests {
+class DateExtensionsTests {
+    private fun getTestDate(timeZone: TimeZone, locale: Locale): Date {
+        val calendar = GregorianCalendar.getInstance(timeZone, locale)
+        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
+        return Date.from(calendar.toInstant())
+    }
+
     @Test
     fun formatWithDateOnlyWillReturnDateStringWithoutTime() {
         // Arrange
         val timeZone = TimeZone.getTimeZone(TIMEZONE_ID_UTC)
         val locale = Locale.UK
-        val calendar = GregorianCalendar.getInstance(timeZone, locale)
-        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
-        val date = Date.from(calendar.toInstant())
+        val date = getTestDate(timeZone, locale)
 
         // Act
         val formattedDate = date.format(dateStyle = DateFormat.FULL, locale = locale, timeZone = timeZone)
@@ -31,9 +35,7 @@ class DataExtensionsTests {
         // Arrange
         val timeZone = TimeZone.getTimeZone(TIMEZONE_ID_UTC)
         val locale = Locale.UK
-        val calendar = GregorianCalendar.getInstance(timeZone, locale)
-        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
-        val date = Date.from(calendar.toInstant())
+        val date = getTestDate(timeZone, locale)
 
         // Act
         val formattedDate = date.format(timeStyle = DateFormat.FULL, locale = locale, timeZone = timeZone)
@@ -52,9 +54,7 @@ class DataExtensionsTests {
         // Arrange
         val timeZone = TimeZone.getTimeZone(TIMEZONE_ID_UTC)
         val locale = Locale.UK
-        val calendar = GregorianCalendar.getInstance(timeZone, locale)
-        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
-        val date = Date.from(calendar.toInstant())
+        val date = getTestDate(timeZone, locale)
 
         // Act
         val formattedDate = date.format(dateStyle = DateFormat.FULL, timeStyle = DateFormat.FULL, locale = locale, timeZone = timeZone)
@@ -74,9 +74,7 @@ class DataExtensionsTests {
         val inputTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_UTC)
         val outputTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_CET)
         val locale = Locale.UK
-        val calendar = GregorianCalendar.getInstance(inputTimeZone, locale)
-        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
-        val date = Date.from(calendar.toInstant())
+        val date = getTestDate(inputTimeZone, locale)
 
         // Act
         val formattedDate = date.format(timeStyle = DateFormat.FULL, locale = locale, timeZone = outputTimeZone)
@@ -94,9 +92,7 @@ class DataExtensionsTests {
         val inputTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_UTC)
         val outputTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_CEST)
         val locale = Locale.UK
-        val calendar = GregorianCalendar.getInstance(inputTimeZone, locale)
-        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
-        val date = Date.from(calendar.toInstant())
+        val date = getTestDate(inputTimeZone, locale)
 
         // Act
         val formattedDate = date.format(timeStyle = DateFormat.FULL, locale = locale, timeZone = outputTimeZone)
@@ -114,9 +110,7 @@ class DataExtensionsTests {
         val inputTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_CET)
         val outputTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_UTC)
         val locale = Locale.UK
-        val calendar = GregorianCalendar.getInstance(inputTimeZone, locale)
-        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
-        val date = Date.from(calendar.toInstant())
+        val date = getTestDate(inputTimeZone, locale)
 
         // Act
         val formattedDate = date.format(timeStyle = DateFormat.FULL, locale = locale, timeZone = outputTimeZone)
@@ -134,9 +128,7 @@ class DataExtensionsTests {
         val inputTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_CEST)
         val outputTimeZone = TimeZone.getTimeZone(TIMEZONE_ID_UTC)
         val locale = Locale.UK
-        val calendar = GregorianCalendar.getInstance(inputTimeZone, locale)
-        calendar.set(2021, Calendar.DECEMBER, 22, 16, 35, 0)
-        val date = Date.from(calendar.toInstant())
+        val date = getTestDate(inputTimeZone, locale)
 
         // Act
         val formattedDate = date.format(timeStyle = DateFormat.FULL, locale = locale, timeZone = outputTimeZone)
