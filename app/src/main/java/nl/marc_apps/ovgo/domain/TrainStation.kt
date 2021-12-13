@@ -3,7 +3,6 @@ package nl.marc_apps.ovgo.domain
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.Keep
-import nl.marc_apps.ovgo.utils.asBit
 import nl.marc_apps.ovgo.utils.readStringCollection
 
 @Keep

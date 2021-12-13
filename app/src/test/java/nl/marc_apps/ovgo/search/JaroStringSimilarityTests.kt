@@ -1,6 +1,7 @@
 package nl.marc_apps.ovgo.search
 
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class JaroStringSimilarityTests {
     @Test

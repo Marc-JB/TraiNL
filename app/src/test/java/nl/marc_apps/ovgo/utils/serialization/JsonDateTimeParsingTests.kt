@@ -1,7 +1,9 @@
 package nl.marc_apps.ovgo.utils.serialization
 
 import java.util.*
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class JsonDateTimeParsingTests {
     @Test

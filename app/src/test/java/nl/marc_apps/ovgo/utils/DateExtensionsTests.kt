@@ -2,7 +2,9 @@ package nl.marc_apps.ovgo.utils
 
 import java.text.DateFormat
 import java.util.*
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class DateExtensionsTests {
     private fun getTestDate(timeZone: TimeZone, locale: Locale): Date {
