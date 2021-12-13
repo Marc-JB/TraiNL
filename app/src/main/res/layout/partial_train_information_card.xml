@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.App.DepartureDetails.Card.FullWidth"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_section_train_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:text="@string/traintype_and_facilities"
+        android:textAppearance="@style/TextAppearance.OVgo.DepartureDetails.Card.Title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_facilities"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="24dp" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_wheelchair_accessible"
+        style="@style/Widget.App.Departure.Facility.Icon"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/icon_toilet"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/guideline_facilities"
+        app:layout_constraintTop_toBottomOf="@id/label_section_train_info"
+        app:srcCompat="@drawable/ic_accessible" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_toilet"
+        style="@style/Widget.App.Departure.Facility.Icon"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/icon_bicycles"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_wheelchair_accessible"
+        app:layout_constraintTop_toBottomOf="@id/label_section_train_info"
+        app:srcCompat="@drawable/ic_toilet" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_bicycles"
+        style="@style/Widget.App.Departure.Facility.Icon"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/icon_wifi"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_toilet"
+        app:layout_constraintTop_toBottomOf="@id/label_section_train_info"
+        app:srcCompat="@drawable/ic_bike" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_wifi"
+        style="@style/Widget.App.Departure.Facility.Icon"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/icon_power_sockets"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_bicycles"
+        app:layout_constraintTop_toBottomOf="@id/label_section_train_info"
+        app:srcCompat="@drawable/ic_wifi" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_power_sockets"
+        style="@style/Widget.App.Departure.Facility.Icon"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/icon_silence_compartment"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_wifi"
+        app:layout_constraintTop_toBottomOf="@id/label_section_train_info"
+        app:srcCompat="@drawable/ic_power" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_silence_compartment"
+        style="@style/Widget.App.Departure.Facility.Icon"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/icon_first_class"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_power_sockets"
+        app:layout_constraintTop_toBottomOf="@id/label_section_train_info"
+        app:srcCompat="@drawable/ic_silence" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_first_class"
+        style="@style/Widget.App.Departure.Facility.Icon"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/icon_bistro"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_silence_compartment"
+        app:layout_constraintTop_toBottomOf="@id/label_section_train_info"
+        app:srcCompat="@drawable/ic_first_class" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_bistro"
+        style="@style/Widget.App.Departure.Facility.Icon"
+        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/icon_first_class"
+        app:layout_constraintTop_toBottomOf="@id/label_section_train_info"
+        app:srcCompat="@drawable/ic_bistro" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_facilities"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="icon_wheelchair_accessible,icon_toilet,icon_bicycles,icon_wifi,icon_power_sockets,icon_silence_compartment,icon_first_class,icon_bistro" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_operator_and_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.OVgo.Departure.OperatorAndCategory.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier_facilities"
+        tools:text="R-net door Qbuzz • Stoptrein" />
+
+    <HorizontalScrollView
+        android:id="@+id/holder_train_images_scrollable"
+        style="@style/Widget.App.Departure.TrainImages.ScrollableHolder"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/train_image_height"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_operator_and_type">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/holder_train_images"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:paddingStart="24dp"
+            android:paddingEnd="8dp"
+            tools:background="@sample/departures.json/data/image"
+            tools:layout_height="40dp"
+            tools:layout_marginStart="24dp" />
+
+    </HorizontalScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

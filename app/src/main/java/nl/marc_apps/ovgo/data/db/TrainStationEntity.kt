@@ -11,7 +11,8 @@ import nl.marc_apps.ovgo.domain.TrainStation
 data class TrainStationEntity(
     @PrimaryKey
     val uicCode: String,
-    val name: String,
+    val fullName: String,
+    val shortenedName: String,
     val alternativeNames: String,
     val alternativeSearches: String,
     val hasDepartureTimesBoard: Boolean,
@@ -21,7 +22,8 @@ data class TrainStationEntity(
     fun asTrainStation(): TrainStation {
         return TrainStation(
             uicCode,
-            name,
+            fullName,
+            shortenedName,
             Json.decodeFromString(alternativeNames),
             Json.decodeFromString(alternativeSearches),
             hasDepartureTimesBoard,
@@ -34,7 +36,8 @@ data class TrainStationEntity(
         fun fromTrainStation(trainStation: TrainStation): TrainStationEntity {
             return TrainStationEntity(
                 trainStation.uicCode,
-                trainStation.name,
+                trainStation.fullName,
+                trainStation.shortenedName,
                 Json.encodeToString(trainStation.alternativeNames),
                 Json.encodeToString(trainStation.alternativeSearches),
                 trainStation.hasDepartureTimesBoard,

@@ -4,6 +4,7 @@ import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.type_conversions.TrainInfoConversions
 import nl.marc_apps.ovgo.domain.DeviceConfiguration
 import nl.marc_apps.ovgo.domain.TrainInfo
+import nl.marc_apps.ovgo.utils.println
 
 class TrainInfoRepository(
     private val dutchRailwaysApi: DutchRailwaysApi,
@@ -28,6 +29,8 @@ class TrainInfoRepository(
             }
         }
 
+        println(TAG, "Train info for ${notCachedJourneyIds.size} items fetched from API, train info for ${cachedTrainInfoList.size} items fetched from MEMORY_CACHE")
+
         val trainInfoList = try {
             dutchRailwaysApi.getTrainInfo(notCachedJourneyIds)
         } catch (error: Throwable) {
@@ -41,6 +44,7 @@ class TrainInfoRepository(
 
     private fun addToCache(trainInfo: TrainInfo) {
         if (trainInfoCache.size >= TRAIN_INFO_MAX_CACHE_SIZE) {
+            println(TAG, "Memory limit of $TRAIN_INFO_MAX_CACHE_SIZE reached.")
             trainInfoCache -= trainInfoCache.keys.first()
         }
 
@@ -51,5 +55,7 @@ class TrainInfoRepository(
 
     companion object {
         private const val TRAIN_INFO_MAX_CACHE_SIZE = 60
+
+        private const val TAG = "TRAIN_INFO_REPO"
     }
 }

@@ -1,211 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingVertical="8dp">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/label_departure_time"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textAppearance="@style/TextAppearance.OVgo.Departure.Time"
-        app:layout_constraintBottom_toTopOf="@id/label_platform"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_platform"
-        tools:text="12:45" />
+        android:paddingVertical="16dp">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/label_direction"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:ellipsize="end"
-        android:gravity="center_horizontal"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.OVgo.Departure.Destination"
-        app:layout_constraintBottom_toBottomOf="@id/label_platform"
-        app:layout_constraintEnd_toStartOf="@+id/label_departure_time_alignment"
-        app:layout_constraintStart_toEndOf="@+id/label_departure_time"
-        app:layout_constraintTop_toTopOf="@id/label_platform"
-        tools:text="@sample/departures.json/data/direction" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Intercity Arnhem Centraal" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/label_departure_time_alignment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:minWidth="36dp"
-        android:textAppearance="@style/TextAppearance.OVgo.Departure.Time"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/label_platform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/label_platform"
-        tools:text="12:45" />
+        <include
+            android:id="@+id/partial_departure_information_card"
+            layout="@layout/partial_departure_information_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/departure_details_card_spacing_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_title" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/label_platform"
-        style="@style/Widget.App.Departure.Platform"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@drawable/platform_background_style"
-        tools:text="4b" />
+        <include
+            android:id="@+id/partial_route_information_card"
+            layout="@layout/partial_route_information_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/departure_details_card_spacing_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/partial_departure_information_card" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="label_direction,label_platform" />
+        <include
+            android:id="@+id/partial_train_information_card"
+            layout="@layout/partial_train_information_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/departure_details_card_spacing_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/partial_route_information_card" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/label_upcoming_stations"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:textAppearance="@style/TextAppearance.OVgo.Departure.RouteStations.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barrier_header"
-        tools:layout_constraintBottom_toTopOf="@+id/label_cancelled"
-        tools:text="Via Dordrecht"
-        tools:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/label_cancelled"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/departure_cancelled"
-        android:textAppearance="@style/TextAppearance.OVgo.Departure.Cancelled"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_upcoming_stations"
-        tools:layout_constraintTop_toBottomOf="@+id/label_upcoming_stations"
-        tools:visibility="visible" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier_main_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="label_direction,label_upcoming_stations,label_cancelled,label_platform" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_facilities"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="12dp" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/icon_wheelchair_accessible"
-        style="@style/Widget.App.Departure.Facility.Icon"
-        app:layout_constraintEnd_toStartOf="@+id/icon_toilet"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@id/guideline_facilities"
-        app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
-        app:srcCompat="@drawable/ic_accessible" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/icon_toilet"
-        style="@style/Widget.App.Departure.Facility.Icon"
-        app:layout_constraintEnd_toStartOf="@+id/icon_bicycles"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/icon_wheelchair_accessible"
-        app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
-        app:srcCompat="@drawable/ic_toilet" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/icon_bicycles"
-        style="@style/Widget.App.Departure.Facility.Icon"
-        app:layout_constraintEnd_toStartOf="@+id/icon_wifi"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/icon_toilet"
-        app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
-        app:srcCompat="@drawable/ic_bike" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/icon_wifi"
-        style="@style/Widget.App.Departure.Facility.Icon"
-        app:layout_constraintEnd_toStartOf="@+id/icon_power_sockets"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/icon_bicycles"
-        app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
-        app:srcCompat="@drawable/ic_wifi" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/icon_power_sockets"
-        style="@style/Widget.App.Departure.Facility.Icon"
-        app:layout_constraintEnd_toStartOf="@+id/icon_silence_compartment"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/icon_wifi"
-        app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
-        app:srcCompat="@drawable/ic_power" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/icon_silence_compartment"
-        style="@style/Widget.App.Departure.Facility.Icon"
-        app:layout_constraintEnd_toStartOf="@+id/label_first_class"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/icon_power_sockets"
-        app:layout_constraintTop_toBottomOf="@id/barrier_main_info"
-        app:srcCompat="@drawable/ic_silence" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/label_first_class"
-        style="@style/Widget.App.Departure.Facility.Label"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/icon_silence_compartment"
-        app:layout_constraintTop_toBottomOf="@id/barrier_main_info" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier_facilities"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="icon_wheelchair_accessible,icon_toilet,icon_bicycles,icon_wifi,icon_power_sockets,icon_silence_compartment,label_first_class" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/label_operator_and_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.OVgo.Departure.OperatorAndCategory.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barrier_facilities"
-        tools:text="R-net door Qbuzz • Stoptrein" />
-
-    <HorizontalScrollView
-        android:id="@+id/holder_train_images_scrollable"
-        style="@style/Widget.App.Departure.TrainImages.ScrollableHolder"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/train_image_height"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_operator_and_type">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/holder_train_images"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:paddingStart="32dp"
-            android:paddingEnd="8dp" />
-
-    </HorizontalScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

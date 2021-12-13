@@ -1,29 +1,21 @@
 package nl.marc_apps.ovgo.search
 
-import kotlin.math.floor
-
 /**
  * @see "https://www.geeksforgeeks.org/jaro-and-jaro-winkler-similarity/"
  */
 object JaroStringSimilarity : StringSimilarity {
-    private const val NO_MATCHES = 0.0
+    private const val THREE_NUMBERS_AVERAGE_BY_DIVISION = 3
 
-    private const val EXACT_MATCH = 1.0
-
-    private const val TWO_NUMBERS_AVERAGE_BY_DIVISION = 2.0
-
-    private const val THREE_NUMBERS_AVERAGE_BY_DIVISION = 3.0
-
-    override fun calculateSimilarity(firstString: String, secondString: String): Double {
+    override fun calculateSimilarity(firstString: String, secondString: String): Int {
         if (firstString == secondString) {
-            return EXACT_MATCH
+            return StringSimilarity.EXACT_MATCH
         }
 
         if (firstString.isEmpty() || secondString.isEmpty()) {
-            return NO_MATCHES
+            return StringSimilarity.NO_MATCH
         }
 
-        val maxMatchingDistance = floor(maxOf(firstString.length, secondString.length) / TWO_NUMBERS_AVERAGE_BY_DIVISION).toInt() - 1
+        val maxMatchingDistance = maxOf(firstString.length, secondString.length) / 2 - 1
 
         var matchCount = 0
 
@@ -32,8 +24,8 @@ object JaroStringSimilarity : StringSimilarity {
 
         for (i in firstString.indices) {
             val low = maxOf(0, i - maxMatchingDistance)
-            val high = minOf(secondString.length, i + maxMatchingDistance + 1)
-            for (j in low until high) {
+            val high = minOf(secondString.length - 1, i + maxMatchingDistance)
+            for (j in low..high) {
                 if (firstString.getOrNull(i) == secondString.getOrNull(j) && !secondStringMatches[j]) {
                     firstStringMatches[i] = true
                     secondStringMatches[j] = true
@@ -44,14 +36,14 @@ object JaroStringSimilarity : StringSimilarity {
         }
 
         if (matchCount == 0) {
-            return NO_MATCHES
+            return StringSimilarity.NO_MATCH
         }
 
         val transpositionCount = calculateTranspositionCount(firstString, secondString, firstStringMatches, secondStringMatches)
 
-        val firstStringWeight = matchCount / firstString.length.toDouble()
-        val secondStringWeight = matchCount / secondString.length.toDouble()
-        val transpositionWeight = (matchCount - transpositionCount) / matchCount
+        val firstStringWeight = matchCount * StringSimilarity.EXACT_MATCH / firstString.length
+        val secondStringWeight = matchCount * StringSimilarity.EXACT_MATCH / secondString.length
+        val transpositionWeight = (matchCount * 2 - transpositionCount) * (StringSimilarity.EXACT_MATCH / 2) / matchCount
         return (firstStringWeight + secondStringWeight + transpositionWeight) / THREE_NUMBERS_AVERAGE_BY_DIVISION
     }
 
@@ -60,8 +52,8 @@ object JaroStringSimilarity : StringSimilarity {
         secondString: String,
         firstStringMatches: BooleanArray,
         secondStringMatches: BooleanArray
-    ): Double {
-        var transpositionCount = 0.0
+    ): Int {
+        var transpositionCount = 0
 
         var points = 0
 
@@ -77,6 +69,6 @@ object JaroStringSimilarity : StringSimilarity {
             }
         }
 
-        return transpositionCount / 2.0
+        return transpositionCount
     }
 }

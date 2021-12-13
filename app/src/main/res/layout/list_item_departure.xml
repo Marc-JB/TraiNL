@@ -7,7 +7,7 @@
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:paddingVertical="8dp">
+    android:paddingVertical="@dimen/departure_board_vertical_spacing">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label_departure_time"

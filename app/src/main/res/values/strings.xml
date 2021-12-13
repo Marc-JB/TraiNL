@@ -12,10 +12,22 @@
     <string name="departure_time_delayed">%1$s +%2$d</string>
     <string name="departure_board">Departures</string>
     <string name="departure_via_stations">Via %1$s</string>
+    <string name="departure_via">Via</string>
     <string name="dutch_railways_api_language_code">en</string>
     <string name="ok">OK</string>
     <string name="operator_rnet_by_qbuzz">R-net by Qbuzz</string>
     <string name="operator_rnet_by_ns">R-net by NS</string>
     <string name="disruption_end_time">Until %1$s</string>
     <string name="disruption_end_time_unknown">Duration is unknown</string>
+    <string name="traintype_and_facilities"><![CDATA[Traintype & facilities]]></string>
+    <string name="route">Route</string>
+    <string name="direction">Direction:</string>
+    <string name="departure_information">Departure information</string>
+    <string name="platform">Platform %1$s</string>
+    <string name="departure_info_title">%1$s %2$s</string>
+    <string name="departure_time_long_text_no_delay">Departure time: %1$s (no delay)</string>
+    <plurals name="departure_time_long_text_delayed">
+        <item quantity="one">Departure time: %1$s, +%2$d minute</item>
+        <item quantity="other">Departure time: %1$s, +%2$d minutes</item>
+    </plurals>
 </resources>

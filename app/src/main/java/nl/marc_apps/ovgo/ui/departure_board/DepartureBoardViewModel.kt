@@ -8,12 +8,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.data.DepartureRepository
 import nl.marc_apps.ovgo.data.TrainStationRepository
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.utils.getOrNull
 import java.util.*
 
 class DepartureBoardViewModel(
@@ -31,9 +31,19 @@ class DepartureBoardViewModel(
     val departures: LiveData<List<Departure>?>
         get() = mutableDepartures
 
+    fun saveCurrentStation(station: TrainStation? = currentStation.value) {
+        if (station == null) return
+
+        viewModelScope.launch {
+            preferences.edit {
+                it[lastTrainStation] = station.uicCode
+            }
+        }
+    }
+
     fun loadDeparturesForLastKnownStation() {
         viewModelScope.launch {
-            val lastKnownStationId = preferences.data.first()[lastTrainStation]
+            val lastKnownStationId = preferences.getOrNull(lastTrainStation)
             if (lastKnownStationId != null) {
                 val station = trainStationRepository.getTrainStationById(lastKnownStationId)
                 if (station != null) {
@@ -43,7 +53,7 @@ class DepartureBoardViewModel(
             }
 
             val station = trainStationRepository.getTrainStations().firstOrNull {
-                it.name == DEFAULT_STATION_NAME
+                it.fullName == DEFAULT_STATION_NAME
             }
             if (station != null) {
                 loadDepartures(station)
@@ -57,11 +67,7 @@ class DepartureBoardViewModel(
         }
 
         mutableCurrentStation.postValue(station)
-        viewModelScope.launch {
-            preferences.edit {
-                it[lastTrainStation] = station.uicCode
-            }
-        }
+        saveCurrentStation(station)
         mutableDepartures.postValue(null)
 
         viewModelScope.launch {

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="train_image_spacing_start">200dp</dimen>
+    <dimen name="train_image_spacing_start_negative">-200dp</dimen>
+    <dimen name="departure_board_horizontal_spacing">32dp</dimen>
+    <dimen name="departure_board_vertical_spacing">16dp</dimen>
+</resources>

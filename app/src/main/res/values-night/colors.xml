@@ -8,5 +8,5 @@
     <color name="sectionTitleWarningColor">@color/colorErrorLight</color>
     <color name="sectionTitleOkColor">@color/colorOKLight</color>
     <color name="sectionTitleColor">@color/colorPrimaryLight</color>
+    <color name="surfaceOnBackground">#424242</color>
 </resources>
-

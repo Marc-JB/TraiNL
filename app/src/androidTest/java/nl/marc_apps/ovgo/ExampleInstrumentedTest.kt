@@ -1,8 +1,8 @@
 package nl.marc_apps.ovgo
 
 import androidx.test.platform.app.InstrumentationRegistry
-import kotlin.test.assertEquals
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 /**
  * Instrumented test, which will execute on an Android device.

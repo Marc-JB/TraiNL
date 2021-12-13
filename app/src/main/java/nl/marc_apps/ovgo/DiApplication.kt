@@ -4,6 +4,7 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 @Suppress("unused")
 class DiApplication : Application() {
@@ -11,7 +12,8 @@ class DiApplication : Application() {
         super.onCreate()
 
         startKoin {
-            androidLogger()
+            // TODO: Remove workaround for Kotlin 1.6. See https://github.com/InsertKoinIO/koin/issues/1188.
+            androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@DiApplication)
             modules(DiModules.dataRepositoriesModule, DiModules.viewModelsModule, DiModules.utilitiesModule)
         }

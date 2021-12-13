@@ -8,8 +8,9 @@ object TrainStationConversions {
         return TrainStation(
             model.uicCode,
             model.names.long,
+            model.names.middle,
             model.customNames,
-            setOf(model.dutchRailwaysCode, model.names.middle, model.names.short),
+            setOf(model.dutchRailwaysCode, model.names.short),
             model.hasDepartureTimesBoard,
             model.hasTravelAssistance,
             TrainStation.Country.valueOf(model.country.name)

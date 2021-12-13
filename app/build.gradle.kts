@@ -4,10 +4,7 @@ import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 plugins {
     id("com.android.application")
     kotlin("android")
-
-    // TODO: Migrate from KAPT to KSP
-    kotlin("kapt")
-    // id("com.google.devtools.ksp")
+    id("com.google.devtools.ksp") version "1.6.0-1.0.1"
 
     // Firebase crashlytics
     id("com.google.gms.google-services")
@@ -34,7 +31,7 @@ fun getLocalProperties(): Properties {
 }
 
 android {
-    compileSdk = 30
+    compileSdk = 31
     buildToolsVersion = "31.0.0"
 
     packagingOptions {
@@ -57,10 +54,11 @@ android {
     defaultConfig {
         applicationId = "nl.marc_apps.ovgo"
         minSdk = 26
-        targetSdk = 30
-        versionCode = getProperty("version.code")?.toInt() ?: 7
-        versionName = getProperty("version.name") ?: "0.5"
+        targetSdk = 31
+        versionCode = getProperty("version.code")?.toInt() ?: 8
+        versionName = getProperty("version.name") ?: "0.6"
 
+        testBuildType = "debug"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["runnerBuilder"] = "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
@@ -76,15 +74,6 @@ android {
         }
     }
 
-    applicationVariants.all {
-        val variantName = name
-        sourceSets {
-            getByName("main") {
-                java.srcDir(File("build/generated/ksp/$variantName/kotlin"))
-            }
-        }
-    }
-
     buildTypes {
         getByName("release") {
             signingConfig = signingConfigs.getByName("release")
@@ -95,24 +84,24 @@ android {
 
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
+
+        getByName("debug") {
+            applicationIdSuffix = ".debug"
+
+            isMinifyEnabled = true
+            isShrinkResources = true
+            isCrunchPngs = true
+
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
     }
 
     bundle {
-        abi {
-            enableSplit = true
-        }
-
-        language {
-            enableSplit = true
-        }
-
-        density {
-            enableSplit = true
-        }
-
-        texture {
-            enableSplit = true
-        }
+        abi.enableSplit = true
+        language.enableSplit = true
+        density.enableSplit = true
+        texture.enableSplit = true
+        deviceTier.enableSplit = true
     }
 
     compileOptions {
@@ -142,30 +131,31 @@ dependencies {
 
     // API
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    implementation("com.squareup.okhttp3:okhttp-brotli:4.9.3")
+    implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.3")
 
     // Database
-    val roomVersion = "2.3.0"
+    val roomVersion = "2.4.0-beta02"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
-    // TODO: Migrate from KAPT to KSP
-    kapt("androidx.room:room-compiler:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
 
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     // Dependency Injection
-    val koinVersion = "3.1.2"
+    val koinVersion = "3.1.4"
     implementation("io.insert-koin:koin-android:$koinVersion")
     // testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
     // androidTestImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
 
     // Backward compatibility & utilities
-    implementation("androidx.core:core-ktx:1.6.0")
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("androidx.fragment:fragment-ktx:1.3.6")
+    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.appcompat:appcompat:1.4.0")
+    implementation("androidx.fragment:fragment-ktx:1.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation("io.coil-kt:coil:1.3.2")
 
@@ -173,14 +163,15 @@ dependencies {
     implementation("com.google.android.material:material:1.4.0")
 
     // Test base
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.0")
+    val junitVersion = "5.8.2"
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testImplementation(kotlin("test-junit5"))
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
 
     // Android test base
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.test:runner:1.4.0")
-    androidTestImplementation("org.junit.jupiter:junit-jupiter-api:5.8.0")
+    androidTestImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     androidTestImplementation(kotlin("test-junit5"))
     androidTestImplementation("de.mannodermaus.junit5:android-test-core:1.3.0")
     androidTestRuntimeOnly("de.mannodermaus.junit5:android-test-runner:1.3.0")

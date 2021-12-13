@@ -2,11 +2,14 @@ package nl.marc_apps.ovgo.domain
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.Keep
 import nl.marc_apps.ovgo.utils.readStringCollection
 
+@Keep
 data class TrainStation(
     val uicCode: String,
-    val name: String,
+    val fullName: String,
+    val shortenedName: String,
     val alternativeNames: Set<String>,
     val alternativeSearches: Set<String>,
     val hasDepartureTimesBoard: Boolean,
@@ -14,6 +17,7 @@ data class TrainStation(
     val country: Country
 ): Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readStringCollection().toSet(),
@@ -35,7 +39,8 @@ data class TrainStation(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(uicCode)
-        parcel.writeString(name)
+        parcel.writeString(fullName)
+        parcel.writeString(shortenedName)
         parcel.writeStringList(alternativeNames.toList())
         parcel.writeStringList(alternativeSearches.toList())
         parcel.writeByte(if (hasDepartureTimesBoard) TRUE_AS_BYTE else FALSE_AS_BYTE)
