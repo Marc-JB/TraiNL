@@ -58,6 +58,7 @@ android {
         versionCode = getProperty("version.code")?.toInt() ?: 8
         versionName = getProperty("version.name") ?: "0.6"
 
+        testBuildType = "debug"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["runnerBuilder"] = "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
