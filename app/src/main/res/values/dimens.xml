@@ -9,4 +9,6 @@
     <dimen name="departure_board_action_bar_height">56dp</dimen>
     <dimen name="departure_board_action_bar_elevation">4dp</dimen>
     <dimen name="departure_board_action_bar_item_size">48dp</dimen>
+    <dimen name="departure_details_card_spacing_vertical">16dp</dimen>
+    <dimen name="departure_details_card_padding">24dp</dimen>
 </resources>
