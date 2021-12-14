@@ -98,12 +98,12 @@ class TrainStationRepository(
         })
 
         preferences.edit {
-            it[trainStationCacheDatePreference] = System.currentTimeMillis()
+            it[PreferenceKeys.trainStationCacheDatePreference] = System.currentTimeMillis()
         }
     }
 
     private suspend fun isDatabaseOutdatedOrEmpty(): Boolean {
-        val lastCacheDate = preferences.getOrNull(trainStationCacheDatePreference) ?: return true
+        val lastCacheDate = preferences.getOrNull(PreferenceKeys.trainStationCacheDatePreference) ?: return true
         val currentDate = System.currentTimeMillis()
         return currentDate - lastCacheDate > databaseCacheExpirationTimeMs
     }
@@ -121,8 +121,6 @@ class TrainStationRepository(
     }
 
     companion object {
-        private val trainStationCacheDatePreference = longPreferencesKey("TRAIN_STATION_CACHE_DATE")
-
         private const val TAG = "TRAIN_STATION_REPO"
 
         private val databaseCacheExpirationTimeMs = TimeUnit.MILLISECONDS.convert(10, TimeUnit.DAYS)

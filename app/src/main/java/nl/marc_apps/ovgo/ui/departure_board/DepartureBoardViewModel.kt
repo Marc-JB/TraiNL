@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.data.DepartureRepository
+import nl.marc_apps.ovgo.data.PreferenceKeys
 import nl.marc_apps.ovgo.data.TrainStationRepository
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainStation
@@ -36,14 +37,14 @@ class DepartureBoardViewModel(
 
         viewModelScope.launch {
             preferences.edit {
-                it[lastTrainStation] = station.uicCode
+                it[PreferenceKeys.lastTrainStation] = station.uicCode
             }
         }
     }
 
     fun loadDeparturesForLastKnownStation() {
         viewModelScope.launch {
-            val lastKnownStationId = preferences.getOrNull(lastTrainStation)
+            val lastKnownStationId = preferences.getOrNull(PreferenceKeys.lastTrainStation)
             if (lastKnownStationId != null) {
                 val station = trainStationRepository.getTrainStationById(lastKnownStationId)
                 if (station != null) {
@@ -77,8 +78,6 @@ class DepartureBoardViewModel(
     }
 
     companion object {
-        private val lastTrainStation = stringPreferencesKey("LAST_TRAIN_STATION")
-
         private const val DEFAULT_STATION_NAME = "Utrecht Centraal"
     }
 }
