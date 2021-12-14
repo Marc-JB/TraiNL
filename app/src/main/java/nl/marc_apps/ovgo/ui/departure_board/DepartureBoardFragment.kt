@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.material.snackbar.Snackbar
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentDepartureBoardBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -62,14 +63,27 @@ class DepartureBoardFragment : Fragment() {
         }
 
         viewModel.departures.observe(viewLifecycleOwner) {
-            if (it == null) {
-                binding.placeholderListDepartures.visibility = View.VISIBLE
-                binding.listDepartures.visibility = View.GONE
-            } else {
-                binding.placeholderListDepartures.visibility = View.GONE
-                binding.listDepartures.visibility = View.VISIBLE
-                departuresAdapter.submitList(it) {
-                    binding.listDepartures.scheduleLayoutAnimation()
+            when {
+                it == null -> {
+                    binding.placeholderListDepartures.visibility = View.VISIBLE
+                    binding.listDepartures.visibility = View.GONE
+                }
+                it.isFailure -> {
+                    binding.placeholderListDepartures.visibility = View.GONE
+                    binding.listDepartures.visibility = View.GONE
+                    Snackbar.make(binding.root, R.string.departure_board_loading_failure, Snackbar.LENGTH_INDEFINITE)
+                        .setAnchorView(R.id.bottom_navigation)
+                        .setAction(R.string.action_retry_loading) {
+                            viewModel.reload()
+                        }
+                        .show()
+                }
+                else -> {
+                    binding.placeholderListDepartures.visibility = View.GONE
+                    binding.listDepartures.visibility = View.VISIBLE
+                    departuresAdapter.submitList(it.getOrThrow()) {
+                        binding.listDepartures.scheduleLayoutAnimation()
+                    }
                 }
             }
         }

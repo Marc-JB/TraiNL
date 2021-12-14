@@ -27,9 +27,9 @@ class DepartureBoardViewModel(
     val currentStation: LiveData<TrainStation>
         get() = mutableCurrentStation
 
-    private val mutableDepartures = MutableLiveData<List<Departure>?>()
+    private val mutableDepartures = MutableLiveData<Result<List<Departure>>?>()
 
-    val departures: LiveData<List<Departure>?>
+    val departures: LiveData<Result<List<Departure>>?>
         get() = mutableDepartures
 
     fun saveCurrentStation(station: TrainStation? = currentStation.value) {
@@ -63,17 +63,30 @@ class DepartureBoardViewModel(
     }
 
     fun loadDepartures(station: TrainStation, allowReload: Boolean = false) {
-        if (!allowReload && !mutableDepartures.value.isNullOrEmpty()) {
+        if (!allowReload && departures.value?.isSuccess == true) {
             return
         }
 
-        mutableCurrentStation.postValue(station)
-        saveCurrentStation(station)
+        if (currentStation.value != station) {
+            mutableCurrentStation.postValue(station)
+            saveCurrentStation(station)
+        }
         mutableDepartures.postValue(null)
 
         viewModelScope.launch {
-            val departures = departureRepository.getDepartures(station)
+            val departures = runCatching {
+                departureRepository.getDepartures(station)
+            }
             mutableDepartures.postValue(departures)
+        }
+    }
+
+    fun reload() {
+        val currentStation = currentStation.value
+        if (currentStation != null) {
+            loadDepartures(currentStation)
+        } else {
+            loadDeparturesForLastKnownStation()
         }
     }
 

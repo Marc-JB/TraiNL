@@ -30,4 +30,6 @@
         <item quantity="one">Vertrektijd: %1$s, +%2$d minuut</item>
         <item quantity="other">Vertrektijd: %1$s, +%2$d minuten</item>
     </plurals>
+    <string name="departure_board_loading_failure">Kan vertrektijden niet laden</string>
+    <string name="action_retry_loading">Opnieuw</string>
 </resources>
