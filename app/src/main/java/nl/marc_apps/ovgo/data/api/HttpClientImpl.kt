@@ -1,17 +1,21 @@
 package nl.marc_apps.ovgo.data.api
 
 import android.content.Context
+import android.os.Build
+import coil.util.CoilUtils
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import nl.marc_apps.ovgo.BuildConfig
 import nl.marc_apps.ovgo.utils.dnsHttpClient
 import nl.marc_apps.ovgo.utils.httpClient
+import nl.marc_apps.ovgo.utils.setUserAgent
 import okhttp3.Cache
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.brotli.BrotliInterceptor
 import okhttp3.logging.HttpLoggingInterceptor
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 @ExperimentalSerializationApi
@@ -23,15 +27,22 @@ class HttpClientImpl(val context: Context) : HttpClient {
 
     override val okHttpClient by lazy {
         val bootstrapClient = httpClient {
-            if (BuildConfig.DEBUG) {
-                addInterceptor(logger)
-            }
+            setUserAgent(applicationUserAgent)
+
             addInterceptor(BrotliInterceptor)
+
+            if (BuildConfig.DEBUG) {
+                addNetworkInterceptor(logger)
+            }
+
             callTimeout(1, TimeUnit.MINUTES)
             connectTimeout(45, TimeUnit.SECONDS)
             readTimeout(30, TimeUnit.SECONDS)
             writeTimeout(30, TimeUnit.SECONDS)
-            cache(Cache(context.cacheDir, MAX_CACHE_SIZE))
+
+            val coilCacheSize = CoilUtils.createDefaultCache(context).maxSize()
+            val cacheDir = File(context.cacheDir, NETWORK_CACHE_DIRECTORY_NAME).apply { mkdirs() }
+            cache(Cache(cacheDir, coilCacheSize))
         }
 
         val dns = dnsHttpClient {
@@ -53,7 +64,10 @@ class HttpClientImpl(val context: Context) : HttpClient {
     override val jsonConverter = json.asConverterFactory(JSON_MEDIA_TYPE.toMediaType())
 
     companion object {
-        private const val MAX_CACHE_SIZE = 10L * 1024L * 1024L
+        private val applicationUserAgent = "TraiNL/${BuildConfig.VERSION_NAME} " +
+                "(Linux; Android ${Build.VERSION.RELEASE}; ${Build.MANUFACTURER} ${Build.MODEL})"
+
+        private const val NETWORK_CACHE_DIRECTORY_NAME = "network_cache"
 
         private const val JSON_MEDIA_TYPE = "application/json"
 

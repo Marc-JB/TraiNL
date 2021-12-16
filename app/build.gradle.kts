@@ -87,6 +87,7 @@ android {
 
         getByName("debug") {
             applicationIdSuffix = ".debug"
+            versionNameSuffix = "-preview"
 
             isMinifyEnabled = true
             isShrinkResources = true

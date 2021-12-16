@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import coil.ImageLoader
+import kotlinx.serialization.ExperimentalSerializationApi
 import nl.marc_apps.ovgo.data.DepartureRepository
 import nl.marc_apps.ovgo.data.TrainInfoRepository
 import nl.marc_apps.ovgo.data.TrainStationRepository
@@ -23,6 +25,7 @@ import nl.marc_apps.ovgo.utils.isLowRamDevice
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
+@ExperimentalSerializationApi
 object DiModules {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -68,5 +71,10 @@ object DiModules {
     val utilitiesModule = module {
         single<HttpClient> { HttpClientImpl(get()) }
         single<StringSimilarity> { JaroWinklerStringSimilarity }
+        single {
+            ImageLoader.Builder(get())
+                .okHttpClient(get<HttpClient>().okHttpClient)
+                .build()
+        }
     }
 }

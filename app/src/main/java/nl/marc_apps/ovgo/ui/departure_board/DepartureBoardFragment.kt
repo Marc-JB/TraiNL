@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
+import coil.ImageLoader
 import com.google.android.material.snackbar.Snackbar
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentDepartureBoardBinding
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DepartureBoardFragment : Fragment() {
@@ -20,6 +22,8 @@ class DepartureBoardFragment : Fragment() {
     private lateinit var binding: FragmentDepartureBoardBinding
 
     private val navigationArgs by navArgs<DepartureBoardFragmentArgs>()
+
+    private val imageLoader by inject<ImageLoader>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +46,7 @@ class DepartureBoardFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        val departuresAdapter = DeparturesAdapter()
+        val departuresAdapter = DeparturesAdapter(imageLoader)
         binding.listDepartures.adapter = departuresAdapter
         binding.listDepartures.addItemDecoration(
             DividerItemDecoration(binding.listDepartures.context, DividerItemDecoration.VERTICAL).apply {

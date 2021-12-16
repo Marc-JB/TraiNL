@@ -2,12 +2,13 @@ package nl.marc_apps.ovgo.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import coil.ImageLoader
 import coil.load
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.PartialTrainImageBinding
 
 object TrainImages {
-    fun loadView(root: ViewGroup, imageUrls: List<String>?) {
+    fun loadView(root: ViewGroup, imageUrls: List<String>?, imageLoader: ImageLoader) {
         val shouldDrawImageBorder = root.resources.getBoolean(R.bool.should_draw_train_image_border)
 
         imageUrls?.forEach {
@@ -25,7 +26,7 @@ object TrainImages {
                 imageView.root.resources.getDimensionPixelSize(R.dimen.train_image_stroke_width),
                 imageView.root.context.getColor(borderColor)
             )
-            imageView.root.load(it) {
+            imageView.root.load(it, imageLoader) {
                 if (isIce || shouldDrawImageBorder) {
                     transformations(borderTransformation)
                 }

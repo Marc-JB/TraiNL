@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.ListItemDepartureBinding
 import nl.marc_apps.ovgo.databinding.ListItemDepartureCancelledBinding
@@ -19,7 +20,9 @@ import nl.marc_apps.ovgo.ui.TrainImages
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
 
-class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureViewHolder>(DiffCallback) {
+class DeparturesAdapter(
+    private val imageLoader: ImageLoader
+) : ListAdapter<Departure, DeparturesAdapter.DepartureViewHolder>(DiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, @Type viewType: Int): DepartureViewHolder {
         return when(viewType) {
             TYPE_REGULAR -> {
@@ -157,7 +160,7 @@ class DeparturesAdapter : ListAdapter<Departure, DeparturesAdapter.DepartureView
         }
 
         trainInfo?.trainParts?.mapNotNull { it.imageUrl }?.let {
-            TrainImages.loadView(binding.holderTrainImages, it)
+            TrainImages.loadView(binding.holderTrainImages, it, imageLoader)
         }
     }
 
