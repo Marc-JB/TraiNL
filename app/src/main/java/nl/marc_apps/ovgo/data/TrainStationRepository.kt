@@ -3,7 +3,6 @@ package nl.marc_apps.ovgo.data
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.longPreferencesKey
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
