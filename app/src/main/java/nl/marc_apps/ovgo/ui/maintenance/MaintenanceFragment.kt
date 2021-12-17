@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
+import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentMaintenanceBinding
 import nl.marc_apps.ovgo.ui.DisruptionsAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,14 +35,24 @@ class MaintenanceFragment : Fragment() {
         )
 
         viewModel.maintenanceList.observe(viewLifecycleOwner) {
-            if (it == null) {
-                binding.placeholderListMaintenance.visibility = View.VISIBLE
-                binding.listMaintenance.visibility = View.GONE
-            } else {
-                binding.placeholderListMaintenance.visibility = View.GONE
-                binding.listMaintenance.visibility = View.VISIBLE
-                binding.listMaintenance.scheduleLayoutAnimation()
-                maintenanceAdapter.submitList(it)
+            binding.partialImageWithLabelPlaceholder.root.visibility = View.GONE
+            binding.placeholderListMaintenance.visibility = View.GONE
+            binding.listMaintenance.visibility = View.GONE
+
+            when {
+                it == null -> {
+                    binding.placeholderListMaintenance.visibility = View.VISIBLE
+                }
+                it.isEmpty() -> {
+                    binding.partialImageWithLabelPlaceholder.image.setImageResource(R.drawable.va_travelling)
+                    binding.partialImageWithLabelPlaceholder.label.setText(R.string.no_maintenance)
+                    binding.partialImageWithLabelPlaceholder.root.visibility = View.VISIBLE
+                }
+                else -> {
+                    binding.listMaintenance.visibility = View.VISIBLE
+                    binding.listMaintenance.scheduleLayoutAnimation()
+                    maintenanceAdapter.submitList(it)
+                }
             }
         }
 

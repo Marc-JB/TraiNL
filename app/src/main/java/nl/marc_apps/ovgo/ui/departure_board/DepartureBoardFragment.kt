@@ -67,14 +67,15 @@ class DepartureBoardFragment : Fragment() {
         }
 
         viewModel.departures.observe(viewLifecycleOwner) {
+            binding.placeholderListDepartures.visibility = View.GONE
+            binding.listDepartures.visibility = View.GONE
+            binding.partialImageWithLabelPlaceholder.root.visibility = View.GONE
+
             when {
                 it == null -> {
                     binding.placeholderListDepartures.visibility = View.VISIBLE
-                    binding.listDepartures.visibility = View.GONE
                 }
                 it.isFailure -> {
-                    binding.placeholderListDepartures.visibility = View.GONE
-                    binding.listDepartures.visibility = View.GONE
                     Snackbar.make(binding.root, R.string.departure_board_loading_failure, Snackbar.LENGTH_INDEFINITE)
                         .setAnchorView(R.id.bottom_navigation)
                         .setAction(R.string.action_retry_loading) {
@@ -82,8 +83,12 @@ class DepartureBoardFragment : Fragment() {
                         }
                         .show()
                 }
+                it.getOrThrow().isEmpty() -> {
+                    binding.partialImageWithLabelPlaceholder.image.setImageResource(R.drawable.va_stranded_traveler)
+                    binding.partialImageWithLabelPlaceholder.label.setText(R.string.no_departures)
+                    binding.partialImageWithLabelPlaceholder.root.visibility = View.VISIBLE
+                }
                 else -> {
-                    binding.placeholderListDepartures.visibility = View.GONE
                     binding.listDepartures.visibility = View.VISIBLE
                     departuresAdapter.submitList(it.getOrThrow()) {
                         binding.listDepartures.scheduleLayoutAnimation()

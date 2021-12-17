@@ -32,4 +32,7 @@
     </plurals>
     <string name="departure_board_loading_failure">Kan vertrektijden niet laden</string>
     <string name="action_retry_loading">Opnieuw</string>
+    <string name="no_departures">Geen vertrekkende treinen</string>
+    <string name="no_disruptions">Geen storingen</string>
+    <string name="no_maintenance">Geen werkzaamheden</string>
 </resources>

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
+import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
 import nl.marc_apps.ovgo.databinding.FragmentDisruptionsBinding
 import nl.marc_apps.ovgo.ui.DisruptionsAdapter
@@ -35,16 +36,26 @@ class DisruptionsFragment : Fragment() {
         )
 
         viewModel.disruptions.observe(viewLifecycleOwner) {
-            if (it == null) {
-                binding.placeholderListDisruptions.visibility = View.VISIBLE
-                binding.listDisruptions.visibility = View.GONE
-            } else {
-                binding.placeholderListDisruptions.visibility = View.GONE
-                binding.listDisruptions.visibility = View.VISIBLE
-                binding.listDisruptions.scheduleLayoutAnimation()
-                disruptionsAdapter.submitList(it.sortedBy {
-                    if (it is DutchRailwaysDisruption.Calamity) 1 else 0
-                })
+            binding.partialImageWithLabelPlaceholder.root.visibility = View.GONE
+            binding.placeholderListDisruptions.visibility = View.GONE
+            binding.listDisruptions.visibility = View.GONE
+
+            when {
+                it == null -> {
+                    binding.placeholderListDisruptions.visibility = View.VISIBLE
+                }
+                it.isEmpty() -> {
+                    binding.partialImageWithLabelPlaceholder.image.setImageResource(R.drawable.va_travelling)
+                    binding.partialImageWithLabelPlaceholder.label.setText(R.string.no_disruptions)
+                    binding.partialImageWithLabelPlaceholder.root.visibility = View.VISIBLE
+                }
+                else -> {
+                    binding.listDisruptions.visibility = View.VISIBLE
+                    binding.listDisruptions.scheduleLayoutAnimation()
+                    disruptionsAdapter.submitList(it.sortedBy {
+                        if (it is DutchRailwaysDisruption.Calamity) 1 else 0
+                    })
+                }
             }
         }
 
