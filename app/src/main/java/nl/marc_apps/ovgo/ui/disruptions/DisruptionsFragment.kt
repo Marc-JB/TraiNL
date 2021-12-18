@@ -52,8 +52,13 @@ class DisruptionsFragment : Fragment() {
                 else -> {
                     binding.listDisruptions.visibility = View.VISIBLE
                     binding.listDisruptions.scheduleLayoutAnimation()
-                    disruptionsAdapter.submitList(it.sortedBy {
-                        if (it is DutchRailwaysDisruption.Calamity) 1 else 0
+                    disruptionsAdapter.submitList(it.sortedByDescending {
+                        when((it as? DutchRailwaysDisruption.Calamity)?.priority) {
+                            DutchRailwaysDisruption.Calamity.Priority.PRIO_1 -> 3
+                            DutchRailwaysDisruption.Calamity.Priority.PRIO_2 -> 2
+                            DutchRailwaysDisruption.Calamity.Priority.PRIO_3 -> 1
+                            null -> 0
+                        }
                     })
                 }
             }
