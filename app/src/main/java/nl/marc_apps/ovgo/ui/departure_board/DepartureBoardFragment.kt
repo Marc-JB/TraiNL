@@ -38,12 +38,17 @@ class DepartureBoardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.currentStation.observe(viewLifecycleOwner) {
-            binding.partialDepartureBoardActionBar.labelStation.text = it.fullName
+            binding.toolbar.title = it.fullName
         }
 
-        binding.partialDepartureBoardActionBar.actionChangeStation.setOnClickListener {
-            val action = DepartureBoardFragmentDirections.actionHomeToStationSearch()
-            findNavController().navigate(action)
+        binding.toolbar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.action_change_station) {
+                val action = DepartureBoardFragmentDirections.actionHomeToStationSearch()
+                findNavController().navigate(action)
+                true
+            } else {
+                false
+            }
         }
 
         val departuresAdapter = DeparturesAdapter(imageLoader)
