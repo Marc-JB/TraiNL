@@ -30,4 +30,10 @@
         <item quantity="one">Departure time: %1$s, +%2$d minute</item>
         <item quantity="other">Departure time: %1$s, +%2$d minutes</item>
     </plurals>
+    <string name="departure_board_loading_failure">Could not load departures</string>
+    <string name="action_retry_loading">Retry</string>
+    <string name="no_departures">No departures</string>
+    <string name="no_disruptions">No disruptions</string>
+    <string name="no_maintenance">No maintenance</string>
+    <string name="action_change_station">Change station</string>
 </resources>

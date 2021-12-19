@@ -6,6 +6,15 @@
                 android:width="1dp"
                 android:height="100dp" />
 
+            <solid android:color="@color/backgroundColor" />
+        </shape>
+    </item>
+    <item android:gravity="fill_horizontal">
+        <shape android:shape="rectangle">
+            <size
+                android:width="1dp"
+                android:height="100dp" />
+
             <solid android:color="@color/dividerColor" />
         </shape>
     </item>

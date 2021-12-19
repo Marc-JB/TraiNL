@@ -8,18 +8,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import coil.ImageLoader
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentDepartureDetailsBinding
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
 import nl.marc_apps.ovgo.ui.TrainImages
 import nl.marc_apps.ovgo.utils.format
+import org.koin.android.ext.android.inject
 import java.text.DateFormat
 
 class DepartureDetailsFragment : Fragment() {
     private lateinit var binding: FragmentDepartureDetailsBinding
 
     private val navigationArgs by navArgs<DepartureDetailsFragmentArgs>()
+
+    private val imageLoader by inject<ImageLoader>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -127,7 +131,7 @@ class DepartureDetailsFragment : Fragment() {
         binding.partialTrainInformationCard.holderTrainImages.removeAllViews()
 
         trainInfo?.trainParts?.mapNotNull { it.imageUrl }?.let {
-            TrainImages.loadView(binding.partialTrainInformationCard.holderTrainImages, it)
+            TrainImages.loadView(binding.partialTrainInformationCard.holderTrainImages, it, imageLoader)
         }
     }
 }

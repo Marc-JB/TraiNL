@@ -2,7 +2,8 @@
 [![Android tests](https://github.com/Marc-JB/TraiNL/actions/workflows/test.yml/badge.svg)](https://github.com/Marc-JB/TraiNL/actions) 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Marc-JB_OVgo&metric=alert_status)](https://sonarcloud.io/dashboard?id=Marc-JB_OVgo) 
 [![License: CC BY-NC-ND 4.0](https://badgen.net/badge/license/CC%20BY-NC-ND%204.0/blue)](https://creativecommons.org/licenses/by-nc-nd/4.0/) 
-# TraiNL (previously "OVgo")
+# TraiNL
+Previously known as "OVgo"
 ![Departures](/docs/screenshots/departures-1.png?raw=true "Departures (light mode)")
 ![Departures](/docs/screenshots/departures-2.png?raw=true "Departures (dark mode)")
 
@@ -17,7 +18,7 @@ Experimental public transport Android app that showcases various Android archite
   * Navigation
   * UI
     * AppCompat
-    * Constraintlayout
+    * ConstraintLayout
     * Fragments
     * Material Design Components
     * Recyclerview

@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-<!-- Base application theme. -->
-<style name="Theme.OVgo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-  <!-- Primary brand color. -->
-  <item name="colorPrimary">@color/colorPrimaryLight</item>
-  <item name="colorPrimaryVariant">@color/colorPrimary</item>
-  <item name="colorOnPrimary">@color/colorOnPrimaryLight</item>
+    <!-- Base application theme. -->
+    <style name="Theme.OVgo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/colorPrimaryLight</item>
+        <item name="colorPrimaryVariant">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryLight</item>
 
-  <!-- Secondary brand color. -->
-  <item name="colorSecondary">@color/colorAccentLight</item>
-  <item name="colorSecondaryVariant">@color/colorAccent</item>
-  <item name="colorOnSecondary">@color/colorOnAccentLight</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/colorAccentLight</item>
+        <item name="colorSecondaryVariant">@color/colorAccent</item>
+        <item name="colorOnSecondary">@color/colorOnAccentLight</item>
 
-  <!-- Status bar color. -->
-  <item name="android:statusBarColor" tools:targetApi="l">@color/backgroundColor</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/backgroundColor</item>
 
-  <!-- Customize your theme here. -->
-  <item name="android:windowBackground">@color/backgroundColor</item>
-</style>
+        <!-- Background -->
+        <item name="android:windowBackground">@color/backgroundColor</item>
+    </style>
+
+    <!-- Theme overlays -->
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Dark" />
 </resources>

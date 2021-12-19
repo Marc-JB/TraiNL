@@ -3,7 +3,6 @@ package nl.marc_apps.ovgo.data
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.longPreferencesKey
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
@@ -98,12 +97,12 @@ class TrainStationRepository(
         })
 
         preferences.edit {
-            it[trainStationCacheDatePreference] = System.currentTimeMillis()
+            it[PreferenceKeys.trainStationCacheDatePreference] = System.currentTimeMillis()
         }
     }
 
     private suspend fun isDatabaseOutdatedOrEmpty(): Boolean {
-        val lastCacheDate = preferences.getOrNull(trainStationCacheDatePreference) ?: return true
+        val lastCacheDate = preferences.getOrNull(PreferenceKeys.trainStationCacheDatePreference) ?: return true
         val currentDate = System.currentTimeMillis()
         return currentDate - lastCacheDate > databaseCacheExpirationTimeMs
     }
@@ -121,8 +120,6 @@ class TrainStationRepository(
     }
 
     companion object {
-        private val trainStationCacheDatePreference = longPreferencesKey("TRAIN_STATION_CACHE_DATE")
-
         private const val TAG = "TRAIN_STATION_REPO"
 
         private val databaseCacheExpirationTimeMs = TimeUnit.MILLISECONDS.convert(10, TimeUnit.DAYS)

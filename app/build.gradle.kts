@@ -55,8 +55,8 @@ android {
         applicationId = "nl.marc_apps.ovgo"
         minSdk = 26
         targetSdk = 31
-        versionCode = getProperty("version.code")?.toInt() ?: 8
-        versionName = getProperty("version.name") ?: "0.6"
+        versionCode = getProperty("version.code")?.toInt() ?: 9
+        versionName = getProperty("version.name") ?: "0.6.1"
 
         testBuildType = "debug"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -87,6 +87,7 @@ android {
 
         getByName("debug") {
             applicationIdSuffix = ".debug"
+            versionNameSuffix = "-preview"
 
             isMinifyEnabled = true
             isShrinkResources = true
@@ -121,7 +122,7 @@ android {
 
 dependencies {
     // Firebase crashlytics
-    implementation(platform("com.google.firebase:firebase-bom:26.8.0"))
+    implementation(platform("com.google.firebase:firebase-bom:29.0.2"))
     implementation("com.google.firebase:firebase-crashlytics-ktx")
 
     // Navigation
@@ -133,12 +134,12 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
     implementation("com.squareup.okhttp3:okhttp-brotli:4.9.3")
     implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.3")
 
     // Database
-    val roomVersion = "2.4.0-beta02"
+    val roomVersion = "2.4.0"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
@@ -157,7 +158,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.4.0")
     implementation("androidx.fragment:fragment-ktx:1.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
-    implementation("io.coil-kt:coil:1.3.2")
+    implementation("io.coil-kt:coil:1.4.0")
 
     // Design
     implementation("com.google.android.material:material:1.4.0")
