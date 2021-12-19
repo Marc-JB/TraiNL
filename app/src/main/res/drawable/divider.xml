@@ -9,6 +9,18 @@
                 android:width="100dp"
                 android:height="1dp" />
 
+            <solid android:color="@color/backgroundColor" />
+        </shape>
+    </item>
+    <item
+        android:end="@dimen/departure_board_horizontal_spacing"
+        android:gravity="fill_vertical"
+        android:start="@dimen/departure_board_horizontal_spacing">
+        <shape android:shape="rectangle">
+            <size
+                android:width="100dp"
+                android:height="1dp" />
+
             <solid android:color="@color/dividerColor" />
         </shape>
     </item>

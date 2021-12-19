@@ -8,11 +8,13 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import coil.ImageLoader
 import com.google.android.material.snackbar.Snackbar
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentDepartureBoardBinding
+import nl.marc_apps.ovgo.domain.Departure
+import nl.marc_apps.ovgo.ui.DividerItemDecoration
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -54,52 +56,31 @@ class DepartureBoardFragment : Fragment() {
         val departuresAdapter = DeparturesAdapter(imageLoader)
         binding.listDepartures.adapter = departuresAdapter
         binding.listDepartures.addItemDecoration(
-            DividerItemDecoration(binding.listDepartures.context, DividerItemDecoration.VERTICAL).apply {
-                AppCompatResources.getDrawable(view.context, R.drawable.divider)?.let { setDrawable(it) }
+            DividerItemDecoration(
+                binding.listDepartures.context,
+                DividerItemDecoration.VERTICAL
+            ).apply {
+                AppCompatResources.getDrawable(view.context, R.drawable.divider)?.let {
+                    drawable = it
+                }
             }
         )
 
-        if (resources.getBoolean(R.bool.is_large_screen_device)) {
+        if (binding.listDepartures.layoutManager is GridLayoutManager) {
             binding.listDepartures.addItemDecoration(
                 DividerItemDecoration(
                     binding.listDepartures.context,
                     DividerItemDecoration.HORIZONTAL
                 ).apply {
-                    AppCompatResources.getDrawable(view.context, R.drawable.divider_vertical)
-                        ?.let { setDrawable(it) }
+                    AppCompatResources.getDrawable(view.context, R.drawable.divider_vertical)?.let {
+                        drawable = it
+                    }
                 }
             )
         }
 
         viewModel.departures.observe(viewLifecycleOwner) {
-            binding.placeholderListDepartures.visibility = View.GONE
-            binding.listDepartures.visibility = View.GONE
-            binding.partialImageWithLabelPlaceholder.root.visibility = View.GONE
-
-            when {
-                it == null -> {
-                    binding.placeholderListDepartures.visibility = View.VISIBLE
-                }
-                it.isFailure -> {
-                    Snackbar.make(binding.root, R.string.departure_board_loading_failure, Snackbar.LENGTH_INDEFINITE)
-                        .setAnchorView(R.id.bottom_navigation)
-                        .setAction(R.string.action_retry_loading) {
-                            viewModel.reload()
-                        }
-                        .show()
-                }
-                it.getOrThrow().isEmpty() -> {
-                    binding.partialImageWithLabelPlaceholder.image.setImageResource(R.drawable.va_stranded_traveler)
-                    binding.partialImageWithLabelPlaceholder.label.setText(R.string.no_departures)
-                    binding.partialImageWithLabelPlaceholder.root.visibility = View.VISIBLE
-                }
-                else -> {
-                    binding.listDepartures.visibility = View.VISIBLE
-                    departuresAdapter.submitList(it.getOrThrow()) {
-                        binding.listDepartures.scheduleLayoutAnimation()
-                    }
-                }
-            }
+            loadNewDepartures(it, departuresAdapter)
         }
 
         val station = navigationArgs.station
@@ -114,5 +95,36 @@ class DepartureBoardFragment : Fragment() {
         super.onResume()
 
         viewModel.saveCurrentStation()
+    }
+
+    private fun loadNewDepartures(departures: Result<List<Departure>>?, adapter: DeparturesAdapter) {
+        binding.placeholderListDepartures.visibility = View.GONE
+        binding.listDepartures.visibility = View.GONE
+        binding.partialImageWithLabelPlaceholder.root.visibility = View.GONE
+
+        when {
+            departures == null -> {
+                binding.placeholderListDepartures.visibility = View.VISIBLE
+            }
+            departures.isFailure -> {
+                Snackbar.make(binding.root, R.string.departure_board_loading_failure, Snackbar.LENGTH_INDEFINITE)
+                    .setAnchorView(R.id.bottom_navigation)
+                    .setAction(R.string.action_retry_loading) {
+                        viewModel.reload()
+                    }
+                    .show()
+            }
+            departures.getOrThrow().isEmpty() -> {
+                binding.partialImageWithLabelPlaceholder.image.setImageResource(R.drawable.va_stranded_traveler)
+                binding.partialImageWithLabelPlaceholder.label.setText(R.string.no_departures)
+                binding.partialImageWithLabelPlaceholder.root.visibility = View.VISIBLE
+            }
+            else -> {
+                binding.listDepartures.visibility = View.VISIBLE
+                adapter.submitList(departures.getOrThrow()) {
+                    binding.listDepartures.scheduleLayoutAnimation()
+                }
+            }
+        }
     }
 }

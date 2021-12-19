@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import nl.marc_apps.ovgo.databinding.FragmentSearchStationBinding
+import nl.marc_apps.ovgo.ui.DividerItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchStationFragment : Fragment() {
