@@ -26,6 +26,8 @@
     <color name="backgroundColorTransparent">#00FAFAFA</color>
 
     <color name="dividerColor">#52000000</color>
+    <color name="departureMessageWarningColor">@color/colorError</color>
+    <color name="departureMessageColor">@android:color/secondary_text_light</color>
 
     <color name="sectionTitleWarningColor">@color/colorError</color>
     <color name="sectionTitleOkColor">@color/colorOK</color>

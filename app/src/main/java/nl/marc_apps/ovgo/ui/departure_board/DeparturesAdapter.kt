@@ -16,6 +16,7 @@ import nl.marc_apps.ovgo.databinding.ListItemDepartureCancelledBinding
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.ui.DepartureMessagesAdapter
 import nl.marc_apps.ovgo.ui.TrainImages
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
@@ -142,6 +143,8 @@ class DeparturesAdapter(
 
         loadTrainImages(binding, departure.trainInfo)
 
+        loadMessages(binding, departure)
+
         binding.root.setOnClickListener {
             val action = DepartureBoardFragmentDirections.actionDepartureBoardToDetails(departure)
             binding.root.findNavController().navigate(action)
@@ -161,6 +164,25 @@ class DeparturesAdapter(
 
         trainInfo?.trainParts?.mapNotNull { it.imageUrl }?.let {
             TrainImages.loadView(binding.holderTrainImages, it, imageLoader)
+        }
+    }
+
+    private fun loadMessages(binding: ListItemDepartureBinding, departure: Departure) {
+        if (departure.messages.isEmpty() && departure.warnings.isEmpty()) {
+            binding.listMessages.visibility = View.GONE
+        } else {
+            binding.listMessages.visibility = View.VISIBLE
+
+            val messagesAdapter = (binding.listMessages.adapter as? DepartureMessagesAdapter)
+                ?: DepartureMessagesAdapter().also {
+                    binding.listMessages.adapter = it
+                }
+
+            messagesAdapter.submitList(departure.warnings.map {
+                it to DepartureMessagesAdapter.TYPE_WARNING
+            } + departure.messages.map {
+                it to DepartureMessagesAdapter.TYPE_MESSAGE
+            })
         }
     }
 
