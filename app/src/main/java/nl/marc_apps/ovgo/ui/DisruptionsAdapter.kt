@@ -24,87 +24,103 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
     override fun onBindViewHolder(holder: DisruptionViewHolder, position: Int) {
         val disruption = currentList.elementAtOrNull(position) ?: return
 
-        val context = holder.binding.root.context
-
         holder.binding.labelTitle.text = disruption.title
 
         if (disruption is DutchRailwaysDisruption.DisruptionOrMaintenance) {
-            holder.binding.labelTitle.setTextColor(context.getColor(R.color.sectionTitleColor))
+            loadDisruption(holder.binding, disruption)
+        } else if (disruption is DutchRailwaysDisruption.Calamity) {
+            loadCalamity(holder.binding, disruption)
+        }
+    }
 
-            val currentDate = Date()
-            val activeTimeSpans = disruption.timespans.filter {
-                currentDate.before(it.end)
-            }.sortedBy {
-                if (currentDate.after(it.start)) 0 else 1
-            }
-            val activeAlternativeTransportTimeSpans = disruption.alternativeTransportTimespans.filter {
-                (it.end == null && it.start != null && currentDate.after(it.start)) || currentDate.before(it.end)
-            }.sortedBy {
-                if (it.start != null && currentDate.after(it.start)) 0 else 1
-            }
+    private fun loadDisruption(binding: ListItemDisruptionBinding, disruption: DutchRailwaysDisruption.DisruptionOrMaintenance) {
+        val context = binding.root.context
 
-            val description = listOfNotNull(
-                activeTimeSpans.firstOrNull()?.situation?.label,
-                disruption.summaryAdditionalTravelTime?.label ?: activeTimeSpans.firstOrNull()?.additionalTravelTime?.label,
-                disruption.expectedDuration?.description,
-                activeAlternativeTransportTimeSpans.firstOrNull()?.alternativeTransport?.label ?: activeTimeSpans.firstOrNull()?.alternativeTransport?.label
-            ).joinToString(separator = " ")
+        binding.labelTitle.setTextColor(context.getColor(R.color.sectionTitleColor))
 
-            holder.binding.labelDescription.text = description
+        val currentDate = Date()
+        val activeTimeSpan = disruption.timespans.filter {
+            currentDate.before(it.end)
+        }.minByOrNull {
+            it.start.time
+        }
 
-            holder.binding.labelLastUpdate.visibility = View.GONE
+        val activeAlternativeTransportTimeSpan = disruption.alternativeTransportTimespans.filter {
+            (it.end == null && it.start != null && currentDate.after(it.start)) || currentDate.before(it.end)
+        }.minByOrNull {
+            it.start?.time ?: Long.MAX_VALUE
+        }
 
-            holder.binding.labelTimerange.visibility = View.VISIBLE
+        val description = listOfNotNull(
+            activeTimeSpan?.situation?.label,
+            disruption.summaryAdditionalTravelTime?.label ?: activeTimeSpan?.additionalTravelTime?.label,
+            disruption.expectedDuration?.description,
+            activeAlternativeTransportTimeSpan?.alternativeTransport?.label ?: activeTimeSpan?.alternativeTransport?.label
+        ).joinToString(separator = " ")
 
-            holder.binding.labelTimerange.text = if (disruption.end == null && currentDate.after(disruption.start)) {
+        binding.labelDescription.text = description
+
+        binding.labelLastUpdate.visibility = View.GONE
+
+        binding.labelTimerange.visibility = View.VISIBLE
+
+        binding.labelTimerange.text = when {
+            disruption.end == null && currentDate.after(disruption.start) -> {
                 context.getString(R.string.disruption_end_time_unknown)
-            } else if (disruption.end != null && currentDate.after(disruption.start)) {
+            }
+            disruption.end != null && currentDate.after(disruption.start) -> {
                 context.getString(R.string.disruption_end_time, disruption.end.format(DateFormat.MEDIUM, DateFormat.SHORT))
-            } else if (disruption.end == null) {
+            }
+            disruption.end == null -> {
                 disruption.start.format(DateFormat.MEDIUM, DateFormat.SHORT)
-            } else {
+            }
+            else -> {
                 disruption.start.format(DateFormat.MEDIUM, DateFormat.SHORT) + "\n" + disruption.end.format(DateFormat.MEDIUM, DateFormat.SHORT)
             }
+        }
 
-            holder.binding.root.setOnClickListener {
-                MaterialAlertDialogBuilder(context)
-                    .setTitle(disruption.title)
-                    .setMessage(description)
-                    .setPositiveButton(R.string.ok) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .show()
-            }
-        } else if (disruption is DutchRailwaysDisruption.Calamity) {
-            holder.binding.labelTitle.setTextColor(context.getColor(
-                if (disruption.priority == DutchRailwaysDisruption.Calamity.Priority.PRIO_1) R.color.sectionTitleWarningColor
-                else R.color.sectionTitleColor
-            ))
+        binding.root.setOnClickListener {
+            MaterialAlertDialogBuilder(context)
+                .setTitle(disruption.title)
+                .setMessage(description)
+                .setPositiveButton(R.string.ok) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+    }
 
-            holder.binding.labelDescription.text = disruption.description
+    private fun loadCalamity(binding: ListItemDisruptionBinding, calamity: DutchRailwaysDisruption.Calamity) {
+        val context = binding.root.context
 
-            holder.binding.labelTimerange.visibility = View.GONE
+        binding.labelTitle.setTextColor(context.getColor(
+            if (calamity.priority == DutchRailwaysDisruption.Calamity.Priority.PRIO_1) R.color.sectionTitleWarningColor
+            else R.color.sectionTitleColor
+        ))
 
-            if (disruption.lastUpdated == null) {
-                holder.binding.labelLastUpdate.visibility = View.GONE
-            } else {
-                holder.binding.labelLastUpdate.visibility = View.VISIBLE
-                holder.binding.labelLastUpdate.text = DateUtils.getRelativeTimeSpanString(
-                    disruption.lastUpdated.time,
-                    System.currentTimeMillis(),
-                    DateUtils.MINUTE_IN_MILLIS
-                )
-            }
+        binding.labelDescription.text = calamity.description
 
-            holder.binding.root.setOnClickListener {
-                MaterialAlertDialogBuilder(context)
-                    .setTitle(disruption.title)
-                    .setMessage(disruption.description)
-                    .setPositiveButton(R.string.ok) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .show()
-            }
+        binding.labelTimerange.visibility = View.GONE
+
+        if (calamity.lastUpdated == null) {
+            binding.labelLastUpdate.visibility = View.GONE
+        } else {
+            binding.labelLastUpdate.visibility = View.VISIBLE
+            binding.labelLastUpdate.text = DateUtils.getRelativeTimeSpanString(
+                calamity.lastUpdated.time,
+                System.currentTimeMillis(),
+                DateUtils.MINUTE_IN_MILLIS
+            )
+        }
+
+        binding.root.setOnClickListener {
+            MaterialAlertDialogBuilder(context)
+                .setTitle(calamity.title)
+                .setMessage(calamity.description)
+                .setPositiveButton(R.string.ok) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
         }
     }
 
