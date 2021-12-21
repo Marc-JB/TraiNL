@@ -16,7 +16,8 @@ data class DutchRailwaysDeparture(
     val actualTrack: String = plannedTrack,
     val product: DutchRailwaysProduct,
     val cancelled: Boolean = false,
-    val routeStations: Set<DutchRailwaysRouteStation> = emptySet()
+    val routeStations: Set<DutchRailwaysRouteStation> = emptySet(),
+    val messages: Set<DepartureMessage> = emptySet()
 ) {
     @Serializable
     data class DutchRailwaysProduct(
@@ -30,4 +31,14 @@ data class DutchRailwaysDeparture(
         val uicCode: String,
         val mediumName: String
     )
+
+    @Serializable
+    data class DepartureMessage(
+        val message: String,
+        val style: MessageStyle
+    ) {
+        enum class MessageStyle {
+            INFO, WARNING
+        }
+    }
 }

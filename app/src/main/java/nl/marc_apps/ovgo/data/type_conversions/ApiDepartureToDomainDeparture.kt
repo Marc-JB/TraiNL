@@ -44,6 +44,14 @@ class ApiDepartureToDomainDeparture(
             ?: model.routeStations.lastOrNull()?.mediumName?.let(::resolveStationName)
     }
 
+    private fun getMessages(model: DutchRailwaysDeparture, level: DutchRailwaysDeparture.DepartureMessage.MessageStyle): Set<String> {
+        return model.messages.filter {
+            it.style == level
+        }.map {
+            it.message
+        }.toSet()
+    }
+
     fun convert(model: DutchRailwaysDeparture): Departure {
         return Departure(
             model.product.number,
@@ -58,7 +66,9 @@ class ApiDepartureToDomainDeparture(
             model.cancelled,
             model.routeStations.mapNotNull {
                 resolveUicCode(it.uicCode) ?: resolveStationName(it.mediumName)
-            }
+            },
+            getMessages(model, DutchRailwaysDeparture.DepartureMessage.MessageStyle.INFO),
+            getMessages(model, DutchRailwaysDeparture.DepartureMessage.MessageStyle.WARNING)
         )
     }
 
