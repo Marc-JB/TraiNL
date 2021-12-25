@@ -12,7 +12,8 @@ import java.util.concurrent.TimeUnit
 @Keep
 data class Departure(
     val journeyId: String,
-    val direction: TrainStation? = null,
+    val actualDirection: TrainStation? = null,
+    val plannedDirection: TrainStation? = null,
     val plannedDepartureTime: Date,
     val actualDepartureTime: Date,
     val plannedTrack: String,
@@ -40,6 +41,7 @@ data class Departure(
     constructor(parcel: Parcel) : this(
         parcel.readInt().toString(),
         parcel.readParcelable<TrainStation>(),
+        parcel.readParcelable<TrainStation>(),
         Date(parcel.readLong()),
         Date(parcel.readLong()),
         parcel.readString()!!,
@@ -55,7 +57,8 @@ data class Departure(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(journeyId.toInt())
-        parcel.writeParcelable(direction, flags)
+        parcel.writeParcelable(actualDirection, flags)
+        parcel.writeParcelable(plannedDirection, flags)
         parcel.writeLong(plannedDepartureTime.time)
         parcel.writeLong(actualDepartureTime.time)
         parcel.writeString(plannedTrack)

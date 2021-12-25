@@ -109,7 +109,7 @@ class DeparturesAdapter(
             )
         )
 
-        binding.labelDirection.text = departure.direction?.let {
+        binding.labelDirection.text = departure.actualDirection?.let {
             createDisplayName(it, STATION_NAME_CHARACTER_LIMIT)
         }
 
@@ -193,7 +193,7 @@ class DeparturesAdapter(
         binding.labelDepartureTime.text = departureTimeText
         binding.labelDepartureTimeAlignment.text = departureTimeText
 
-        binding.labelDirection.text = departure.direction?.fullName
+        binding.labelDirection.text = departure.actualDirection?.fullName
 
         binding.labelCancelled.visibility = if (departure.isCancelled) View.VISIBLE else View.GONE
 
