@@ -2,6 +2,7 @@ package nl.marc_apps.ovgo.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +21,7 @@ class DepartureMessagesAdapter : ListAdapter<Pair<String, Int>, DepartureMessage
         val context = holder.binding.root.context
 
         holder.binding.root.setTextColor(
-            context.getColor(if(type == TYPE_WARNING) {
+            ContextCompat.getColor(context, if(type == TYPE_WARNING) {
                 R.color.departureMessageWarningColor
             } else {
                 R.color.departureMessageColor

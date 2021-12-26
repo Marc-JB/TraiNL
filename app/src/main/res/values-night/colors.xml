@@ -11,6 +11,7 @@
     <color name="sectionTitleOkColor">@color/colorOKLight</color>
     <color name="sectionTitleColor">@color/colorPrimaryLight</color>
     <color name="surfaceOnBackground">#424242</color>
+    <color name="statusBarColor">@color/backgroundColor</color>
 
     <color name="vectorAssetStrandedTravelerColor1">#616161</color>
     <color name="vectorAssetStrandedTravelerColor2">#BDBDBD</color>

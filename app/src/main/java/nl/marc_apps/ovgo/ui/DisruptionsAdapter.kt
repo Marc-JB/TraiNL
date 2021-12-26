@@ -4,6 +4,7 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +37,7 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
     private fun loadDisruption(binding: ListItemDisruptionBinding, disruption: DutchRailwaysDisruption.DisruptionOrMaintenance) {
         val context = binding.root.context
 
-        binding.labelTitle.setTextColor(context.getColor(R.color.sectionTitleColor))
+        binding.labelTitle.setTextColor(ContextCompat.getColor(context, R.color.sectionTitleColor))
 
         val currentDate = Date()
         val activeTimeSpan = disruption.timespans.filter {
@@ -93,10 +94,16 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
     private fun loadCalamity(binding: ListItemDisruptionBinding, calamity: DutchRailwaysDisruption.Calamity) {
         val context = binding.root.context
 
-        binding.labelTitle.setTextColor(context.getColor(
-            if (calamity.priority == DutchRailwaysDisruption.Calamity.Priority.PRIO_1) R.color.sectionTitleWarningColor
-            else R.color.sectionTitleColor
-        ))
+        binding.labelTitle.setTextColor(
+            ContextCompat.getColor(
+                context,
+                if (calamity.priority == DutchRailwaysDisruption.Calamity.Priority.PRIO_1) {
+                    R.color.sectionTitleWarningColor
+                } else {
+                    R.color.sectionTitleColor
+                }
+            )
+        )
 
         binding.labelDescription.text = calamity.description
 

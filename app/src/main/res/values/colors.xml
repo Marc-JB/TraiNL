@@ -32,6 +32,7 @@
     <color name="sectionTitleWarningColor">@color/colorError</color>
     <color name="sectionTitleOkColor">@color/colorOK</color>
     <color name="sectionTitleColor">@color/colorPrimary</color>
+    <color name="statusBarColor">#212121</color>
     <color name="surfaceOnBackground">#EEEEEE</color>
 
     <color name="trainImageBorder">#FAFAFA</color>

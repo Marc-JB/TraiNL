@@ -53,7 +53,7 @@ android {
 
     defaultConfig {
         applicationId = "nl.marc_apps.ovgo"
-        minSdk = 26
+        minSdk = 21
         targetSdk = 31
         versionCode = getProperty("version.code")?.toInt() ?: 9
         versionName = getProperty("version.name") ?: "0.6.1"
