@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.Keep
 import nl.marc_apps.ovgo.utils.readParcelable
+import nl.marc_apps.ovgo.utils.readStringCollection
 import nl.marc_apps.ovgo.utils.readTypedList
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -11,7 +12,8 @@ import java.util.concurrent.TimeUnit
 @Keep
 data class Departure(
     val journeyId: String,
-    val direction: TrainStation? = null,
+    val actualDirection: TrainStation? = null,
+    val plannedDirection: TrainStation? = null,
     val plannedDepartureTime: Date,
     val actualDepartureTime: Date,
     val plannedTrack: String,
@@ -20,7 +22,9 @@ data class Departure(
     val operator: String,
     val categoryName: String,
     val isCancelled: Boolean = false,
-    val stationsOnRoute: List<TrainStation> = emptyList()
+    val stationsOnRoute: List<TrainStation> = emptyList(),
+    val messages: Set<String> = emptySet(),
+    val warnings: Set<String> = emptySet()
 ): Parcelable {
     val platformChanged: Boolean
         get() = actualTrack != plannedTrack
@@ -37,6 +41,7 @@ data class Departure(
     constructor(parcel: Parcel) : this(
         parcel.readInt().toString(),
         parcel.readParcelable<TrainStation>(),
+        parcel.readParcelable<TrainStation>(),
         Date(parcel.readLong()),
         Date(parcel.readLong()),
         parcel.readString()!!,
@@ -45,12 +50,15 @@ data class Departure(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readByte() != FALSE_AS_BYTE,
-        parcel.readTypedList(TrainStation.CREATOR)
+        parcel.readTypedList(TrainStation.CREATOR),
+        parcel.readStringCollection().toSet(),
+        parcel.readStringCollection().toSet()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(journeyId.toInt())
-        parcel.writeParcelable(direction, flags)
+        parcel.writeParcelable(actualDirection, flags)
+        parcel.writeParcelable(plannedDirection, flags)
         parcel.writeLong(plannedDepartureTime.time)
         parcel.writeLong(actualDepartureTime.time)
         parcel.writeString(plannedTrack)
@@ -60,6 +68,8 @@ data class Departure(
         parcel.writeString(categoryName)
         parcel.writeByte(if (isCancelled) TRUE_AS_BYTE else FALSE_AS_BYTE)
         parcel.writeTypedList(stationsOnRoute)
+        parcel.writeStringList(messages.toList())
+        parcel.writeStringList(warnings.toList())
     }
 
     override fun describeContents() = 0

@@ -1,5 +1,6 @@
 package nl.marc_apps.ovgo.utils
 
+import android.os.Build
 import androidx.annotation.IntDef
 import java.text.DateFormat
 import java.util.*
@@ -8,10 +9,18 @@ import java.util.*
 @Retention(AnnotationRetention.SOURCE)
 annotation class DateTimeStyle
 
+private fun getDefaultFormattingLocale(): Locale {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Locale.getDefault(Locale.Category.FORMAT)
+    } else {
+        Locale.getDefault()
+    }
+}
+
 fun Date.format(
     @DateTimeStyle dateStyle: Int? = null,
     @DateTimeStyle timeStyle: Int? = null,
-    locale: Locale = Locale.getDefault(Locale.Category.FORMAT),
+    locale: Locale = getDefaultFormattingLocale(),
     calendar: Calendar? = null,
     timeZone: TimeZone? = null
 ): String {

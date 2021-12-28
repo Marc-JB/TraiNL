@@ -60,13 +60,13 @@ class DepartureDetailsFragment : Fragment() {
             DateUtils.MINUTE_IN_MILLIS
         )
 
-        binding.labelTitle.text = view.context.getString(R.string.departure_info_title, departure.categoryName, departure.direction?.fullName)
+        binding.labelTitle.text = view.context.getString(R.string.departure_info_title, departure.categoryName, departure.actualDirection?.fullName)
 
-        binding.partialRouteInformationCard.actionShowDestinationStation.text = departure.direction?.fullName
+        binding.partialRouteInformationCard.actionShowDestinationStation.text = departure.actualDirection?.fullName
         binding.partialRouteInformationCard.actionShowDestinationStation.setOnClickListener {
-            if (departure.direction != null) {
+            if (departure.actualDirection != null) {
                 val action = DepartureDetailsFragmentDirections
-                    .actionDepartureDetailsToStationDepartureBoard(departure.direction)
+                    .actionDepartureDetailsToStationDepartureBoard(departure.actualDirection)
                 findNavController().navigate(action)
             }
         }
