@@ -7,7 +7,7 @@
 
 ![Banner image](/docs/TraiNL-banner.png?raw=true "Banner image")
 
-Experimental public transport Android app that showcases various Android architecture patterns. The app is fully written in Kotlin and uses MVVM, dependency injection and various libraries for data access. 
+Public transport app that showcases various Android architecture patterns. The app is written in Kotlin and uses MVVM, dependency injection and various libraries for data access. 
 
 ## Screenshots
 ![Screenshot: Departures (light mode)](/docs/screenshots/departures-1.png?raw=true "Screenshot: Departures (light mode)")
@@ -25,7 +25,7 @@ Experimental public transport Android app that showcases various Android archite
     * ConstraintLayout
     * Fragments
     * Material Design Components
-    * Recyclerview
+    * RecyclerView
 * Other
   * [Retrofit](https://square.github.io/retrofit/)
   * [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
