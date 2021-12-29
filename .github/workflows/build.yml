@@ -48,10 +48,10 @@ jobs:
       - name: Move artifacts
         run: |
           mkdir out
-          mv app/build/outputs/bundle/release/app-release.aab /out/TraiNL-release.aab
-          find app/build/outputs/bundle -type f -name 'app-*-release.aab' -exec sh -c 'x="{}"; mv "$x" "TraiNL-${x#\"app-\"}"' \;
-          mv app/build/outputs/apk/release/app-release.apk /out/TraiNL-release.apk
-          find app/build/outputs/apk -type f -name 'app-*-release.apk' -exec sh -c 'x="{}"; mv "$x" "TraiNL-${x#\"app-\"}"' \;
+          mv app/build/outputs/bundle/release/app-release.aab out/TraiNL-release.aab || echo "app-release.aab was not found"
+          find app/build/outputs/bundle -type f -name 'app-*-release.aab' -exec sh -c 'x="{}"; mv "$x" "out/TraiNL-${x#\"app-\"}"' \; || echo "app-[variant]-release.aab was not found"
+          mv app/build/outputs/apk/release/app-release.apk out/TraiNL-release.apk || echo "app-release.apk was not found"
+          find app/build/outputs/apk -type f -name 'app-*-release.apk' -exec sh -c 'x="{}"; mv "$x" "out/TraiNL-${x#\"app-\"}"' \; || echo "app-[variant]-release.apk was not found"
 
       # Upload artifacts
       - uses: actions/upload-artifact@v2
