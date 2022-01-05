@@ -16,9 +16,12 @@ import nl.marc_apps.ovgo.domain.TrainInfo
 import nl.marc_apps.ovgo.ui.TrainImages
 import nl.marc_apps.ovgo.utils.format
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DateFormat
 
 class DepartureDetailsFragment : Fragment() {
+    private val viewModel by viewModel<DepartureDetailsViewModel>()
+
     private lateinit var binding: FragmentDepartureDetailsBinding
 
     private val navigationArgs by navArgs<DepartureDetailsFragmentArgs>()
@@ -39,6 +42,8 @@ class DepartureDetailsFragment : Fragment() {
 
         val departure = navigationArgs.departure
         val trainInfo = departure.trainInfo
+
+        viewModel.loadStations(departure)
 
         binding.partialDepartureInformationCard.labelDepartureTime.text = if (departure.isDelayed) {
             view.context.resources.getQuantityString(
@@ -89,14 +94,17 @@ class DepartureDetailsFragment : Fragment() {
     private fun loadUpcomingStations(departure: Departure) {
         val upcomingTrainStationAdapter = UpcomingTrainStationAdapter()
         binding.partialRouteInformationCard.listUpcomingStations.adapter = upcomingTrainStationAdapter
-        upcomingTrainStationAdapter.submitList(departure.stationsOnRoute)
 
-        binding.partialRouteInformationCard.labelUpcomingStations.visibility =
-            if (departure.stationsOnRoute.isEmpty() || departure.isCancelled) View.GONE
-            else View.VISIBLE
-        binding.partialRouteInformationCard.listUpcomingStations.visibility =
-            if (departure.stationsOnRoute.isEmpty() || departure.isCancelled) View.GONE
-            else View.VISIBLE
+        viewModel.routeStations.observe(viewLifecycleOwner) {
+            upcomingTrainStationAdapter.submitList(it)
+
+            binding.partialRouteInformationCard.labelUpcomingStations.visibility =
+                if (it.isEmpty() || departure.isCancelled) View.GONE
+                else View.VISIBLE
+            binding.partialRouteInformationCard.listUpcomingStations.visibility =
+                if (it.isEmpty() || departure.isCancelled) View.GONE
+                else View.VISIBLE
+        }
     }
 
     private fun loadFacilities(departure: Departure, trainInfo: TrainInfo?) {

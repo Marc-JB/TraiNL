@@ -3,10 +3,7 @@ package nl.marc_apps.ovgo.data.api.dutch_railways
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import nl.marc_apps.ovgo.data.api.HttpClient
-import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
-import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
-import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysStation
-import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysTrainInfo
+import nl.marc_apps.ovgo.data.api.dutch_railways.models.*
 import nl.marc_apps.ovgo.utils.retrofit
 import retrofit2.await
 
@@ -102,6 +99,19 @@ class DutchRailwaysApi(
                 dutchRailwaysTravelInfoApiKey,
                 ids = journeys.joinToString(separator = ",")
             ).await().filterNotNull()
+        } catch (error: Throwable) {
+            Firebase.crashlytics.recordException(error)
+            error.printStackTrace()
+            throw error
+        }
+    }
+
+    suspend fun getJourneyDetails(journeyNumber: String): Set<DutchRailwaysStop> {
+        try {
+            return travelInfoApi.getJourneyDetails(
+                dutchRailwaysTravelInfoApiKey,
+                journeyNumber = journeyNumber
+            ).await().payload?.stops ?: emptySet()
         } catch (error: Throwable) {
             Firebase.crashlytics.recordException(error)
             error.printStackTrace()

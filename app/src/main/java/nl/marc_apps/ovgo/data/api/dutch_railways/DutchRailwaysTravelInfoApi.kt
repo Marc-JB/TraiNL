@@ -34,6 +34,13 @@ interface DutchRailwaysTravelInfoApi {
         @Header("Ocp-Apim-Subscription-Key") apiKey: String
     ): Call<Payload<List<DutchRailwaysStation?>>>
 
+    @GET("v2/journey")
+    fun getJourneyDetails(
+        @Header("Ocp-Apim-Subscription-Key") apiKey: String,
+        @Query("train") journeyNumber: String,
+        @Query("dateTime") timestamp: String? = null
+    ): Call<Payload<DutchRailwaysStops>>
+
     companion object {
         const val BASE_URL = "https://gateway.apiportal.ns.nl/reisinformatie-api/api/"
     }
