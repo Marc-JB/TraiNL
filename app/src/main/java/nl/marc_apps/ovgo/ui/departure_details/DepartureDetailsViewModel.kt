@@ -25,7 +25,7 @@ class DepartureDetailsViewModel(
                 val stops = journeyDetailsRepository.getStops(departure.journeyId).toList()
 
                 if (stops.isNotEmpty()) {
-                    mutableRouteStations.postValue(stops)
+                    mutableRouteStations.postValue(stops.map { it.station })
                 }
             } catch (ignored: Throwable) {}
         }

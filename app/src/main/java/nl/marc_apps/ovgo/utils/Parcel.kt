@@ -18,3 +18,7 @@ fun <T : Parcelable> Parcel.readTypedList(creator: Parcelable.Creator<T>): List<
 inline fun <reified T : Parcelable> Parcel.readParcelable(): T? {
     return readParcelable(T::class.java.classLoader)
 }
+
+inline fun <reified T> Parcel.readOrNull(): T? {
+    return readValue(T::class.java.classLoader) as? T
+}
