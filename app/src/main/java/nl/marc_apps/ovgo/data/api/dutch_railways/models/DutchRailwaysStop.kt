@@ -26,15 +26,15 @@ data class DutchRailwaysStop(
     @Serializable
     data class DepartureOrArrival(
         val product: Product,
-        val origin: StationDetails,
-        val destination: StationDetails,
+        val origin: StationDetails? = null,
+        val destination: StationDetails? = null,
         @Serializable(with = DateSerializer::class)
         val plannedTime: Date,
         @Serializable(with = DateSerializer::class)
-        val actualTime: Date,
-        val delayInSeconds: Int,
+        val actualTime: Date = plannedTime,
+        val delayInSeconds: Int = 0,
         val plannedTrack: String,
-        val actualTrack: String,
+        val actualTrack: String = plannedTrack,
         val cancelled: Boolean,
         val punctuality: Double? = null,
         val crowdForecast: CrowdForecast

@@ -6,10 +6,12 @@ import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.content.res.getDrawableOrThrow
 import androidx.core.content.res.use
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import nl.marc_apps.ovgo.R
 import kotlin.math.roundToInt
 
 class DividerItemDecoration(context: Context, orientation: Int) : ItemDecoration() {
@@ -27,8 +29,14 @@ class DividerItemDecoration(context: Context, orientation: Int) : ItemDecoration
     private val bounds = Rect()
 
     init {
-        context.obtainStyledAttributes(ATTRS).use {
-            drawable = it.getDrawable(0)!!
+        try {
+            context.obtainStyledAttributes(ATTRS).use {
+                drawable = it.getDrawableOrThrow(0)
+            }
+        } catch (error: IllegalArgumentException) {
+            context.obtainStyledAttributes(R.style.Theme_OVgo, ATTRS).use {
+                drawable = it.getDrawableOrThrow(0)
+            }
         }
     }
 

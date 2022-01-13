@@ -36,4 +36,5 @@
     <string name="no_disruptions">No disruptions</string>
     <string name="no_maintenance">No maintenance</string>
     <string name="action_change_station">Change station</string>
+    <string name="show_all_stops">Show all stops</string>
 </resources>

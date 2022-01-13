@@ -89,22 +89,36 @@ class DepartureDetailsFragment : Fragment() {
         )
 
         loadTrainImages(departure, trainInfo)
+
+        viewModel.journeyStops.observe(viewLifecycleOwner) {
+            binding.partialRouteInformationCard.actionShowStops.visibility = View.GONE
+            binding.partialRouteInformationCard.loadingIndicator.visibility = View.GONE
+
+            if (it == null) {
+                binding.partialRouteInformationCard.loadingIndicator.visibility = View.VISIBLE
+            } else if (it.isNotEmpty()) {
+                binding.partialRouteInformationCard.actionShowStops.visibility = View.VISIBLE
+                binding.partialRouteInformationCard.actionShowStops.setOnClickListener { _ ->
+                    val action = DepartureDetailsFragmentDirections
+                        .actionDepartureDetailsToStops(it.toTypedArray())
+                    findNavController().navigate(action)
+                }
+            }
+        }
     }
 
     private fun loadUpcomingStations(departure: Departure) {
         val upcomingTrainStationAdapter = UpcomingTrainStationAdapter()
         binding.partialRouteInformationCard.listUpcomingStations.adapter = upcomingTrainStationAdapter
 
-        viewModel.routeStations.observe(viewLifecycleOwner) {
-            upcomingTrainStationAdapter.submitList(it)
+        upcomingTrainStationAdapter.submitList(departure.stationsOnRoute)
 
-            binding.partialRouteInformationCard.labelUpcomingStations.visibility =
-                if (it.isEmpty() || departure.isCancelled) View.GONE
-                else View.VISIBLE
-            binding.partialRouteInformationCard.listUpcomingStations.visibility =
-                if (it.isEmpty() || departure.isCancelled) View.GONE
-                else View.VISIBLE
-        }
+        binding.partialRouteInformationCard.labelUpcomingStations.visibility =
+            if (departure.stationsOnRoute.isEmpty() || departure.isCancelled) View.GONE
+            else View.VISIBLE
+        binding.partialRouteInformationCard.listUpcomingStations.visibility =
+            if (departure.stationsOnRoute.isEmpty() || departure.isCancelled) View.GONE
+            else View.VISIBLE
     }
 
     private fun loadFacilities(departure: Departure, trainInfo: TrainInfo?) {

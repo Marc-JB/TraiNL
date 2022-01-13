@@ -7,25 +7,23 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.data.JourneyDetailsRepository
 import nl.marc_apps.ovgo.domain.Departure
-import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.domain.JourneyStop
 
 class DepartureDetailsViewModel(
     private val journeyDetailsRepository: JourneyDetailsRepository
 ) : ViewModel() {
-    private val mutableRouteStations = MutableLiveData<List<TrainStation>>()
+    private val mutableJourneyStops = MutableLiveData<List<JourneyStop>?>(null)
 
-    val routeStations: LiveData<List<TrainStation>>
-        get() = mutableRouteStations
+    val journeyStops: LiveData<List<JourneyStop>?>
+        get() = mutableJourneyStops
 
     fun loadStations(departure: Departure) {
-        mutableRouteStations.postValue(departure.stationsOnRoute)
-
         viewModelScope.launch {
             try {
                 val stops = journeyDetailsRepository.getStops(departure.journeyId).toList()
 
                 if (stops.isNotEmpty()) {
-                    mutableRouteStations.postValue(stops.map { it.station })
+                    mutableJourneyStops.postValue(stops)
                 }
             } catch (ignored: Throwable) {}
         }
