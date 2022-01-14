@@ -1,6 +1,7 @@
 package nl.marc_apps.ovgo.data
 
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
+import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
 import nl.marc_apps.ovgo.data.type_conversions.TrainInfoConversions
 import nl.marc_apps.ovgo.domain.DeviceConfiguration
 import nl.marc_apps.ovgo.domain.TrainInfo
@@ -12,7 +13,15 @@ class TrainInfoRepository(
 ) {
     private val trainInfoCache = mutableMapOf<String, TrainInfo>()
 
+    suspend fun getTrainInfo(departures: List<DutchRailwaysDeparture>): List<TrainInfo> {
+        return getTrainInfo(departures.associateBy { it.product.number })
+    }
+
     suspend fun getTrainInfo(ids: Set<String>): List<TrainInfo> {
+        return getTrainInfo(ids.associateWith { null })
+    }
+
+    private suspend fun getTrainInfo(ids: Map<String, DutchRailwaysDeparture?>): List<TrainInfo> {
         if (ids.isEmpty()) {
             return emptyList()
         }
@@ -20,7 +29,7 @@ class TrainInfoRepository(
         val cachedTrainInfoList = mutableListOf<TrainInfo>()
         val notCachedJourneyIds = mutableSetOf<String>()
 
-        for (id in ids) {
+        for ((id) in ids) {
             val cachedTrainInfo = trainInfoCache[id]
             if (cachedTrainInfo == null) {
                 notCachedJourneyIds += id
@@ -38,7 +47,11 @@ class TrainInfoRepository(
         }
 
         return cachedTrainInfoList + trainInfoList.map {
-            TrainInfoConversions.convertApiToDomainModel(it).also(::addToCache)
+            val departure = ids[it.journeyNumber.toString()]
+            println(TAG, "${it.journeyNumber}: departure ${if(departure == null) "missing" else "found"}")
+            TrainInfoConversions
+                .convertApiToDomainModel(it, departure)
+                .also(::addToCache)
         }
     }
 

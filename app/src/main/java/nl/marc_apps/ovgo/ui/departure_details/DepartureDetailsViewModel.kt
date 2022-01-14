@@ -18,14 +18,19 @@ class DepartureDetailsViewModel(
         get() = mutableJourneyStops
 
     fun loadStations(departure: Departure) {
+        if (departure.isForeignService) {
+            mutableJourneyStops.postValue(emptyList())
+            return
+        }
+
         viewModelScope.launch {
             try {
-                val stops = journeyDetailsRepository.getStops(departure.journeyId).toList()
-
-                if (stops.isNotEmpty()) {
-                    mutableJourneyStops.postValue(stops)
-                }
-            } catch (ignored: Throwable) {}
+                mutableJourneyStops.postValue(
+                    journeyDetailsRepository.getStops(departure.journeyId).toList()
+                )
+            } catch (error: Throwable) {
+                mutableJourneyStops.postValue(emptyList())
+            }
         }
     }
 }
