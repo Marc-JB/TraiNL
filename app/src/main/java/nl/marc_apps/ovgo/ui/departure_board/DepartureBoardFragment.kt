@@ -108,7 +108,11 @@ class DepartureBoardFragment : Fragment() {
             }
             departures.isFailure -> {
                 Snackbar.make(binding.root, R.string.departure_board_loading_failure, Snackbar.LENGTH_INDEFINITE)
-                    .setAnchorView(R.id.bottom_navigation)
+                    .also {
+                        try {
+                            it.setAnchorView(R.id.bottom_navigation)
+                        } catch (ignored: IllegalArgumentException) {}
+                    }
                     .setAction(R.string.action_retry_loading) {
                         viewModel.reload()
                     }
