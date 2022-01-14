@@ -33,7 +33,7 @@ data class TrainStationEntity(
     }
 
     companion object {
-        fun fromTrainStation(trainStation: TrainStation): TrainStationEntity {
+        fun fromTrainStation(trainStation: TrainStation): TrainStationEntity? {
             return TrainStationEntity(
                 trainStation.uicCode,
                 trainStation.fullName,
@@ -42,7 +42,7 @@ data class TrainStationEntity(
                 Json.encodeToString(trainStation.alternativeSearches),
                 trainStation.hasDepartureTimesBoard,
                 trainStation.hasTravelAssistance,
-                trainStation.country
+                trainStation.country ?: return null
             )
         }
     }

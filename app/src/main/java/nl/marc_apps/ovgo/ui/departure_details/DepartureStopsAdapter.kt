@@ -29,7 +29,7 @@ class DepartureStopsAdapter(
     }
 
     private fun isForeignStation(trainStation: TrainStation): Boolean {
-        return trainStation.country != TrainStation.Country.THE_NETHERLANDS
+        return trainStation.country != null && trainStation.country != TrainStation.Country.THE_NETHERLANDS
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -48,7 +48,7 @@ class DepartureStopsAdapter(
 
             if (isForeignStation(stop.station)) {
                 append(" ")
-                append(stop.station.country.flag)
+                append(stop.station.country?.flag)
             }
         }
 

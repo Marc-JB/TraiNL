@@ -20,7 +20,7 @@ class UpcomingTrainStationAdapter : ListAdapter<TrainStation, UpcomingTrainStati
     }
 
     private fun isForeignStation(trainStation: TrainStation): Boolean {
-        return trainStation.country != TrainStation.Country.THE_NETHERLANDS
+        return trainStation.country != null && trainStation.country != TrainStation.Country.THE_NETHERLANDS
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -31,7 +31,7 @@ class UpcomingTrainStationAdapter : ListAdapter<TrainStation, UpcomingTrainStati
 
             if (isForeignStation(station)) {
                 append(" ")
-                append(station.country.flag)
+                append(station.country?.flag)
             }
         }
 
