@@ -17,6 +17,8 @@ class DepartureStopsFragment : BottomSheetDialogFragment() {
 
     private val navigationArgs by navArgs<DepartureStopsFragmentArgs>()
 
+    override fun getTheme() = R.style.ThemeOverlay_App_BottomSheetDialog
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
