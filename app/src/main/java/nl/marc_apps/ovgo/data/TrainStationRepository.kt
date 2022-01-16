@@ -92,7 +92,7 @@ class TrainStationRepository(
     private suspend fun updateTrainStationDatabase(updatedTrainStations: Collection<TrainStation>) {
         trainStationDao.deleteAll()
 
-        trainStationDao.insert(updatedTrainStations.map {
+        trainStationDao.insert(updatedTrainStations.mapNotNull {
             TrainStationEntity.fromTrainStation(it)
         })
 

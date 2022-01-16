@@ -57,7 +57,7 @@ class DeparturesAdapter(
     }
 
     private fun isForeignStation(trainStation: TrainStation): Boolean {
-        return trainStation.country != TrainStation.Country.THE_NETHERLANDS
+        return trainStation.country != null && trainStation.country != TrainStation.Country.THE_NETHERLANDS
     }
 
     private fun createDisplayName(trainStation: TrainStation, characterLimit: Int): String {
@@ -78,7 +78,7 @@ class DeparturesAdapter(
 
             if (isForeignStation(trainStation)) {
                 append(" ")
-                append(trainStation.country.flag)
+                append(trainStation.country?.flag)
             }
         }
     }
@@ -104,7 +104,7 @@ class DeparturesAdapter(
 
         binding.labelDepartureTime.setTextColor(
             ContextCompat.getColor(
-                binding.labelDepartureTime.context,
+                context,
                 if (departure.isDelayed) R.color.sectionTitleWarningColor else R.color.sectionTitleOkColor
             )
         )

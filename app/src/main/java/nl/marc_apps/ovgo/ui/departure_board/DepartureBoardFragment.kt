@@ -11,6 +11,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import coil.ImageLoader
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentDepartureBoardBinding
 import nl.marc_apps.ovgo.domain.Departure
@@ -108,7 +110,14 @@ class DepartureBoardFragment : Fragment() {
             }
             departures.isFailure -> {
                 Snackbar.make(binding.root, R.string.departure_board_loading_failure, Snackbar.LENGTH_INDEFINITE)
-                    .setAnchorView(R.id.bottom_navigation)
+                    .also {
+                        try {
+                            it.setAnchorView(R.id.bottom_navigation)
+                        } catch (error: IllegalArgumentException) {
+                            error.printStackTrace()
+                            Firebase.crashlytics.recordException(error)
+                        }
+                    }
                     .setAction(R.string.action_retry_loading) {
                         viewModel.reload()
                     }

@@ -10,11 +10,11 @@ data class TrainStation(
     val uicCode: String,
     val fullName: String,
     val shortenedName: String,
-    val alternativeNames: Set<String>,
-    val alternativeSearches: Set<String>,
-    val hasDepartureTimesBoard: Boolean,
-    val hasTravelAssistance: Boolean,
-    val country: Country
+    val alternativeNames: Set<String> = emptySet(),
+    val alternativeSearches: Set<String> = emptySet(),
+    val hasDepartureTimesBoard: Boolean = false,
+    val hasTravelAssistance: Boolean = false,
+    val country: Country? = null
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -24,7 +24,7 @@ data class TrainStation(
         parcel.readStringCollection().toSet(),
         parcel.readByte() == TRUE_AS_BYTE,
         parcel.readByte() == TRUE_AS_BYTE,
-        Country.valueOf(parcel.readString()!!)
+        parcel.readString()?.let { Country.valueOf(it) }
     )
 
     enum class Country(val flag: String) {
@@ -45,7 +45,7 @@ data class TrainStation(
         parcel.writeStringList(alternativeSearches.toList())
         parcel.writeByte(if (hasDepartureTimesBoard) TRUE_AS_BYTE else FALSE_AS_BYTE)
         parcel.writeByte(if (hasTravelAssistance) TRUE_AS_BYTE else FALSE_AS_BYTE)
-        parcel.writeString(country.name)
+        parcel.writeString(country?.name)
     }
 
     override fun describeContents() = 0

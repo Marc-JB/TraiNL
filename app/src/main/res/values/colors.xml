@@ -24,6 +24,7 @@
     <!-- Specific colors -->
     <color name="backgroundColor">#FAFAFA</color>
     <color name="backgroundColorTransparent">#00FAFAFA</color>
+    <color name="bottomSheetPillColor">#52000000</color>
 
     <color name="dividerColor">#52000000</color>
     <color name="departureMessageWarningColor">@color/colorError</color>

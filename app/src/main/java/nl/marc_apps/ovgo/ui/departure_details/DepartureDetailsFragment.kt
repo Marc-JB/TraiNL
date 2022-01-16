@@ -16,9 +16,12 @@ import nl.marc_apps.ovgo.domain.TrainInfo
 import nl.marc_apps.ovgo.ui.TrainImages
 import nl.marc_apps.ovgo.utils.format
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DateFormat
 
 class DepartureDetailsFragment : Fragment() {
+    private val viewModel by viewModel<DepartureDetailsViewModel>()
+
     private lateinit var binding: FragmentDepartureDetailsBinding
 
     private val navigationArgs by navArgs<DepartureDetailsFragmentArgs>()
@@ -39,6 +42,8 @@ class DepartureDetailsFragment : Fragment() {
 
         val departure = navigationArgs.departure
         val trainInfo = departure.trainInfo
+
+        viewModel.loadStations(departure)
 
         binding.partialDepartureInformationCard.labelDepartureTime.text = if (departure.isDelayed) {
             view.context.resources.getQuantityString(
@@ -84,11 +89,28 @@ class DepartureDetailsFragment : Fragment() {
         )
 
         loadTrainImages(departure, trainInfo)
+
+        viewModel.journeyStops.observe(viewLifecycleOwner) {
+            binding.partialRouteInformationCard.actionShowStops.visibility = View.GONE
+            binding.partialRouteInformationCard.loadingIndicator.visibility = View.GONE
+
+            if (it == null) {
+                binding.partialRouteInformationCard.loadingIndicator.visibility = View.VISIBLE
+            } else if (it.isNotEmpty()) {
+                binding.partialRouteInformationCard.actionShowStops.visibility = View.VISIBLE
+                binding.partialRouteInformationCard.actionShowStops.setOnClickListener { _ ->
+                    val action = DepartureDetailsFragmentDirections
+                        .actionDepartureDetailsToStops(it.toTypedArray())
+                    findNavController().navigate(action)
+                }
+            }
+        }
     }
 
     private fun loadUpcomingStations(departure: Departure) {
         val upcomingTrainStationAdapter = UpcomingTrainStationAdapter()
         binding.partialRouteInformationCard.listUpcomingStations.adapter = upcomingTrainStationAdapter
+
         upcomingTrainStationAdapter.submitList(departure.stationsOnRoute)
 
         binding.partialRouteInformationCard.labelUpcomingStations.visibility =

@@ -11,6 +11,7 @@ import org.koin.core.component.inject
 
 class ApiDepartureToDomainDeparture(
     private val stations: List<TrainStation>,
+    private val trainStation: TrainStation,
     private val resolveTrainInfo: (String) -> TrainInfo?
 ): KoinComponent {
     private val applicationContext by inject<Context>()
@@ -19,11 +20,15 @@ class ApiDepartureToDomainDeparture(
 
     private fun resolveStationName(stationName: String): TrainStation? {
         return stations.find {
-            it.fullName == stationName
-                    || it.shortenedName == stationName
-                    || stationName in it.alternativeNames
-                    || stationName in it.alternativeSearches
+            doesStationNameMatch(it, stationName)
         }
+    }
+
+    private fun doesStationNameMatch(trainStation: TrainStation, query: String): Boolean {
+        return trainStation.fullName.equals(query, ignoreCase = true)
+                || trainStation.shortenedName.equals(query, ignoreCase = true)
+                || query in trainStation.alternativeNames
+                || query in trainStation.alternativeSearches
     }
 
     private fun getOperator(model: DutchRailwaysDeparture): String {
@@ -74,23 +79,29 @@ class ApiDepartureToDomainDeparture(
 
     fun convert(model: DutchRailwaysDeparture): Departure {
         val (actualDirectionStation, plannedDirectionStation) = getDirectionStation(model)
+        val resolvedRouteStations = model.routeStations.mapNotNull {
+            resolveUicCode(it.uicCode) ?: resolveStationName(it.mediumName)
+        }
+
+        val isForeignService = actualDirectionStation?.country != TrainStation.Country.THE_NETHERLANDS &&
+                trainStation.country != TrainStation.Country.THE_NETHERLANDS
+
         return Departure(
             model.product.number,
-            actualDirectionStation,
+            actualDirectionStation ?: model.direction?.let { TrainStation(it, it, it) },
             plannedDirectionStation,
             model.plannedDateTime,
             model.actualDateTime,
             model.plannedTrack,
             model.actualTrack,
-            resolveTrainInfo(model.product.number),
+            if (isForeignService) null else resolveTrainInfo(model.product.number),
             getOperator(model),
             model.product.longCategoryName,
             model.cancelled,
-            model.routeStations.mapNotNull {
-                resolveUicCode(it.uicCode) ?: resolveStationName(it.mediumName)
-            },
+            resolvedRouteStations,
             getMessages(model, DutchRailwaysDeparture.DepartureMessage.MessageStyle.INFO),
-            getMessages(model, DutchRailwaysDeparture.DepartureMessage.MessageStyle.WARNING)
+            getMessages(model, DutchRailwaysDeparture.DepartureMessage.MessageStyle.WARNING),
+            isForeignService
         )
     }
 

@@ -6,6 +6,16 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="ShapeAppearance.App.BottomSheet" parent="@style/ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/card_radius</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.BottomSheet" parent="">
+        <item name="cornerSizeBottomRight">@dimen/card_radius</item>
+        <item name="cornerSizeBottomLeft">@dimen/card_radius</item>
+    </style>
+
     <!-- Component styles -->
     <style name="Widget.App.Departure.Facility.Icon" parent="">
         <item name="android:layout_width">22dp</item>
@@ -44,6 +54,24 @@
         <item name="android:background">@drawable/bg_flat_card</item>
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
+    </style>
+
+    <style name="Widget.App.BottomSheet" parent="@style/Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.BottomSheet</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.BottomSheet</item>
+    </style>
+
+    <style name="Widget.App.DepartureDetails.Stop" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:minHeight">@dimen/departure_stops_item_min_height</item>
+        <item name="android:paddingStart">@dimen/departure_stops_item_spacing_horizontal</item>
+        <item name="android:paddingTop">@dimen/departure_stops_item_spacing_vertical</item>
+        <item name="android:paddingEnd">@dimen/departure_stops_item_spacing_horizontal</item>
+        <item name="android:paddingBottom">@dimen/departure_stops_item_spacing_vertical</item>
     </style>
 
     <!-- Main text styles -->

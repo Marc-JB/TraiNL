@@ -15,9 +15,9 @@ class DepartureRepository(
     suspend fun getDepartures(station: TrainStation): List<Departure> {
         val departuresList = dutchRailwaysApi.getDeparturesForStation(station.uicCode)
         val stationsList = trainStationRepository.getTrainStations()
-        val trainInfoList = trainInfoRepository.getTrainInfo(departuresList.map { it.product.number }.toSet())
+        val trainInfoList = trainInfoRepository.getTrainInfo(departuresList)
 
-        val converter = ApiDepartureToDomainDeparture(stationsList, resolveTrainInfo = { journeyId ->
+        val converter = ApiDepartureToDomainDeparture(stationsList, station, resolveTrainInfo = { journeyId ->
             trainInfoList.find { it.journeyId == journeyId.toInt() }
         })
 

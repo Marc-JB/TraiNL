@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("com.google.devtools.ksp") version "1.6.0-1.0.1"
+    id("com.google.devtools.ksp") version "1.6.10-1.0.2"
 
     // Firebase crashlytics
     id("com.google.gms.google-services")
@@ -55,8 +55,8 @@ android {
         applicationId = "nl.marc_apps.ovgo"
         minSdk = 21
         targetSdk = 31
-        versionCode = getProperty("version.code")?.toInt() ?: 10
-        versionName = getProperty("version.name") ?: "0.7"
+        versionCode = getProperty("version.code")?.toInt() ?: 11
+        versionName = getProperty("version.name") ?: "0.8"
 
         testBuildType = "debug"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -78,8 +78,8 @@ android {
         getByName("release") {
             signingConfig = signingConfigs.getByName("release")
 
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             isCrunchPngs = true
 
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -155,7 +155,7 @@ dependencies {
 
     // Backward compatibility & utilities
     implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.0")
+    implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("androidx.fragment:fragment-ktx:1.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation("io.coil-kt:coil:1.4.0")

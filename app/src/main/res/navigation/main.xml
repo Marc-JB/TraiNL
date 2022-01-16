@@ -57,18 +57,40 @@
             android:id="@+id/action_departure_details_to_station_departure_board"
             app:destination="@id/departure_board" />
 
+        <action
+            android:id="@+id/action_departure_details_to_stops"
+            app:destination="@id/departure_stops" />
+
     </fragment>
+
+    <dialog
+        android:id="@+id/departure_stops"
+        android:name="nl.marc_apps.ovgo.ui.departure_details.DepartureStopsFragment"
+        android:label="Departure stops"
+        tools:layout="@layout/fragment_departure_stops">
+
+        <argument
+            android:name="stops"
+            app:argType="nl.marc_apps.ovgo.domain.JourneyStop[]" />
+
+        <action
+            android:id="@+id/action_departure_stops_to_station_departure_board"
+            app:destination="@id/departure_board" />
+
+    </dialog>
 
     <fragment
         android:id="@+id/search_station"
         android:name="nl.marc_apps.ovgo.ui.search_station.SearchStationFragment"
         android:label="Search station"
         tools:layout="@layout/fragment_search_station">
+
         <action
             android:id="@+id/action_station_search_to_home"
             app:destination="@id/departure_board"
             app:popUpTo="@id/departure_board"
             app:popUpToInclusive="true" />
+
     </fragment>
 
 </navigation>

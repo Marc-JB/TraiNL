@@ -36,4 +36,5 @@
     <string name="no_disruptions">Geen storingen</string>
     <string name="no_maintenance">Geen werkzaamheden</string>
     <string name="action_change_station">Verander station</string>
+    <string name="show_all_stops">Alle stations tonen</string>
 </resources>

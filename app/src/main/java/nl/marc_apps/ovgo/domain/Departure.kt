@@ -24,7 +24,8 @@ data class Departure(
     val isCancelled: Boolean = false,
     val stationsOnRoute: List<TrainStation> = emptyList(),
     val messages: Set<String> = emptySet(),
-    val warnings: Set<String> = emptySet()
+    val warnings: Set<String> = emptySet(),
+    val isForeignService: Boolean = false
 ): Parcelable {
     val platformChanged: Boolean
         get() = actualTrack != plannedTrack
@@ -52,7 +53,8 @@ data class Departure(
         parcel.readByte() != FALSE_AS_BYTE,
         parcel.readTypedList(TrainStation.CREATOR),
         parcel.readStringCollection().toSet(),
-        parcel.readStringCollection().toSet()
+        parcel.readStringCollection().toSet(),
+        parcel.readByte() == TRUE_AS_BYTE
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -70,6 +72,7 @@ data class Departure(
         parcel.writeTypedList(stationsOnRoute)
         parcel.writeStringList(messages.toList())
         parcel.writeStringList(warnings.toList())
+        parcel.writeByte(if(isForeignService) TRUE_AS_BYTE else FALSE_AS_BYTE)
     }
 
     override fun describeContents() = 0
