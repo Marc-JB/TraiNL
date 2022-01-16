@@ -148,8 +148,9 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     // Dependency Injection
-    val koinVersion = "3.1.4"
+    val koinVersion = "3.1.5"
     implementation("io.insert-koin:koin-android:$koinVersion")
+    implementation("io.insert-koin:koin-androidx-navigation:$koinVersion")
     // testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
     // androidTestImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
 

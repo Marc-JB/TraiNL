@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentSearchStationBinding
 import nl.marc_apps.ovgo.ui.DividerItemDecoration
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import nl.marc_apps.ovgo.utils.navGraphViewModel
 
 class SearchStationFragment : Fragment() {
-    private val viewModel by viewModel<SearchStationViewModel>()
+    private val viewModel by navGraphViewModel<SearchStationViewModel>(R.id.main_navigation)
 
     private lateinit var binding: FragmentSearchStationBinding
 

@@ -17,11 +17,11 @@ import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentDepartureBoardBinding
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.ui.DividerItemDecoration
+import nl.marc_apps.ovgo.utils.navGraphViewModel
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DepartureBoardFragment : Fragment() {
-    private val viewModel by viewModel<DepartureBoardViewModel>()
+    private val viewModel by navGraphViewModel<DepartureBoardViewModel>(R.id.main_navigation)
 
     private lateinit var binding: FragmentDepartureBoardBinding
 
