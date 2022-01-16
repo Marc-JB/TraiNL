@@ -47,10 +47,8 @@ class TrainInfoRepository(
         }
 
         return cachedTrainInfoList + trainInfoList.map {
-            val departure = ids[it.journeyNumber.toString()]
-            println(TAG, "${it.journeyNumber}: departure ${if(departure == null) "missing" else "found"}")
             TrainInfoConversions
-                .convertApiToDomainModel(it, departure)
+                .convertApiToDomainModel(it, ids[it.journeyNumber.toString()])
                 .also(::addToCache)
         }
     }
