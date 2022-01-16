@@ -16,6 +16,21 @@ object JourneyStopConversions {
         return if (list.isEmpty()) null else list.average().roundToInt()
     }
 
+    private fun isDepartureOrArrivalCancelled(
+        departureOrArrival: DutchRailwaysStop.DepartureOrArrival,
+        isDeparture: Boolean,
+        currentStationUicCode: String
+    ): Boolean {
+        return departureOrArrival.cancelled ||
+                departureOrArrival.origin == null ||
+                departureOrArrival.destination == null ||
+                (if(isDeparture) {
+                    departureOrArrival.destination
+                } else {
+                    departureOrArrival.origin
+                }).uicCode == currentStationUicCode
+    }
+
     suspend fun convert(stop: DutchRailwaysStop, trainStationRepository: TrainStationRepository): JourneyStop? {
         if (stop.previousStopId.size > 1 || stop.nextStopId.size > 1) {
             return null
@@ -24,16 +39,11 @@ object JourneyStopConversions {
         val trainStation = trainStationRepository.getTrainStationById(stop.stop.uicCode) ?: return null
 
         val hasArrivals = stop.arrivals.none {
-            it.cancelled
-                    || it.origin == null
-                    || it.origin.uicCode == stop.stop.uicCode
-                    || it.destination == null
+            isDepartureOrArrivalCancelled(it, false, stop.stop.uicCode)
         }
+
         val hasDepartures = stop.departures.none {
-            it.cancelled
-                    || it.origin == null
-                    || it.destination == null
-                    || it.destination.uicCode == stop.stop.uicCode
+            isDepartureOrArrivalCancelled(it, true, stop.stop.uicCode)
         }
 
         val isCancelled = (!hasArrivals && !hasDepartures)
