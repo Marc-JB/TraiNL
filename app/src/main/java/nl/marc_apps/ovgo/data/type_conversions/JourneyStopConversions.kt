@@ -6,18 +6,22 @@ import nl.marc_apps.ovgo.domain.JourneyStop
 import kotlin.math.roundToInt
 
 object JourneyStopConversions {
-    suspend fun convert(stop: DutchRailwaysStop, trainStationRepository: TrainStationRepository): JourneyStop? {
-        if (stop.nextStopId.size > 1 || stop.nextStopId.size > 1) {
-            return null
-        }
-
-        val trainStation = trainStationRepository.getTrainStationById(stop.stop.uicCode) ?: return null
-
-        val punctuality = stop.arrivals.mapNotNull {
+    private fun getTotalPunctuality(stop: DutchRailwaysStop): Int? {
+        val list = stop.arrivals.mapNotNull {
             it.punctuality
         } + stop.departures.mapNotNull {
             it.punctuality
         }
+
+        return if (list.isEmpty()) null else list.average().roundToInt()
+    }
+
+    suspend fun convert(stop: DutchRailwaysStop, trainStationRepository: TrainStationRepository): JourneyStop? {
+        if (stop.previousStopId.size > 1 || stop.nextStopId.size > 1) {
+            return null
+        }
+
+        val trainStation = trainStationRepository.getTrainStationById(stop.stop.uicCode) ?: return null
 
         val hasArrivals = stop.arrivals.none {
             it.cancelled
@@ -52,7 +56,7 @@ object JourneyStopConversions {
             (firstDeparture ?: lastArrival)?.plannedTrack ?: return null,
             (firstDeparture ?: lastArrival)?.actualTrack ?: return null,
             isCancelled,
-            if (punctuality.isEmpty()) null else punctuality.average().roundToInt()
+            getTotalPunctuality(stop)
         )
     }
 }
