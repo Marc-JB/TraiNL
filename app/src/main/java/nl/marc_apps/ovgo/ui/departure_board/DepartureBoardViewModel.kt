@@ -3,10 +3,7 @@ package nl.marc_apps.ovgo.ui.departure_board
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.data.DepartureRepository
 import nl.marc_apps.ovgo.data.PreferenceKeys
@@ -14,14 +11,14 @@ import nl.marc_apps.ovgo.data.TrainStationRepository
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.utils.getOrNull
-import java.util.*
 
 class DepartureBoardViewModel(
+    state: SavedStateHandle,
     private val trainStationRepository: TrainStationRepository,
     private val departureRepository: DepartureRepository,
     private val preferences: DataStore<Preferences>
 ) : ViewModel() {
-    private val mutableCurrentStation = MutableLiveData<TrainStation>()
+    private val mutableCurrentStation = state.getLiveData<TrainStation>(SAVED_STATE_KEY_STATION)
 
     val currentStation: LiveData<TrainStation>
         get() = mutableCurrentStation
@@ -41,22 +38,22 @@ class DepartureBoardViewModel(
         }
     }
 
+    private suspend fun getDefaultTrainStation(): TrainStation? {
+        return trainStationRepository.getTrainStations().firstOrNull {
+            it.fullName == DEFAULT_STATION_NAME
+        }
+    }
+
+    private suspend fun getSavedTrainStation(): TrainStation? {
+        return preferences.getOrNull(PreferenceKeys.lastTrainStation)?.let {
+            trainStationRepository.getTrainStationById(it)
+        }
+    }
+
     fun loadDeparturesForLastKnownStation() {
         viewModelScope.launch {
-            val lastKnownStationId = preferences.getOrNull(PreferenceKeys.lastTrainStation)
-            if (lastKnownStationId != null) {
-                val station = trainStationRepository.getTrainStationById(lastKnownStationId)
-                if (station != null) {
-                    loadDepartures(station)
-                    return@launch
-                }
-            }
-
-            val station = trainStationRepository.getTrainStations().firstOrNull {
-                it.fullName == DEFAULT_STATION_NAME
-            }
-            if (station != null) {
-                loadDepartures(station)
+            (currentStation.value ?: getSavedTrainStation() ?: getDefaultTrainStation())?.let {
+                loadDepartures(it)
             }
         }
     }
@@ -91,5 +88,7 @@ class DepartureBoardViewModel(
 
     companion object {
         private const val DEFAULT_STATION_NAME = "Utrecht Centraal"
+
+        private const val SAVED_STATE_KEY_STATION = "KEY_STATION"
     }
 }

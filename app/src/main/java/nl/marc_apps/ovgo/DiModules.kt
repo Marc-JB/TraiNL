@@ -65,7 +65,7 @@ object DiModules {
     }
 
     val viewModelsModule = module {
-        viewModel { DepartureBoardViewModel(get(), get(), get()) }
+        viewModel { DepartureBoardViewModel(get(), get(), get(), get()) }
         viewModel { DepartureDetailsViewModel(get()) }
         viewModel { DisruptionsViewModel(get()) }
         viewModel { MaintenanceViewModel(get()) }
