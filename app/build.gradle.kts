@@ -89,8 +89,8 @@ android {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-preview"
 
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             isCrunchPngs = true
 
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
