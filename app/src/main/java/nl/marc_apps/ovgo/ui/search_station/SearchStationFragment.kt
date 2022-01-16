@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentSearchStationBinding
 import nl.marc_apps.ovgo.ui.DividerItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -47,8 +48,10 @@ class SearchStationFragment : Fragment() {
             DividerItemDecoration(binding.listStationSuggestions.context, DividerItemDecoration.VERTICAL)
         )
 
+        val autocompleteMaxListSize = resources.getInteger(R.integer.autocomplete_suggestion_list_size)
+
         viewModel.stationSuggestions.observe(viewLifecycleOwner) {
-            stationSuggestionsAdapter.submitList(it)
+            stationSuggestionsAdapter.submitList(it.take(autocompleteMaxListSize))
             binding.listStationSuggestions.layoutManager?.scrollToPosition(FIRST_ELEMENT_IN_LIST_POSITION)
         }
     }
