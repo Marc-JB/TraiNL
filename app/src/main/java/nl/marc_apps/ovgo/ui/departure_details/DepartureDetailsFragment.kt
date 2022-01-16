@@ -15,12 +15,12 @@ import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
 import nl.marc_apps.ovgo.ui.TrainImages
 import nl.marc_apps.ovgo.utils.format
+import nl.marc_apps.ovgo.utils.navGraphViewModel
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DateFormat
 
 class DepartureDetailsFragment : Fragment() {
-    private val viewModel by viewModel<DepartureDetailsViewModel>()
+    private val viewModel by navGraphViewModel<DepartureDetailsViewModel>(R.id.departure_details)
 
     private lateinit var binding: FragmentDepartureDetailsBinding
 

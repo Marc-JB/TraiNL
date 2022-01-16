@@ -10,10 +10,10 @@ import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
 import nl.marc_apps.ovgo.databinding.FragmentDisruptionsBinding
 import nl.marc_apps.ovgo.ui.DisruptionsAdapter
 import nl.marc_apps.ovgo.ui.DividerItemDecoration
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import nl.marc_apps.ovgo.utils.navGraphViewModel
 
 class DisruptionsFragment : Fragment() {
-    private val viewModel by viewModel<DisruptionsViewModel>()
+    private val viewModel by navGraphViewModel<DisruptionsViewModel>(R.id.disruptions)
 
     private lateinit var binding: FragmentDisruptionsBinding
 

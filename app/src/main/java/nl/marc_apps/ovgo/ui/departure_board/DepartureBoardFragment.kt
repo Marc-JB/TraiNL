@@ -1,5 +1,6 @@
 package nl.marc_apps.ovgo.ui.departure_board
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.crashlytics.ktx.crashlytics
@@ -17,11 +19,11 @@ import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentDepartureBoardBinding
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.ui.DividerItemDecoration
+import nl.marc_apps.ovgo.utils.navGraphViewModel
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DepartureBoardFragment : Fragment() {
-    private val viewModel by viewModel<DepartureBoardViewModel>()
+    private val viewModel by navGraphViewModel<DepartureBoardViewModel>(R.id.departure_board)
 
     private lateinit var binding: FragmentDepartureBoardBinding
 
@@ -57,28 +59,10 @@ class DepartureBoardFragment : Fragment() {
 
         val departuresAdapter = DeparturesAdapter(imageLoader)
         binding.listDepartures.adapter = departuresAdapter
-        binding.listDepartures.addItemDecoration(
-            DividerItemDecoration(
-                binding.listDepartures.context,
-                DividerItemDecoration.VERTICAL
-            ).apply {
-                AppCompatResources.getDrawable(view.context, R.drawable.divider)?.let {
-                    drawable = it
-                }
-            }
-        )
+        binding.listDepartures.addItemDecoration(getDividerDecoration(view.context, true))
 
         if (binding.listDepartures.layoutManager is GridLayoutManager) {
-            binding.listDepartures.addItemDecoration(
-                DividerItemDecoration(
-                    binding.listDepartures.context,
-                    DividerItemDecoration.HORIZONTAL
-                ).apply {
-                    AppCompatResources.getDrawable(view.context, R.drawable.divider_vertical)?.let {
-                        drawable = it
-                    }
-                }
-            )
+            binding.listDepartures.addItemDecoration(getDividerDecoration(view.context, false))
         }
 
         viewModel.departures.observe(viewLifecycleOwner) {
@@ -93,10 +77,18 @@ class DepartureBoardFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun getDividerDecoration(context: Context, isHorizontalDivider: Boolean): RecyclerView.ItemDecoration {
+        val dividerResource = if(isHorizontalDivider) R.drawable.divider else R.drawable.divider_vertical
+        val dividerDrawable = AppCompatResources.getDrawable(context, dividerResource)
 
-        viewModel.saveCurrentStation()
+        return DividerItemDecoration(
+            binding.listDepartures.context,
+            if(isHorizontalDivider) DividerItemDecoration.VERTICAL else DividerItemDecoration.HORIZONTAL
+        ).apply {
+            if (dividerDrawable != null) {
+                drawable = dividerDrawable
+            }
+        }
     }
 
     private fun loadNewDepartures(departures: Result<List<Departure>>?, adapter: DeparturesAdapter) {

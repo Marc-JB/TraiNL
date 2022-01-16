@@ -45,10 +45,6 @@ class SearchStationViewModel(
             allNames.maxOf {
                 stringSimilarity.calculateSimilarity(stationQuery.lowercase(), it.lowercase())
             }
-        }.take(AUTOCOMPLETE_SUGGESTION_LIST_SIZE))
-    }
-
-    companion object {
-        private const val AUTOCOMPLETE_SUGGESTION_LIST_SIZE = 15
+        })
     }
 }
