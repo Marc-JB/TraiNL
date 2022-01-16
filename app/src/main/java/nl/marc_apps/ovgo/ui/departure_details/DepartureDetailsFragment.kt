@@ -20,7 +20,7 @@ import org.koin.android.ext.android.inject
 import java.text.DateFormat
 
 class DepartureDetailsFragment : Fragment() {
-    private val viewModel by navGraphViewModel<DepartureDetailsViewModel>(R.id.main_navigation)
+    private val viewModel by navGraphViewModel<DepartureDetailsViewModel>(R.id.departure_details)
 
     private lateinit var binding: FragmentDepartureDetailsBinding
 

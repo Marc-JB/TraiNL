@@ -12,7 +12,7 @@ import nl.marc_apps.ovgo.ui.DividerItemDecoration
 import nl.marc_apps.ovgo.utils.navGraphViewModel
 
 class SearchStationFragment : Fragment() {
-    private val viewModel by navGraphViewModel<SearchStationViewModel>(R.id.main_navigation)
+    private val viewModel by navGraphViewModel<SearchStationViewModel>(R.id.search_station)
 
     private lateinit var binding: FragmentSearchStationBinding
 

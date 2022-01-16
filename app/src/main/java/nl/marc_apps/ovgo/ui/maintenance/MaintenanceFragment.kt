@@ -12,7 +12,7 @@ import nl.marc_apps.ovgo.ui.DividerItemDecoration
 import nl.marc_apps.ovgo.utils.navGraphViewModel
 
 class MaintenanceFragment : Fragment() {
-    private val viewModel by navGraphViewModel<MaintenanceViewModel>(R.id.main_navigation)
+    private val viewModel by navGraphViewModel<MaintenanceViewModel>(R.id.maintenance)
 
     private lateinit var binding: FragmentMaintenanceBinding
 
