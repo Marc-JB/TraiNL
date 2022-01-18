@@ -1,6 +1,3 @@
-import org.jetbrains.kotlin.konan.properties.Properties
-import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
-
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     val androidxNavigationVersion by extra("2.3.5")
@@ -27,7 +24,6 @@ buildscript {
         // Testing
         classpath("de.mannodermaus.gradle.plugins:android-junit5:1.7.1.1")
         classpath("org.jetbrains.kotlinx:kover:0.5.0-RC2")
-        classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3")
 
         // Navigation
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$androidxNavigationVersion")
@@ -41,32 +37,7 @@ buildscript {
 }
 
 apply(plugin = "kover")
-apply(plugin = "org.sonarqube")
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
-}
-
-fun getLocalProperties(): Properties {
-    return Properties().also { properties ->
-        try {
-            file("../local.properties").inputStream().use {
-                properties.load(it)
-            }
-        } catch (ignored: java.io.FileNotFoundException) {}
-    }
-}
-
-tasks.getByName("sonarqube", org.sonarqube.gradle.SonarQubeTask::class) {
-    val keys = getLocalProperties()
-
-    fun getProperty(key: String): String? {
-        return keys.getProperty(key) ?: System.getenv(key.toUpperCaseAsciiOnly().replace(".", "_"))
-    }
-
-    setProperty("sonar.projectKey", getProperty("sonar.projectKey"))
-    setProperty("sonar.organization", getProperty("sonar.organization"))
-    setProperty("sonar.host.url", getProperty("sonar.host.url"))
-
-    setProperty("sonar.coverage.jacoco.xmlReportPaths", "**/build/reports/kover/project-xml/report.xml")
 }
