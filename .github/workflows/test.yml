@@ -15,6 +15,8 @@ jobs:
       # Checkout
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
 
       # Set up JDK
       - name: Set up JDK 11
@@ -23,6 +25,14 @@ jobs:
           java-version: 11
           distribution: 'adopt'
           cache: 'gradle'
+
+      # Restore SonarQube Cache
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
 
       # Permissions for Gradle
       - name: Grant execute permission for gradlew
@@ -39,9 +49,13 @@ jobs:
 
       # Test
       - name: Test with Gradle
-        run: ./gradlew test
+        run: ./gradlew test koverReport sonarqube
         env:
           DUTCHRAILWAYS_TRAVELINFOAPI_KEY: ${{ secrets.DUTCHRAILWAYS_TRAVELINFOAPI_KEY }}
           ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECTKEY }}
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
