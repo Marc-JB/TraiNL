@@ -22,7 +22,6 @@ buildscript {
         classpath("com.google.firebase:firebase-crashlytics-gradle:2.8.1")
 
         // Testing
-        classpath("de.mannodermaus.gradle.plugins:android-junit5:1.7.1.1")
         classpath("org.jetbrains.kotlinx:kover:0.5.0-RC2")
 
         // Navigation

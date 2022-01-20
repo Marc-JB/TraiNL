@@ -11,7 +11,6 @@ plugins {
     id("com.google.firebase.crashlytics")
 
     // Testing
-    id("de.mannodermaus.android-junit5")
     id("org.sonarqube") version "3.3"
 
     // Navigation
@@ -61,7 +60,6 @@ android {
 
         testBuildType = "debug"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArguments["runnerBuilder"] = "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
         buildConfigField("String", "DUTCH_RAILWAYS_TRAVEL_INFO_API_KEY", "\"${getProperty("dutchRailways.travelInfoApi.key")}\"")
     }
@@ -119,6 +117,12 @@ android {
         viewBinding = true
         // compose = true
     }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -166,18 +170,22 @@ dependencies {
     implementation("com.google.android.material:material:1.4.0")
 
     // Test base
-    val junitVersion = "5.8.2"
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    testImplementation(kotlin("test-junit5"))
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    val mockkVersion = "1.12.2"
+    testImplementation(kotlin("test-junit"))
+    testImplementation("org.robolectric:robolectric:4.7.3")
+    testImplementation("io.mockk:mockk:${mockkVersion}")
+    testImplementation("io.mockk:mockk-agent-jvm:${mockkVersion}")
+    testImplementation("androidx.test:runner:1.4.0")
+    testImplementation("androidx.navigation:navigation-testing:$androidxNavigationVersion")
+    // testImplementation("androidx.fragment:fragment-testing:1.4.0")
+    // TODO: Remove following line when https://github.com/robolectric/robolectric/pull/4736 is fixed
+    debugImplementation("androidx.fragment:fragment-testing:1.4.0")
+    testImplementation("androidx.test.ext:junit:1.1.3")
 
     // Android test base
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.test:runner:1.4.0")
-    androidTestImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    androidTestImplementation(kotlin("test-junit5"))
-    androidTestImplementation("de.mannodermaus.junit5:android-test-core:1.3.0")
-    androidTestRuntimeOnly("de.mannodermaus.junit5:android-test-runner:1.3.0")
+    androidTestImplementation(kotlin("test-junit"))
 }
 
 sonarqube {

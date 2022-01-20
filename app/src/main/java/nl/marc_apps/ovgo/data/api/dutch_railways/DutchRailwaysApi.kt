@@ -2,28 +2,15 @@ package nl.marc_apps.ovgo.data.api.dutch_railways
 
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
-import nl.marc_apps.ovgo.data.api.HttpClient
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.*
-import nl.marc_apps.ovgo.utils.retrofit
 import retrofit2.await
 
 class DutchRailwaysApi(
-    private val httpClient: HttpClient,
+    private val travelInfoApi: DutchRailwaysTravelInfoApi,
+    private val trainInfoApi: DutchRailwaysTrainInfoApi,
     private val dutchRailwaysTravelInfoApiKey: String,
     private val defaultLanguageCode: String? = null
 ) {
-    private val travelInfoApi = retrofit<DutchRailwaysTravelInfoApi> {
-        baseUrl(DutchRailwaysTravelInfoApi.BASE_URL)
-        addConverterFactory(httpClient.jsonConverter)
-        client(httpClient.okHttpClient)
-    }
-
-    private val trainInfoApi = retrofit<DutchRailwaysTrainInfoApi> {
-        baseUrl(DutchRailwaysTrainInfoApi.BASE_URL)
-        addConverterFactory(httpClient.jsonConverter)
-        client(httpClient.okHttpClient)
-    }
-
     suspend fun getDisruptions(
         language: String? = defaultLanguageCode,
         type: Set<DutchRailwaysDisruption.DisruptionType>? = null,
