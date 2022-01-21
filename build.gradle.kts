@@ -1,3 +1,6 @@
+import kotlinx.kover.api.CoverageEngine
+import kotlinx.kover.api.KoverExtension
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     val androidxNavigationVersion by extra("2.3.5")
@@ -36,6 +39,11 @@ buildscript {
 }
 
 apply(plugin = "kover")
+
+extensions.configure<KoverExtension> {
+    coverageEngine.set(CoverageEngine.INTELLIJ)
+    instrumentAndroidPackage = true
+}
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)

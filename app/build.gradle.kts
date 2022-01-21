@@ -1,3 +1,4 @@
+import kotlinx.kover.api.KoverTaskExtension
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 
@@ -121,6 +122,16 @@ android {
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
+        }
+
+        unitTests.all {
+            it.jvmArgs("-noverify")
+
+            if (!it.name.contains("debug", ignoreCase = true)) {
+                it.extensions.configure<KoverTaskExtension> {
+                    isDisabled = true
+                }
+            }
         }
     }
 }
