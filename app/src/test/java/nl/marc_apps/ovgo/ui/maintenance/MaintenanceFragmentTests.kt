@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.mockk.every
 import io.mockk.mockk
 import nl.marc_apps.ovgo.R
@@ -25,7 +26,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4::class)
+@RunWith(AndroidJUnit4::class)
 @Config(application = KoinTestApplication::class)
 class MaintenanceFragmentTests {
     private fun createTestModule(response: Response<List<DutchRailwaysDisruption>>): Module {
