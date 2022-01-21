@@ -188,8 +188,7 @@ dependencies {
     testImplementation("io.mockk:mockk-agent-jvm:${mockkVersion}")
     testImplementation("androidx.test:runner:1.4.0")
     testImplementation("androidx.navigation:navigation-testing:$androidxNavigationVersion")
-    // testImplementation("androidx.fragment:fragment-testing:1.4.0")
-    // TODO: Remove following line when https://github.com/robolectric/robolectric/pull/4736 is fixed
+    // TODO: Change to testImplementation when https://issuetracker.google.com/issues/127986458 is fixed
     debugImplementation("androidx.fragment:fragment-testing:1.4.0")
     testImplementation("androidx.test.ext:junit:1.1.3")
 
