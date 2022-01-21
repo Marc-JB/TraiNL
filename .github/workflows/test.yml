@@ -49,7 +49,7 @@ jobs:
 
       # Test
       - name: Test with Gradle
-        run: ./gradlew test sonarqube
+        run: ./gradlew :app:cleanTestDebugUnitTest :app:testDebugUnitTest sonarqube
         env:
           DUTCHRAILWAYS_TRAVELINFOAPI_KEY: ${{ secrets.DUTCHRAILWAYS_TRAVELINFOAPI_KEY }}
           ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
