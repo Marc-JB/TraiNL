@@ -31,6 +31,17 @@ fun getLocalProperties(): Properties {
     }
 }
 
+val coverageExclusionList = listOf(
+    "nl.marc_apps.ovgo.databinding.*",
+    "nl.marc_apps.ovgo.BuildConfig",
+    "nl.marc_apps.ovgo.data.db.*_Impl",
+    "nl.marc_apps.ovgo.data.db.*_Impl*",
+    "nl.marc_apps.ovgo.ui.*.*FragmentArgs",
+    "nl.marc_apps.ovgo.ui.*.*FragmentArgs*",
+    "nl.marc_apps.ovgo.ui.*.*FragmentDirections",
+    "nl.marc_apps.ovgo.ui.*.*FragmentDirections*"
+)
+
 android {
     compileSdk = 31
     buildToolsVersion = "31.0.0"
@@ -127,13 +138,21 @@ android {
         unitTests.all {
             it.jvmArgs("-noverify")
 
-            if (!it.name.contains("debug", ignoreCase = true)) {
-                it.extensions.configure<KoverTaskExtension> {
-                    isDisabled = true
-                }
+            it.extensions.configure<KoverTaskExtension> {
+                isDisabled = !it.name.contains("debug", ignoreCase = true)
+
+                excludes = coverageExclusionList
             }
         }
     }
+}
+
+tasks.koverHtmlReport {
+    excludes = coverageExclusionList
+}
+
+tasks.koverXmlReport {
+    excludes = coverageExclusionList
 }
 
 dependencies {
