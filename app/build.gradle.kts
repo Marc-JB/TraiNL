@@ -164,6 +164,7 @@ dependencies {
     val androidxNavigationVersion = rootProject.extra["androidxNavigationVersion"]
     implementation("androidx.navigation:navigation-fragment-ktx:${androidxNavigationVersion}")
     implementation("androidx.navigation:navigation-ui-ktx:$androidxNavigationVersion")
+    testImplementation("androidx.navigation:navigation-testing:$androidxNavigationVersion")
 
     // API
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -191,9 +192,16 @@ dependencies {
 
     // Backward compatibility & utilities
     implementation("androidx.core:core-ktx:1.7.0")
+
     implementation("androidx.appcompat:appcompat:1.4.1")
+
     implementation("androidx.fragment:fragment-ktx:1.4.0")
+    // TODO: Change to testImplementation when https://issuetracker.google.com/issues/127986458 is fixed
+    debugImplementation("androidx.fragment:fragment-testing:1.4.0")
+
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+
     implementation("io.coil-kt:coil:1.4.0")
 
     // Design
@@ -206,9 +214,6 @@ dependencies {
     testImplementation("io.mockk:mockk:${mockkVersion}")
     testImplementation("io.mockk:mockk-agent-jvm:${mockkVersion}")
     testImplementation("androidx.test:runner:1.4.0")
-    testImplementation("androidx.navigation:navigation-testing:$androidxNavigationVersion")
-    // TODO: Change to testImplementation when https://issuetracker.google.com/issues/127986458 is fixed
-    debugImplementation("androidx.fragment:fragment-testing:1.4.0")
     testImplementation("androidx.test.ext:junit:1.1.3")
 
     // Android test base

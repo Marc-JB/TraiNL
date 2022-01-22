@@ -14,7 +14,7 @@ import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysTrainInfoApi
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysTravelInfoApi
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
-import nl.marc_apps.ovgo.ui.*
+import nl.marc_apps.ovgo.test_utils.*
 import org.junit.runner.RunWith
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
