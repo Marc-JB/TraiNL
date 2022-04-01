@@ -1,44 +1,27 @@
 import kotlinx.kover.api.CoverageEngine
 import kotlinx.kover.api.KoverExtension
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    val androidxNavigationVersion by extra("2.3.5")
+val androidxNavigationVersion by extra("2.4.0-rc01")
+
+plugins {
     val kotlinVersion = "1.6.10"
 
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-        // TODO: Remove manual R8 declaration when AGP 7.1 releases: https://issuetracker.google.com/issues/206855609
-        maven(url = "https://storage.googleapis.com/r8-releases/raw")
-    }
+    id("com.android.application") version "7.1.0" apply false
+    kotlin("android") version kotlinVersion apply false
 
-    dependencies {
-        // TODO: Remove manual R8 declaration when AGP 7.1 releases: https://issuetracker.google.com/issues/206855609
-        classpath("com.android.tools:r8:3.1.42")
-        classpath("com.android.tools.build:gradle:7.0.4")
-        classpath(kotlin("gradle-plugin", kotlinVersion))
+    // Firebase crashlytics
+    id("com.google.gms.google-services") version "4.3.10" apply false
+    id("com.google.firebase.crashlytics") version "2.8.1" apply false
 
-        // Firebase crashlytics
-        classpath("com.google.gms:google-services:4.3.10")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:2.8.1")
+    // Navigation
+    id("androidx.navigation.safeargs.kotlin") version "2.5.0-SNAPSHOT" apply false
 
-        // Testing
-        classpath("org.jetbrains.kotlinx:kover:0.5.0-RC2")
+    // Testing
+    id("org.jetbrains.kotlinx.kover") version "0.5.0-RC2"
 
-        // Navigation
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$androidxNavigationVersion")
-
-        // API
-        classpath(kotlin("serialization", kotlinVersion))
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle.kts files
-    }
+    // API
+    kotlin("plugin.serialization") version kotlinVersion apply false
 }
-
-apply(plugin = "kover")
 
 extensions.configure<KoverExtension> {
     coverageEngine.set(CoverageEngine.INTELLIJ)

@@ -44,7 +44,7 @@ val coverageExclusionList = listOf(
 
 android {
     compileSdk = 31
-    buildToolsVersion = "31.0.0"
+    buildToolsVersion = "32.0.0"
 
     packagingOptions {
         resources {
@@ -162,8 +162,8 @@ dependencies {
 
     // Navigation
     val androidxNavigationVersion = rootProject.extra["androidxNavigationVersion"]
-    implementation("androidx.navigation:navigation-fragment-ktx:${androidxNavigationVersion}")
-    implementation("androidx.navigation:navigation-ui-ktx:$androidxNavigationVersion")
+    implementation("androidx.navigation:navigation-fragment:${androidxNavigationVersion}")
+    implementation("androidx.navigation:navigation-ui:$androidxNavigationVersion")
     testImplementation("androidx.navigation:navigation-testing:$androidxNavigationVersion")
 
     // API
