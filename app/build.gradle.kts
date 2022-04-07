@@ -6,6 +6,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("com.google.devtools.ksp") version "1.6.20-1.0.4"
+    id("kotlin-parcelize")
 
     // Firebase crashlytics
     id("com.google.gms.google-services")
