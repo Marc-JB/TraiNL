@@ -2,7 +2,7 @@
 
   ![Banner image](/docs/TraiNL-banner.png?raw=true "Banner image")
   # TraiNL
-  Public transport app that showcases various Android architecture patterns (Like MVVM, Dependency Injection).
+  Public transport app that showcases various Android architecture patterns (like MVVM, Dependency Injection).
 
   [![Android build](https://github.com/Marc-JB/TraiNL/actions/workflows/build.yml/badge.svg)](https://github.com/Marc-JB/TraiNL/actions) 
   [![Android tests](https://github.com/Marc-JB/TraiNL/actions/workflows/test.yml/badge.svg)](https://github.com/Marc-JB/TraiNL/actions) 
