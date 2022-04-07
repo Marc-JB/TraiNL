@@ -46,7 +46,7 @@ jobs:
       - name: Add key store file
         run: |
           echo "${{ secrets.ANDROID_STORE_FILE }}" > ./app/key.jks.b64
-          bas64 -d ./app/key.jks.b64 > ./app/key.jks
+          base64 -d ./app/key.jks.b64 > ./app/key.jks
 
       # Test
       - name: Test with Gradle
