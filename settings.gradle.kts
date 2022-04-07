@@ -3,7 +3,6 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven("https://androidx.dev/snapshots/builds/8054565/artifacts/repository")
     }
 }
 

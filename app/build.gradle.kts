@@ -175,7 +175,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.3")
 
     // Database
-    val roomVersion = "2.4.1"
+    val roomVersion = "2.4.2"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
@@ -195,12 +195,12 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.4.1")
 
-    implementation("androidx.fragment:fragment-ktx:1.4.0")
+    implementation("androidx.fragment:fragment-ktx:1.4.1")
     // TODO: Change to testImplementation when https://issuetracker.google.com/issues/127986458 is fixed
-    debugImplementation("androidx.fragment:fragment-testing:1.4.0")
+    debugImplementation("androidx.fragment:fragment-testing:1.4.1")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
 
     implementation("io.coil-kt:coil:1.4.0")
 
@@ -208,7 +208,7 @@ dependencies {
     implementation("com.google.android.material:material:1.5.0")
 
     // Test base
-    val mockkVersion = "1.12.2"
+    val mockkVersion = "1.12.3"
     testImplementation(kotlin("test-junit"))
     testImplementation("org.robolectric:robolectric:4.7.3")
     testImplementation("io.mockk:mockk:${mockkVersion}")
