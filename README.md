@@ -1,13 +1,15 @@
-[![Android build](https://github.com/Marc-JB/TraiNL/actions/workflows/build.yml/badge.svg)](https://github.com/Marc-JB/TraiNL/actions) 
-[![Android tests](https://github.com/Marc-JB/TraiNL/actions/workflows/test.yml/badge.svg)](https://github.com/Marc-JB/TraiNL/actions) 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Marc-JB_OVgo&metric=alert_status)](https://sonarcloud.io/dashboard?id=Marc-JB_OVgo) 
-[![License: CC BY-NC-ND 4.0](https://badgen.net/badge/license/CC%20BY-NC-ND%204.0/blue)](https://creativecommons.org/licenses/by-nc-nd/4.0/) 
-# TraiNL
-*Note: Previously known as "OVgo"*  
+<div align="center">
 
-![Banner image](/docs/TraiNL-banner.png?raw=true "Banner image")
+  ![Banner image](/docs/TraiNL-banner.png?raw=true "Banner image")
+  # TraiNL
+  Public transport app that showcases various Android architecture patterns (Like MVVM, Dependency Injection).
 
-Public transport app that showcases various Android architecture patterns. The app is written in Kotlin and uses MVVM, dependency injection and various libraries for data access. 
+  [![Android build](https://github.com/Marc-JB/TraiNL/actions/workflows/build.yml/badge.svg)](https://github.com/Marc-JB/TraiNL/actions) 
+  [![Android tests](https://github.com/Marc-JB/TraiNL/actions/workflows/test.yml/badge.svg)](https://github.com/Marc-JB/TraiNL/actions) 
+  [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Marc-JB_OVgo&metric=alert_status)](https://sonarcloud.io/dashboard?id=Marc-JB_OVgo) 
+  [![License: CC BY-NC-ND 4.0](https://badgen.net/badge/license/CC%20BY-NC-ND%204.0/blue)](https://creativecommons.org/licenses/by-nc-nd/4.0/) 
+
+</div>
 
 # :notebook_with_decorative_cover: Table of Contents
 - [About the Project](#star2-about-the-project)
@@ -57,7 +59,6 @@ An Android application in Kotlin with the following libraries/patterns:
 * Improved reliability of information shown in the app when compared to other providers that use the Dutch Railways API
 
 ### :art: Color Reference
-
 | Color | Hex |
 | --- | --- |
 | Primary Color | ![#1976D2](https://via.placeholder.com/10/1976D2?text=+) #1976D2 |
@@ -84,6 +85,8 @@ This project requires a Firebase Crashlytics configuration file and a Dutch Rail
    - the enviromental variables (in a CI/CD pipeline) by setting a property `DUTCHRAILWAYS_TRAVELINFOAPI_KEY` to your API key.
 
 ## 	:toolbox: Getting Started
+*Note: This project may contain references to "OVgo". This was the previous name for this app.*
+
 ### :bangbang: Prerequisites
 This project uses Gradle as build tool. Android Studio is the recommended IDE to deploy or test this application.
 
