@@ -162,8 +162,8 @@ dependencies {
 
     // Navigation
     val androidxNavigationVersion = rootProject.extra["androidxNavigationVersion"]
-    implementation("androidx.navigation:navigation-fragment:${androidxNavigationVersion}")
-    implementation("androidx.navigation:navigation-ui:$androidxNavigationVersion")
+    implementation("androidx.navigation:navigation-fragment-ktx:${androidxNavigationVersion}")
+    implementation("androidx.navigation:navigation-ui-ktx:$androidxNavigationVersion")
     testImplementation("androidx.navigation:navigation-testing:$androidxNavigationVersion")
 
     // API
