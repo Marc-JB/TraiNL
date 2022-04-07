@@ -155,6 +155,10 @@ tasks.koverXmlReport {
     excludes = coverageExclusionList
 }
 
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 dependencies {
     // Firebase crashlytics
     implementation(platform("com.google.firebase:firebase-bom:29.0.2"))
