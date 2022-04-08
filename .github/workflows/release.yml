@@ -35,7 +35,7 @@ jobs:
       SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECTKEY }}
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  deploy:
+  release:
     runs-on: ubuntu-latest
     needs: build
     steps:
