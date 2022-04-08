@@ -58,7 +58,7 @@ sonarqube {
     }
 
     properties {
-        property("sonar.projectName",  "TraiNL")
+        property("sonar.projectName", "TraiNL")
 
         property("sonar.projectKey", getProperty("sonar.projectKey")!!)
         property("sonar.organization", getProperty("sonar.organization")!!)
