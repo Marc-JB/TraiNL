@@ -1,0 +1,76 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "3118cbf6efbf687c30e8e1db8451420d",
+    "entities": [
+      {
+        "tableName": "trainstation",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uicCode` TEXT NOT NULL, `fullName` TEXT NOT NULL, `shortenedName` TEXT NOT NULL, `alternativeNames` TEXT NOT NULL, `alternativeSearches` TEXT NOT NULL, `hasDepartureTimesBoard` INTEGER NOT NULL, `hasTravelAssistance` INTEGER NOT NULL, `country` TEXT NOT NULL, PRIMARY KEY(`uicCode`))",
+        "fields": [
+          {
+            "fieldPath": "uicCode",
+            "columnName": "uicCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fullName",
+            "columnName": "fullName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shortenedName",
+            "columnName": "shortenedName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alternativeNames",
+            "columnName": "alternativeNames",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alternativeSearches",
+            "columnName": "alternativeSearches",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hasDepartureTimesBoard",
+            "columnName": "hasDepartureTimesBoard",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hasTravelAssistance",
+            "columnName": "hasTravelAssistance",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "country",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uicCode"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3118cbf6efbf687c30e8e1db8451420d')"
+    ]
+  }
+}

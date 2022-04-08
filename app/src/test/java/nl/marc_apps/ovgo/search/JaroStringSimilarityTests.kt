@@ -81,4 +81,17 @@ class JaroStringSimilarityTests {
         // Assert
         assertEquals(822, result)
     }
+
+    @Test
+    fun calculateSimilarityShouldReturnZeroWhenStringsAreCompletelyDifferent() {
+        // Arrange
+        val firstString = "ABCD"
+        val secondString = "efgh"
+
+        // Act
+        val result = JaroStringSimilarity.calculateSimilarity(firstString, secondString)
+
+        // Assert
+        assertEquals(0, result)
+    }
 }

@@ -108,15 +108,13 @@ class TrainStationRepository(
     }
 
     private suspend fun getTrainStationsFromApi(): List<TrainStation>? {
-        val trainStations = try {
+        return try {
             dutchRailwaysApi.getTrainStations().map {
                 TrainStationConversions.convertApiToDomainModel(it)
             }
         } catch (error: Throwable) {
-            return null
+            null
         }
-
-        return trainStations
     }
 
     companion object {

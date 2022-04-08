@@ -1,17 +1,16 @@
+import kotlinx.kover.api.KoverTaskExtension
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("com.google.devtools.ksp") version "1.6.10-1.0.2"
+    id("com.google.devtools.ksp") version "1.6.20-1.0.4"
+    id("kotlin-parcelize")
 
     // Firebase crashlytics
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
-
-    // Testing
-    id("de.mannodermaus.android-junit5")
 
     // Navigation
     id("androidx.navigation.safeargs.kotlin")
@@ -32,7 +31,7 @@ fun getLocalProperties(): Properties {
 
 android {
     compileSdk = 31
-    buildToolsVersion = "31.0.0"
+    buildToolsVersion = "32.0.0"
 
     packagingOptions {
         resources {
@@ -60,7 +59,6 @@ android {
 
         testBuildType = "debug"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArguments["runnerBuilder"] = "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
         buildConfigField("String", "DUTCH_RAILWAYS_TRAVEL_INFO_API_KEY", "\"${getProperty("dutchRailways.travelInfoApi.key")}\"")
     }
@@ -118,6 +116,22 @@ android {
         viewBinding = true
         // compose = true
     }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+
+        unitTests.all {
+            it.extensions.configure<KoverTaskExtension> {
+                isDisabled = !it.name.contains("debug", ignoreCase = true)
+            }
+        }
+    }
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {
@@ -129,6 +143,7 @@ dependencies {
     val androidxNavigationVersion = rootProject.extra["androidxNavigationVersion"]
     implementation("androidx.navigation:navigation-fragment-ktx:${androidxNavigationVersion}")
     implementation("androidx.navigation:navigation-ui-ktx:$androidxNavigationVersion")
+    testImplementation("androidx.navigation:navigation-testing:$androidxNavigationVersion")
 
     // API
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -139,7 +154,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.3")
 
     // Database
-    val roomVersion = "2.4.1"
+    val roomVersion = "2.4.2"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
@@ -156,25 +171,32 @@ dependencies {
 
     // Backward compatibility & utilities
     implementation("androidx.core:core-ktx:1.7.0")
+
     implementation("androidx.appcompat:appcompat:1.4.1")
-    implementation("androidx.fragment:fragment-ktx:1.4.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+
+    implementation("androidx.fragment:fragment-ktx:1.4.1")
+    // TODO: Change to testImplementation when https://issuetracker.google.com/issues/127986458 is fixed
+    debugImplementation("androidx.fragment:fragment-testing:1.4.1")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
+
     implementation("io.coil-kt:coil:1.4.0")
 
     // Design
-    implementation("com.google.android.material:material:1.4.0")
+    implementation("com.google.android.material:material:1.5.0")
 
     // Test base
-    val junitVersion = "5.8.2"
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    testImplementation(kotlin("test-junit5"))
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    val mockkVersion = "1.12.3"
+    testImplementation(kotlin("test-junit"))
+    testImplementation("org.robolectric:robolectric:4.7.3")
+    testImplementation("io.mockk:mockk:${mockkVersion}")
+    testImplementation("io.mockk:mockk-agent-jvm:${mockkVersion}")
+    testImplementation("androidx.test:runner:1.4.0")
+    testImplementation("androidx.test.ext:junit:1.1.3")
 
     // Android test base
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.test:runner:1.4.0")
-    androidTestImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    androidTestImplementation(kotlin("test-junit5"))
-    androidTestImplementation("de.mannodermaus.junit5:android-test-core:1.3.0")
-    androidTestRuntimeOnly("de.mannodermaus.junit5:android-test-runner:1.3.0")
+    androidTestImplementation(kotlin("test-junit"))
 }

@@ -1,15 +1,16 @@
 package nl.marc_apps.ovgo.domain
 
-import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 import nl.marc_apps.ovgo.utils.BitwiseOperations
-import nl.marc_apps.ovgo.utils.readParcelable
-import nl.marc_apps.ovgo.utils.readTypedList
 
+@Parcelize
 data class TrainInfo(
     val journeyId: Int,
     val trainParts: List<TrainPart>
 ): Parcelable {
+    @IgnoredOnParcel
     val facilities by lazy {
         TrainFacilities(
             trainParts.sumOf { it.facilities.seatsFirstClass },
@@ -18,16 +19,13 @@ data class TrainInfo(
         )
     }
 
-    constructor(parcel: Parcel) : this(
-        parcel.readInt(),
-        parcel.readTypedList(TrainPart.CREATOR)
-    )
-
+    @Parcelize
     data class TrainFacilities(
         val seatsFirstClass: Int = 0,
         val seatsSecondClass: Int = 0,
         val features: Int = 0
     ): Parcelable {
+        @IgnoredOnParcel
         val hasFirstClass = seatsFirstClass > 0 && seatsSecondClass > 0
 
         val hasToilet
@@ -50,12 +48,6 @@ data class TrainInfo(
 
         val hasBistro
             get() = BitwiseOperations.getBooleanFromInt(features, 6)
-
-        constructor(parcel: Parcel) : this(
-            parcel.readInt(),
-            parcel.readInt(),
-            parcel.readInt()
-        )
 
         constructor(
             seatsFirstClass: Int = 0,
@@ -80,58 +72,12 @@ data class TrainInfo(
                 hasBistro
             )
         )
-
-        override fun writeToParcel(parcel: Parcel, flags: Int) {
-            parcel.writeInt(seatsFirstClass)
-            parcel.writeInt(seatsSecondClass)
-            parcel.writeInt(features)
-        }
-
-        override fun describeContents() = 0
-
-        companion object CREATOR : Parcelable.Creator<TrainFacilities> {
-            override fun createFromParcel(parcel: Parcel) = TrainFacilities(parcel)
-
-            override fun newArray(size: Int) = arrayOfNulls<TrainFacilities>(size)
-        }
     }
 
+    @Parcelize
     data class TrainPart(
         val id: Int? = null,
         val facilities: TrainFacilities,
         val imageUrl: String? = null
-    ) : Parcelable {
-        constructor(parcel: Parcel) : this(
-            parcel.readValue(Int::class.java.classLoader) as? Int,
-            parcel.readParcelable() ?: TrainFacilities(),
-            parcel.readString()
-        )
-
-        override fun writeToParcel(parcel: Parcel, flags: Int) {
-            parcel.writeValue(id)
-            parcel.writeParcelable(facilities, flags)
-            parcel.writeString(imageUrl)
-        }
-
-        override fun describeContents() = 0
-
-        companion object CREATOR : Parcelable.Creator<TrainPart> {
-            override fun createFromParcel(parcel: Parcel) = TrainPart(parcel)
-
-            override fun newArray(size: Int) = arrayOfNulls<TrainPart>(size)
-        }
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(journeyId)
-        parcel.writeTypedList(trainParts)
-    }
-
-    override fun describeContents() = 0
-
-    companion object CREATOR : Parcelable.Creator<TrainInfo> {
-        override fun createFromParcel(parcel: Parcel) = TrainInfo(parcel)
-
-        override fun newArray(size: Int) = arrayOfNulls<TrainInfo>(size)
-    }
+    ) : Parcelable
 }
