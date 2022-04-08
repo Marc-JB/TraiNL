@@ -55,7 +55,7 @@ jobs:
 
       # Build
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew compileDebugSources compileDebugUnitTestSources compileReleaseSources
         env:
           DUTCHRAILWAYS_TRAVELINFOAPI_KEY: ${{ secrets.DUTCHRAILWAYS_TRAVELINFOAPI_KEY }}
           ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
