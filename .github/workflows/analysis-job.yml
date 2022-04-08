@@ -1,0 +1,86 @@
+name: Android Test & Analysis
+
+on:
+  workflow_call:
+    secrets:
+      ANDROID_KEY_ALIAS:
+        required: true
+      ANDROID_KEY_PASSWORD:
+        required: true
+      ANDROID_STORE_FILE:
+        required: true
+      ANDROID_STORE_PASSWORD:
+        required: true
+      DUTCHRAILWAYS_TRAVELINFOAPI_KEY:
+        required: true
+      GOOGLE_SERVICES_JSON:
+        required: true
+      SONAR_HOST_URL:
+        required: true
+      SONAR_ORGANIZATION:
+        required: true
+      SONAR_PROJECTKEY: 
+        required: true
+      SONAR_TOKEN: 
+        required: true
+
+concurrency:
+  group: android-analysis-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analysis:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+
+      # Set up JDK
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: 'adopt'
+          cache: 'gradle'
+
+      # Restore SonarQube Cache
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      # Permissions for Gradle
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # Add Google Services File
+      - name: Add google-services.json
+        run: |
+          echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > ./app/google-services.json.b64
+          base64 -d ./app/google-services.json.b64 > ./app/google-services.json
+
+      # Add key store file
+      - name: Add key store file
+        run: |
+          echo "${{ secrets.ANDROID_STORE_FILE }}" > ./app/key.jks.b64
+          base64 -d ./app/key.jks.b64 > ./app/key.jks
+
+      # Test
+      - name: Test with Gradle
+        run: ./gradlew sonarqube
+        env:
+          DUTCHRAILWAYS_TRAVELINFOAPI_KEY: ${{ secrets.DUTCHRAILWAYS_TRAVELINFOAPI_KEY }}
+          ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECTKEY }}
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
