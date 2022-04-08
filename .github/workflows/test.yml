@@ -62,3 +62,4 @@ jobs:
           SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECTKEY }}
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
