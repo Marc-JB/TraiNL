@@ -1,0 +1,35 @@
+name: Android PR validation
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: pr-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    uses: ./.github/workflows/build-job.yml
+    secrets:
+      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      ANDROID_STORE_FILE: ${{ secrets.ANDROID_STORE_FILE }}
+      ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+      DUTCHRAILWAYS_TRAVELINFOAPI_KEY: ${{ secrets.DUTCHRAILWAYS_TRAVELINFOAPI_KEY }}
+      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+
+  analysis:
+    needs: build
+    uses: ./.github/workflows/analysis-job.yml
+    secrets:
+      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      ANDROID_STORE_FILE: ${{ secrets.ANDROID_STORE_FILE }}
+      ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+      DUTCHRAILWAYS_TRAVELINFOAPI_KEY: ${{ secrets.DUTCHRAILWAYS_TRAVELINFOAPI_KEY }}
+      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+      SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECTKEY }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

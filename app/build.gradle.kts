@@ -1,3 +1,6 @@
+@file:SuppressLint("FragmentGradleConfiguration")
+
+import android.annotation.SuppressLint
 import kotlinx.kover.api.KoverTaskExtension
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
@@ -177,6 +180,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.4.1")
     // TODO: Change to testImplementation when https://issuetracker.google.com/issues/127986458 is fixed
     debugImplementation("androidx.fragment:fragment-testing:1.4.1")
+    testReleaseImplementation("androidx.fragment:fragment-testing:1.4.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
