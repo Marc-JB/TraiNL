@@ -1,5 +1,6 @@
 import kotlinx.kover.api.CoverageEngine
-import kotlinx.kover.api.KoverExtension
+import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
+import org.jetbrains.kotlin.konan.properties.Properties
 
 val androidxNavigationVersion by extra("2.4.2")
 
@@ -18,14 +19,65 @@ plugins {
 
     // Testing
     id("org.jetbrains.kotlinx.kover") version "0.5.0"
+    id("org.sonarqube") version "3.3"
 
     // API
     kotlin("plugin.serialization") version kotlinVersion apply false
 }
 
-extensions.configure<KoverExtension> {
+val coverageExclusionList = listOf(
+    "nl.marc_apps.ovgo.databinding.*",
+    "nl.marc_apps.ovgo.BuildConfig",
+    "nl.marc_apps.ovgo.data.db.*_Impl",
+    "nl.marc_apps.ovgo.data.db.*_Impl*",
+    "nl.marc_apps.ovgo.ui.*.*FragmentArgs",
+    "nl.marc_apps.ovgo.ui.*.*FragmentArgs*",
+    "nl.marc_apps.ovgo.ui.*.*FragmentDirections",
+    "nl.marc_apps.ovgo.ui.*.*FragmentDirections*"
+)
+
+kover {
     coverageEngine.set(CoverageEngine.INTELLIJ)
-    instrumentAndroidPackage = true
+}
+
+fun getLocalProperties(): Properties {
+    return Properties().also { properties ->
+        try {
+            file("../local.properties").inputStream().use {
+                properties.load(it)
+            }
+        } catch (ignored: java.io.FileNotFoundException) {}
+    }
+}
+
+sonarqube {
+    val keys = getLocalProperties()
+
+    fun getProperty(key: String): String? {
+        return keys.getProperty(key) ?: System.getenv(key.toUpperCaseAsciiOnly().replace(".", "_"))
+    }
+
+    properties {
+        property("sonar.projectName",  "TraiNL")
+
+        property("sonar.projectKey", getProperty("sonar.projectKey")!!)
+        property("sonar.organization", getProperty("sonar.organization")!!)
+        property("sonar.host.url", getProperty("sonar.host.url")!!)
+
+        property("sonar.coverage.jacoco.xmlReportPaths", "${projectDir.invariantSeparatorsPath}/build/reports/kover/report.xml")
+    }
+}
+
+tasks.sonarqube {
+    dependsOn("koverMergedReport")
+}
+
+tasks.koverMergedHtmlReport {
+    excludes = coverageExclusionList
+}
+
+tasks.koverMergedXmlReport {
+    excludes = coverageExclusionList
 }
 
 tasks.register("clean", Delete::class) {

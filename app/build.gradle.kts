@@ -12,9 +12,6 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 
-    // Testing
-    id("org.sonarqube") version "3.3"
-
     // Navigation
     id("androidx.navigation.safeargs.kotlin")
 
@@ -31,17 +28,6 @@ fun getLocalProperties(): Properties {
         } catch (ignored: java.io.FileNotFoundException) {}
     }
 }
-
-val coverageExclusionList = listOf(
-    "nl.marc_apps.ovgo.databinding.*",
-    "nl.marc_apps.ovgo.BuildConfig",
-    "nl.marc_apps.ovgo.data.db.*_Impl",
-    "nl.marc_apps.ovgo.data.db.*_Impl*",
-    "nl.marc_apps.ovgo.ui.*.*FragmentArgs",
-    "nl.marc_apps.ovgo.ui.*.*FragmentArgs*",
-    "nl.marc_apps.ovgo.ui.*.*FragmentDirections",
-    "nl.marc_apps.ovgo.ui.*.*FragmentDirections*"
-)
 
 android {
     compileSdk = 31
@@ -137,23 +123,11 @@ android {
         }
 
         unitTests.all {
-            it.jvmArgs("-noverify")
-
             it.extensions.configure<KoverTaskExtension> {
                 isDisabled = !it.name.contains("debug", ignoreCase = true)
-
-                excludes = coverageExclusionList
             }
         }
     }
-}
-
-tasks.koverHtmlReport {
-    excludes = coverageExclusionList
-}
-
-tasks.koverXmlReport {
-    excludes = coverageExclusionList
 }
 
 ksp {
@@ -225,20 +199,4 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.test:runner:1.4.0")
     androidTestImplementation(kotlin("test-junit"))
-}
-
-sonarqube {
-    val keys = getLocalProperties()
-
-    fun getProperty(key: String): String? {
-        return keys.getProperty(key) ?: System.getenv(key.toUpperCaseAsciiOnly().replace(".", "_"))
-    }
-
-    properties {
-        property("sonar.projectKey", getProperty("sonar.projectKey")!!)
-        property("sonar.organization", getProperty("sonar.organization")!!)
-        property("sonar.host.url", getProperty("sonar.host.url")!!)
-
-        property("sonar.coverage.jacoco.xmlReportPaths", "**/build/reports/kover/project-xml/report.xml")
-    }
 }
