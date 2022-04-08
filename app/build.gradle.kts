@@ -1,3 +1,6 @@
+@file:SuppressLint("FragmentGradleConfiguration")
+
+import android.annotation.SuppressLint
 import kotlinx.kover.api.KoverTaskExtension
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
