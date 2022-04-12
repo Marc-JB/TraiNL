@@ -1,6 +1,6 @@
 <div align="center">
 
-  ![Banner image](/docs/TraiNL-banner.png?raw=true "Banner image")
+  ![Banner image](/docs/TraiNL-banner.webp?raw=true "Banner image")
   # TraiNL
   Public transport app that showcases various Android architecture patterns (like MVVM, Dependency Injection).
 
@@ -28,8 +28,8 @@
 
 ## :star2: About the Project
 ### :camera: Screenshots
-![Screenshot: Departures (light mode)](/docs/screenshots/departures-1.png?raw=true "Screenshot: Departures (light mode)")
-![Screenshot: Departures (dark mode)](/docs/screenshots/departures-2.png?raw=true "Screenshot: Departures (dark mode)") 
+![Screenshot: Departures (light mode)](/docs/screenshots/departures-1.webp?raw=true "Screenshot: Departures (light mode)")
+![Screenshot: Departures (dark mode)](/docs/screenshots/departures-2.webp?raw=true "Screenshot: Departures (dark mode)") 
 
 ### :space_invader: Tech Stack
 An Android application in Kotlin with the following libraries/patterns:
