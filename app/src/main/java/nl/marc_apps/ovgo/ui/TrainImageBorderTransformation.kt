@@ -3,18 +3,17 @@ package nl.marc_apps.ovgo.ui
 import android.graphics.*
 import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.createBitmap
-import coil.bitmap.BitmapPool
 import coil.size.Size
 import coil.transform.Transformation
 
 class TrainImageBorderTransformation(
-    private val key: String,
+    key: String,
     private val strokeWidth: Int = 2,
     private val color: Int = Color.WHITE
 ) : Transformation {
-    override fun key() = "train-image-border:$key:$strokeWidth:$color"
+    override val cacheKey = "train-image-border:$key:$strokeWidth:$color"
 
-    override suspend fun transform(pool: BitmapPool, input: Bitmap, size: Size): Bitmap {
+    override suspend fun transform(input: Bitmap, size: Size): Bitmap {
         val inputWithRemovedBackground = changeBitmapAlpha(changeBitmapAlpha(input, 0.1f), 10f)
 
         val doubleStrokeWidth = 2 * strokeWidth

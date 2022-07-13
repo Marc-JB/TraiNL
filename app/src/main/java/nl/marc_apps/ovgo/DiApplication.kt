@@ -14,8 +14,7 @@ class DiApplication : Application() {
         super.onCreate()
 
         startKoin {
-            // TODO: Remove workaround for Kotlin 1.6. See https://github.com/InsertKoinIO/koin/issues/1188.
-            androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
+            androidLogger()
             androidContext(this@DiApplication)
             modules(DiModules.dataRepositoriesModule, DiModules.viewModelsModule, DiModules.utilitiesModule)
         }

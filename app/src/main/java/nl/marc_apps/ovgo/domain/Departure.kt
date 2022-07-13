@@ -5,6 +5,8 @@ import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 @Keep
 @Parcelize
@@ -28,12 +30,9 @@ data class Departure(
     val platformChanged: Boolean
         get() = actualTrack != plannedTrack
 
-    private val delayInMs: Long
-        get() = actualDepartureTime.time - plannedDepartureTime.time
-
-    val delayInMinutesRounded
-        get() = TimeUnit.MINUTES.convert(delayInMs, TimeUnit.MILLISECONDS).toInt()
+    val delay: Duration
+        get() = (actualDepartureTime.time - plannedDepartureTime.time).milliseconds
 
     val isDelayed
-        get() = delayInMinutesRounded > 0
+        get() = delay.inWholeMinutes > 0
 }

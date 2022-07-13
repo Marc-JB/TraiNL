@@ -94,7 +94,7 @@ class DeparturesAdapter(
             context.getString(
                 R.string.departure_time_delayed,
                 departure.plannedDepartureTime.format(timeStyle = DateFormat.SHORT),
-                departure.delayInMinutesRounded
+                departure.delay.inWholeMinutes
             )
         } else {
             departure.plannedDepartureTime.format(timeStyle = DateFormat.SHORT)

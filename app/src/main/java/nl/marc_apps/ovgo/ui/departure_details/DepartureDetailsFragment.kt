@@ -15,12 +15,12 @@ import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
 import nl.marc_apps.ovgo.ui.TrainImages
 import nl.marc_apps.ovgo.utils.format
-import nl.marc_apps.ovgo.utils.navGraphViewModel
 import org.koin.android.ext.android.inject
+import org.koin.androidx.navigation.koinNavGraphViewModel
 import java.text.DateFormat
 
 class DepartureDetailsFragment : Fragment() {
-    private val viewModel by navGraphViewModel<DepartureDetailsViewModel>(R.id.departure_details)
+    private val viewModel by koinNavGraphViewModel<DepartureDetailsViewModel>(R.id.departure_details)
 
     private lateinit var binding: FragmentDepartureDetailsBinding
 
@@ -48,9 +48,9 @@ class DepartureDetailsFragment : Fragment() {
         binding.partialDepartureInformationCard.labelDepartureTime.text = if (departure.isDelayed) {
             view.context.resources.getQuantityString(
                 R.plurals.departure_time_long_text_delayed,
-                departure.delayInMinutesRounded,
+                departure.delay.inWholeMinutes.toInt(),
                 departure.plannedDepartureTime.format(timeStyle = DateFormat.SHORT),
-                departure.delayInMinutesRounded
+                departure.delay.inWholeMinutes
             )
         } else {
             view.context.getString(

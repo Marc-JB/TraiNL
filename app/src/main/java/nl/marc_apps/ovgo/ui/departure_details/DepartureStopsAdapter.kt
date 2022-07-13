@@ -38,10 +38,14 @@ class DepartureStopsAdapter(
         if (stop.actualArrivalTime == stop.actualDepartureTime) {
             holder.binding.labelArrivalTime.visibility = View.GONE
         } else {
-            loadTimeView(holder.binding.labelArrivalTime, stop.plannedArrivalTime, stop.arrivalDelayInMinutesRounded)
+            loadTimeView(holder.binding.labelArrivalTime, stop.plannedArrivalTime,
+                stop.arrivalDelay.inWholeMinutes
+            )
         }
 
-        loadTimeView(holder.binding.labelDepartureTime, stop.plannedDepartureTime, stop.departureDelayInMinutesRounded)
+        loadTimeView(holder.binding.labelDepartureTime, stop.plannedDepartureTime,
+            stop.departureDelay.inWholeMinutes
+        )
 
         holder.binding.labelStationName.text = buildString {
             append(stop.station.fullName)
@@ -64,7 +68,7 @@ class DepartureStopsAdapter(
         }
     }
 
-    private fun loadTimeView(view: TextView, plannedTime: Date?, delayInMinutesRounded: Int) {
+    private fun loadTimeView(view: TextView, plannedTime: Date?, delayInMinutesRounded: Long) {
         val context = view.context
 
         if (plannedTime == null) {

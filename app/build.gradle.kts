@@ -8,7 +8,7 @@ import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("com.google.devtools.ksp") version "1.6.20-1.0.4"
+    id("com.google.devtools.ksp") version "1.7.10-1.0.6"
     id("kotlin-parcelize")
 
     // Firebase crashlytics
@@ -150,7 +150,7 @@ dependencies {
 
     // API
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
     implementation("com.squareup.okhttp3:okhttp-brotli:4.9.3")
@@ -166,34 +166,34 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     // Dependency Injection
-    val koinVersion = "3.1.5"
+    val koinVersion = "3.2.0"
     implementation("io.insert-koin:koin-android:$koinVersion")
     implementation("io.insert-koin:koin-androidx-navigation:$koinVersion")
     // testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
     // androidTestImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
 
     // Backward compatibility & utilities
-    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.core:core-ktx:1.8.0")
 
-    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("androidx.appcompat:appcompat:1.4.2")
 
-    implementation("androidx.fragment:fragment-ktx:1.4.1")
+    implementation("androidx.fragment:fragment-ktx:1.5.0")
     // TODO: Change to testImplementation when https://issuetracker.google.com/issues/127986458 is fixed
-    debugImplementation("androidx.fragment:fragment-testing:1.4.1")
-    testReleaseImplementation("androidx.fragment:fragment-testing:1.4.1")
+    debugImplementation("androidx.fragment:fragment-testing:1.5.0")
+    testReleaseImplementation("androidx.fragment:fragment-testing:1.5.0")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.3")
 
-    implementation("io.coil-kt:coil:1.4.0")
+    implementation("io.coil-kt:coil:2.1.0")
 
     // Design
-    implementation("com.google.android.material:material:1.5.0")
+    implementation("com.google.android.material:material:1.6.1")
 
     // Test base
-    val mockkVersion = "1.12.3"
+    val mockkVersion = "1.12.4"
     testImplementation(kotlin("test-junit"))
-    testImplementation("org.robolectric:robolectric:4.7.3")
+    testImplementation("org.robolectric:robolectric:4.8.1")
     testImplementation("io.mockk:mockk:${mockkVersion}")
     testImplementation("io.mockk:mockk-agent-jvm:${mockkVersion}")
     testImplementation("androidx.test:runner:1.4.0")

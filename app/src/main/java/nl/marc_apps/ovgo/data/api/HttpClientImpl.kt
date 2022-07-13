@@ -2,7 +2,6 @@ package nl.marc_apps.ovgo.data.api
 
 import android.content.Context
 import android.os.Build
-import coil.util.CoilUtils
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -17,8 +16,10 @@ import okhttp3.brotli.BrotliInterceptor
 import okhttp3.logging.HttpLoggingInterceptor
 import java.io.File
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toJavaDuration
 
-@ExperimentalSerializationApi
 class HttpClientImpl(val context: Context) : HttpClient {
     private inline val logger: HttpLoggingInterceptor
         get() = HttpLoggingInterceptor().also {
@@ -35,12 +36,12 @@ class HttpClientImpl(val context: Context) : HttpClient {
                 addNetworkInterceptor(logger)
             }
 
-            callTimeout(1, TimeUnit.MINUTES)
-            connectTimeout(45, TimeUnit.SECONDS)
-            readTimeout(30, TimeUnit.SECONDS)
-            writeTimeout(30, TimeUnit.SECONDS)
+            callTimeout(75.seconds.toJavaDuration())
+            connectTimeout(45.seconds.toJavaDuration())
+            readTimeout(30.seconds.toJavaDuration())
+            writeTimeout(30.seconds.toJavaDuration())
 
-            val coilCacheSize = CoilUtils.createDefaultCache(context).maxSize()
+            val coilCacheSize = 5_000_000L
             val cacheDir = File(context.cacheDir, NETWORK_CACHE_DIRECTORY_NAME).apply { mkdirs() }
             cache(Cache(cacheDir, coilCacheSize))
         }

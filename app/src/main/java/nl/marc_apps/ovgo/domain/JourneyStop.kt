@@ -5,6 +5,8 @@ import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 @Keep
 @Parcelize
@@ -23,31 +25,25 @@ data class JourneyStop(
     val platformChanged: Boolean
         get() = actualTrack != plannedTrack
 
-    private val arrivalDelayInMs: Long
+    val arrivalDelay: Duration
         get() = if (actualArrivalTime == null || plannedArrivalTime == null) {
             0
         } else {
             actualArrivalTime.time - plannedArrivalTime.time
-        }
+        }.milliseconds
 
-    val arrivalDelayInMinutesRounded
-        get() = TimeUnit.MINUTES.convert(arrivalDelayInMs, TimeUnit.MILLISECONDS).toInt()
-
-    private val departureDelayInMs: Long
+    val departureDelay: Duration
         get() = if (actualDepartureTime == null || plannedDepartureTime == null) {
             0
         } else {
             actualDepartureTime.time - plannedDepartureTime.time
-        }
-
-    val departureDelayInMinutesRounded
-        get() = TimeUnit.MINUTES.convert(departureDelayInMs, TimeUnit.MILLISECONDS).toInt()
+        }.milliseconds
 
     val isDepartureDelayed
-        get() = departureDelayInMinutesRounded > 0
+        get() = departureDelay.inWholeMinutes > 0
 
     val isArrivalDelayed
-        get() = arrivalDelayInMinutesRounded > 0
+        get() = arrivalDelay.inWholeMinutes > 0
 
     val isOnStation: Boolean
         get() = (actualDepartureTime == null || actualDepartureTime.before(Date()))

@@ -28,7 +28,6 @@ import nl.marc_apps.ovgo.utils.retrofit
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-@ExperimentalSerializationApi
 object DiModules {
     private const val APP_DATABASE_NAME = "app-database"
 

@@ -9,10 +9,10 @@ import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentMaintenanceBinding
 import nl.marc_apps.ovgo.ui.DisruptionsAdapter
 import nl.marc_apps.ovgo.ui.DividerItemDecoration
-import nl.marc_apps.ovgo.utils.navGraphViewModel
+import org.koin.androidx.navigation.koinNavGraphViewModel
 
 class MaintenanceFragment : Fragment() {
-    private val viewModel by navGraphViewModel<MaintenanceViewModel>(R.id.maintenance)
+    private val viewModel by koinNavGraphViewModel<MaintenanceViewModel>(R.id.maintenance)
 
     private lateinit var binding: FragmentMaintenanceBinding
 
