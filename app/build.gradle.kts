@@ -172,6 +172,16 @@ dependencies {
     // testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
     // androidTestImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
 
+    // Compose
+    // implementation("androidx.compose.runtime:runtime:$composeVersion")
+    // implementation("androidx.compose.ui:ui:$composeVersion")
+    // implementation("androidx.compose.foundation:foundation:$composeVersion")
+    // implementation("androidx.compose.foundation:foundation-layout:$composeVersion")
+    // implementation("androidx.compose.material:material:$composeVersion")
+    // implementation("androidx.compose.runtime:runtime-livedata:$composeVersion")
+    // implementation("androidx.compose.ui:ui-tooling:$composeVersion")
+    // implementation("com.google.android.material:compose-theme-adapter:$composeVersion")
+
     // Backward compatibility & utilities
     implementation("androidx.core:core-ktx:1.8.0")
 
