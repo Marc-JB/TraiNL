@@ -5,21 +5,28 @@ import kotlinx.kover.api.KoverTaskExtension
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 
+// TODO: Remove when https://youtrack.jetbrains.com/issue/KTIJ-19369 is fixed.
+@Suppress(
+    "DSL_SCOPE_VIOLATION",
+    "MISSING_DEPENDENCY_CLASS",
+    "UNRESOLVED_REFERENCE_WRONG_RECEIVER",
+    "FUNCTION_CALL_EXPECTED"
+)
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    id("com.google.devtools.ksp") version "1.7.10-1.0.6"
+    alias(libs.plugins.android.app)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.ksp)
     id("kotlin-parcelize")
 
     // Firebase crashlytics
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 
     // Navigation
-    id("androidx.navigation.safeargs.kotlin")
+    alias(libs.plugins.androidx.navigation)
 
     // API
-    kotlin("plugin.serialization")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 fun getLocalProperties(): Properties {
@@ -33,7 +40,7 @@ fun getLocalProperties(): Properties {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = libs.versions.trainl.targetsdk.get().toInt()
     buildToolsVersion = "32.0.0"
 
     packagingOptions {
@@ -55,8 +62,10 @@ android {
 
     defaultConfig {
         applicationId = "nl.marc_apps.ovgo"
-        minSdk = 21
-        targetSdk = 31
+
+        minSdk = libs.versions.trainl.minsdk.get().toInt()
+        targetSdk = libs.versions.trainl.targetsdk.get().toInt()
+
         versionCode = getProperty("version.code")?.toInt() ?: 12
         versionName = getProperty("version.name") ?: "0.9"
 
@@ -143,74 +152,51 @@ dependencies {
     implementation("com.google.firebase:firebase-crashlytics-ktx")
 
     // Navigation
-    val androidxNavigationVersion = rootProject.extra["androidxNavigationVersion"]
-    implementation("androidx.navigation:navigation-fragment-ktx:${androidxNavigationVersion}")
-    implementation("androidx.navigation:navigation-ui-ktx:$androidxNavigationVersion")
-    testImplementation("androidx.navigation:navigation-testing:$androidxNavigationVersion")
+    implementation(libs.bundles.androidx.navigation)
+    testImplementation(libs.androidx.navigation.test)
 
     // API
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
-    implementation("com.squareup.okhttp3:okhttp-brotli:4.9.3")
-    implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.3")
+    implementation(libs.bundles.retrofit.extended)
+    implementation(libs.kotlin.serialization)
 
     // Database
-    val roomVersion = "2.4.2"
-    implementation("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
-    ksp("androidx.room:room-compiler:$roomVersion")
+    implementation(libs.bundles.androidx.room)
+    ksp(libs.androidx.room.compiler)
 
     // DataStore
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation(libs.androidx.datastore.preferences)
 
     // Dependency Injection
-    val koinVersion = "3.2.0"
-    implementation("io.insert-koin:koin-android:$koinVersion")
-    implementation("io.insert-koin:koin-androidx-navigation:$koinVersion")
-    // testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
-    // androidTestImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
+    implementation(libs.bundles.koin)
 
     // Compose
-    // implementation("androidx.compose.runtime:runtime:$composeVersion")
-    // implementation("androidx.compose.ui:ui:$composeVersion")
-    // implementation("androidx.compose.foundation:foundation:$composeVersion")
-    // implementation("androidx.compose.foundation:foundation-layout:$composeVersion")
-    // implementation("androidx.compose.material:material:$composeVersion")
-    // implementation("androidx.compose.runtime:runtime-livedata:$composeVersion")
-    // implementation("androidx.compose.ui:ui-tooling:$composeVersion")
-    // implementation("com.google.android.material:compose-theme-adapter:$composeVersion")
+    // implementation(libs.bundles.androidx.compose)
+    // implementation(libs.bundles.google.material.compose)
 
     // Backward compatibility & utilities
-    implementation("androidx.core:core-ktx:1.8.0")
+    implementation(libs.bundles.androidx.compat)
 
-    implementation("androidx.appcompat:appcompat:1.4.2")
-
-    implementation("androidx.fragment:fragment-ktx:1.5.0")
     // TODO: Change to testImplementation when https://issuetracker.google.com/issues/127986458 is fixed
-    debugImplementation("androidx.fragment:fragment-testing:1.5.0")
-    testReleaseImplementation("androidx.fragment:fragment-testing:1.5.0")
+    debugImplementation(libs.androidx.fragment.test)
+    testReleaseImplementation(libs.androidx.fragment.test)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.3")
+    implementation(libs.kotlin.coroutines)
+    testImplementation(libs.kotlin.coroutines.test)
 
-    implementation("io.coil-kt:coil:2.1.0")
+    implementation(libs.coil)
 
     // Design
-    implementation("com.google.android.material:material:1.6.1")
+    implementation(libs.google.material)
 
     // Test base
-    val mockkVersion = "1.12.4"
     testImplementation(kotlin("test-junit"))
-    testImplementation("org.robolectric:robolectric:4.8.1")
-    testImplementation("io.mockk:mockk:${mockkVersion}")
-    testImplementation("io.mockk:mockk-agent-jvm:${mockkVersion}")
-    testImplementation("androidx.test:runner:1.4.0")
-    testImplementation("androidx.test.ext:junit:1.1.3")
+    testImplementation(libs.robolectric)
+    testImplementation(libs.bundles.mockk)
+    testImplementation(libs.androidx.test.runner)
+    testImplementation(libs.androidx.test.junit)
 
     // Android test base
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.test:runner:1.4.0")
+    androidTestImplementation(libs.androidx.test.espresso)
+    androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(kotlin("test-junit"))
 }

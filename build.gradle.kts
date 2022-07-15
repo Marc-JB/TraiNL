@@ -2,27 +2,33 @@ import kotlinx.kover.api.CoverageEngine
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 import org.jetbrains.kotlin.konan.properties.Properties
 
+@Deprecated("Use Gradle Version Catalogs")
 val androidxNavigationVersion by extra("2.5.0")
 
+// TODO: Remove when https://youtrack.jetbrains.com/issue/KTIJ-19369 is fixed.
+@Suppress(
+    "DSL_SCOPE_VIOLATION",
+    "MISSING_DEPENDENCY_CLASS",
+    "UNRESOLVED_REFERENCE_WRONG_RECEIVER",
+    "FUNCTION_CALL_EXPECTED"
+)
 plugins {
-    val kotlinVersion = "1.7.10"
-
-    id("com.android.application") version "7.2.1" apply false
-    kotlin("android") version kotlinVersion apply false
+    alias(libs.plugins.android.app) apply false
+    alias(libs.plugins.kotlin.android) apply false
 
     // Firebase crashlytics
-    id("com.google.gms.google-services") version "4.3.13" apply false
-    id("com.google.firebase.crashlytics") version "2.9.1" apply false
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
 
     // Navigation
-    id("androidx.navigation.safeargs.kotlin") version "2.5.0" apply false
+    alias(libs.plugins.androidx.navigation) apply false
 
     // Testing
-    id("org.jetbrains.kotlinx.kover") version "0.5.1"
-    id("org.sonarqube") version "3.3"
+    alias(libs.plugins.kover)
+    alias(libs.plugins.sonarqube)
 
     // API
-    kotlin("plugin.serialization") version kotlinVersion apply false
+    alias(libs.plugins.kotlin.serialization)
 }
 
 val coverageExclusionList = listOf(
