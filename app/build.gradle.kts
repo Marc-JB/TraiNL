@@ -126,7 +126,11 @@ android {
 
     buildFeatures {
         viewBinding = true
-        // compose = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
 
     testOptions {
@@ -170,8 +174,8 @@ dependencies {
     implementation(libs.bundles.koin)
 
     // Compose
-    // implementation(libs.bundles.androidx.compose)
-    // implementation(libs.bundles.google.material.compose)
+    implementation(libs.bundles.androidx.compose)
+    implementation(libs.bundles.google.material.compose)
 
     // Backward compatibility & utilities
     implementation(libs.bundles.androidx.compat)
