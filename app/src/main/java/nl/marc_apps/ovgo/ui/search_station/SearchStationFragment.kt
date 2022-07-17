@@ -31,6 +31,8 @@ class SearchStationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val navController = binding.root.findNavController()
+
         binding.root.setViewCompositionStrategy(
             ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
         )
@@ -40,10 +42,7 @@ class SearchStationFragment : Fragment() {
                 Surface(
                     color = MaterialTheme.colors.background
                 ) {
-                    SearchStationView(viewModel) {
-                        val action = SearchStationFragmentDirections.actionStationSearchToHome(it)
-                        binding.root.findNavController().navigate(action)
-                    }
+                    SearchStationView(viewModel, navController)
                 }
             }
         }
