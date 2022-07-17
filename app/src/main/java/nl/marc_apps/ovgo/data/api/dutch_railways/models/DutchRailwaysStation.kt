@@ -27,7 +27,7 @@ data class DutchRailwaysStation(
     @SerialName("namen")
     val names: Names,
     @SerialName("land")
-    val country: Country,
+    val country: Country? = null,
     @SerialName("lat")
     val latitude: Double,
     @SerialName("lng")
