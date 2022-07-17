@@ -9,15 +9,13 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.integerResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.google.android.material.composethemeadapter.MdcTheme
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.ui.theme.TextAppearance
 
 @Composable
 fun StationSuggestions(suggestions: List<TrainStation>, onSuggestionSelected: (TrainStation) -> Unit) {
@@ -33,10 +31,10 @@ fun StationSuggestions(suggestions: List<TrainStation>, onSuggestionSelected: (T
                 .padding(16.dp, 12.dp)
                 .fillMaxWidth()
             ) {
-                Text(station.fullName, color = colorResource(id = R.color.sectionTitleColor), fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                Text(station.fullName, style = TextAppearance.sectionTitle)
                 if (station.alternativeNames.isNotEmpty()) {
                     Spacer(Modifier.height(8.dp))
-                    Text(station.alternativeNames.joinToString(), fontSize = 14.sp)
+                    Text(station.alternativeNames.joinToString(), style = TextAppearance.sectionTextMedium)
                 }
             }
 

@@ -83,7 +83,7 @@
     </style>
 
     <style name="TextAppearance.OVgo.SectionTitle.Disabled" parent="@style/TextAppearance.OVgo.SectionTitle">
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
     <style name="TextAppearance.OVgo.SectionText.Medium" parent="@style/TextAppearance.MaterialComponents.Caption">
