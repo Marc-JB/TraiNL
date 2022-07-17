@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,10 +21,11 @@ import nl.marc_apps.ovgo.databinding.FragmentDepartureBoardBinding
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.ui.DividerItemDecoration
 import org.koin.android.ext.android.inject
-import org.koin.androidx.navigation.koinNavGraphViewModel
+import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 class DepartureBoardFragment : Fragment() {
-    private val viewModel by koinNavGraphViewModel<DepartureBoardViewModel>(R.id.departure_board)
+    private val backStackEntry: NavBackStackEntry by lazy { findNavController().getBackStackEntry(R.id.departure_board) }
+    private val viewModel by stateViewModel<DepartureBoardViewModel>(owner = { backStackEntry })
 
     private lateinit var binding: FragmentDepartureBoardBinding
 
