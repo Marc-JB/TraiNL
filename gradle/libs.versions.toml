@@ -62,7 +62,6 @@ koin-android-navigation = { module = "io.insert-koin:koin-androidx-navigation", 
 
 google-material = { module = "com.google.android.material:material", version = "1.6.1" }
 google-material-compose = { module = "androidx.compose.material:material", version.ref = "androidx-compose" }
-google-material-compose-adapter = { module = "com.google.android.material:compose-theme-adapter", version.ref = "androidx-compose" }
 
 coil = { module = "io.coil-kt:coil", version = "2.1.0" }
 
@@ -80,8 +79,6 @@ androidx-compat = ["androidx-core", "androidx-appcompat", "androidx-fragment"]
 retrofit-extended = ["retrofit-runtime", "retrofit-serialization", "okhttp-logging", "okhttp-brotli", "okhttp-doh"]
 
 koin = ["koin-android-runtime", "koin-android-navigation"]
-
-google-material-compose = ["google-material-compose", "google-material-compose-adapter"]
 
 mockk = ["mockk-runtime", "mockk-agent"]
 

@@ -175,7 +175,7 @@ dependencies {
 
     // Compose
     implementation(libs.bundles.androidx.compose)
-    implementation(libs.bundles.google.material.compose)
+    implementation(libs.google.material.compose)
 
     // Backward compatibility & utilities
     implementation(libs.bundles.androidx.compat)
