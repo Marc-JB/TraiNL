@@ -151,55 +151,51 @@ ksp {
 }
 
 dependencies {
-    // Firebase crashlytics
-    implementation(platform("com.google.firebase:firebase-bom:29.0.2"))
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
-
-    // Navigation
-    implementation(libs.bundles.androidx.navigation)
-    testImplementation(libs.androidx.navigation.test)
-
-    // API
+    // Data
     implementation(libs.bundles.retrofit.extended)
     implementation(libs.kotlin.serialization)
 
-    // Database
     implementation(libs.bundles.androidx.room)
     ksp(libs.androidx.room.compiler)
 
-    // DataStore
     implementation(libs.androidx.datastore.preferences)
 
-    // Dependency Injection
-    implementation(libs.bundles.koin)
+    // User Interface
+    implementation(libs.bundles.androidx.navigation)
+    testImplementation(libs.androidx.navigation.test)
 
-    // Compose
+    implementation(libs.coil)
+
     implementation(libs.bundles.androidx.compose)
+
     implementation(libs.google.material.compose)
 
-    // Backward compatibility & utilities
+    implementation(libs.google.material)
+
+    // Backward compatibility
     implementation(libs.bundles.androidx.compat)
 
     // TODO: Change to testImplementation when https://issuetracker.google.com/issues/127986458 is fixed
     debugImplementation(libs.androidx.fragment.test)
     testReleaseImplementation(libs.androidx.fragment.test)
 
+    // Utilities
+    implementation(platform("com.google.firebase:firebase-bom:29.0.2"))
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+
+    implementation(libs.bundles.koin)
+
     implementation(libs.kotlin.coroutines)
     testImplementation(libs.kotlin.coroutines.test)
 
-    implementation(libs.coil)
-
-    // Design
-    implementation(libs.google.material)
-
-    // Test base
+    // Test utilities
     testImplementation(kotlin("test-junit"))
     testImplementation(libs.robolectric)
     testImplementation(libs.bundles.mockk)
     testImplementation(libs.androidx.test.runner)
     testImplementation(libs.androidx.test.junit)
 
-    // Android test base
+    // Android test utilities
     androidTestImplementation(libs.androidx.test.espresso)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(kotlin("test-junit"))
