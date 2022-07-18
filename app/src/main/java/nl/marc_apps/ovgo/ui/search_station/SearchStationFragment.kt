@@ -9,9 +9,9 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.google.android.material.composethemeadapter.MdcTheme
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentSearchStationBinding
+import nl.marc_apps.ovgo.ui.theme.AppTheme
 import org.koin.androidx.navigation.koinNavGraphViewModel
 
 class SearchStationFragment : Fragment() {
@@ -38,7 +38,7 @@ class SearchStationFragment : Fragment() {
         )
 
         binding.root.setContent {
-            MdcTheme {
+            AppTheme {
                 Surface(
                     color = MaterialTheme.colors.background
                 ) {

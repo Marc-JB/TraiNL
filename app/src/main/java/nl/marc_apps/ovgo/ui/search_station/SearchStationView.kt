@@ -17,9 +17,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.google.android.material.composethemeadapter.MdcTheme
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.ui.theme.AppTheme
 
 @Composable
 fun SearchStationView(searchStationViewModel: SearchStationViewModel, navController: NavController) {
@@ -90,7 +90,7 @@ fun SearchStationViewPreview() {
         TrainStation("ddr", "Dordrecht", "Dordrecht"),
         TrainStation("rtd", "Rotterdam Centraal", "Rotterdam", setOf("Rotterdam CS", "Rotterdam"))
     )
-    MdcTheme {
+    AppTheme {
         Surface(color = MaterialTheme.colors.background) {
             SearchStationView(false, exampleStations, {}, {})
         }
@@ -100,7 +100,7 @@ fun SearchStationViewPreview() {
 @Composable
 @Preview
 fun SearchStationViewLoadingPreview() {
-    MdcTheme {
+    AppTheme {
         Surface(color = MaterialTheme.colors.background) {
             SearchStationView(true, listOf(), {}, {})
         }

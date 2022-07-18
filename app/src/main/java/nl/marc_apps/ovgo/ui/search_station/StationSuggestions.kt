@@ -12,10 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.android.material.composethemeadapter.MdcTheme
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.TrainStation
-import nl.marc_apps.ovgo.ui.theme.TextAppearance
+import nl.marc_apps.ovgo.ui.theme.AppTheme
+import nl.marc_apps.ovgo.ui.theme.SubtitleColor
 
 @Composable
 fun StationSuggestions(suggestions: List<TrainStation>, onSuggestionSelected: (TrainStation) -> Unit) {
@@ -25,16 +25,16 @@ fun StationSuggestions(suggestions: List<TrainStation>, onSuggestionSelected: (T
             val station = suggestions[index]
             Column(
                 Modifier
-                .clickable {
-                    onSuggestionSelected(station)
-                }
-                .padding(16.dp, 12.dp)
-                .fillMaxWidth()
+                    .clickable {
+                        onSuggestionSelected(station)
+                    }
+                    .padding(16.dp, 12.dp)
+                    .fillMaxWidth()
             ) {
-                Text(station.fullName, style = TextAppearance.sectionTitle)
+                Text(station.fullName, style = MaterialTheme.typography.subtitle1, color = SubtitleColor)
                 if (station.alternativeNames.isNotEmpty()) {
                     Spacer(Modifier.height(8.dp))
-                    Text(station.alternativeNames.joinToString(), style = TextAppearance.sectionTextMedium)
+                    Text(station.alternativeNames.joinToString(), style = MaterialTheme.typography.caption)
                 }
             }
 
@@ -51,7 +51,7 @@ fun StationSuggestions(suggestions: List<TrainStation>, onSuggestionSelected: (T
 @Preview
 fun StationSuggestionPreview() {
     val exampleStation = TrainStation("rtd", "Rotterdam Centraal", "Rotterdam", setOf("Rotterdam CS", "Rotterdam"))
-    MdcTheme {
+    AppTheme {
         Surface(color = MaterialTheme.colors.background) {
             StationSuggestions(suggestions = listOf(exampleStation), onSuggestionSelected = {})
         }
