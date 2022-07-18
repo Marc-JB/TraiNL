@@ -1,6 +1,7 @@
 package nl.marc_apps.ovgo.data.type_conversions
 
 import android.content.Context
+import kotlinx.datetime.toJavaInstant
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
 import nl.marc_apps.ovgo.domain.Departure
@@ -90,8 +91,8 @@ class ApiDepartureToDomainDeparture(
             model.product.number,
             actualDirectionStation ?: model.direction?.let { TrainStation(it, it, it) },
             plannedDirectionStation,
-            model.plannedDateTime,
-            model.actualDateTime,
+            model.plannedDateTime.toJavaInstant(),
+            model.actualDateTime.toJavaInstant(),
             model.plannedTrack,
             model.actualTrack,
             if (isForeignService) null else resolveTrainInfo(model.product.number),

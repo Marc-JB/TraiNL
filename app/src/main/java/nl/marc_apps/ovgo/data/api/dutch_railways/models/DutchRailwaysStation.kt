@@ -1,9 +1,9 @@
 package nl.marc_apps.ovgo.data.api.dutch_railways.models
 
+import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import nl.marc_apps.ovgo.utils.serialization.DateSerializer
-import java.util.*
+import nl.marc_apps.ovgo.data.api.dutch_railways.utils.InstantIso8601Serializer
 
 @Serializable
 data class DutchRailwaysStation(
@@ -36,8 +36,8 @@ data class DutchRailwaysStation(
     @SerialName("naderenRadius")
     val approachRadius: Int,
     @SerialName("ingangsDatum")
-    @Serializable(with = DateSerializer::class)
-    val sinceDate: Date
+    @Serializable(with = InstantIso8601Serializer::class)
+    val sinceDate: Instant
 ) {
     @Serializable
     data class Names(

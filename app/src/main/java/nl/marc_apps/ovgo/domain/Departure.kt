@@ -2,11 +2,11 @@ package nl.marc_apps.ovgo.domain
 
 import android.os.Parcelable
 import androidx.annotation.Keep
+import kotlinx.datetime.toKotlinInstant
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
-import kotlin.time.Duration.Companion.milliseconds
+import java.time.Instant as JtInstant
 
 @Keep
 @Parcelize
@@ -14,8 +14,8 @@ data class Departure(
     val journeyId: String,
     val actualDirection: TrainStation? = null,
     val plannedDirection: TrainStation? = null,
-    val plannedDepartureTime: Date,
-    val actualDepartureTime: Date,
+    private val _plannedDepartureTime: JtInstant,
+    private val _actualDepartureTime: JtInstant,
     val plannedTrack: String,
     val actualTrack: String,
     val trainInfo: TrainInfo? = null,
@@ -27,11 +27,17 @@ data class Departure(
     val warnings: Set<String> = emptySet(),
     val isForeignService: Boolean = false
 ): Parcelable {
+    @IgnoredOnParcel
+    val plannedDepartureTime = _plannedDepartureTime.toKotlinInstant()
+
+    @IgnoredOnParcel
+    val actualDepartureTime = _actualDepartureTime.toKotlinInstant()
+
     val platformChanged: Boolean
         get() = actualTrack != plannedTrack
 
     val delay: Duration
-        get() = (actualDepartureTime.time - plannedDepartureTime.time).milliseconds
+        get() = actualDepartureTime - plannedDepartureTime
 
     val isDelayed
         get() = delay.inWholeMinutes > 0

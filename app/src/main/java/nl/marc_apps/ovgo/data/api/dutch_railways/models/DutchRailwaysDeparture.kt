@@ -1,17 +1,17 @@
 package nl.marc_apps.ovgo.data.api.dutch_railways.models
 
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
-import nl.marc_apps.ovgo.utils.serialization.DateSerializer
-import java.util.*
+import nl.marc_apps.ovgo.data.api.dutch_railways.utils.InstantIso8601Serializer
 
 @Serializable
 data class DutchRailwaysDeparture(
     val direction: String? = null,
     val name: String,
-    @Serializable(with = DateSerializer::class)
-    val plannedDateTime: Date,
-    @Serializable(with = DateSerializer::class)
-    val actualDateTime: Date = plannedDateTime,
+    @Serializable(with = InstantIso8601Serializer::class)
+    val plannedDateTime: Instant,
+    @Serializable(with = InstantIso8601Serializer::class)
+    val actualDateTime: Instant = plannedDateTime,
     val plannedTrack: String = "-",
     val actualTrack: String = plannedTrack,
     val product: DutchRailwaysProduct,

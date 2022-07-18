@@ -1,5 +1,6 @@
 package nl.marc_apps.ovgo.data.type_conversions
 
+import kotlinx.datetime.toJavaInstant
 import nl.marc_apps.ovgo.data.TrainStationRepository
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysStop
 import nl.marc_apps.ovgo.domain.JourneyStop
@@ -59,10 +60,10 @@ object JourneyStopConversions {
         return JourneyStop(
             stop.id,
             trainStation,
-            if (hideArrival) null else lastArrival?.plannedTime,
-            if (hideArrival) null else lastArrival?.actualTime,
-            if (hideDeparture) null else firstDeparture?.plannedTime,
-            if (hideDeparture) null else firstDeparture?.actualTime,
+            if (hideArrival) null else lastArrival?.plannedTime?.toJavaInstant(),
+            if (hideArrival) null else lastArrival?.actualTime?.toJavaInstant(),
+            if (hideDeparture) null else firstDeparture?.plannedTime?.toJavaInstant(),
+            if (hideDeparture) null else firstDeparture?.actualTime?.toJavaInstant(),
             (firstDeparture ?: lastArrival)?.plannedTrack ?: return null,
             (firstDeparture ?: lastArrival)?.actualTrack ?: return null,
             isCancelled,

@@ -9,12 +9,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
 import nl.marc_apps.ovgo.databinding.ListItemDisruptionBinding
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
-import java.util.*
 
 class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapter.DisruptionViewHolder>(DiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DisruptionViewHolder {
@@ -39,17 +40,17 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
 
         binding.labelTitle.setTextColor(ContextCompat.getColor(context, R.color.sectionTitleColor))
 
-        val currentDate = Date()
+        val currentDate = Clock.System.now()
         val activeTimeSpan = disruption.timespans.filter {
-            currentDate.before(it.end)
+            it.end != null && currentDate < it.end
         }.minByOrNull {
-            it.start.time
+            it.start
         }
 
         val activeAlternativeTransportTimeSpan = disruption.alternativeTransportTimespans.filter {
-            (it.end == null && it.start != null && currentDate.after(it.start)) || currentDate.before(it.end)
+            (it.end == null && it.start != null && currentDate > it.start) || (it.end != null && currentDate < it.end)
         }.minByOrNull {
-            it.start?.time ?: Long.MAX_VALUE
+            it.start ?: Instant.DISTANT_FUTURE
         }
 
         val description = listOfNotNull(
@@ -66,10 +67,10 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
         binding.labelTimerange.visibility = View.VISIBLE
 
         binding.labelTimerange.text = when {
-            disruption.end == null && currentDate.after(disruption.start) -> {
+            disruption.end == null && currentDate > disruption.start -> {
                 context.getString(R.string.disruption_end_time_unknown)
             }
-            disruption.end != null && currentDate.after(disruption.start) -> {
+            disruption.end != null && currentDate > disruption.start -> {
                 context.getString(R.string.disruption_end_time, disruption.end.format(DateFormat.MEDIUM, DateFormat.SHORT))
             }
             disruption.end == null -> {
@@ -114,7 +115,7 @@ class DisruptionsAdapter : ListAdapter<DutchRailwaysDisruption, DisruptionsAdapt
         } else {
             binding.labelLastUpdate.visibility = View.VISIBLE
             binding.labelLastUpdate.text = DateUtils.getRelativeTimeSpanString(
-                calamity.lastUpdated.time,
+                calamity.lastUpdated.toEpochMilliseconds(),
                 System.currentTimeMillis(),
                 DateUtils.MINUTE_IN_MILLIS
             )

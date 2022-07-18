@@ -188,6 +188,8 @@ dependencies {
     implementation(libs.kotlin.coroutines)
     testImplementation(libs.kotlin.coroutines.test)
 
+    implementation(libs.kotlin.datetime)
+
     // Test utilities
     testImplementation(kotlin("test-junit"))
     testImplementation(libs.robolectric)

@@ -60,7 +60,7 @@ class DepartureDetailsFragment : Fragment() {
         }
 
         binding.partialDepartureInformationCard.labelDepartureTimeCountdown.text = DateUtils.getRelativeTimeSpanString(
-            departure.actualDepartureTime.time,
+            departure.actualDepartureTime.toEpochMilliseconds(),
             System.currentTimeMillis(),
             DateUtils.MINUTE_IN_MILLIS
         )

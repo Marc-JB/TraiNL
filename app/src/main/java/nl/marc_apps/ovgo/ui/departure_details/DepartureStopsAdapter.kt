@@ -8,13 +8,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.datetime.Instant
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.ListItemJourneyStopBinding
 import nl.marc_apps.ovgo.domain.JourneyStop
 import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
-import java.util.*
 
 class DepartureStopsAdapter(
     private val navigateToStation: ((TrainStation) -> Unit)? = null
@@ -68,7 +68,7 @@ class DepartureStopsAdapter(
         }
     }
 
-    private fun loadTimeView(view: TextView, plannedTime: Date?, delayInMinutesRounded: Long) {
+    private fun loadTimeView(view: TextView, plannedTime: Instant?, delayInMinutesRounded: Long) {
         val context = view.context
 
         if (plannedTime == null) {
