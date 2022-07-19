@@ -22,17 +22,20 @@ import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 
 @Composable
-fun SearchStationView(searchStationViewModel: SearchStationViewModel, navController: NavController) {
+fun SearchStationView(
+    searchStationViewModel: SearchStationViewModel,
+    navController: NavController
+) {
     val isLoading by searchStationViewModel.isLoadingData.collectAsState()
     val results by searchStationViewModel.stationSuggestions.collectAsState()
 
     SearchStationView(
         isLoading,
         results,
-        {
+        updateSuggestions = {
             searchStationViewModel.updateAutocompleteList(it)
         },
-        {
+        onSuggestionSelected = {
             val action = SearchStationFragmentDirections.actionStationSearchToHome(it)
             navController.navigate(action)
         }

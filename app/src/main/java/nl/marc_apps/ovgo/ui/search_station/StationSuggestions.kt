@@ -1,5 +1,6 @@
 package nl.marc_apps.ovgo.ui.search_station
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,8 +18,12 @@ import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import nl.marc_apps.ovgo.ui.theme.SubtitleColor
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun StationSuggestions(suggestions: List<TrainStation>, onSuggestionSelected: (TrainStation) -> Unit) {
+fun StationSuggestions(
+    suggestions: List<TrainStation>,
+    onSuggestionSelected: (TrainStation) -> Unit
+) {
     val listSize = minOf(suggestions.size, integerResource(R.integer.autocomplete_suggestion_list_size))
     LazyColumn {
         items(listSize, key = { index -> suggestions[index].uicCode }) { index ->
@@ -30,6 +35,7 @@ fun StationSuggestions(suggestions: List<TrainStation>, onSuggestionSelected: (T
                     }
                     .padding(16.dp, 12.dp)
                     .fillMaxWidth()
+                    .animateItemPlacement()
             ) {
                 Text(station.fullName, style = MaterialTheme.typography.subtitle1, color = SubtitleColor)
                 if (station.alternativeNames.isNotEmpty()) {
@@ -53,7 +59,7 @@ fun StationSuggestionPreview() {
     val exampleStation = TrainStation("rtd", "Rotterdam Centraal", "Rotterdam", setOf("Rotterdam CS", "Rotterdam"))
     AppTheme {
         Surface(color = MaterialTheme.colors.background) {
-            StationSuggestions(suggestions = listOf(exampleStation), onSuggestionSelected = {})
+            StationSuggestions(listOf(exampleStation)) {}
         }
     }
 }
