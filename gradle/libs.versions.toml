@@ -1,6 +1,6 @@
 [versions]
 trainl-minsdk = "21"
-trainl-targetsdk = "31"
+trainl-targetsdk = "32"
 
 android = "7.2.1"
 
@@ -8,7 +8,7 @@ kotlin = "1.7.0"
 kotlin-ksp = "1.7.0-1.0.6"
 kotlin-coroutines = "1.6.3"
 
-androidx-compose = "1.1.1"
+androidx-compose = "1.2.0-rc03"
 androidx-compose-compiler = "1.2.0"
 androidx-navigation = "2.5.0"
 androidx-room = "2.4.2"
