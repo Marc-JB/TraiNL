@@ -8,7 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentSearchStationBinding
 import nl.marc_apps.ovgo.ui.theme.AppTheme
@@ -31,8 +31,6 @@ class SearchStationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navController = binding.root.findNavController()
-
         binding.root.setViewCompositionStrategy(
             ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
         )
@@ -42,7 +40,7 @@ class SearchStationFragment : Fragment() {
                 Surface(
                     color = MaterialTheme.colors.background
                 ) {
-                    SearchStationView(viewModel, navController)
+                    SearchStationView(viewModel, findNavController())
                 }
             }
         }

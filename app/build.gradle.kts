@@ -164,7 +164,7 @@ dependencies {
     implementation(libs.bundles.androidx.navigation)
     testImplementation(libs.androidx.navigation.test)
 
-    implementation(libs.coil)
+    implementation(libs.bundles.coil)
 
     implementation(libs.bundles.androidx.compose)
 

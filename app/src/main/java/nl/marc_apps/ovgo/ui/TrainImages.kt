@@ -2,6 +2,7 @@ package nl.marc_apps.ovgo.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import coil.ImageLoader
@@ -38,7 +39,7 @@ object TrainImages {
             val borderTransformation = TrainImageBorderTransformation(
                 key = it,
                 trainImageStrokeWidth,
-                ContextCompat.getColor(imageView.root.context, borderColor)
+                Color(ContextCompat.getColor(imageView.root.context, borderColor))
             )
             imageView.root.load(it, imageLoader) {
                 if (isWhiteTrain || shouldDrawImageBorder) {

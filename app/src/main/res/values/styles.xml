@@ -61,19 +61,6 @@
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.BottomSheet</item>
     </style>
 
-    <style name="Widget.App.DepartureDetails.Stop" parent="">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
-        <item name="android:minHeight">@dimen/departure_stops_item_min_height</item>
-        <item name="android:paddingStart">@dimen/departure_stops_item_spacing_horizontal</item>
-        <item name="android:paddingTop">@dimen/departure_stops_item_spacing_vertical</item>
-        <item name="android:paddingEnd">@dimen/departure_stops_item_spacing_horizontal</item>
-        <item name="android:paddingBottom">@dimen/departure_stops_item_spacing_vertical</item>
-    </style>
-
     <!-- Main text styles -->
     <style name="TextAppearance.OVgo.SectionTitle" parent="@style/TextAppearance.MaterialComponents.Body2">
         <item name="fontFamily">@font/roboto_bold</item>
@@ -134,10 +121,6 @@
     <style name="TextAppearance.OVgo.DepartureDetails.Card.Title" parent="@style/TextAppearance.OVgo.SectionTitle">
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
-
-    <style name="TextAppearance.OVgo.StationSearch.Item.Title" parent="@style/TextAppearance.OVgo.SectionTitle" />
-
-    <style name="TextAppearance.OVgo.StationSearch.Item.SubText" parent="@style/TextAppearance.OVgo.SectionText.Medium" />
 
     <style name="TextAppearance.OVgo.Disruption.Title" parent="@style/TextAppearance.OVgo.SectionTitle" />
 

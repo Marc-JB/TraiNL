@@ -17,12 +17,13 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalFontLoader
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ParagraphIntrinsics
+import androidx.compose.ui.text.font.createFontFamilyResolver
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -69,7 +70,7 @@ fun DepartureStopsView(stops: List<JourneyStop>, onStationSelected: (TrainStatio
                     "00:00 +00",
                     style = MaterialTheme.typography.subtitle1,
                     density = LocalDensity.current,
-                    resourceLoader = LocalFontLoader.current
+                    fontFamilyResolver = createFontFamilyResolver(LocalContext.current)
                 )
 
                 Row(

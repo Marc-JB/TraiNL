@@ -18,6 +18,8 @@ okhttp = "4.9.3"
 
 koin = "3.2.0"
 
+coil = "2.1.0"
+
 mockk = "1.12.4"
 
 [libraries]
@@ -64,7 +66,8 @@ koin-android-navigation = { module = "io.insert-koin:koin-androidx-navigation", 
 google-material = { module = "com.google.android.material:material", version = "1.6.1" }
 google-material-compose = { module = "androidx.compose.material:material", version.ref = "androidx-compose" }
 
-coil = { module = "io.coil-kt:coil", version = "2.1.0" }
+coil = { module = "io.coil-kt:coil", version.ref = "coil" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
 mockk-runtime = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-agent = { module = "io.mockk:mockk-agent-jvm", version.ref = "mockk" }
@@ -80,6 +83,8 @@ androidx-compat = ["androidx-core", "androidx-appcompat", "androidx-fragment"]
 retrofit-extended = ["retrofit-runtime", "retrofit-serialization", "okhttp-logging", "okhttp-brotli", "okhttp-doh"]
 
 koin = ["koin-android-runtime", "koin-android-navigation"]
+
+coil = ["coil", "coil-compose"]
 
 mockk = ["mockk-runtime", "mockk-agent"]
 
