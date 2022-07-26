@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.datetime.Clock
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysTrainInfoApi
@@ -21,7 +22,6 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.robolectric.annotation.Config
 import retrofit2.Response
-import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -87,7 +87,7 @@ class DisruptionsFragmentTests {
             "DisRupTIoN",
             isActive = true,
             local = true,
-            start = Date(),
+            start = Clock.System.now(),
             publicationSections = emptyList(),
             timespans = emptyList()
         )
@@ -109,7 +109,7 @@ class DisruptionsFragmentTests {
             "DisRupTIoN",
             isActive = true,
             local = true,
-            start = Date(),
+            start = Clock.System.now(),
             publicationSections = emptyList(),
             timespans = emptyList()
         )
