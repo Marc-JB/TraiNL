@@ -1,5 +1,6 @@
 package nl.marc_apps.ovgo.data.api.dutch_railways.utils
 
+import android.util.Log
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -12,8 +13,15 @@ object InstantIso8601Serializer: KSerializer<Instant> {
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("Instant", PrimitiveKind.STRING)
 
-    override fun deserialize(decoder: Decoder): Instant =
-        Instant.parse(fixOffsetRepresentation(decoder.decodeString()))
+    override fun deserialize(decoder: Decoder): Instant {
+        val timestamp = decoder.decodeString()
+        return try {
+            Instant.parse(fixOffsetRepresentation(timestamp))
+        } catch (error: IllegalArgumentException) {
+            Log.e("InstantIso8601Serializer", "timestamp: $timestamp", error)
+            Instant.parse("2020-01-01T00:00Z")
+        }
+    }
 
     override fun serialize(encoder: Encoder, value: Instant) {
         encoder.encodeString(value.toString())
