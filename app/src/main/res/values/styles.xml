@@ -17,45 +17,6 @@
     </style>
 
     <!-- Component styles -->
-    <style name="Widget.App.Departure.Facility.Icon" parent="">
-        <item name="android:layout_width">22dp</item>
-        <item name="android:layout_height">22dp</item>
-        <item name="android:layout_marginStart">4dp</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:tint">?attr/colorPrimary</item>
-    </style>
-
-    <style name="Widget.App.Departure.TrainImages.ScrollableHolder" parent="">
-        <item name="android:fillViewport">true</item>
-        <item name="android:paddingTop">2dp</item>
-        <item name="android:paddingBottom">2dp</item>
-        <item name="android:scrollbarThumbHorizontal">@null</item>
-        <item name="android:scrollbarTrackHorizontal">@null</item>
-    </style>
-
-    <style name="Widget.App.Departure.Platform" parent="">
-        <item name="android:layout_width">40dp</item>
-        <item name="android:layout_height">40dp</item>
-        <item name="android:elevation">4dp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:padding">2dp</item>
-        <item name="android:textAppearance">@style/TextAppearance.OVgo.Departure.Platform</item>
-    </style>
-
-    <style name="Widget.App.DepartureDetails.Card" parent="">
-        <item name="android:background">@drawable/bg_flat_card</item>
-        <item name="android:paddingTop">@dimen/departure_details_card_padding</item>
-        <item name="android:paddingBottom">@dimen/departure_details_card_padding</item>
-        <item name="android:paddingStart">@dimen/departure_details_card_padding</item>
-        <item name="android:paddingEnd">@dimen/departure_details_card_padding</item>
-    </style>
-
-    <style name="Widget.App.DepartureDetails.Card.FullWidth" parent="@style/Widget.App.DepartureDetails.Card">
-        <item name="android:background">@drawable/bg_flat_card</item>
-        <item name="android:paddingStart">0dp</item>
-        <item name="android:paddingEnd">0dp</item>
-    </style>
-
     <style name="Widget.App.BottomSheet" parent="@style/Widget.MaterialComponents.BottomSheet.Modal">
         <item name="shapeAppearance">@style/ShapeAppearance.App.BottomSheet</item>
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.BottomSheet</item>
@@ -86,42 +47,6 @@
     </style>
 
     <!-- Specific text styles -->
-    <style name="TextAppearance.OVgo.Departure.Destination" parent="@style/TextAppearance.OVgo.SectionTitle" />
-
-    <style name="TextAppearance.OVgo.Departure.Destination.Disabled" parent="@style/TextAppearance.OVgo.SectionTitle.Disabled" />
-
-    <style name="TextAppearance.OVgo.Departure.Time" parent="@style/TextAppearance.OVgo.SectionTitle" />
-
-    <style name="TextAppearance.OVgo.Departure.Time.Disabled" parent="@style/TextAppearance.OVgo.SectionTitle.Disabled" />
-
-    <style name="TextAppearance.OVgo.Departure.RouteStations.Medium" parent="@style/TextAppearance.OVgo.SectionText.Medium" />
-
-    <style name="TextAppearance.OVgo.Departure.OperatorAndCategory.Medium" parent="@style/TextAppearance.OVgo.SectionText.Medium" />
-
-    <style name="TextAppearance.OVgo.Departure.Cancelled" parent="@style/TextAppearance.OVgo.SectionText.Medium">
-        <item name="android:textColor">@color/sectionTitleWarningColor</item>
-        <item name="fontFamily">@font/roboto_bold</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
-    </style>
-
-    <style name="TextAppearance.OVgo.Departure.RouteStations.Small" parent="@style/TextAppearance.OVgo.SectionText.Small" />
-
-    <style name="TextAppearance.OVgo.Departure.OperatorAndCategory.Small" parent="@style/TextAppearance.OVgo.SectionText.Small" />
-
-    <style name="TextAppearance.OVgo.Departure.Platform" parent="@style/TextAppearance.MaterialComponents.Body2">
-        <item name="android:textColor">@color/colorOnPrimary</item>
-        <item name="fontFamily">@font/roboto_bold</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
-        <item name="autoSizeMaxTextSize">48sp</item>
-        <item name="autoSizeMinTextSize">14sp</item>
-        <item name="autoSizeStepGranularity">4sp</item>
-        <item name="autoSizeTextType">uniform</item>
-    </style>
-
-    <style name="TextAppearance.OVgo.DepartureDetails.Card.Title" parent="@style/TextAppearance.OVgo.SectionTitle">
-        <item name="android:textColor">?android:textColorPrimary</item>
-    </style>
-
     <style name="TextAppearance.OVgo.Disruption.Title" parent="@style/TextAppearance.OVgo.SectionTitle" />
 
     <style name="TextAppearance.OVgo.Disruption.SubText" parent="@style/TextAppearance.OVgo.SectionText.Medium" />

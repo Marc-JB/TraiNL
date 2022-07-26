@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import com.google.android.material.snackbar.Snackbar
@@ -20,6 +22,7 @@ import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentDepartureBoardBinding
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.ui.DividerItemDecoration
+import nl.marc_apps.ovgo.ui.theme.AppTheme
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
@@ -59,16 +62,26 @@ class DepartureBoardFragment : Fragment() {
             }
         }
 
-        val departuresAdapter = DeparturesAdapter(imageLoader)
-        binding.listDepartures.adapter = departuresAdapter
-        binding.listDepartures.addItemDecoration(getDividerDecoration(view.context, true))
+        binding.listDepartures.setViewCompositionStrategy(
+            ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+        )
 
-        if (binding.listDepartures.layoutManager is GridLayoutManager) {
-            binding.listDepartures.addItemDecoration(getDividerDecoration(view.context, false))
+        binding.listDepartures.setContent {
+            AppTheme {
+                Surface(
+                    color = MaterialTheme.colors.background
+                ) {
+                    DeparturesList(
+                        departureBoardViewModel = viewModel,
+                        navController = findNavController(),
+                        imageLoader = imageLoader
+                    )
+                }
+            }
         }
 
         viewModel.departures.observe(viewLifecycleOwner) {
-            loadNewDepartures(it, departuresAdapter)
+            loadNewDepartures(it)
         }
 
         val station = navigationArgs.station
@@ -93,7 +106,7 @@ class DepartureBoardFragment : Fragment() {
         }
     }
 
-    private fun loadNewDepartures(departures: Result<List<Departure>>?, adapter: DeparturesAdapter) {
+    private fun loadNewDepartures(departures: Result<List<Departure>>?) {
         binding.placeholderListDepartures.visibility = View.GONE
         binding.listDepartures.visibility = View.GONE
         binding.partialImageWithLabelPlaceholder.root.visibility = View.GONE
@@ -124,9 +137,6 @@ class DepartureBoardFragment : Fragment() {
             }
             else -> {
                 binding.listDepartures.visibility = View.VISIBLE
-                adapter.submitList(departures.getOrThrow()) {
-                    binding.listDepartures.scheduleLayoutAnimation()
-                }
             }
         }
     }

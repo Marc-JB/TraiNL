@@ -1,8 +1,6 @@
 package nl.marc_apps.ovgo.ui
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,16 +22,33 @@ private fun isImageUrlFromWhiteTrain(imageUrl: String): Boolean {
 }
 
 @Composable
-fun TrainImagesView(imageUrls: List<String>, paddingStart: Dp, paddingEnd: Dp, imageLoader: ImageLoader? = null) {
+fun TrainImagesView(
+    imageUrls: List<String>,
+    paddingStart: Dp,
+    paddingEnd: Dp,
+    imageLoader: ImageLoader? = null,
+    header: (@Composable () -> Unit)? = null
+) {
     val shouldDrawImageBorder = booleanResource(R.bool.should_draw_train_image_border)
     val trainImageStrokeWidth = dimensionResource(R.dimen.train_image_stroke_width)
     val trainImageHeight = dimensionResource(R.dimen.train_image_height)
 
     LazyRow(
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
     ) {
+        if (header != null) {
+            item {
+                Box (
+                    modifier = Modifier.widthIn(min = paddingStart)
+                ) {
+                    header()
+                }
+            }
+        }
+
         items(imageUrls.size) { index ->
-            if (index == 0) {
+            if (index == 0 && header == null) {
                 Spacer(Modifier.width(paddingStart))
             }
 

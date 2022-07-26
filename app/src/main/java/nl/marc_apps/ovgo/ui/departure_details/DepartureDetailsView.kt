@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -22,9 +24,13 @@ fun DepartureDetailsView(
     departure: Departure,
     departureDetailsViewModel: DepartureDetailsViewModel,
     navController: NavController,
-    imageLoader: ImageLoader? = null
+    imageLoader: ImageLoader
 ) {
-    Column {
+    val scrollState = rememberScrollState()
+
+    Column(
+        Modifier.verticalScroll(scrollState)
+    ) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
@@ -48,5 +54,7 @@ fun DepartureDetailsView(
         Spacer(modifier = Modifier.height(16.dp))
 
         TrainInformationCard(departure, imageLoader)
+
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
