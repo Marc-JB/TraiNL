@@ -15,8 +15,6 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.brotli.BrotliInterceptor
 import okhttp3.logging.HttpLoggingInterceptor
 import java.io.File
-import java.util.concurrent.TimeUnit
-import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
@@ -62,6 +60,7 @@ class HttpClientImpl(val context: Context) : HttpClient {
         coerceInputValues = true
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     override val jsonConverter = json.asConverterFactory(JSON_MEDIA_TYPE.toMediaType())
 
     companion object {

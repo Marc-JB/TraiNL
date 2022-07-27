@@ -5,7 +5,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import coil.ImageLoader
-import kotlinx.serialization.ExperimentalSerializationApi
 import nl.marc_apps.ovgo.data.DepartureRepository
 import nl.marc_apps.ovgo.data.JourneyDetailsRepository
 import nl.marc_apps.ovgo.data.TrainInfoRepository
