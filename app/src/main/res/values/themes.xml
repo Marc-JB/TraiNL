@@ -23,8 +23,4 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
-
-    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/Widget.App.BottomSheet</item>
-    </style>
 </resources>

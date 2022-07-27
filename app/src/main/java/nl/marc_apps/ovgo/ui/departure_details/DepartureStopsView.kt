@@ -13,13 +13,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ParagraphIntrinsics
@@ -37,20 +34,10 @@ import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
 import kotlin.time.Duration
 
-@Composable
-fun DepartureStopsView(stops: Array<JourneyStop>, navController: NavController?) {
-    DepartureStopsView(stops.toList()) {
-        val action = DepartureStopsFragmentDirections
-            .actionDepartureStopsToStationDepartureBoard(it)
-        navController?.navigate(action)
-    }
-}
-
 private fun isForeignStation(trainStation: TrainStation): Boolean {
     return trainStation.country != null && trainStation.country != TrainStation.Country.THE_NETHERLANDS
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun DepartureStopsView(stops: List<JourneyStop>, onStationSelected: (TrainStation) -> Unit) {
     Column(
@@ -62,9 +49,8 @@ fun DepartureStopsView(stops: List<JourneyStop>, onStationSelected: (TrainStatio
 
         Spacer(Modifier.height(16.dp))
 
-        val nestedScrollInterop = rememberNestedScrollInteropConnection()
 
-        LazyColumn(modifier = Modifier.nestedScroll(nestedScrollInterop)) {
+        LazyColumn {
             items(stops, key = { it.id }) {
                 val intrinsics = ParagraphIntrinsics(
                     "00:00 +00",

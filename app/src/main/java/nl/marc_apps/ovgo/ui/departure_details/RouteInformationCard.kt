@@ -28,32 +28,6 @@ import kotlin.time.Duration.Companion.minutes
 @Composable
 fun RouteInformationCard(
     departure: Departure,
-    departureDetailsViewModel: DepartureDetailsViewModel,
-    navController: NavController
-) {
-    val stops by departureDetailsViewModel.journeyStops.collectAsState()
-
-    RouteInformationCard(
-        departure,
-        stops,
-        onStationSelected = {
-            val action = DepartureDetailsFragmentDirections
-                .actionDepartureDetailsToStationDepartureBoard(it)
-            navController.navigate(action)
-        },
-        showAllStops = {
-            stops?.let {
-                val action = DepartureDetailsFragmentDirections
-                    .actionDepartureDetailsToStops(it.toTypedArray())
-                navController.navigate(action)
-            }
-        }
-    )
-}
-
-@Composable
-fun RouteInformationCard(
-    departure: Departure,
     journeyStops: List<JourneyStop>?,
     onStationSelected: (TrainStation) -> Unit,
     showAllStops: () -> Unit

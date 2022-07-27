@@ -1,10 +1,12 @@
 package nl.marc_apps.ovgo.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
 
 private val DarkColorPalette = darkColors(
     primary = BluePrimaryLight,
@@ -36,6 +38,9 @@ fun AppTheme(
     MaterialTheme(
         colors = colors,
         typography = TextAppearance,
+        shapes = MaterialTheme.shapes.copy(
+            large = RoundedCornerShape(24.dp)
+        ),
         content = content
     )
 }
