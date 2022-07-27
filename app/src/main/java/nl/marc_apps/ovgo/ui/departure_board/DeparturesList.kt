@@ -9,36 +9,15 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.booleanResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import coil.ImageLoader
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.Departure
-
-@Composable
-fun DeparturesList(
-    departureBoardViewModel: DepartureBoardViewModel,
-    navController: NavController,
-    imageLoader: ImageLoader
-) {
-    val departures by departureBoardViewModel.departures.observeAsState()
-
-    departures?.let {
-        if (it.getOrThrow().isNotEmpty()) {
-            DeparturesList(it.getOrThrow(), imageLoader) {
-                val action = DepartureBoardFragmentDirections.actionDepartureBoardToDetails(it)
-                navController.navigate(action)
-            }
-        }
-    }
-}
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

@@ -3,7 +3,11 @@ package nl.marc_apps.ovgo.ui.departure_board
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.lifecycle.*
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.data.DepartureRepository
 import nl.marc_apps.ovgo.data.PreferenceKeys
@@ -13,19 +17,22 @@ import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.utils.getOrNull
 
 class DepartureBoardViewModel(
-    state: SavedStateHandle,
+    private val state: SavedStateHandle,
     private val trainStationRepository: TrainStationRepository,
     private val departureRepository: DepartureRepository,
     private val preferences: DataStore<Preferences>
 ) : ViewModel() {
-    private val mutableCurrentStation = state.getLiveData<TrainStation>(SAVED_STATE_KEY_STATION)
+    private var mutableCurrentStation: TrainStation?
+        get() = currentStation.value
+        set(value) {
+            state[SAVED_STATE_KEY_STATION] = value
+        }
 
-    val currentStation: LiveData<TrainStation>
-        get() = mutableCurrentStation
+    val currentStation = state.getStateFlow<TrainStation?>(SAVED_STATE_KEY_STATION, null)
 
-    private val mutableDepartures = MutableLiveData<Result<List<Departure>>?>()
+    private val mutableDepartures = MutableStateFlow<Result<List<Departure>>?>(null)
 
-    val departures: LiveData<Result<List<Departure>>?>
+    val departures: StateFlow<Result<List<Departure>>?>
         get() = mutableDepartures
 
     private fun saveCurrentStation(station: TrainStation) {
@@ -62,16 +69,16 @@ class DepartureBoardViewModel(
         }
 
         if (currentStation.value != station) {
-            mutableCurrentStation.postValue(station)
+            mutableCurrentStation = station
             saveCurrentStation(station)
         }
-        mutableDepartures.postValue(null)
+        mutableDepartures.value = null
 
         viewModelScope.launch {
             val departures = runCatching {
                 departureRepository.getDepartures(station)
             }
-            mutableDepartures.postValue(departures)
+            mutableDepartures.value = departures
         }
     }
 

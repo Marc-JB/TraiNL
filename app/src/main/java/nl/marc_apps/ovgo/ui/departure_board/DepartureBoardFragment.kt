@@ -1,19 +1,17 @@
 package nl.marc_apps.ovgo.ui.departure_board
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.crashlytics.ktx.crashlytics
@@ -21,7 +19,6 @@ import com.google.firebase.ktx.Firebase
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentDepartureBoardBinding
 import nl.marc_apps.ovgo.domain.Departure
-import nl.marc_apps.ovgo.ui.DividerItemDecoration
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
@@ -48,8 +45,10 @@ class DepartureBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.currentStation.observe(viewLifecycleOwner) {
-            binding.toolbar.title = it.fullName
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.currentStation.collect {
+                binding.toolbar.title = it?.fullName
+            }
         }
 
         binding.toolbar.setOnMenuItemClickListener {
@@ -71,7 +70,7 @@ class DepartureBoardFragment : Fragment() {
                 Surface(
                     color = MaterialTheme.colors.background
                 ) {
-                    DeparturesList(
+                    DepartureBoardView(
                         departureBoardViewModel = viewModel,
                         navController = findNavController(),
                         imageLoader = imageLoader
@@ -80,8 +79,10 @@ class DepartureBoardFragment : Fragment() {
             }
         }
 
-        viewModel.departures.observe(viewLifecycleOwner) {
-            loadNewDepartures(it)
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.departures.collect {
+                loadNewDepartures(it)
+            }
         }
 
         val station = navigationArgs.station
@@ -92,28 +93,13 @@ class DepartureBoardFragment : Fragment() {
         }
     }
 
-    private fun getDividerDecoration(context: Context, isHorizontalDivider: Boolean): RecyclerView.ItemDecoration {
-        val dividerResource = if(isHorizontalDivider) R.drawable.divider else R.drawable.divider_vertical
-        val dividerDrawable = AppCompatResources.getDrawable(context, dividerResource)
-
-        return DividerItemDecoration(
-            binding.listDepartures.context,
-            if(isHorizontalDivider) DividerItemDecoration.VERTICAL else DividerItemDecoration.HORIZONTAL
-        ).apply {
-            if (dividerDrawable != null) {
-                drawable = dividerDrawable
-            }
-        }
-    }
-
     private fun loadNewDepartures(departures: Result<List<Departure>>?) {
-        binding.placeholderListDepartures.visibility = View.GONE
         binding.listDepartures.visibility = View.GONE
         binding.partialImageWithLabelPlaceholder.root.visibility = View.GONE
 
         when {
             departures == null -> {
-                binding.placeholderListDepartures.visibility = View.VISIBLE
+                binding.listDepartures.visibility = View.VISIBLE
             }
             departures.isFailure -> {
                 Snackbar.make(binding.root, R.string.departure_board_loading_failure, Snackbar.LENGTH_INDEFINITE)
