@@ -11,7 +11,10 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.booleanResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -37,12 +40,15 @@ fun DeparturesList(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun DeparturesList(departures: List<Departure>, imageLoader: ImageLoader? = null, onDepartureSelected: (Departure) -> Unit) {
+    val nestedScrollInterop = rememberNestedScrollInteropConnection()
+
     if (booleanResource(R.bool.is_large_screen_device)) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().nestedScroll(nestedScrollInterop)
         ) {
             itemsIndexed(
                 departures,
@@ -62,7 +68,7 @@ fun DeparturesList(departures: List<Departure>, imageLoader: ImageLoader? = null
         }
     } else {
         LazyColumn(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().nestedScroll(nestedScrollInterop)
         ) {
             itemsIndexed(
                 departures,
