@@ -18,13 +18,15 @@ import androidx.navigation.NavController
 import coil.ImageLoader
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.Departure
+import org.koin.androidx.compose.get
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun DepartureDetailsView(
     departure: Departure,
-    departureDetailsViewModel: DepartureDetailsViewModel,
+    departureDetailsViewModel: DepartureDetailsViewModel = getViewModel(),
     navController: NavController,
-    imageLoader: ImageLoader
+    imageLoader: ImageLoader = get()
 ) {
     val scrollState = rememberScrollState()
 

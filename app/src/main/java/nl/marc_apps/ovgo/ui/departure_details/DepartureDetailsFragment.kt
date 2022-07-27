@@ -10,11 +10,9 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import coil.ImageLoader
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentDepartureDetailsBinding
 import nl.marc_apps.ovgo.ui.theme.AppTheme
-import org.koin.android.ext.android.inject
 import org.koin.androidx.navigation.koinNavGraphViewModel
 
 class DepartureDetailsFragment : Fragment() {
@@ -23,8 +21,6 @@ class DepartureDetailsFragment : Fragment() {
     private lateinit var binding: FragmentDepartureDetailsBinding
 
     private val navigationArgs by navArgs<DepartureDetailsFragmentArgs>()
-
-    private val imageLoader by inject<ImageLoader>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,8 +48,7 @@ class DepartureDetailsFragment : Fragment() {
                     DepartureDetailsView(
                         departure = navigationArgs.departure,
                         departureDetailsViewModel = viewModel,
-                        navController = findNavController(),
-                        imageLoader = imageLoader
+                        navController = findNavController()
                     )
                 }
             }

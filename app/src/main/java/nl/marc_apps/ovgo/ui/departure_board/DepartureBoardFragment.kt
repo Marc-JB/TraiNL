@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import coil.ImageLoader
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
@@ -20,7 +19,6 @@ import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentDepartureBoardBinding
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.ui.theme.AppTheme
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 class DepartureBoardFragment : Fragment() {
@@ -30,8 +28,6 @@ class DepartureBoardFragment : Fragment() {
     private lateinit var binding: FragmentDepartureBoardBinding
 
     private val navigationArgs by navArgs<DepartureBoardFragmentArgs>()
-
-    private val imageLoader by inject<ImageLoader>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,8 +68,7 @@ class DepartureBoardFragment : Fragment() {
                 ) {
                     DepartureBoardView(
                         departureBoardViewModel = viewModel,
-                        navController = findNavController(),
-                        imageLoader = imageLoader
+                        navController = findNavController()
                     )
                 }
             }

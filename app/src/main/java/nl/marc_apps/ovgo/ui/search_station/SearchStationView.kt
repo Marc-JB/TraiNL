@@ -20,10 +20,11 @@ import androidx.navigation.NavController
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.ui.theme.AppTheme
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun SearchStationView(
-    searchStationViewModel: SearchStationViewModel,
+    searchStationViewModel: SearchStationViewModel = getViewModel(),
     navController: NavController
 ) {
     val isLoading by searchStationViewModel.isLoadingData.collectAsState()

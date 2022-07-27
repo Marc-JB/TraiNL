@@ -12,12 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.ImageLoader
+import org.koin.androidx.compose.get
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun DepartureBoardView(
-    departureBoardViewModel: DepartureBoardViewModel,
+    departureBoardViewModel: DepartureBoardViewModel = getViewModel(),
     navController: NavController,
-    imageLoader: ImageLoader
+    imageLoader: ImageLoader = get()
 ) {
     val departuresState = departureBoardViewModel.departures.collectAsState()
     val departures = departuresState.value
