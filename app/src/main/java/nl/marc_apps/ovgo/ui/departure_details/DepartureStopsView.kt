@@ -23,7 +23,6 @@ import androidx.compose.ui.text.ParagraphIntrinsics
 import androidx.compose.ui.text.font.createFontFamilyResolver
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toJavaInstant
 import nl.marc_apps.ovgo.R
