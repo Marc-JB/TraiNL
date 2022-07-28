@@ -26,6 +26,7 @@ import nl.marc_apps.ovgo.domain.JourneyStop
 import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
+import nl.marc_apps.ovgo.ui.preview.fixtures.JourneyStopPreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
@@ -128,9 +129,10 @@ fun DepartureDetailsView(
 fun DepartureDetailsViewPreview(
     @PreviewParameter(DeparturePreviewParameterProvider::class) departure: Departure
 ) {
+    val stops = JourneyStopPreviewParameterProvider().values.toList()
     AppTheme {
         Surface(color = MaterialTheme.colors.background) {
-            DepartureDetailsView(departure, null, null) {}
+            DepartureDetailsView(departure, stops, null) {}
         }
     }
 }

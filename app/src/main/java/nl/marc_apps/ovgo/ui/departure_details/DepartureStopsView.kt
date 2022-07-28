@@ -24,10 +24,10 @@ import androidx.compose.ui.text.font.createFontFamilyResolver
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toJavaInstant
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.JourneyStop
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.ui.preview.fixtures.JourneyStopPreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
@@ -152,38 +152,7 @@ fun Pill() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun DepartureStopsViewPreview() {
-    val stops = listOf(
-        JourneyStop(
-            "abcd",
-            TrainStation("ddr", "Dordrecht", "Dordrecht"),
-            null,
-            null,
-            Instant.parse("2022-07-18T10:20Z").toJavaInstant(),
-            Instant.parse("2022-07-18T10:20Z").toJavaInstant(),
-            "3a",
-            "3a"
-        ),
-        JourneyStop(
-            "efgh",
-            TrainStation("rtd", "Rotterdam Centraal", "Rotterdam", setOf("Rotterdam CS", "Rotterdam")),
-            Instant.parse("2022-07-18T10:40Z").toJavaInstant(),
-            Instant.parse("2022-07-18T10:40Z").toJavaInstant(),
-            Instant.parse("2022-07-18T10:43Z").toJavaInstant(),
-            Instant.parse("2022-07-18T10:44Z").toJavaInstant(),
-            "6",
-            "7"
-        ),
-        JourneyStop(
-            "ijkl",
-            TrainStation("gvc", "Den Haag Centraal", "Den Haag", setOf("Den Haag CS", "Den Haag")),
-            Instant.parse("2022-07-18T10:40Z").toJavaInstant(),
-            Instant.parse("2022-07-18T10:40Z").toJavaInstant(),
-            null,
-            null,
-            "20",
-            "20"
-        )
-    )
+    val stops = JourneyStopPreviewParameterProvider().values.toList()
     AppTheme {
         Surface(color = MaterialTheme.colors.background) {
             DepartureStopsView(stops) {}

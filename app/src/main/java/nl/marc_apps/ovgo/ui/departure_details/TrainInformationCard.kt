@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
@@ -16,6 +17,8 @@ import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
 import nl.marc_apps.ovgo.ui.TrainImagesView
+import nl.marc_apps.ovgo.ui.preview.DayNightPreview
+import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import nl.marc_apps.ovgo.ui.theme.Card
 
@@ -122,6 +125,19 @@ fun FacilityIcon(enabled: Boolean, iconPainter: Painter, description: String) {
     }
 
     Spacer(Modifier.width(4.dp))
+}
+
+@Preview
+@DayNightPreview
+@Composable
+fun TrainInformationCardPreview(
+    @PreviewParameter(DeparturePreviewParameterProvider::class) departure: Departure
+) {
+    AppTheme {
+        Surface(color = MaterialTheme.colors.background) {
+            TrainInformationCard(departure)
+        }
+    }
 }
 
 @Preview
