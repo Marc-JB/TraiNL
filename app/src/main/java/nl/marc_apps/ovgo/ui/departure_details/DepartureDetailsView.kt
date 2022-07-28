@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -50,6 +47,10 @@ fun DepartureDetailsView(
             navController.navigate(action)
         }
     )
+
+    LaunchedEffect(departure) {
+        departureDetailsViewModel.loadStations(departure)
+    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)

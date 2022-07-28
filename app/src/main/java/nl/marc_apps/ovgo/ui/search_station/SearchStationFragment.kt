@@ -10,21 +10,21 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import nl.marc_apps.ovgo.R
-import nl.marc_apps.ovgo.databinding.FragmentSearchStationBinding
+import nl.marc_apps.ovgo.databinding.ComposeLayoutBinding
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import org.koin.androidx.navigation.koinNavGraphViewModel
 
 class SearchStationFragment : Fragment() {
     private val viewModel by koinNavGraphViewModel<SearchStationViewModel>(R.id.search_station)
 
-    private lateinit var binding: FragmentSearchStationBinding
+    private lateinit var binding: ComposeLayoutBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSearchStationBinding.inflate(inflater, container, false)
+        binding = ComposeLayoutBinding.inflate(inflater, container, false)
         return binding.root
     }
 

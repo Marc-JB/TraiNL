@@ -11,14 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import nl.marc_apps.ovgo.R
-import nl.marc_apps.ovgo.databinding.FragmentDepartureDetailsBinding
+import nl.marc_apps.ovgo.databinding.ComposeLayoutBinding
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import org.koin.androidx.navigation.koinNavGraphViewModel
 
 class DepartureDetailsFragment : Fragment() {
     private val viewModel by koinNavGraphViewModel<DepartureDetailsViewModel>(R.id.departure_details)
 
-    private lateinit var binding: FragmentDepartureDetailsBinding
+    private lateinit var binding: ComposeLayoutBinding
 
     private val navigationArgs by navArgs<DepartureDetailsFragmentArgs>()
 
@@ -27,14 +27,12 @@ class DepartureDetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDepartureDetailsBinding.inflate(inflater, container, false)
+        binding = ComposeLayoutBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.loadStations(navigationArgs.departure)
 
         binding.root.setViewCompositionStrategy(
             ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed

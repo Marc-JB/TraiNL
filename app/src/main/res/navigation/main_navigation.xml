@@ -63,7 +63,7 @@
         android:id="@+id/search_station"
         android:name="nl.marc_apps.ovgo.ui.search_station.SearchStationFragment"
         android:label="Search station"
-        tools:layout="@layout/fragment_search_station">
+        tools:layout="@layout/compose_layout">
 
         <action
             android:id="@+id/action_station_search_to_home"
