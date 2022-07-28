@@ -1,5 +1,6 @@
 package nl.marc_apps.ovgo.ui.departure_board
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,20 +18,18 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
-import kotlinx.datetime.Clock
-import kotlinx.datetime.toJavaInstant
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.Departure
-import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.ui.TrainImagesView
 import nl.marc_apps.ovgo.ui.TrainStationDisplayName
+import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import nl.marc_apps.ovgo.ui.theme.BluePrimary
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
-import kotlin.time.Duration.Companion.minutes
 
 private const val MAX_STATIONS_DISPLAYED_ON_ROUTE = 2
 
@@ -202,35 +201,26 @@ fun PlatformIcon(platform: String, platformChanged: Boolean) {
     }
 }
 
-@Preview
+@Preview(
+    name = "Light theme",
+    group = "themes",
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
+@Preview(
+    name = "Dark theme",
+    group = "themes",
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
-fun ActiveDepartureViewPreview() {
-    val exampleStations = listOf(
-        TrainStation("ddr", "Dordrecht", "Dordrecht"),
-        TrainStation("rtd", "Rotterdam Centraal", "Rotterdam", setOf("Rotterdam CS", "Rotterdam"))
-    )
-
+fun ActiveDepartureViewPreview(
+    @PreviewParameter(DeparturePreviewParameterProvider::class) departure: Departure
+) {
     AppTheme {
         Surface(
             color = MaterialTheme.colors.background,
             modifier = Modifier.fillMaxWidth()
         ) {
-            ActiveDepartureView(
-                Departure(
-                    "abcd",
-                    actualDirection = exampleStations.last(),
-                    _plannedDepartureTime = (Clock.System.now() + 2.minutes).toJavaInstant(),
-                    _actualDepartureTime = (Clock.System.now() + 4.minutes).toJavaInstant(),
-                    plannedTrack = "4b",
-                    actualTrack = "4",
-                    operator = "NS",
-                    categoryName = "Sprinter",
-                    stationsOnRoute = exampleStations,
-                    warnings = setOf("Ends at Rotterdam Centraal"),
-                    messages = setOf("Does not stop in Rotterdam Kralingse Zoom")
-                ),
-                null
-            ) {}
+            ActiveDepartureView(departure, null) {}
         }
     }
 }

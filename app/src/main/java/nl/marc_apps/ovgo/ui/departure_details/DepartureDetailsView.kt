@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -22,6 +24,9 @@ import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.JourneyStop
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.ui.preview.DayNightPreview
+import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
+import nl.marc_apps.ovgo.ui.theme.AppTheme
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
@@ -55,7 +60,6 @@ fun DepartureDetailsView(
     onStationSelected: (TrainStation) -> Unit
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
-    val scaffoldState = rememberScaffoldState()
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -71,51 +75,62 @@ fun DepartureDetailsView(
             }
         }
     ) {
-        Scaffold(scaffoldState = scaffoldState) {
-            Column(
-                Modifier.verticalScroll(scrollState)
-            ) {
-                Spacer(modifier = Modifier.height(16.dp))
+        Column(
+            Modifier.verticalScroll(scrollState)
+        ) {
+            Spacer(modifier = Modifier.height(16.dp))
 
-                Text(
-                    text = departure.actualDirection?.fullName?.let {
-                        stringResource(R.string.departure_info_title, departure.categoryName, it)
-                    } ?: departure.categoryName,
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colors.primary,
-                    modifier = Modifier.padding(24.dp, 0.dp)
-                )
+            Text(
+                text = departure.actualDirection?.fullName?.let {
+                    stringResource(R.string.departure_info_title, departure.categoryName, it)
+                } ?: departure.categoryName,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colors.primary,
+                modifier = Modifier.padding(24.dp, 0.dp)
+            )
 
-                Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-                DepartureInformationCard(departure)
+            DepartureInformationCard(departure)
 
-                Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-                RouteInformationCard(
-                    departure,
-                    stops,
-                    onStationSelected = onStationSelected,
-                    showAllStops = {
-                        coroutineScope.launch {
-                            modalBottomSheetState.show()
-                        }
+            RouteInformationCard(
+                departure,
+                stops,
+                onStationSelected = onStationSelected,
+                showAllStops = {
+                    coroutineScope.launch {
+                        modalBottomSheetState.show()
                     }
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                TrainInformationCard(departure, imageLoader)
-
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-
-            BackHandler(enabled = modalBottomSheetState.isVisible) {
-                coroutineScope.launch {
-                    modalBottomSheetState.hide()
                 }
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            TrainInformationCard(departure, imageLoader)
+
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        BackHandler(enabled = modalBottomSheetState.isVisible) {
+            coroutineScope.launch {
+                modalBottomSheetState.hide()
             }
+        }
+    }
+}
+
+@DayNightPreview
+@Preview
+@Composable
+fun DepartureDetailsViewPreview(
+    @PreviewParameter(DeparturePreviewParameterProvider::class) departure: Departure
+) {
+    AppTheme {
+        Surface(color = MaterialTheme.colors.background) {
+            DepartureDetailsView(departure, null, null) {}
         }
     }
 }

@@ -167,6 +167,7 @@ dependencies {
     implementation(libs.bundles.coil)
 
     implementation(libs.bundles.androidx.compose)
+    debugImplementation(libs.androidx.compose.tooling)
 
     implementation(libs.google.material.compose)
 

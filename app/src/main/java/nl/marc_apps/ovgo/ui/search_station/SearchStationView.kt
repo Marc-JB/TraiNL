@@ -1,6 +1,5 @@
 package nl.marc_apps.ovgo.ui.search_station
 
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.ui.preview.DayNightPreview
+import nl.marc_apps.ovgo.ui.preview.fixtures.TrainStationPreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import org.koin.androidx.compose.getViewModel
 
@@ -87,13 +88,11 @@ fun SearchStationView(
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DayNightPreview
+@Preview
 @Composable
 fun SearchStationViewPreview() {
-    val exampleStations = listOf(
-        TrainStation("ddr", "Dordrecht", "Dordrecht"),
-        TrainStation("rtd", "Rotterdam Centraal", "Rotterdam", setOf("Rotterdam CS", "Rotterdam"))
-    )
+    val exampleStations = TrainStationPreviewParameterProvider().values.toList()
     AppTheme {
         Surface(color = MaterialTheme.colors.background) {
             SearchStationView(false, exampleStations, {}, {})

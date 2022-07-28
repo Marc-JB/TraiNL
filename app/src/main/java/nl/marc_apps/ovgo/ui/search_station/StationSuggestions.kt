@@ -10,9 +10,12 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.ui.preview.DayNightPreview
+import nl.marc_apps.ovgo.ui.preview.fixtures.TrainStationPreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import nl.marc_apps.ovgo.ui.theme.SubtitleColor
 
@@ -59,11 +62,13 @@ fun StationSuggestions(
 
 @Composable
 @Preview
-fun StationSuggestionPreview() {
-    val exampleStation = TrainStation("rtd", "Rotterdam Centraal", "Rotterdam", setOf("Rotterdam CS", "Rotterdam"))
+@DayNightPreview
+fun StationSuggestionPreview(
+    @PreviewParameter(TrainStationPreviewParameterProvider::class) trainStation: TrainStation
+) {
     AppTheme {
         Surface(color = MaterialTheme.colors.background) {
-            StationSuggestions(listOf(exampleStation)) {}
+            StationSuggestions(listOf(trainStation)) {}
         }
     }
 }

@@ -10,17 +10,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import kotlinx.datetime.Clock
-import kotlinx.datetime.toJavaInstant
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.JourneyStop
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.ui.preview.DayNightPreview
+import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import nl.marc_apps.ovgo.ui.theme.Card
-import kotlin.time.Duration.Companion.minutes
 
 @Composable
 fun RouteInformationCard(
@@ -133,32 +133,15 @@ fun StationChip(station: TrainStation, onSelected: () -> Unit) {
     }
 }
 
+@DayNightPreview
 @Preview
 @Composable
-fun RouteInformationCardPreview() {
-    val exampleStations = listOf(
-        TrainStation("ddr", "Dordrecht", "Dordrecht"),
-        TrainStation("rtd", "Rotterdam Centraal", "Rotterdam", setOf("Rotterdam CS", "Rotterdam"))
-    )
-
+fun RouteInformationCardPreview(
+    @PreviewParameter(DeparturePreviewParameterProvider::class) departure: Departure
+) {
     AppTheme {
         Surface(color = MaterialTheme.colors.background) {
-            RouteInformationCard(
-                Departure(
-                    "abcd",
-                    actualDirection = exampleStations.last(),
-                    _plannedDepartureTime = (Clock.System.now() + 2.minutes).toJavaInstant(),
-                    _actualDepartureTime = (Clock.System.now() + 4.minutes).toJavaInstant(),
-                    plannedTrack = "4b",
-                    actualTrack = "4",
-                    operator = "NS",
-                    categoryName = "Sprinter",
-                    stationsOnRoute = exampleStations
-                ),
-                null,
-                {},
-                {}
-            )
+            RouteInformationCard(departure, null, {}, {})
         }
     }
 }
