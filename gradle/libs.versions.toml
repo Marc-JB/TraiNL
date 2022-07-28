@@ -6,21 +6,21 @@ android = "7.2.1"
 
 kotlin = "1.7.0"
 kotlin-ksp = "1.7.0-1.0.6"
-kotlin-coroutines = "1.6.3"
+kotlin-coroutines = "1.6.4"
 
-androidx-compose = "1.2.0-rc03"
+androidx-compose = "1.2.0"
 androidx-compose-compiler = "1.2.0"
-androidx-navigation = "2.5.0"
-androidx-room = "2.4.2"
-androidx-fragment = "1.5.0"
+androidx-navigation = "2.5.1"
+androidx-room = "2.4.3"
+androidx-fragment = "1.5.1"
 
-okhttp = "4.9.3"
+okhttp = "4.10.0"
 
 koin = "3.2.0"
 
 coil = "2.1.0"
 
-mockk = "1.12.4"
+mockk = "1.12.5"
 
 [libraries]
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.3.3" }
@@ -46,7 +46,7 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version = "1.0.0" }
 
 androidx-core = { module = "androidx.core:core-ktx", version = "1.8.0" }
-androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.5.0" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.5.1" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.4.2" }
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidx-fragment" }
 androidx-fragment-test = { module = "androidx.fragment:fragment-testing", version.ref = "androidx-fragment" }
@@ -104,4 +104,6 @@ google-services = { id = "com.google.gms.google-services", version = "4.3.13" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.1" }
 
 kover = { id = "org.jetbrains.kotlinx.kover", version = "0.5.1" }
-sonarqube = { id = "org.sonarqube", version = "3.3" }
+sonarqube = { id = "org.sonarqube", version = "3.4.0.2513" }
+
+versioncheck = { id = "com.github.ben-manes.versions", version = "0.42.0" }

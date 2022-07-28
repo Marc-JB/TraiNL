@@ -1,9 +1,7 @@
-import kotlinx.kover.api.CoverageEngine
-import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
-import org.jetbrains.kotlin.konan.properties.Properties
 
-@Deprecated("Use Gradle Version Catalogs")
-val androidxNavigationVersion by extra("2.5.0")
+import kotlinx.kover.api.CoverageEngine
+import org.jetbrains.kotlin.konan.properties.Properties
+import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 
 // TODO: Remove when https://youtrack.jetbrains.com/issue/KTIJ-19369 is fixed.
 @Suppress(
@@ -29,6 +27,9 @@ plugins {
 
     // API
     alias(libs.plugins.kotlin.serialization)
+
+    // Other
+    alias(libs.plugins.versioncheck)
 }
 
 val coverageExclusionList = listOf(
@@ -88,4 +89,36 @@ tasks.koverMergedXmlReport {
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
+}
+
+fun hasLowerStability(candidateVersion: String, currentVersion: String): Boolean {
+    val candidateVersionUpperCased = candidateVersion.toUpperCase()
+    val currentVersionUpperCased = currentVersion.toUpperCase()
+
+    val versionsToCheck = mutableListOf<String>()
+    when {
+        "ALPHA" in currentVersionUpperCased -> {
+            // NOTHING
+        }
+        "BETA" in currentVersionUpperCased -> {
+            versionsToCheck += "ALPHA"
+        }
+        "RC" in currentVersionUpperCased -> {
+            versionsToCheck += "ALPHA"
+            versionsToCheck += "BETA"
+        }
+        else -> {
+            versionsToCheck += "ALPHA"
+            versionsToCheck += "BETA"
+            versionsToCheck += "RC"
+        }
+    }
+
+    return versionsToCheck.any { it in candidateVersionUpperCased }
+}
+
+tasks.dependencyUpdates {
+    rejectVersionIf {
+        hasLowerStability(candidate.version, currentVersion)
+    }
 }
