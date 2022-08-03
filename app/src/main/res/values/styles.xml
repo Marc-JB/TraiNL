@@ -9,15 +9,4 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="TextAppearance.OVgo.SectionText.Medium" parent="@style/TextAppearance.MaterialComponents.Caption">
-        <item name="fontFamily">@font/roboto_regular</item>
-        <item name="android:fontFamily">@font/roboto_regular</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <!-- Specific text styles -->
-    <style name="TextAppearance.OVgo.Disruption.Title" parent="@style/TextAppearance.OVgo.SectionTitle" />
-
-    <style name="TextAppearance.OVgo.Disruption.SubText" parent="@style/TextAppearance.OVgo.SectionText.Medium" />
-
 </resources>
