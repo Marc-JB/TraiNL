@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
@@ -17,7 +17,7 @@ import org.koin.androidx.compose.getViewModel
 fun DisruptionsView(
     disruptionsViewModel: DisruptionsViewModel = getViewModel()
 ) {
-    val disruptionsState by disruptionsViewModel.disruptions.observeAsState()
+    val disruptionsState by disruptionsViewModel.disruptions.collectAsState()
     val disruptions = disruptionsState
 
     Column(
