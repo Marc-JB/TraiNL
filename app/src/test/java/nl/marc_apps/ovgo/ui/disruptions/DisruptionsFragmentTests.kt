@@ -2,10 +2,8 @@ package nl.marc_apps.ovgo.ui.disruptions
 
 import android.content.Context
 import android.view.View
-import android.widget.TextView
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.mockk.every
 import io.mockk.mockk
@@ -97,32 +95,6 @@ class DisruptionsFragmentTests {
                 val placeholder = it.view?.findViewById<View>(R.id.partial_image_with_label_placeholder)
                 assertNotNull(placeholder)
                 assertEquals(View.GONE, placeholder.visibility)
-            }
-        }
-    }
-
-    @Test
-    fun isDisruptionItemShownWhenApiReturnsItem() {
-        val testData = DutchRailwaysDisruption.DisruptionOrMaintenance(
-            "abcd",
-            DutchRailwaysDisruption.DisruptionType.DISRUPTION,
-            "DisRupTIoN",
-            isActive = true,
-            local = true,
-            start = Clock.System.now(),
-            publicationSections = emptyList(),
-            timespans = emptyList()
-        )
-
-        withKoinModule(createTestModule(Response.success(200, listOf(testData)))) {
-            launchDisruptionsFragment(it).onFragment {
-                val disruptionList = it.view?.findViewById<RecyclerView>(R.id.list_disruptions)
-                assertNotNull(disruptionList)
-                assertEquals(View.VISIBLE, disruptionList.visibility)
-                assertEquals(1, disruptionList.adapter?.itemCount)
-
-                val view = disruptionList.findViewHolderForAdapterPosition(0)?.itemView
-                assertEquals(testData.title, view?.findViewById<TextView>(R.id.label_title)?.text.toString())
             }
         }
     }

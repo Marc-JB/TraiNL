@@ -1,71 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:paddingTop="8dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="8dp"
-        android:paddingBottom="56dp">
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/label_section_maintenance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:drawablePadding="8dp"
+        android:text="@string/maintenance"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textColor="?android:attr/textColorPrimary"
+        app:drawableStartCompat="@drawable/ic_warning"
+        app:drawableTint="?android:attr/textColorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/label_section_maintenance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:drawablePadding="8dp"
-            android:text="@string/maintenance"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textColor="?android:attr/textColorPrimary"
-            app:drawableStartCompat="@drawable/ic_warning"
-            app:drawableTint="?android:attr/textColorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/holder_compose"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_section_maintenance" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list_maintenance"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layoutAnimation="@anim/list_item_layout_animation_slide_up"
-            android:nestedScrollingEnabled="false"
-            android:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_section_maintenance"
-            tools:itemCount="2"
-            tools:layoutAnimation="@null"
-            tools:listitem="@layout/list_item_disruption"
-            tools:visibility="visible" />
+    <include
+        android:id="@+id/partial_image_with_label_placeholder"
+        layout="@layout/partial_image_with_label_placeholder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_section_maintenance"
+        tools:visibility="visible" />
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/placeholder_list_maintenance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:indeterminate="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_section_maintenance" />
-
-        <include
-            android:id="@+id/partial_image_with_label_placeholder"
-            layout="@layout/partial_image_with_label_placeholder"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_section_maintenance"
-            tools:visibility="visible" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import nl.marc_apps.ovgo.R
-import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
 import nl.marc_apps.ovgo.databinding.FragmentDisruptionsBinding
-import nl.marc_apps.ovgo.ui.DisruptionsAdapter
-import nl.marc_apps.ovgo.ui.DividerItemDecoration
+import nl.marc_apps.ovgo.ui.theme.AppTheme
 import org.koin.androidx.navigation.koinNavGraphViewModel
 
 class DisruptionsFragment : Fragment() {
@@ -29,41 +31,33 @@ class DisruptionsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val disruptionsAdapter = DisruptionsAdapter()
-        binding.listDisruptions.adapter = disruptionsAdapter
-        binding.listDisruptions.addItemDecoration(
-            DividerItemDecoration(binding.listDisruptions.context, DividerItemDecoration.VERTICAL)
+        binding.holderCompose.setViewCompositionStrategy(
+            ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
         )
 
-        viewModel.disruptions.observe(viewLifecycleOwner) {
-            binding.partialImageWithLabelPlaceholder.root.visibility = View.GONE
-            binding.placeholderListDisruptions.visibility = View.GONE
-            binding.listDisruptions.visibility = View.GONE
-
-            when {
-                it == null -> {
-                    binding.placeholderListDisruptions.visibility = View.VISIBLE
-                }
-                it.isEmpty() -> {
-                    binding.partialImageWithLabelPlaceholder.image.setImageResource(R.drawable.va_travelling)
-                    binding.partialImageWithLabelPlaceholder.label.setText(R.string.no_disruptions)
-                    binding.partialImageWithLabelPlaceholder.root.visibility = View.VISIBLE
-                }
-                else -> {
-                    binding.listDisruptions.visibility = View.VISIBLE
-                    binding.listDisruptions.scheduleLayoutAnimation()
-                    disruptionsAdapter.submitList(it.sortedByDescending {
-                        when((it as? DutchRailwaysDisruption.Calamity)?.priority) {
-                            DutchRailwaysDisruption.Calamity.Priority.PRIO_1 -> 3
-                            DutchRailwaysDisruption.Calamity.Priority.PRIO_2 -> 2
-                            DutchRailwaysDisruption.Calamity.Priority.PRIO_3 -> 1
-                            null -> 0
-                        }
-                    })
+        binding.holderCompose.setContent {
+            AppTheme {
+                Surface(
+                    color = MaterialTheme.colors.background
+                ) {
+                    DisruptionsView(viewModel)
                 }
             }
         }
 
-        viewModel.loadDisruptions()
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.disruptions.collect {
+                binding.partialImageWithLabelPlaceholder.root.visibility = View.GONE
+
+                when {
+                    it == null -> {}
+                    it.isEmpty() -> {
+                        binding.partialImageWithLabelPlaceholder.image.setImageResource(R.drawable.va_travelling)
+                        binding.partialImageWithLabelPlaceholder.label.setText(R.string.no_disruptions)
+                        binding.partialImageWithLabelPlaceholder.root.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
     }
 }

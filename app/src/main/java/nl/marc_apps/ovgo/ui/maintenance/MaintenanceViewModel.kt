@@ -1,9 +1,9 @@
 package nl.marc_apps.ovgo.ui.maintenance
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.data.api.dutch_railways.DutchRailwaysApi
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
@@ -12,9 +12,9 @@ import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption.
 class MaintenanceViewModel(
     private val dutchRailwaysApi: DutchRailwaysApi
 ) : ViewModel() {
-    private val mutableMaintenanceList = MutableLiveData<List<DutchRailwaysDisruption>?>()
+    private val mutableMaintenanceList = MutableStateFlow<List<DutchRailwaysDisruption>?>(null)
 
-    val maintenanceList: LiveData<List<DutchRailwaysDisruption>?>
+    val maintenanceList: StateFlow<List<DutchRailwaysDisruption>?>
         get() = mutableMaintenanceList
 
     fun loadMaintenance(allowReload: Boolean = false) {
@@ -22,7 +22,7 @@ class MaintenanceViewModel(
             return
         }
 
-        mutableMaintenanceList.postValue(null)
+        mutableMaintenanceList.value = null
 
         viewModelScope.launch {
             val maintenanceList = try {
@@ -34,7 +34,7 @@ class MaintenanceViewModel(
                 emptyList()
             }
 
-            mutableMaintenanceList.postValue(maintenanceList)
+            mutableMaintenanceList.value = maintenanceList
         }
     }
 }

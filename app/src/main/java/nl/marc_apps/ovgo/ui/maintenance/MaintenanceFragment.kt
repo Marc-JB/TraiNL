@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentMaintenanceBinding
-import nl.marc_apps.ovgo.ui.DisruptionsAdapter
-import nl.marc_apps.ovgo.ui.DividerItemDecoration
+import nl.marc_apps.ovgo.ui.theme.AppTheme
 import org.koin.androidx.navigation.koinNavGraphViewModel
 
 class MaintenanceFragment : Fragment() {
@@ -28,34 +31,33 @@ class MaintenanceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val maintenanceAdapter = DisruptionsAdapter()
-        binding.listMaintenance.adapter = maintenanceAdapter
-        binding.listMaintenance.addItemDecoration(
-            DividerItemDecoration(binding.listMaintenance.context, DividerItemDecoration.VERTICAL)
+        binding.holderCompose.setViewCompositionStrategy(
+            ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
         )
 
-        viewModel.maintenanceList.observe(viewLifecycleOwner) {
-            binding.partialImageWithLabelPlaceholder.root.visibility = View.GONE
-            binding.placeholderListMaintenance.visibility = View.GONE
-            binding.listMaintenance.visibility = View.GONE
-
-            when {
-                it == null -> {
-                    binding.placeholderListMaintenance.visibility = View.VISIBLE
-                }
-                it.isEmpty() -> {
-                    binding.partialImageWithLabelPlaceholder.image.setImageResource(R.drawable.va_travelling)
-                    binding.partialImageWithLabelPlaceholder.label.setText(R.string.no_maintenance)
-                    binding.partialImageWithLabelPlaceholder.root.visibility = View.VISIBLE
-                }
-                else -> {
-                    binding.listMaintenance.visibility = View.VISIBLE
-                    binding.listMaintenance.scheduleLayoutAnimation()
-                    maintenanceAdapter.submitList(it)
+        binding.holderCompose.setContent {
+            AppTheme {
+                Surface(
+                    color = MaterialTheme.colors.background
+                ) {
+                    MaintenanceView(viewModel)
                 }
             }
         }
 
-        viewModel.loadMaintenance()
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.maintenanceList.collect {
+                binding.partialImageWithLabelPlaceholder.root.visibility = View.GONE
+
+                when {
+                    it == null -> {}
+                    it.isEmpty() -> {
+                        binding.partialImageWithLabelPlaceholder.image.setImageResource(R.drawable.va_travelling)
+                        binding.partialImageWithLabelPlaceholder.label.setText(R.string.no_maintenance)
+                        binding.partialImageWithLabelPlaceholder.root.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
     }
 }

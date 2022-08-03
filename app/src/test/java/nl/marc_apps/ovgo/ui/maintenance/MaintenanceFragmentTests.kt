@@ -2,10 +2,8 @@ package nl.marc_apps.ovgo.ui.maintenance
 
 import android.content.Context
 import android.view.View
-import android.widget.TextView
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.mockk.every
 import io.mockk.mockk
@@ -92,32 +90,6 @@ class MaintenanceFragmentTests {
                 val placeholder = it.view?.findViewById<View>(R.id.partial_image_with_label_placeholder)
                 assertNotNull(placeholder)
                 assertEquals(View.GONE, placeholder.visibility)
-            }
-        }
-    }
-
-    @Test
-    fun isMaintenanceItemShownWhenApiReturnsItem() {
-        val testData = DutchRailwaysDisruption.DisruptionOrMaintenance(
-            "abcd",
-            DutchRailwaysDisruption.DisruptionType.MAINTENANCE,
-            "MaIntEnANce",
-            isActive = true,
-            local = true,
-            start = Clock.System.now(),
-            publicationSections = emptyList(),
-            timespans = emptyList()
-        )
-
-        withKoinModule(createTestModule(Response.success(200, listOf(testData)))) {
-            launchMaintenanceFragment(it).onFragment {
-                val maintenanceList = it.view?.findViewById<RecyclerView>(R.id.list_maintenance)
-                assertNotNull(maintenanceList)
-                assertEquals(View.VISIBLE, maintenanceList.visibility)
-                assertEquals(1, maintenanceList.adapter?.itemCount)
-
-                val view = maintenanceList.findViewHolderForAdapterPosition(0)?.itemView
-                assertEquals(testData.title, view?.findViewById<TextView>(R.id.label_title)?.text.toString())
             }
         }
     }
