@@ -47,7 +47,7 @@
         android:id="@+id/departure_details"
         android:name="nl.marc_apps.ovgo.ui.departure_details.DepartureDetailsFragment"
         android:label="Departure details"
-        tools:layout="@layout/fragment_departure_details">
+        tools:layout="@layout/compose_layout">
 
         <argument
             android:name="departure"
