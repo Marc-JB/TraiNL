@@ -35,13 +35,13 @@
         android:id="@+id/disruptions"
         android:name="nl.marc_apps.ovgo.ui.disruptions.DisruptionsFragment"
         android:label="Disruptions"
-        tools:layout="@layout/fragment_disruptions" />
+        tools:layout="@layout/compose_layout" />
 
     <fragment
         android:id="@+id/maintenance"
         android:name="nl.marc_apps.ovgo.ui.maintenance.MaintenanceFragment"
         android:label="Maintenance"
-        tools:layout="@layout/fragment_maintenance" />
+        tools:layout="@layout/compose_layout" />
 
     <fragment
         android:id="@+id/departure_details"
