@@ -9,7 +9,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.ui.DisruptionsList
+import nl.marc_apps.ovgo.ui.PlaceholderImage
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -24,10 +27,11 @@ fun MaintenanceView(
         modifier = Modifier.fillMaxSize()
     ) {
         when {
-            maintenanceList == null -> {
-                CircularProgressIndicator()
-            }
-            maintenanceList.isEmpty() -> {}
+            maintenanceList == null -> CircularProgressIndicator()
+            maintenanceList.isEmpty() -> PlaceholderImage(
+                text = stringResource(R.string.no_maintenance),
+                imageId = R.drawable.va_travelling
+            )
             else -> DisruptionsList(maintenanceList)
         }
     }

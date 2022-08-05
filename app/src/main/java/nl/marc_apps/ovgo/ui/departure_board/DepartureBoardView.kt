@@ -9,9 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.ImageLoader
+import nl.marc_apps.ovgo.R
+import nl.marc_apps.ovgo.ui.PlaceholderImage
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
@@ -35,6 +38,10 @@ fun DepartureBoardView(
                 CircularProgressIndicator()
             }
         }
+        departures.getOrNull()?.isEmpty() == true -> PlaceholderImage(
+            text = stringResource(R.string.no_departures),
+            imageId = R.drawable.va_stranded_traveler
+        )
         departures.getOrNull()?.isNotEmpty() == true -> {
             DeparturesList(departures.getOrThrow(), imageLoader) {
                 val action = DepartureBoardFragmentDirections.actionDepartureBoardToDetails(it)

@@ -9,8 +9,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
 import nl.marc_apps.ovgo.ui.DisruptionsList
+import nl.marc_apps.ovgo.ui.PlaceholderImage
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -25,10 +28,11 @@ fun DisruptionsView(
         modifier = Modifier.fillMaxSize()
     ) {
         when {
-            disruptions == null -> {
-                CircularProgressIndicator()
-            }
-            disruptions.isEmpty() -> {}
+            disruptions == null -> CircularProgressIndicator()
+            disruptions.isEmpty() -> PlaceholderImage(
+                text = stringResource(R.string.no_disruptions),
+                imageId = R.drawable.va_travelling
+            )
             else -> DisruptionsList(disruptions.sortedByDescending {
                 when((it as? DutchRailwaysDisruption.Calamity)?.priority) {
                     DutchRailwaysDisruption.Calamity.Priority.PRIO_1 -> 3

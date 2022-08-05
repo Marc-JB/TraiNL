@@ -57,11 +57,11 @@ class DepartureBoardFragment : Fragment() {
             }
         }
 
-        binding.listDepartures.setViewCompositionStrategy(
+        binding.holderCompose.setViewCompositionStrategy(
             ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
         )
 
-        binding.listDepartures.setContent {
+        binding.holderCompose.setContent {
             AppTheme {
                 Surface(
                     color = MaterialTheme.colors.background
@@ -89,36 +89,24 @@ class DepartureBoardFragment : Fragment() {
     }
 
     private fun loadNewDepartures(departures: Result<List<Departure>>?) {
-        binding.listDepartures.visibility = View.GONE
-        binding.partialImageWithLabelPlaceholder.root.visibility = View.GONE
+        binding.holderCompose.visibility = View.GONE
 
-        when {
-            departures == null -> {
-                binding.listDepartures.visibility = View.VISIBLE
-            }
-            departures.isFailure -> {
-                Snackbar.make(binding.root, R.string.departure_board_loading_failure, Snackbar.LENGTH_INDEFINITE)
-                    .also {
-                        try {
-                            it.setAnchorView(R.id.bottom_navigation)
-                        } catch (error: IllegalArgumentException) {
-                            error.printStackTrace()
-                            Firebase.crashlytics.recordException(error)
-                        }
+        if (departures?.isFailure == true) {
+            Snackbar.make(binding.root, R.string.departure_board_loading_failure, Snackbar.LENGTH_INDEFINITE)
+                .also {
+                    try {
+                        it.setAnchorView(R.id.bottom_navigation)
+                    } catch (error: IllegalArgumentException) {
+                        error.printStackTrace()
+                        Firebase.crashlytics.recordException(error)
                     }
-                    .setAction(R.string.action_retry_loading) {
-                        viewModel.reload()
-                    }
-                    .show()
-            }
-            departures.getOrThrow().isEmpty() -> {
-                binding.partialImageWithLabelPlaceholder.image.setImageResource(R.drawable.va_stranded_traveler)
-                binding.partialImageWithLabelPlaceholder.label.setText(R.string.no_departures)
-                binding.partialImageWithLabelPlaceholder.root.visibility = View.VISIBLE
-            }
-            else -> {
-                binding.listDepartures.visibility = View.VISIBLE
-            }
+                }
+                .setAction(R.string.action_retry_loading) {
+                    viewModel.reload()
+                }
+                .show()
+        } else {
+            binding.holderCompose.visibility = View.VISIBLE
         }
     }
 }

@@ -8,7 +8,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.databinding.FragmentMaintenanceBinding
 import nl.marc_apps.ovgo.ui.theme.AppTheme
@@ -41,21 +40,6 @@ class MaintenanceFragment : Fragment() {
                     color = MaterialTheme.colors.background
                 ) {
                     MaintenanceView(viewModel)
-                }
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.maintenanceList.collect {
-                binding.partialImageWithLabelPlaceholder.root.visibility = View.GONE
-
-                when {
-                    it == null -> {}
-                    it.isEmpty() -> {
-                        binding.partialImageWithLabelPlaceholder.image.setImageResource(R.drawable.va_travelling)
-                        binding.partialImageWithLabelPlaceholder.label.setText(R.string.no_maintenance)
-                        binding.partialImageWithLabelPlaceholder.root.visibility = View.VISIBLE
-                    }
                 }
             }
         }
