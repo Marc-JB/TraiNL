@@ -9,7 +9,7 @@
         android:id="@+id/departure_board"
         android:name="nl.marc_apps.ovgo.ui.departure_board.DepartureBoardFragment"
         android:label="Departure board"
-        tools:layout="@layout/fragment_departure_board">
+        tools:layout="@layout/compose_layout">
 
         <action
             android:id="@+id/action_home_to_departure_details"

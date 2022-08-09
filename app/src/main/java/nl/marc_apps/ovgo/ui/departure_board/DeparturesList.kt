@@ -11,10 +11,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.booleanResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,21 +22,16 @@ import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun DeparturesList(
     departures: List<Departure>,
     imageLoader: ImageLoader? = null,
     onDepartureSelected: (Departure) -> Unit
 ) {
-    val nestedScrollInterop = rememberNestedScrollInteropConnection()
-
     if (booleanResource(R.bool.is_large_screen_device)) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            modifier = Modifier
-                .fillMaxWidth()
-                .nestedScroll(nestedScrollInterop)
+            modifier = Modifier.fillMaxWidth()
         ) {
             itemsIndexed(
                 departures,
@@ -59,9 +51,7 @@ fun DeparturesList(
         }
     } else {
         LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .nestedScroll(nestedScrollInterop)
+            modifier = Modifier.fillMaxWidth()
         ) {
             itemsIndexed(
                 departures,
