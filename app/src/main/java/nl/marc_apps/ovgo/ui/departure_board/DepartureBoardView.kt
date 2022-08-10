@@ -70,7 +70,7 @@ fun DepartureBoardView(
                 imageId = R.drawable.va_stranded_traveler
             )
             else -> DeparturesList(departures.getOrThrow(), imageLoader) {
-                val action = DepartureBoardFragmentDirections.actionDepartureBoardToDetails(it)
+                val action = DepartureBoardFragmentDirections.actionDepartureBoardToDetails(it.journeyId)
                 navController.navigate(action)
             }
         }

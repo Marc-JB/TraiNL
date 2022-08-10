@@ -21,6 +21,7 @@ import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.JourneyStop
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.ui.components.PlaceholderImage
 import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
 import nl.marc_apps.ovgo.ui.preview.fixtures.JourneyStopPreviewParameterProvider
@@ -34,26 +35,32 @@ private val DepartureStopsSheetMinHeight = 56.dp
 
 @Composable
 fun DepartureDetailsView(
-    departure: Departure,
+    departureId: String,
     departureDetailsViewModel: DepartureDetailsViewModel = getViewModel(),
     navController: NavController,
     imageLoader: ImageLoader = get()
 ) {
-    val stops by departureDetailsViewModel.journeyStops.collectAsState()
+    val departure = departureDetailsViewModel.getDepartureById(departureId)
 
-    DepartureDetailsView(
-        departure,
-        stops,
-        imageLoader,
-        onStationSelected = {
-            val action = DepartureDetailsFragmentDirections
-                .actionDepartureDetailsToStationDepartureBoard(it.uicCode)
-            navController.navigate(action)
+    if (departure == null) {
+        PlaceholderImage(stringResource(R.string.departure_board_loading_failure), R.drawable.va_stranded_traveler)
+    } else {
+        val stops by departureDetailsViewModel.journeyStops.collectAsState()
+
+        DepartureDetailsView(
+            departure,
+            stops,
+            imageLoader,
+            onStationSelected = {
+                val action = DepartureDetailsFragmentDirections
+                    .actionDepartureDetailsToStationDepartureBoard(it.uicCode)
+                navController.navigate(action)
+            }
+        )
+
+        LaunchedEffect(departureId) {
+            departureDetailsViewModel.loadStations(departure)
         }
-    )
-
-    LaunchedEffect(departure) {
-        departureDetailsViewModel.loadStations(departure)
     }
 }
 

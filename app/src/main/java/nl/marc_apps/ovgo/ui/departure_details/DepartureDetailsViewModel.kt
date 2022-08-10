@@ -5,11 +5,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import nl.marc_apps.ovgo.data.DepartureRepository
 import nl.marc_apps.ovgo.data.JourneyDetailsRepository
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.JourneyStop
 
 class DepartureDetailsViewModel(
+    private val departureRepository: DepartureRepository,
     private val journeyDetailsRepository: JourneyDetailsRepository
 ) : ViewModel() {
     private val mutableJourneyStops = MutableStateFlow<List<JourneyStop>?>(null)
@@ -31,4 +33,6 @@ class DepartureDetailsViewModel(
             }
         }
     }
+
+    fun getDepartureById(id: String) = departureRepository.getDepartureById(id)
 }

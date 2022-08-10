@@ -50,12 +50,14 @@
         tools:layout="@layout/compose_layout">
 
         <argument
-            android:name="departure"
-            app:argType="nl.marc_apps.ovgo.domain.Departure" />
+            android:name="departureId"
+            app:argType="string" />
 
         <action
             android:id="@+id/action_departure_details_to_station_departure_board"
-            app:destination="@id/departure_board" />
+            app:destination="@id/departure_board"
+            app:popUpTo="@id/departure_board"
+            app:popUpToInclusive="true" />
 
     </fragment>
 

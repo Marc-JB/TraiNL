@@ -11,6 +11,8 @@ class DepartureRepository(
     private val trainInfoRepository: TrainInfoRepository,
     private val trainStationRepository: TrainStationRepository
 ) {
+    private var cache: List<Departure> = emptyList()
+
     @Throws(KotlinNullPointerException::class, HttpException::class, Throwable::class)
     suspend fun getDepartures(station: TrainStation): List<Departure> {
         val departuresList = dutchRailwaysApi.getDeparturesForStation(station.uicCode)
@@ -23,6 +25,12 @@ class DepartureRepository(
 
         return departuresList.map {
             converter.convert(it)
+        }.also {
+            cache = it
         }
+    }
+
+    fun getDepartureById(id: String): Departure? {
+        return cache.find { it.journeyId == id }
     }
 }
