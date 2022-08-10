@@ -19,6 +19,11 @@ import nl.marc_apps.ovgo.ui.preview.fixtures.TrainStationPreviewParameterProvide
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import nl.marc_apps.ovgo.ui.theme.SubtitleColor
 
+private val SuggestionSpacingHorizontal = 16.dp
+private val SuggestionSpacingVertical = 12.dp
+
+private val SuggestionItemSpacing = 8.dp
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StationSuggestions(
@@ -34,14 +39,15 @@ fun StationSuggestions(
                     .clickable {
                         onSuggestionSelected(station)
                     }
-                    .padding(16.dp, 12.dp)
+                    .padding(SuggestionSpacingHorizontal, SuggestionSpacingVertical)
                     .fillMaxWidth()
                     .animateItemPlacement()
             ) {
                 Text(station.fullName, style = MaterialTheme.typography.subtitle1, color = SubtitleColor)
 
                 if (station.alternativeNames.isNotEmpty()) {
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(SuggestionItemSpacing))
+
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                         Text(
                             station.alternativeNames.joinToString(),
@@ -53,7 +59,7 @@ fun StationSuggestions(
 
             if (index != listSize - 1) {
                 Divider(
-                    modifier = Modifier.padding(16.dp, 0.dp)
+                    modifier = Modifier.padding(SuggestionSpacingHorizontal, 0.dp)
                 )
             }
         }

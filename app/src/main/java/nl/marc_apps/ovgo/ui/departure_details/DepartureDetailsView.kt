@@ -28,6 +28,10 @@ import nl.marc_apps.ovgo.ui.theme.AppTheme
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
+private val DepartureDetailsItemSpacing = 16.dp
+
+private val DepartureStopsSheetMinHeight = 56.dp
+
 @Composable
 fun DepartureDetailsView(
     departure: Departure,
@@ -70,7 +74,7 @@ fun DepartureDetailsView(
         sheetBackgroundColor = MaterialTheme.colors.background,
         scrimColor = Color.Black.copy(alpha = 0.32f),
         sheetContent = {
-            Box(Modifier.defaultMinSize(minHeight = 56.dp)) {
+            Box(Modifier.defaultMinSize(minHeight = DepartureStopsSheetMinHeight)) {
                 stops?.let {
                     DepartureStopsView(it, onStationSelected)
                 }
@@ -80,7 +84,7 @@ fun DepartureDetailsView(
         Column(
             Modifier.verticalScroll(scrollState)
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(DepartureDetailsItemSpacing))
 
             Text(
                 text = departure.actualDirection?.fullName?.let {
@@ -92,11 +96,11 @@ fun DepartureDetailsView(
                 modifier = Modifier.padding(24.dp, 0.dp)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(DepartureDetailsItemSpacing))
 
             DepartureInformationCard(departure)
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(DepartureDetailsItemSpacing))
 
             RouteInformationCard(
                 departure,
@@ -109,11 +113,11 @@ fun DepartureDetailsView(
                 }
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(DepartureDetailsItemSpacing))
 
             TrainInformationCard(departure, imageLoader)
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(DepartureDetailsItemSpacing))
         }
 
         BackHandler(enabled = modalBottomSheetState.isVisible) {

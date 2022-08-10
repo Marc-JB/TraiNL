@@ -41,6 +41,8 @@ val DutchRailwaysDisruption.DisruptionOrMaintenance.description
         activeAlternativeTransportTimeSpan?.alternativeTransport?.label ?: activeTimeSpan?.alternativeTransport?.label
     ).joinToString(separator = " ")
 
+private val DisruptionItemSpacing = 8.dp
+
 @Composable
 fun Disruption(
     disruption: DutchRailwaysDisruption.DisruptionOrMaintenance,
@@ -60,7 +62,7 @@ fun Disruption(
             color = MaterialTheme.colors.primary
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(DisruptionItemSpacing))
 
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(
@@ -70,7 +72,7 @@ fun Disruption(
                 overflow = TextOverflow.Ellipsis
             )
 
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(DisruptionItemSpacing))
 
             Row(
                 verticalAlignment = Alignment.CenterVertically

@@ -17,6 +17,8 @@ import androidx.compose.ui.unit.dp
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
 
+private val CalamityItemSpacing = 8.dp
+
 @Composable
 fun Calamity(
     calamity: DutchRailwaysDisruption.Calamity,
@@ -42,7 +44,7 @@ fun Calamity(
             )
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(CalamityItemSpacing))
 
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             if (calamity.description != null) {
@@ -52,9 +54,9 @@ fun Calamity(
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
-            }
 
-            Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(CalamityItemSpacing))
+            }
 
             if (calamity.lastUpdated != null) {
                 Text(
