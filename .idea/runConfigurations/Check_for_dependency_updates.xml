@@ -1,10 +1,10 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Run app unit tests" type="GradleRunConfiguration" factoryName="Gradle">
+  <configuration default="false" name="Check for dependency updates" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$/app" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$" />
       <option name="externalSystemIdString" value="GRADLE" />
-      <option name="scriptParameters" value="testDebugUnitTest" />
+      <option name="scriptParameters" value="dependencyUpdates" />
       <option name="taskDescriptions">
         <list />
       </option>

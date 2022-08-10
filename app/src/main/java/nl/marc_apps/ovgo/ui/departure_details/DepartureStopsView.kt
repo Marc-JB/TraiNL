@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ParagraphIntrinsics
@@ -48,57 +49,10 @@ fun DepartureStopsView(stops: List<JourneyStop>, onStationSelected: (TrainStatio
 
         Spacer(Modifier.height(16.dp))
 
-
         LazyColumn {
             items(stops, key = { it.id }) {
-                val intrinsics = ParagraphIntrinsics(
-                    "00:00 +00",
-                    style = MaterialTheme.typography.subtitle1,
-                    density = LocalDensity.current,
-                    fontFamilyResolver = createFontFamilyResolver(LocalContext.current)
-                )
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clickable {
-                            onStationSelected(it.station)
-                        }
-                        .heightIn(min = 56.dp)
-                        .padding(16.dp, 8.dp)
-                        .fillMaxWidth()
-                ) {
-                    Column(
-                        Modifier.widthIn(min = with(LocalDensity.current) {
-                            intrinsics.maxIntrinsicWidth.toDp()
-                        })
-                    ) {
-                        val hasSingleTime = it.actualArrivalTime == it.actualDepartureTime && !it.isDepartureDelayed && !it.isArrivalDelayed
-                        if (!hasSingleTime && it.plannedArrivalTime != null) {
-                            TimeDisplayView(it.plannedArrivalTime, it.arrivalDelay)
-                            Spacer(Modifier.width(2.dp))
-                        }
-
-                        if (it.plannedDepartureTime != null) {
-                            Spacer(Modifier.width(2.dp))
-                            TimeDisplayView(it.plannedDepartureTime, it.departureDelay)
-                        }
-                    }
-
-                    Spacer(Modifier.width(8.dp))
-
-                    Text(
-                        buildString {
-                            append(it.station.fullName)
-
-                            if (isForeignStation(it.station)) {
-                                append(" ")
-                                append(it.station.country?.flag)
-                            }
-                        },
-                        color = colorResource(if (it.isCancelled) R.color.sectionTitleWarningColor else R.color.sectionTitleColor),
-                        style = MaterialTheme.typography.subtitle1
-                    )
+                DepartureStop(it) {
+                    onStationSelected(it.station)
                 }
 
                 if (it != stops.last()) {
@@ -114,6 +68,61 @@ fun DepartureStopsView(stops: List<JourneyStop>, onStationSelected: (TrainStatio
                 Spacer(Modifier.height(56.dp))
             }
         }
+    }
+}
+
+@Composable
+fun DepartureStop(stop: JourneyStop, onSelected: () -> Unit) {
+    val intrinsics = ParagraphIntrinsics(
+        "00:00 +00",
+        style = MaterialTheme.typography.subtitle1,
+        density = LocalDensity.current,
+        fontFamilyResolver = createFontFamilyResolver(LocalContext.current)
+    )
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .clickable {
+                onSelected()
+            }
+            .heightIn(min = 56.dp)
+            .padding(16.dp, 8.dp)
+            .fillMaxWidth()
+    ) {
+        Column(
+            Modifier.widthIn(min = with(LocalDensity.current) {
+                intrinsics.maxIntrinsicWidth.toDp()
+            })
+        ) {
+            val hasSingleTime = stop.actualArrivalTime == stop.actualDepartureTime
+                    && stop.plannedArrivalTime == stop.plannedDepartureTime
+
+            if (!hasSingleTime && stop.plannedArrivalTime != null) {
+                TimeDisplayView(stop.plannedArrivalTime, stop.arrivalDelay)
+                Spacer(Modifier.width(2.dp))
+            }
+
+            if (stop.plannedDepartureTime != null) {
+                Spacer(Modifier.width(2.dp))
+                TimeDisplayView(stop.plannedDepartureTime, stop.departureDelay)
+            }
+        }
+
+        Spacer(Modifier.width(8.dp))
+
+        Text(
+            buildString {
+                append(stop.station.fullName)
+
+                if (isForeignStation(stop.station)) {
+                    append(" ")
+                    append(stop.station.country?.flag)
+                }
+            },
+            color = colorResource(if (stop.isCancelled) R.color.sectionTitleWarningColor else R.color.sectionTitleColor),
+            style = MaterialTheme.typography.subtitle1
+        )
     }
 }
 
@@ -135,7 +144,8 @@ fun TimeDisplayView(plannedTime: Instant, delay: Duration) {
     Text(
         departureTimeWithDelayText,
         color = colorResource(if(isDelayed) R.color.sectionTitleWarningColor else R.color.sectionTitleOkColor),
-        style = MaterialTheme.typography.subtitle1
+        style = MaterialTheme.typography.subtitle1,
+        modifier = Modifier.testTag("TimeDisplayView")
     )
 }
 
