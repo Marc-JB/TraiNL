@@ -31,10 +31,6 @@ fun TrainImagesView(
     imageLoader: ImageLoader? = null,
     header: (@Composable () -> Unit)? = null
 ) {
-    val shouldDrawImageBorder = booleanResource(R.bool.should_draw_train_image_border)
-    val trainImageStrokeWidth = dimensionResource(R.dimen.train_image_stroke_width)
-    val trainImageHeight = dimensionResource(R.dimen.train_image_height)
-
     LazyRow(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
@@ -54,37 +50,47 @@ fun TrainImagesView(
                 Spacer(Modifier.width(paddingStart))
             }
 
-            val url = imageUrls[index]
-            val isWhiteTrain = isImageUrlFromWhiteTrain(url)
-
-            val borderColor = if (isWhiteTrain) R.color.trainImageBorderAlternative else R.color.trainImageBorder
-            val borderTransformation = TrainImageBorderTransformation(
-                key = url,
-                with(LocalDensity.current) { trainImageStrokeWidth.roundToPx() },
-                colorResource(borderColor)
-            )
-
-            AsyncImage(
-                ImageRequest(url = url) {
-                    if (isWhiteTrain || shouldDrawImageBorder) {
-                        transformations(borderTransformation)
-                    }
-                },
-                imageLoader = imageLoader ?: LocalContext.current.imageLoader,
-                contentScale = ContentScale.Fit,
-                contentDescription = "Train image",
-                modifier = Modifier.height(
-                    if (shouldDrawImageBorder || isWhiteTrain) {
-                        trainImageHeight + trainImageStrokeWidth * 2
-                    } else {
-                        trainImageHeight
-                    }
-                )
-            )
+            TrainImage(imageUrls[index], imageLoader)
 
             if (index == imageUrls.lastIndex) {
                 Spacer(Modifier.width(paddingEnd))
             }
         }
     }
+}
+
+@Composable
+fun TrainImage(url: String, imageLoader: ImageLoader? = null) {
+    val shouldDrawImageBorder = booleanResource(R.bool.should_draw_train_image_border)
+    val trainImageStrokeWidth = dimensionResource(R.dimen.train_image_stroke_width)
+    val trainImageHeight = dimensionResource(R.dimen.train_image_height)
+
+    val isWhiteTrain = isImageUrlFromWhiteTrain(url)
+
+    val borderColor = if (isWhiteTrain) R.color.trainImageBorderAlternative else R.color.trainImageBorder
+    val borderTransformation = TrainImageBorderTransformation(
+        key = url,
+        with(LocalDensity.current) { trainImageStrokeWidth.roundToPx() },
+        colorResource(borderColor)
+    )
+
+    val shouldApplyBorder = isWhiteTrain || shouldDrawImageBorder
+
+    AsyncImage(
+        ImageRequest(url = url) {
+            if (shouldApplyBorder) {
+                transformations(borderTransformation)
+            }
+        },
+        imageLoader = imageLoader ?: LocalContext.current.imageLoader,
+        contentScale = ContentScale.Fit,
+        contentDescription = "Train image",
+        modifier = Modifier.height(
+            if (shouldApplyBorder) {
+                trainImageHeight + trainImageStrokeWidth * 2
+            } else {
+                trainImageHeight
+            }
+        )
+    )
 }
