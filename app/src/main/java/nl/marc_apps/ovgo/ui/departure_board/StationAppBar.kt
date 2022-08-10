@@ -28,6 +28,10 @@ private val AppBarCornerRadius = 2.dp
 
 private val AppBarHeight = 56.dp
 
+private val StationAppBarWhiteSquareSize = 16.dp
+
+private val AppBarIconPadding = 16.dp
+
 @Composable
 fun StationAppBar(
     station: TrainStation?,
@@ -54,7 +58,7 @@ fun StationAppBar(
     ) {
         Box (
             modifier = Modifier
-                .size(16.dp)
+                .size(StationAppBarWhiteSquareSize)
                 .background(Color.White, RoundedCornerShape(topStart = AppBarCornerRadius))
                 .align(Alignment.TopStart)
         ) {}
@@ -83,7 +87,7 @@ fun StationAppBar(
                         Icon(
                             painter = painterResource(R.drawable.ic_edit),
                             contentDescription = stringResource(R.string.action_change_station),
-                            modifier = Modifier.padding(16.dp)
+                            modifier = Modifier.padding(AppBarIconPadding)
                         )
                     }
                 }

@@ -33,6 +33,9 @@ import java.text.DateFormat
 
 private const val MAX_STATIONS_DISPLAYED_ON_ROUTE = 2
 
+private val DepartureViewSpacingHorizontal = 16.dp
+private val DepartureViewItemSpacingVertical = 8.dp
+
 @Composable
 fun ActiveDepartureView(departure: Departure, imageLoader: ImageLoader? = null, onDepartureSelected: (Departure) -> Unit) {
     Column(
@@ -40,10 +43,10 @@ fun ActiveDepartureView(departure: Departure, imageLoader: ImageLoader? = null, 
             .clickable {
                 onDepartureSelected(departure)
             }
-            .padding(0.dp, 8.dp)
+            .padding(0.dp, DepartureViewItemSpacingVertical)
     ) {
         Row(
-            modifier = Modifier.padding(16.dp, 0.dp)
+            modifier = Modifier.padding(DepartureViewSpacingHorizontal, 0.dp)
         ) {
             Text(
                 if (departure.isDelayed) {
@@ -106,7 +109,7 @@ fun ActiveDepartureView(departure: Departure, imageLoader: ImageLoader? = null, 
             }
         }
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(DepartureViewItemSpacingVertical))
 
         TrainInfoRow(departure, imageLoader)
 
@@ -115,7 +118,7 @@ fun ActiveDepartureView(departure: Departure, imageLoader: ImageLoader? = null, 
                 warning,
                 style = MaterialTheme.typography.overline,
                 color = colorResource(R.color.departureMessageWarningColor),
-                modifier = Modifier.padding(16.dp, 2.dp)
+                modifier = Modifier.padding(DepartureViewSpacingHorizontal, 2.dp)
             )
         }
 
@@ -124,7 +127,7 @@ fun ActiveDepartureView(departure: Departure, imageLoader: ImageLoader? = null, 
                 Text(
                     message,
                     style = MaterialTheme.typography.overline,
-                    modifier = Modifier.padding(16.dp, 2.dp)
+                    modifier = Modifier.padding(DepartureViewSpacingHorizontal, 2.dp)
                 )
             }
         }
@@ -142,11 +145,11 @@ fun TrainInfoRow(departure: Departure, imageLoader: ImageLoader? = null) {
     TrainImagesView(
         imageUrls,
         dimensionResource(R.dimen.train_image_spacing_start),
-        16.dp,
+        DepartureViewSpacingHorizontal,
         imageLoader,
         header = {
             Row {
-                Spacer(Modifier.width(16.dp))
+                Spacer(Modifier.width(DepartureViewSpacingHorizontal))
 
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                     Text(
@@ -168,8 +171,13 @@ fun TrainInfoRow(departure: Departure, imageLoader: ImageLoader? = null) {
         }
     )
 
-    Spacer(Modifier.height(8.dp))
+    Spacer(Modifier.height(DepartureViewItemSpacingVertical))
 }
+
+private val PlatformIconCornerRadius = 2.dp
+private val PlatformIconSize = 40.dp
+private val PlatformIconElevation = 4.dp
+private val PlatformIconWhiteSquareSize = 10.dp
 
 @Composable
 fun PlatformIcon(platform: String, platformChanged: Boolean) {
@@ -177,17 +185,22 @@ fun PlatformIcon(platform: String, platformChanged: Boolean) {
 
     Box (
         modifier = Modifier
-            .size(40.dp)
-            .shadow(4.dp, RoundedCornerShape(2.dp))
+            .size(PlatformIconSize)
+            .shadow(PlatformIconElevation, RoundedCornerShape(PlatformIconCornerRadius))
             .background(
                 platformColor,
-                RoundedCornerShape(topStart = 4.dp, 2.dp, 2.dp, 2.dp)
+                RoundedCornerShape(
+                    topStart = PlatformIconCornerRadius + 2.dp,
+                    PlatformIconCornerRadius,
+                    PlatformIconCornerRadius,
+                    PlatformIconCornerRadius
+                )
             )
     ){
         Box (
             modifier = Modifier
-                .size(10.dp)
-                .background(Color.White, RoundedCornerShape(topStart = 2.dp))
+                .size(PlatformIconWhiteSquareSize)
+                .background(Color.White, RoundedCornerShape(topStart = PlatformIconCornerRadius))
                 .align(Alignment.TopStart)
         ){}
 

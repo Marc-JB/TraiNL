@@ -22,6 +22,8 @@ import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 
+private val DepartureViewSpacingHorizontal = 16.dp
+
 @Composable
 fun DeparturesList(
     departures: List<Departure>,
@@ -44,7 +46,7 @@ fun DeparturesList(
 
                 if (index != departures.lastIndex || index != departures.lastIndex - 1) {
                     Divider(
-                        modifier = Modifier.padding(16.dp, 0.dp)
+                        modifier = Modifier.padding(DepartureViewSpacingHorizontal, 0.dp)
                     )
                 }
             }
@@ -62,7 +64,7 @@ fun DeparturesList(
 
                 if (index != departures.lastIndex) {
                     Divider(
-                        modifier = Modifier.padding(16.dp, 0.dp)
+                        modifier = Modifier.padding(DepartureViewSpacingHorizontal, 0.dp)
                     )
                 }
             }

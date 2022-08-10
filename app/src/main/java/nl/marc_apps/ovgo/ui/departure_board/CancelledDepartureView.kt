@@ -22,11 +22,14 @@ import nl.marc_apps.ovgo.ui.theme.AppTheme
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
 
+private val DepartureViewSpacingHorizontal = 16.dp
+private val DepartureViewSpacingVertical = 8.dp
+
 @Composable
 fun CancelledDepartureView(departure: Departure) {
     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
         Row(
-            modifier = Modifier.padding(16.dp, 8.dp)
+            modifier = Modifier.padding(DepartureViewSpacingHorizontal, DepartureViewSpacingVertical)
         ) {
             Text(
                 departure.actualDepartureTime.format(timeStyle = DateFormat.SHORT),
