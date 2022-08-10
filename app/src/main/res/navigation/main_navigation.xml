@@ -55,9 +55,7 @@
 
         <action
             android:id="@+id/action_departure_details_to_station_departure_board"
-            app:destination="@id/departure_board"
-            app:popUpTo="@id/departure_board"
-            app:popUpToInclusive="true" />
+            app:destination="@id/departure_board" />
 
     </fragment>
 

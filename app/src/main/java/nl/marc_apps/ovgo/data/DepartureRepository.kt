@@ -11,7 +11,9 @@ class DepartureRepository(
     private val trainInfoRepository: TrainInfoRepository,
     private val trainStationRepository: TrainStationRepository
 ) {
-    private var cache: List<Departure> = emptyList()
+    private var cache = emptyList<Departure>()
+
+    private val detailsCache = mutableListOf<Departure>()
 
     @Throws(KotlinNullPointerException::class, HttpException::class, Throwable::class)
     suspend fun getDepartures(station: TrainStation): List<Departure> {
@@ -31,6 +33,18 @@ class DepartureRepository(
     }
 
     fun getDepartureById(id: String): Departure? {
-        return cache.find { it.journeyId == id }
+        return detailsCache.find { it.journeyId == id } ?: cache.find {
+            it.journeyId == id
+        }?.also {
+            detailsCache += it
+
+            if (detailsCache.size > MAX_DETAILS_CACHE_SIZE) {
+                detailsCache.removeFirst()
+            }
+        }
+    }
+
+    companion object {
+        private const val MAX_DETAILS_CACHE_SIZE = 10
     }
 }
