@@ -46,7 +46,7 @@ class DepartureBoardFragment : Fragment() {
                     color = MaterialTheme.colors.background
                 ) {
                     DepartureBoardView(
-                        station = navigationArgs.station,
+                        stationId = navigationArgs.stationId,
                         departureBoardViewModel = viewModel,
                         navController = findNavController()
                     )

@@ -24,9 +24,9 @@
             app:destination="@id/search_station" />
 
         <argument
-            android:name="station"
+            android:name="stationId"
             android:defaultValue="@null"
-            app:argType="nl.marc_apps.ovgo.domain.TrainStation"
+            app:argType="string"
             app:nullable="true" />
 
     </fragment>

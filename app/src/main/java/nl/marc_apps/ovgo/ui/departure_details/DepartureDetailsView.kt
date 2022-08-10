@@ -47,7 +47,7 @@ fun DepartureDetailsView(
         imageLoader,
         onStationSelected = {
             val action = DepartureDetailsFragmentDirections
-                .actionDepartureDetailsToStationDepartureBoard(it)
+                .actionDepartureDetailsToStationDepartureBoard(it.uicCode)
             navController.navigate(action)
         }
     )

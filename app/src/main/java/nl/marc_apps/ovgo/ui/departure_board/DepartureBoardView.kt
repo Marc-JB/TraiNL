@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.ImageLoader
 import nl.marc_apps.ovgo.R
-import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.ui.components.PlaceholderImage
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
@@ -25,7 +24,7 @@ private val SnackbarSpacing = 16.dp
 
 @Composable
 fun DepartureBoardView(
-    station: TrainStation? = null,
+    stationId: String? = null,
     departureBoardViewModel: DepartureBoardViewModel = getViewModel(),
     navController: NavController,
     imageLoader: ImageLoader = get()
@@ -77,11 +76,11 @@ fun DepartureBoardView(
         }
     }
 
-    LaunchedEffect(station?.uicCode) {
-        if (station == null) {
+    LaunchedEffect(stationId) {
+        if (stationId == null) {
             departureBoardViewModel.loadDeparturesForLastKnownStation()
         } else {
-            departureBoardViewModel.loadDepartures(station)
+            departureBoardViewModel.loadDepartures(stationId)
         }
     }
 }

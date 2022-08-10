@@ -38,7 +38,7 @@ fun SearchStationView(
             searchStationViewModel.updateAutocompleteList(it)
         },
         onSuggestionSelected = {
-            val action = SearchStationFragmentDirections.actionStationSearchToHome(it)
+            val action = SearchStationFragmentDirections.actionStationSearchToHome(it.uicCode)
             navController.navigate(action)
         }
     )

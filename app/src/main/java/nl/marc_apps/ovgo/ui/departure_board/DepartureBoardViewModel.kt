@@ -63,6 +63,23 @@ class DepartureBoardViewModel(
         }
     }
 
+    fun loadDepartures(stationId: String, allowReload: Boolean = false) {
+        if (!allowReload && departures.value?.isSuccess == true) {
+            return
+        }
+
+        val currentStation = currentStation.value
+        if (currentStation?.uicCode == stationId) {
+            loadDepartures(currentStation, allowReload)
+            return
+        }
+
+        viewModelScope.launch {
+            val station = trainStationRepository.getTrainStationById(stationId) ?: return@launch
+            loadDepartures(station, allowReload)
+        }
+    }
+
     fun loadDepartures(station: TrainStation, allowReload: Boolean = false) {
         if (!allowReload && departures.value?.isSuccess == true) {
             return
