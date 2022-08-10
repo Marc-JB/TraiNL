@@ -17,7 +17,7 @@ import androidx.navigation.NavController
 import coil.ImageLoader
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.TrainStation
-import nl.marc_apps.ovgo.ui.PlaceholderImage
+import nl.marc_apps.ovgo.ui.components.PlaceholderImage
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 

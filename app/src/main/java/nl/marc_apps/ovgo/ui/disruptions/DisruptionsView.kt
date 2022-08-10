@@ -16,8 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
-import nl.marc_apps.ovgo.ui.DisruptionsList
-import nl.marc_apps.ovgo.ui.PlaceholderImage
+import nl.marc_apps.ovgo.ui.components.DisruptionsList
+import nl.marc_apps.ovgo.ui.components.PlaceholderImage
 import org.koin.androidx.compose.getViewModel
 
 @Composable

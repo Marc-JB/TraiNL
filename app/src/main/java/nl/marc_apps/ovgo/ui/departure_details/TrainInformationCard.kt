@@ -16,11 +16,11 @@ import coil.ImageLoader
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.TrainInfo
-import nl.marc_apps.ovgo.ui.TrainImagesView
+import nl.marc_apps.ovgo.ui.components.Card
+import nl.marc_apps.ovgo.ui.components.TrainImagesView
 import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
-import nl.marc_apps.ovgo.ui.theme.Card
 
 @Composable
 fun TrainInformationCard(departure: Departure, imageLoader: ImageLoader? = null) {

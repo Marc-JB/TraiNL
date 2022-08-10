@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.ui
+package nl.marc_apps.ovgo.ui.components
 
 import android.text.format.DateUtils
 import androidx.compose.foundation.clickable

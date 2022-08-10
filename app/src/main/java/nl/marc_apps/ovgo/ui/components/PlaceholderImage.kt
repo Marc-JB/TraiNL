@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.ui
+package nl.marc_apps.ovgo.ui.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

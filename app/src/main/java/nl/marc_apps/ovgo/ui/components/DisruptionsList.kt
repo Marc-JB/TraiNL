@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.ui
+package nl.marc_apps.ovgo.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

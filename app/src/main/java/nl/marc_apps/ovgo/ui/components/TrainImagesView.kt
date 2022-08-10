@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.ui
+package nl.marc_apps.ovgo.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -16,6 +16,8 @@ import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.imageLoader
 import nl.marc_apps.ovgo.R
+import nl.marc_apps.ovgo.ui.ImageRequest
+import nl.marc_apps.ovgo.ui.TrainImageBorderTransformation
 
 private fun isImageUrlFromWhiteTrain(imageUrl: String): Boolean {
     return "ice" in imageUrl

@@ -1,4 +1,4 @@
-package nl.marc_apps.ovgo.ui.theme
+package nl.marc_apps.ovgo.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope

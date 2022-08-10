@@ -15,10 +15,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.Departure
+import nl.marc_apps.ovgo.ui.components.Card
 import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
-import nl.marc_apps.ovgo.ui.theme.Card
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
 

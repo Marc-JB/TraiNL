@@ -17,10 +17,10 @@ import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.JourneyStop
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.ui.components.Card
 import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
-import nl.marc_apps.ovgo.ui.theme.Card
 
 @Composable
 fun RouteInformationCard(

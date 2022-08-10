@@ -1,17 +1,14 @@
 package nl.marc_apps.ovgo.ui.departure_board
 
 import android.content.res.Configuration
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
@@ -23,8 +20,9 @@ import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.Departure
-import nl.marc_apps.ovgo.ui.TrainImagesView
 import nl.marc_apps.ovgo.ui.TrainStationDisplayName
+import nl.marc_apps.ovgo.ui.components.PlatformView
+import nl.marc_apps.ovgo.ui.components.TrainImagesView
 import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import nl.marc_apps.ovgo.ui.theme.BluePrimary
@@ -174,36 +172,20 @@ fun TrainInfoRow(departure: Departure, imageLoader: ImageLoader? = null) {
     Spacer(Modifier.height(DepartureViewItemSpacingVertical))
 }
 
-private val PlatformIconCornerRadius = 2.dp
 private val PlatformIconSize = 40.dp
-private val PlatformIconElevation = 4.dp
 private val PlatformIconWhiteSquareSize = 10.dp
 
 @Composable
 fun PlatformIcon(platform: String, platformChanged: Boolean) {
     val platformColor = if(platformChanged) colorResource(R.color.colorError) else BluePrimary
 
-    Box (
+    PlatformView(
         modifier = Modifier
-            .size(PlatformIconSize)
-            .shadow(PlatformIconElevation, RoundedCornerShape(PlatformIconCornerRadius))
-            .background(
-                platformColor,
-                RoundedCornerShape(
-                    topStart = PlatformIconCornerRadius + 2.dp,
-                    PlatformIconCornerRadius,
-                    PlatformIconCornerRadius,
-                    PlatformIconCornerRadius
-                )
-            )
-    ){
-        Box (
-            modifier = Modifier
-                .size(PlatformIconWhiteSquareSize)
-                .background(Color.White, RoundedCornerShape(topStart = PlatformIconCornerRadius))
-                .align(Alignment.TopStart)
-        ){}
-
+            .size(PlatformIconSize),
+        whiteSquareSize = PlatformIconWhiteSquareSize,
+        backgroundColor = platformColor,
+        contentColor = Color.White
+    ) {
         Text(
             platform,
             style = MaterialTheme.typography.body2,
