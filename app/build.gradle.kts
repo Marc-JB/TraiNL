@@ -191,6 +191,11 @@ dependencies {
 
     implementation(libs.kotlin.datetime)
 
+    // Compose testing
+    testImplementation(libs.androidx.compose.testing)
+    androidTestImplementation(libs.androidx.compose.testing)
+    debugImplementation(libs.androidx.compose.testing.manifest)
+
     // Test utilities
     testImplementation(kotlin("test-junit"))
     testImplementation(libs.robolectric)
