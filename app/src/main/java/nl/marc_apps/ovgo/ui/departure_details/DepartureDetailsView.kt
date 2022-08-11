@@ -35,12 +35,12 @@ private val DepartureStopsSheetMinHeight = 56.dp
 
 @Composable
 fun DepartureDetailsView(
-    departureId: String,
+    departureId: String?,
     departureDetailsViewModel: DepartureDetailsViewModel = getViewModel(),
     navController: NavController,
     imageLoader: ImageLoader = get()
 ) {
-    val departure = departureDetailsViewModel.getDepartureById(departureId)
+    val departure = departureId?.let { departureDetailsViewModel.getDepartureById(it) }
 
     if (departure == null) {
         PlaceholderImage(stringResource(R.string.departure_board_loading_failure), R.drawable.va_stranded_traveler)
@@ -52,9 +52,7 @@ fun DepartureDetailsView(
             stops,
             imageLoader,
             onStationSelected = {
-                val action = DepartureDetailsFragmentDirections
-                    .actionDepartureDetailsToStationDepartureBoard(it.uicCode)
-                navController.navigate(action)
+                navController.navigate("departure_board/${it.uicCode}")
             }
         )
 
@@ -78,8 +76,8 @@ fun DepartureDetailsView(
 
     ModalBottomSheetLayout(
         sheetState = modalBottomSheetState,
-        sheetBackgroundColor = MaterialTheme.colors.background,
-        scrimColor = Color.Black.copy(alpha = 0.32f),
+        scrimColor = Color.Black.copy(alpha = ContentAlpha.medium),
+        sheetElevation = 0.dp,
         sheetContent = {
             Box(Modifier.defaultMinSize(minHeight = DepartureStopsSheetMinHeight)) {
                 stops?.let {

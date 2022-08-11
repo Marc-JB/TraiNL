@@ -18,9 +18,6 @@ plugins {
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
 
-    // Navigation
-    alias(libs.plugins.androidx.navigation) apply false
-
     // Testing
     alias(libs.plugins.kover)
     alias(libs.plugins.sonarqube)

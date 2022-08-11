@@ -38,8 +38,7 @@ fun DepartureBoardView(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         StationAppBar(selectedStation) {
-            val action = DepartureBoardFragmentDirections.actionHomeToStationSearch()
-            navController.navigate(action)
+            navController.navigate("station_search")
         }
 
         when {
@@ -70,8 +69,7 @@ fun DepartureBoardView(
                 imageId = R.drawable.va_stranded_traveler
             )
             else -> DeparturesList(departures.getOrThrow(), imageLoader) {
-                val action = DepartureBoardFragmentDirections.actionDepartureBoardToDetails(it.journeyId)
-                navController.navigate(action)
+                navController.navigate("departures/${it.journeyId}")
             }
         }
     }

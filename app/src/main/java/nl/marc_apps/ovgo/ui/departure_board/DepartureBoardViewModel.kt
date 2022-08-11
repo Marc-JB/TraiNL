@@ -3,7 +3,6 @@ package nl.marc_apps.ovgo.ui.departure_board
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,18 +16,14 @@ import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.utils.getOrNull
 
 class DepartureBoardViewModel(
-    private val state: SavedStateHandle,
     private val trainStationRepository: TrainStationRepository,
     private val departureRepository: DepartureRepository,
     private val preferences: DataStore<Preferences>
 ) : ViewModel() {
-    private var mutableCurrentStation: TrainStation?
-        get() = currentStation.value
-        set(value) {
-            state[SAVED_STATE_KEY_STATION] = value
-        }
+    private var mutableCurrentStation = MutableStateFlow<TrainStation?>(null)
 
-    val currentStation = state.getStateFlow<TrainStation?>(SAVED_STATE_KEY_STATION, null)
+    val currentStation: StateFlow<TrainStation?>
+        get() = mutableCurrentStation
 
     private val mutableDepartures = MutableStateFlow<Result<List<Departure>>?>(null)
 
@@ -86,7 +81,7 @@ class DepartureBoardViewModel(
         }
 
         if (currentStation.value != station) {
-            mutableCurrentStation = station
+            mutableCurrentStation.value = station
             saveCurrentStation(station)
         }
         mutableDepartures.value = null
@@ -110,7 +105,5 @@ class DepartureBoardViewModel(
 
     companion object {
         private const val DEFAULT_STATION_NAME = "Utrecht Centraal"
-
-        private const val SAVED_STATE_KEY_STATION = "KEY_STATION"
     }
 }

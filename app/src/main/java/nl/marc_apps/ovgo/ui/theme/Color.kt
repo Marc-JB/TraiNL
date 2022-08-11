@@ -13,8 +13,7 @@ val YellowAccent = Color(0xFFFFEB3B)
 val YellowAccentDark = Color(0xFFC8B900)
 
 val Gray50 = Color(0xFFFAFAFA)
-val Gray200 = Color(0xFFEEEEEE)
-val Gray800 = Color(0xFF424242)
+val Gray850 = Color(0xFF2D2D2D)
 val Gray900 = Color(0xFF212121)
 
 val SubtitleColor

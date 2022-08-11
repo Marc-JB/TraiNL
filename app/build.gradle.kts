@@ -22,9 +22,6 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
 
-    // Navigation
-    alias(libs.plugins.androidx.navigation)
-
     // API
     alias(libs.plugins.kotlin.serialization)
 }
@@ -41,7 +38,7 @@ fun getLocalProperties(): Properties {
 
 android {
     compileSdk = libs.versions.trainl.targetsdk.get().toInt()
-    buildToolsVersion = "32.0.0"
+    buildToolsVersion = "33.0.0"
 
     packagingOptions {
         resources {
@@ -125,7 +122,6 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
         compose = true
     }
 
@@ -161,24 +157,17 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
 
     // User Interface
-    implementation(libs.bundles.androidx.navigation)
-    testImplementation(libs.androidx.navigation.test)
+    implementation(libs.androidx.navigation)
 
     implementation(libs.bundles.coil)
 
     implementation(libs.bundles.androidx.compose)
     debugImplementation(libs.androidx.compose.tooling)
 
-    implementation(libs.google.material.compose)
-
     implementation(libs.google.material)
 
     // Backward compatibility
-    implementation(libs.bundles.androidx.compat)
-
-    // TODO: Change to testImplementation when https://issuetracker.google.com/issues/127986458 is fixed
-    debugImplementation(libs.androidx.fragment.test)
-    testReleaseImplementation(libs.androidx.fragment.test)
+    implementation(libs.androidx.compat)
 
     // Utilities
     implementation(platform("com.google.firebase:firebase-bom:29.0.2"))
@@ -204,7 +193,6 @@ dependencies {
     testImplementation(libs.androidx.test.junit)
 
     // Android test utilities
-    androidTestImplementation(libs.androidx.test.espresso)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(kotlin("test-junit"))
 }
