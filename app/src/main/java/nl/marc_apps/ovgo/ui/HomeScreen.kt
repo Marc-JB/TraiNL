@@ -2,9 +2,7 @@ package nl.marc_apps.ovgo.ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -50,26 +48,68 @@ fun HomeScreen() {
             HomeScreenDestination.Maintenance
         )
 
-        Scaffold(
-            bottomBar = {
-                BottomNavigation(
-                    backgroundColor = MaterialTheme.colors.surface,
-                    elevation = 0.dp
-                ) {
-                    val navBackStackEntry by navController.currentBackStackEntryAsState()
-                    val currentDestination = navBackStackEntry?.destination
+        BoxWithConstraints {
+            if (maxWidth > maxHeight && maxWidth >= 600.dp) {
+                HomeScreenWithNavigationRail(navController, items)
+            } else {
+                HomeScreenWithBottomNavigation(navController, items)
+            }
+        }
+    }
+}
 
-                    for (screen in items) {
-                        HomeScreenBottomNavigationItem(
-                            screen = screen,
-                            navController = navController,
-                            currentDestination = currentDestination
-                        )
-                    }
+@Composable
+fun HomeScreenWithBottomNavigation(
+    navController: NavHostController,
+    items: List<HomeScreenDestination>
+) {
+    Scaffold(
+        bottomBar = {
+            BottomNavigation(
+                backgroundColor = MaterialTheme.colors.surface,
+                elevation = 0.dp
+            ) {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
+
+                for (screen in items) {
+                    HomeScreenBottomNavigationItem(
+                        screen = screen,
+                        navController = navController,
+                        currentDestination = currentDestination
+                    )
                 }
             }
-        ) { innerPadding ->
-            HomeScreenNavigationHost(navController, innerPadding)
+        }
+    ) { innerPadding ->
+        HomeScreenNavigationHost(navController, innerPadding)
+    }
+}
+
+@Composable
+fun HomeScreenWithNavigationRail(
+    navController: NavHostController,
+    items: List<HomeScreenDestination>
+) {
+    Scaffold { innerPadding ->
+        Row(Modifier.padding(innerPadding)) {
+            NavigationRail(
+                backgroundColor = MaterialTheme.colors.surface,
+                elevation = 0.dp
+            ) {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
+
+                for (screen in items) {
+                    HomeScreenNavigationRailItem(
+                        screen = screen,
+                        navController = navController,
+                        currentDestination = currentDestination
+                    )
+                }
+            }
+
+            HomeScreenNavigationHost(navController, PaddingValues(0.dp))
         }
     }
 }
@@ -125,6 +165,30 @@ fun RowScope.HomeScreenBottomNavigationItem(
     currentDestination: NavDestination?
 ) {
     BottomNavigationItem(
+        icon = { Icon(painterResource(screen.iconRes), contentDescription = null) },
+        label = { Text(stringResource(screen.titleRes)) },
+        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+        selectedContentColor = MaterialTheme.colors.primary,
+        unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.medium),
+        onClick = {
+            navController.navigate(screen.route) {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
+        }
+    )
+}
+
+@Composable
+fun ColumnScope.HomeScreenNavigationRailItem(
+    screen: HomeScreenDestination,
+    navController: NavController,
+    currentDestination: NavDestination?
+) {
+    NavigationRailItem(
         icon = { Icon(painterResource(screen.iconRes), contentDescription = null) },
         label = { Text(stringResource(screen.titleRes)) },
         selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
