@@ -11,20 +11,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.*
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import nl.marc_apps.ovgo.R
-import nl.marc_apps.ovgo.ui.departure_board.DepartureBoardView
-import nl.marc_apps.ovgo.ui.departure_details.DepartureDetailsView
-import nl.marc_apps.ovgo.ui.disruptions.DisruptionsView
-import nl.marc_apps.ovgo.ui.maintenance.MaintenanceView
-import nl.marc_apps.ovgo.ui.search_station.SearchStationView
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 
 sealed class HomeScreenDestination(
@@ -32,11 +29,23 @@ sealed class HomeScreenDestination(
     @StringRes val titleRes: Int,
     @DrawableRes val iconRes: Int
 ) {
-    object DepartureBoard : HomeScreenDestination("departure_board", R.string.departure_board, R.drawable.ic_departure_board)
+    object DepartureBoard : HomeScreenDestination(
+        DepartureBoardDestination.buildRoute(),
+        R.string.departure_board,
+        R.drawable.ic_departure_board
+    )
 
-    object Disruptions : HomeScreenDestination("disruptions", R.string.disruptions, R.drawable.ic_error)
+    object Disruptions : HomeScreenDestination(
+        DisruptionsDestination.buildRoute(),
+        R.string.disruptions,
+        R.drawable.ic_error
+    )
 
-    object Maintenance : HomeScreenDestination("maintenance", R.string.maintenance, R.drawable.ic_warning)
+    object Maintenance : HomeScreenDestination(
+        MaintenanceDestination.buildRoute(),
+        R.string.maintenance,
+        R.drawable.ic_warning
+    )
 }
 
 @Composable
@@ -126,37 +135,14 @@ fun HomeScreenNavigationHost(
         startDestination = HomeScreenDestination.DepartureBoard.route,
         modifier = Modifier.padding(innerPadding)
     ) {
-        composable(HomeScreenDestination.DepartureBoard.route) {
-            DepartureBoardView(navController = navController)
+        for (destination in Destination.allDestinations) {
+            composable(
+                route = destination.routeSpecification,
+                arguments = destination.arguments
+            ) { backStackEntry ->
+                destination.composable(navController, backStackEntry.arguments)
+            }
         }
-
-        composable(
-            "departure_board/{stationId}",
-            arguments = listOf(navArgument("stationId") { type = NavType.StringType })
-        ) { backStackEntry ->
-            DepartureBoardView(
-                stationId = backStackEntry.arguments?.getString("stationId"),
-                navController = navController
-            )
-        }
-
-        composable(
-            "departures/{departureId}",
-            arguments = listOf(navArgument("departureId") { type = NavType.StringType })
-        ) { backStackEntry ->
-            DepartureDetailsView(
-                departureId = backStackEntry.arguments?.getString("departureId"),
-                navController = navController
-            )
-        }
-
-        composable("station_search") {
-            SearchStationView(navController = navController)
-        }
-
-        composable(HomeScreenDestination.Disruptions.route) { DisruptionsView() }
-
-        composable(HomeScreenDestination.Maintenance.route) { MaintenanceView() }
     }
 }
 

@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.ImageLoader
 import nl.marc_apps.ovgo.R
+import nl.marc_apps.ovgo.ui.DepartureDetailsDestination
+import nl.marc_apps.ovgo.ui.StationSearchDestination
 import nl.marc_apps.ovgo.ui.components.PlaceholderImage
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
@@ -38,7 +40,7 @@ fun DepartureBoardView(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         StationAppBar(selectedStation) {
-            navController.navigate("station_search")
+            navController.navigate(StationSearchDestination.buildRoute())
         }
 
         when {
@@ -69,7 +71,7 @@ fun DepartureBoardView(
                 imageId = R.drawable.va_stranded_traveler
             )
             else -> DeparturesList(departures.getOrThrow(), imageLoader) {
-                navController.navigate("departures/${it.journeyId}")
+                navController.navigate(DepartureDetailsDestination.buildRoute(it.journeyId))
             }
         }
     }

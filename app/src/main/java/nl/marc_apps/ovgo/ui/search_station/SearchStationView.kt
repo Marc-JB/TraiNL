@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.ui.DepartureBoardDestination
 import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.TrainStationPreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
@@ -38,7 +39,7 @@ fun SearchStationView(
             searchStationViewModel.updateAutocompleteList(it)
         },
         onSuggestionSelected = {
-            navController.navigate("departure_board/${it.uicCode}")
+            navController.navigate(DepartureBoardDestination.buildRoute(it.uicCode))
         }
     )
 }

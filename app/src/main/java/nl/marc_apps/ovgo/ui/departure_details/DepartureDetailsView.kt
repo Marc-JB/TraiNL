@@ -21,6 +21,7 @@ import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.domain.JourneyStop
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.ui.DepartureBoardDestination
 import nl.marc_apps.ovgo.ui.components.PlaceholderImage
 import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
@@ -52,7 +53,7 @@ fun DepartureDetailsView(
             stops,
             imageLoader,
             onStationSelected = {
-                navController.navigate("departure_board/${it.uicCode}")
+                navController.navigate(DepartureBoardDestination.buildRoute(it.uicCode))
             }
         )
 
