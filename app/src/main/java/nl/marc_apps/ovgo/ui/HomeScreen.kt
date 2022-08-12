@@ -9,8 +9,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.*
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -166,7 +168,12 @@ fun RowScope.HomeScreenBottomNavigationItem(
 ) {
     BottomNavigationItem(
         icon = { Icon(painterResource(screen.iconRes), contentDescription = null) },
-        label = { Text(stringResource(screen.titleRes)) },
+        label = {
+            Text(
+                stringResource(screen.titleRes),
+                fontSize = 12.sp
+            )
+        },
         selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
         selectedContentColor = MaterialTheme.colors.primary,
         unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.medium),
@@ -190,7 +197,14 @@ fun ColumnScope.HomeScreenNavigationRailItem(
 ) {
     NavigationRailItem(
         icon = { Icon(painterResource(screen.iconRes), contentDescription = null) },
-        label = { Text(stringResource(screen.titleRes)) },
+        label = {
+            Text(
+                stringResource(screen.titleRes),
+                fontSize = 12.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
         selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
         selectedContentColor = MaterialTheme.colors.primary,
         unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.medium),
