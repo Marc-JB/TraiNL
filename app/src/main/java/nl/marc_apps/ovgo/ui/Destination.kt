@@ -17,9 +17,11 @@ sealed class Destination(
     val arguments: List<NamedNavArgument> = emptyList(),
     val composable: @Composable (NavHostController, Bundle?) -> Unit
 ) {
+    abstract fun buildRoute(): String
+
     companion object {
         val allDestinations = listOf(
-            DepartureBoardDestination,
+            DepartureBoardDestination(),
             DisruptionsDestination,
             MaintenanceDestination,
             DepartureDetailsDestination,
@@ -32,7 +34,7 @@ private const val PARAM_STATION_ID = "stationId"
 
 private const val PARAM_DEPARTURE_ID = "departureId"
 
-object DepartureBoardDestination : Destination(
+class DepartureBoardDestination : Destination(
     routeSpecification = "departure_board?$PARAM_STATION_ID={$PARAM_STATION_ID}",
     arguments = listOf(
         navArgument(PARAM_STATION_ID) {
@@ -48,6 +50,7 @@ object DepartureBoardDestination : Destination(
         )
     }
 ) {
+    override fun buildRoute() = buildRoute(null)
 
     fun buildRoute(stationId: String? = null): String {
         return if (stationId != null) "departure_board?$PARAM_STATION_ID=$stationId" else "departure_board"
@@ -58,14 +61,14 @@ object DisruptionsDestination : Destination(
     routeSpecification = "disruptions",
     composable = { _, _ -> DisruptionsView() }
 ) {
-    fun buildRoute() = routeSpecification
+    override fun buildRoute() = routeSpecification
 }
 
 object MaintenanceDestination : Destination(
     routeSpecification = "maintenance",
     composable = { _, _ -> MaintenanceView() }
 ) {
-    fun buildRoute() = routeSpecification
+    override fun buildRoute() = routeSpecification
 }
 
 object DepartureDetailsDestination : Destination(
@@ -83,6 +86,8 @@ object DepartureDetailsDestination : Destination(
         )
     }
 ) {
+    override fun buildRoute() = throw IllegalArgumentException("DepartureId argument is required")
+
     fun buildRoute(departureId: String) = "departures/${departureId}"
 }
 
@@ -92,5 +97,5 @@ object StationSearchDestination : Destination(
         SearchStationView(navController = navController)
     }
 ) {
-    fun buildRoute() = routeSpecification
+    override fun buildRoute() = routeSpecification
 }

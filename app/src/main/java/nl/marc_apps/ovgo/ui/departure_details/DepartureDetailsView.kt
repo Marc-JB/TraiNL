@@ -53,7 +53,7 @@ fun DepartureDetailsView(
             stops,
             imageLoader,
             onStationSelected = {
-                navController.navigate(DepartureBoardDestination.buildRoute(it.uicCode))
+                navController.navigate(DepartureBoardDestination().buildRoute(it.uicCode))
             }
         )
 

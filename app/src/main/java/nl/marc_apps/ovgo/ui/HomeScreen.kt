@@ -25,24 +25,24 @@ import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 
 sealed class HomeScreenDestination(
-    val route: String,
+    val destination: Destination,
     @StringRes val titleRes: Int,
     @DrawableRes val iconRes: Int
 ) {
     object DepartureBoard : HomeScreenDestination(
-        DepartureBoardDestination.buildRoute(),
+        DepartureBoardDestination(),
         R.string.departure_board,
         R.drawable.ic_departure_board
     )
 
     object Disruptions : HomeScreenDestination(
-        DisruptionsDestination.buildRoute(),
+        DisruptionsDestination,
         R.string.disruptions,
         R.drawable.ic_error
     )
 
     object Maintenance : HomeScreenDestination(
-        MaintenanceDestination.buildRoute(),
+        MaintenanceDestination,
         R.string.maintenance,
         R.drawable.ic_warning
     )
@@ -132,7 +132,7 @@ fun HomeScreenNavigationHost(
 ) {
     NavHost(
         navController,
-        startDestination = HomeScreenDestination.DepartureBoard.route,
+        startDestination = DepartureBoardDestination().routeSpecification,
         modifier = Modifier.padding(innerPadding)
     ) {
         for (destination in Destination.allDestinations) {
@@ -160,11 +160,13 @@ fun RowScope.HomeScreenBottomNavigationItem(
                 fontSize = 12.sp
             )
         },
-        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+        selected = currentDestination?.hierarchy?.any {
+            it.route == screen.destination.routeSpecification
+        } == true,
         selectedContentColor = MaterialTheme.colors.primary,
         unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.medium),
         onClick = {
-            navController.navigate(screen.route) {
+            navController.navigate(screen.destination.buildRoute()) {
                 popUpTo(navController.graph.findStartDestination().id) {
                     saveState = true
                 }
@@ -191,11 +193,13 @@ fun ColumnScope.HomeScreenNavigationRailItem(
                 overflow = TextOverflow.Ellipsis
             )
         },
-        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+        selected = currentDestination?.hierarchy?.any {
+            it.route == screen.destination.routeSpecification
+        } == true,
         selectedContentColor = MaterialTheme.colors.primary,
         unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.medium),
         onClick = {
-            navController.navigate(screen.route) {
+            navController.navigate(screen.destination.buildRoute()) {
                 popUpTo(navController.graph.findStartDestination().id) {
                     saveState = true
                 }
