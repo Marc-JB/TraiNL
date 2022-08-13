@@ -8,7 +8,9 @@ import androidx.compose.material.icons.rounded.DepartureBoard
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -63,7 +65,13 @@ fun HomeScreen() {
         )
 
         BoxWithConstraints {
-            if (maxWidth > maxHeight && maxWidth >= 600.dp) {
+            val showNavigationRail by remember(maxWidth, maxHeight) {
+                derivedStateOf {
+                    maxWidth > maxHeight && maxWidth >= 600.dp
+                }
+            }
+
+            if (showNavigationRail) {
                 HomeScreenWithNavigationRail(navController, items)
             } else {
                 HomeScreenWithBottomNavigation(navController, items)
