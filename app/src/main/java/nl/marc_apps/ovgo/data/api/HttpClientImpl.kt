@@ -39,9 +39,8 @@ class HttpClientImpl(val context: Context) : HttpClient {
             readTimeout(30.seconds.toJavaDuration())
             writeTimeout(30.seconds.toJavaDuration())
 
-            val coilCacheSize = 5_000_000L
             val cacheDir = File(context.cacheDir, NETWORK_CACHE_DIRECTORY_NAME).apply { mkdirs() }
-            cache(Cache(cacheDir, coilCacheSize))
+            cache(Cache(cacheDir, maxSize = 2_000_000L))
         }
 
         val dns = dnsHttpClient {
