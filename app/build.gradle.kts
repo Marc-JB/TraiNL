@@ -159,21 +159,18 @@ dependencies {
     // User Interface
     implementation(libs.androidx.navigation)
 
-    implementation(libs.bundles.coil)
+    implementation(libs.coil)
 
     implementation(libs.bundles.androidx.compose)
     debugImplementation(libs.androidx.compose.tooling)
 
     implementation(libs.google.material)
 
-    // Backward compatibility
-    implementation(libs.androidx.compat)
-
     // Utilities
     implementation(platform("com.google.firebase:firebase-bom:29.0.2"))
     implementation("com.google.firebase:firebase-crashlytics-ktx")
 
-    implementation(libs.bundles.koin)
+    implementation(libs.koin)
 
     implementation(libs.kotlin.coroutines)
     testImplementation(libs.kotlin.coroutines.test)
