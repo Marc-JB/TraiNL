@@ -164,7 +164,7 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
     debugImplementation(libs.androidx.compose.tooling)
 
-    implementation(libs.google.material)
+    implementation(libs.bundles.google.material)
 
     // Utilities
     implementation(platform("com.google.firebase:firebase-bom:29.0.2"))

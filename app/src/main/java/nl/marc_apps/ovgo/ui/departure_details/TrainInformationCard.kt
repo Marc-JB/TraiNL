@@ -2,10 +2,13 @@ package nl.marc_apps.ovgo.ui.departure_details
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -64,7 +67,7 @@ fun FacilityView(facilities: TrainInfo.TrainFacilities, modifier: Modifier = Mod
     Row(modifier) {
         FacilityIcon(
             enabled = facilities.isWheelChairAccessible,
-            iconPainter = painterResource(R.drawable.ic_accessible),
+            vectorIcon = Icons.Rounded.Accessible,
             description = "Wheelchair accessible"
         )
 
@@ -76,37 +79,37 @@ fun FacilityView(facilities: TrainInfo.TrainFacilities, modifier: Modifier = Mod
 
         FacilityIcon(
             enabled = facilities.hasBicycleCompartment,
-            iconPainter = painterResource(R.drawable.ic_bike),
+            vectorIcon = Icons.Rounded.DirectionsBike,
             description = "Bicycles"
         )
 
         FacilityIcon(
             enabled = facilities.hasFreeWifi,
-            iconPainter = painterResource(R.drawable.ic_wifi),
+            vectorIcon = Icons.Rounded.Wifi,
             description = "Wifi"
         )
 
         FacilityIcon(
             enabled = facilities.hasPowerSockets,
-            iconPainter = painterResource(R.drawable.ic_power),
+            vectorIcon = Icons.Rounded.Power,
             description = "Power sockets"
         )
 
         FacilityIcon(
             enabled = facilities.hasSilenceCompartment,
-            iconPainter = painterResource(R.drawable.ic_silence),
+            vectorIcon = Icons.Rounded.VoiceOverOff,
             description = "Silence compartment"
         )
 
         FacilityIcon(
             enabled = facilities.hasFirstClass,
-            iconPainter = painterResource(R.drawable.ic_first_class),
+            vectorIcon = Icons.Rounded.LooksOne,
             description = "First class"
         )
 
         FacilityIcon(
             enabled = facilities.hasBistro,
-            iconPainter = painterResource(R.drawable.ic_bistro),
+            vectorIcon = Icons.Rounded.Restaurant,
             description = "Bistro"
         )
     }
@@ -121,6 +124,21 @@ fun FacilityIcon(enabled: Boolean, iconPainter: Painter, description: String) {
     } else {
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.disabled) {
             Icon(iconPainter, contentDescription = description)
+        }
+    }
+
+    Spacer(Modifier.width(4.dp))
+}
+
+@Composable
+fun FacilityIcon(enabled: Boolean, vectorIcon: ImageVector, description: String) {
+    if (enabled) {
+        CompositionLocalProvider(LocalContentColor provides MaterialTheme.colors.primary) {
+            Icon(vectorIcon, contentDescription = description)
+        }
+    } else {
+        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.disabled) {
+            Icon(vectorIcon, contentDescription = description)
         }
     }
 

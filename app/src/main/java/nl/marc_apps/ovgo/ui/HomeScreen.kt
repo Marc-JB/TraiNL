@@ -1,13 +1,16 @@
 package nl.marc_apps.ovgo.ui
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.DepartureBoard
+import androidx.compose.material.icons.rounded.Error
+import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -27,24 +30,24 @@ import nl.marc_apps.ovgo.ui.theme.AppTheme
 sealed class HomeScreenDestination(
     val destination: Destination,
     @StringRes val titleRes: Int,
-    @DrawableRes val iconRes: Int
+   val icon: ImageVector
 ) {
     object DepartureBoard : HomeScreenDestination(
         DepartureBoardDestination(),
         R.string.departure_board,
-        R.drawable.ic_departure_board
+        Icons.Rounded.DepartureBoard
     )
 
     object Disruptions : HomeScreenDestination(
         DisruptionsDestination,
         R.string.disruptions,
-        R.drawable.ic_error
+        Icons.Rounded.Error
     )
 
     object Maintenance : HomeScreenDestination(
         MaintenanceDestination,
         R.string.maintenance,
-        R.drawable.ic_warning
+        Icons.Rounded.Warning
     )
 }
 
@@ -153,7 +156,7 @@ fun RowScope.HomeScreenBottomNavigationItem(
     currentDestination: NavDestination?
 ) {
     BottomNavigationItem(
-        icon = { Icon(painterResource(screen.iconRes), contentDescription = null) },
+        icon = { Icon(screen.icon, contentDescription = null) },
         label = {
             Text(
                 stringResource(screen.titleRes),
@@ -178,13 +181,13 @@ fun RowScope.HomeScreenBottomNavigationItem(
 }
 
 @Composable
-fun ColumnScope.HomeScreenNavigationRailItem(
+fun HomeScreenNavigationRailItem(
     screen: HomeScreenDestination,
     navController: NavController,
     currentDestination: NavDestination?
 ) {
     NavigationRailItem(
-        icon = { Icon(painterResource(screen.iconRes), contentDescription = null) },
+        icon = { Icon(screen.icon, contentDescription = null) },
         label = {
             Text(
                 stringResource(screen.titleRes),
