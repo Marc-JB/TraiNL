@@ -1,10 +1,10 @@
 package nl.marc_apps.ovgo.ui.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -44,17 +44,15 @@ val DutchRailwaysDisruption.DisruptionOrMaintenance.description
 private val DisruptionItemSpacing = 8.dp
 
 @Composable
-fun Disruption(
-    disruption: DutchRailwaysDisruption.DisruptionOrMaintenance,
-    onDisruptionSelected: (DutchRailwaysDisruption.DisruptionOrMaintenance) -> Unit
-) {
+fun Disruption(disruption: DutchRailwaysDisruption.DisruptionOrMaintenance) {
+    var isExpanded by remember { mutableStateOf(false) }
+
     Column(
         Modifier
-            .clickable {
-                onDisruptionSelected(disruption)
-            }
+            .clickable { isExpanded = !isExpanded }
             .padding(16.dp)
             .fillMaxWidth()
+            .animateContentSize()
     ) {
         Text(
             disruption.title,
@@ -68,7 +66,7 @@ fun Disruption(
             Text(
                 disruption.description,
                 style = MaterialTheme.typography.body2,
-                maxLines = 3,
+                maxLines = if (isExpanded) Int.MAX_VALUE else 3,
                 overflow = TextOverflow.Ellipsis
             )
 

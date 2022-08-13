@@ -1,14 +1,14 @@
 package nl.marc_apps.ovgo.ui.components
 
 import android.text.format.DateUtils
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -20,17 +20,15 @@ import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDisruption
 private val CalamityItemSpacing = 8.dp
 
 @Composable
-fun Calamity(
-    calamity: DutchRailwaysDisruption.Calamity,
-    onCalamitySelected: (DutchRailwaysDisruption.Calamity) -> Unit
-) {
+fun Calamity(calamity: DutchRailwaysDisruption.Calamity) {
+    var isExpanded by remember { mutableStateOf(false) }
+
     Column(
         Modifier
-            .clickable {
-                onCalamitySelected(calamity)
-            }
+            .clickable { isExpanded = !isExpanded }
             .padding(16.dp)
             .fillMaxWidth()
+            .animateContentSize()
     ) {
         Text(
             calamity.title,
@@ -51,7 +49,7 @@ fun Calamity(
                 Text(
                     calamity.description,
                     style = MaterialTheme.typography.body2,
-                    maxLines = 3,
+                    maxLines = if (isExpanded) Int.MAX_VALUE else 3,
                     overflow = TextOverflow.Ellipsis
                 )
 

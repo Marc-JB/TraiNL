@@ -39,7 +39,7 @@ fun SearchStationView(
             searchStationViewModel.updateAutocompleteList(it)
         },
         onSuggestionSelected = {
-            navController.navigate(DepartureBoardDestination.buildRoute(it.uicCode))
+            navController.navigate(DepartureBoardDestination().buildRoute(it.uicCode))
         }
     )
 }
