@@ -1,37 +1,40 @@
 package nl.marc_apps.ovgo.ui
 
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
+import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.createBitmap
-import coil.bitmap.BitmapPool
 import coil.size.Size
 import coil.transform.Transformation
 
 class TrainImageBorderTransformation(
-    private val key: String,
+    key: String,
     private val strokeWidth: Int = 2,
-    private val color: Int = Color.WHITE
+    private val color: Color = Color(android.graphics.Color.WHITE)
 ) : Transformation {
-    override fun key() = "train-image-border:$key:$strokeWidth:$color"
+    override val cacheKey = "train-image-border:$key:$strokeWidth:$color"
 
-    override suspend fun transform(pool: BitmapPool, input: Bitmap, size: Size): Bitmap {
+    override suspend fun transform(input: Bitmap, size: Size): Bitmap {
         val inputWithRemovedBackground = changeBitmapAlpha(changeBitmapAlpha(input, 0.1f), 10f)
+        val whiteBitmap = changeBitmapColor(inputWithRemovedBackground)
 
         val doubleStrokeWidth = 2 * strokeWidth
 
         return createBitmap(input.width + doubleStrokeWidth, input.height + doubleStrokeWidth).applyCanvas {
             val range = 0..doubleStrokeWidth
             for (index in range) {
-                drawBitmap(inputWithRemovedBackground, 0f, index.toFloat(), null)
+                drawBitmap(whiteBitmap, 0f, index.toFloat(), null)
                 if (index != 0) {
-                    drawBitmap(inputWithRemovedBackground, index.toFloat(), 0f, null)
+                    drawBitmap(whiteBitmap, index.toFloat(), 0f, null)
                 }
-                drawBitmap(inputWithRemovedBackground, doubleStrokeWidth.toFloat(), index.toFloat(), null)
+                drawBitmap(whiteBitmap, doubleStrokeWidth.toFloat(), index.toFloat(), null)
                 if (index != doubleStrokeWidth) {
-                    drawBitmap(inputWithRemovedBackground, index.toFloat(), doubleStrokeWidth.toFloat(), null)
+                    drawBitmap(whiteBitmap, index.toFloat(), doubleStrokeWidth.toFloat(), null)
                 }
             }
-            drawColor(color, PorterDuff.Mode.SRC_ATOP)
+
             drawBitmap(inputWithRemovedBackground, strokeWidth.toFloat(), strokeWidth.toFloat(), null)
         }
     }
@@ -44,6 +47,19 @@ class TrainImageBorderTransformation(
                     0f, 1f, 0f, 0f, 0f,
                     0f, 0f, 1f, 0f, 0f,
                     0f, 0f, 0f, factor, 0f
+                ))
+            })
+        }
+    }
+
+    private fun changeBitmapColor(bitmap: Bitmap): Bitmap {
+        return createBitmap(bitmap.width, bitmap.height).applyCanvas {
+            drawBitmap(bitmap, 0f, 0f, Paint().apply {
+                this.colorFilter = ColorMatrixColorFilter(floatArrayOf(
+                    0f, 0f, 0f, 0f, this@TrainImageBorderTransformation.color.red * 255f,
+                    0f, 0f, 0f, 0f, this@TrainImageBorderTransformation.color.green * 255f,
+                    0f, 0f, 0f, 0f, this@TrainImageBorderTransformation.color.blue * 255f,
+                    0f, 0f, 0f, 1f, 0f
                 ))
             })
         }

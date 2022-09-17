@@ -1,28 +1,32 @@
+
 import kotlinx.kover.api.CoverageEngine
-import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 import org.jetbrains.kotlin.konan.properties.Properties
+import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 
-val androidxNavigationVersion by extra("2.4.2")
-
+// TODO: Remove when https://youtrack.jetbrains.com/issue/KTIJ-19369 is fixed.
+@Suppress(
+    "DSL_SCOPE_VIOLATION",
+    "MISSING_DEPENDENCY_CLASS",
+    "UNRESOLVED_REFERENCE_WRONG_RECEIVER",
+    "FUNCTION_CALL_EXPECTED"
+)
 plugins {
-    val kotlinVersion = "1.6.20"
-
-    id("com.android.application") version "7.1.2" apply false
-    kotlin("android") version kotlinVersion apply false
+    alias(libs.plugins.android.app) apply false
+    alias(libs.plugins.kotlin.android) apply false
 
     // Firebase crashlytics
-    id("com.google.gms.google-services") version "4.3.10" apply false
-    id("com.google.firebase.crashlytics") version "2.8.1" apply false
-
-    // Navigation
-    id("androidx.navigation.safeargs.kotlin") version "2.4.2" apply false
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
 
     // Testing
-    id("org.jetbrains.kotlinx.kover") version "0.5.0"
-    id("org.sonarqube") version "3.3"
+    alias(libs.plugins.kover)
+    alias(libs.plugins.sonarqube)
 
     // API
-    kotlin("plugin.serialization") version kotlinVersion apply false
+    alias(libs.plugins.kotlin.serialization)
+
+    // Other
+    alias(libs.plugins.versioncheck)
 }
 
 val coverageExclusionList = listOf(
@@ -82,4 +86,36 @@ tasks.koverMergedXmlReport {
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
+}
+
+fun hasLowerStability(candidateVersion: String, currentVersion: String): Boolean {
+    val candidateVersionUpperCased = candidateVersion.toUpperCase()
+    val currentVersionUpperCased = currentVersion.toUpperCase()
+
+    val versionsToCheck = mutableListOf<String>()
+    when {
+        "ALPHA" in currentVersionUpperCased -> {
+            // NOTHING
+        }
+        "BETA" in currentVersionUpperCased -> {
+            versionsToCheck += "ALPHA"
+        }
+        "RC" in currentVersionUpperCased -> {
+            versionsToCheck += "ALPHA"
+            versionsToCheck += "BETA"
+        }
+        else -> {
+            versionsToCheck += "ALPHA"
+            versionsToCheck += "BETA"
+            versionsToCheck += "RC"
+        }
+    }
+
+    return versionsToCheck.any { it in candidateVersionUpperCased }
+}
+
+tasks.dependencyUpdates {
+    rejectVersionIf {
+        hasLowerStability(candidate.version, currentVersion)
+    }
 }

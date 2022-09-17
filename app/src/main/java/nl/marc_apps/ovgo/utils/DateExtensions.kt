@@ -2,6 +2,8 @@ package nl.marc_apps.ovgo.utils
 
 import android.os.Build
 import androidx.annotation.IntDef
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toJavaInstant
 import java.text.DateFormat
 import java.util.*
 
@@ -17,7 +19,7 @@ private fun getDefaultFormattingLocale(): Locale {
     }
 }
 
-fun Date.format(
+fun Instant.format(
     @DateTimeStyle dateStyle: Int? = null,
     @DateTimeStyle timeStyle: Int? = null,
     locale: Locale = getDefaultFormattingLocale(),
@@ -37,5 +39,5 @@ fun Date.format(
         if (timeZone != null) {
             it.timeZone = timeZone
         }
-    }.format(this)
+    }.format(Date.from(this.toJavaInstant()))
 }

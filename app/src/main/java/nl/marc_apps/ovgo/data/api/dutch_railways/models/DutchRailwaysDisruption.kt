@@ -1,10 +1,9 @@
 package nl.marc_apps.ovgo.data.api.dutch_railways.models
 
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 import nl.marc_apps.ovgo.data.api.dutch_railways.utils.DutchRailwaysDisruptionSerializer
-import nl.marc_apps.ovgo.utils.serialization.DateSerializer
-import nl.marc_apps.ovgo.utils.serialization.NullableDateSerializer
-import java.util.*
+import nl.marc_apps.ovgo.data.api.dutch_railways.utils.InstantIso8601Serializer
 
 @Serializable(with = DutchRailwaysDisruptionSerializer::class)
 sealed class DutchRailwaysDisruption {
@@ -21,17 +20,17 @@ sealed class DutchRailwaysDisruption {
         override val title: String,
         override val isActive: Boolean,
         val local: Boolean,
-        @Serializable(with = DateSerializer::class)
-        val start: Date,
+        @Serializable(with = InstantIso8601Serializer::class)
+        val start: Instant,
         val publicationSections: List<PublicationSection>,
         val timespans: List<TimeSpan>,
-        @Serializable(with = NullableDateSerializer::class)
-        val registrationTime: Date? = null,
-        @Serializable(with = NullableDateSerializer::class)
-        val releaseTime: Date? = null,
+        @Serializable(with = InstantIso8601Serializer::class)
+        val registrationTime: Instant? = null,
+        @Serializable(with = InstantIso8601Serializer::class)
+        val releaseTime: Instant? = null,
         override val topic: String? = null,
-        @Serializable(with = NullableDateSerializer::class)
-        val end: Date? = null,
+        @Serializable(with = InstantIso8601Serializer::class)
+        val end: Instant? = null,
         val period: String? = null,
         val phase: Phase? = null,
         val impact: Impact? = null,
@@ -53,8 +52,8 @@ sealed class DutchRailwaysDisruption {
         @Serializable
         data class ExpectedDuration(
             val description: String,
-            @Serializable(with = NullableDateSerializer::class)
-            val endTime: Date? = null
+            @Serializable(with = InstantIso8601Serializer::class)
+            val endTime: Instant? = null
         )
 
         @Serializable
@@ -111,12 +110,12 @@ sealed class DutchRailwaysDisruption {
 
         @Serializable
         data class TimeSpan(
-            @Serializable(with = DateSerializer::class)
-            val start: Date,
+            @Serializable(with = InstantIso8601Serializer::class)
+            val start: Instant,
             val situation: Situation,
             val advices: List<String> = emptyList(),
-            @Serializable(with = NullableDateSerializer::class)
-            val end: Date? = null,
+            @Serializable(with = InstantIso8601Serializer::class)
+            val end: Instant? = null,
             val period: String? = null,
             val cause: Cause? = null,
             val additionalTravelTime: AdditionalTravelTime? = null,
@@ -149,10 +148,10 @@ sealed class DutchRailwaysDisruption {
 
         @Serializable
         data class AlternativeTransportTimespan(
-            @Serializable(with = NullableDateSerializer::class)
-            val start: Date? = null,
-            @Serializable(with = NullableDateSerializer::class)
-            val end: Date? = null,
+            @Serializable(with = InstantIso8601Serializer::class)
+            val start: Instant? = null,
+            @Serializable(with = InstantIso8601Serializer::class)
+            val end: Instant? = null,
             val alternativeTransport: AlternativeTransport
         )
     }
@@ -166,10 +165,10 @@ sealed class DutchRailwaysDisruption {
         val priority: Priority,
         override val topic: String? = null,
         val description: String? = null,
-        @Serializable(with = NullableDateSerializer::class)
-        val lastUpdated: Date? = null,
-        @Serializable(with = NullableDateSerializer::class)
-        val expectedNextUpdate: Date? = null
+        @Serializable(with = InstantIso8601Serializer::class)
+        val lastUpdated: Instant? = null,
+        @Serializable(with = InstantIso8601Serializer::class)
+        val expectedNextUpdate: Instant? = null
     ) : DutchRailwaysDisruption() {
         enum class Priority {
             PRIO_1, PRIO_2, PRIO_3

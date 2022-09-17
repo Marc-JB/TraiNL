@@ -13,7 +13,7 @@ object TrainStationConversions {
             setOf(model.dutchRailwaysCode, model.names.short),
             model.hasDepartureTimesBoard,
             model.hasTravelAssistance,
-            TrainStation.Country.valueOf(model.country.name)
+            model.country?.name?.let { TrainStation.Country.valueOf(it) }
         )
     }
 }

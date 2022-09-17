@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="nl.marc_apps.ovgo"
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,7 +14,8 @@
     <application
         android:name=".DiApplication"
         android:allowBackup="true"
-        android:fullBackupOnly="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"

@@ -5,7 +5,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import coil.ImageLoader
-import kotlinx.serialization.ExperimentalSerializationApi
 import nl.marc_apps.ovgo.data.DepartureRepository
 import nl.marc_apps.ovgo.data.JourneyDetailsRepository
 import nl.marc_apps.ovgo.data.TrainInfoRepository
@@ -25,10 +24,10 @@ import nl.marc_apps.ovgo.ui.maintenance.MaintenanceViewModel
 import nl.marc_apps.ovgo.ui.search_station.SearchStationViewModel
 import nl.marc_apps.ovgo.utils.buildRoomDatabase
 import nl.marc_apps.ovgo.utils.retrofit
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-@ExperimentalSerializationApi
 object DiModules {
     private const val APP_DATABASE_NAME = "app-database"
 
@@ -74,18 +73,18 @@ object DiModules {
             get<AppDatabase>().trainStationDao()
         }
 
-        single { TrainStationRepository(get(), get(), get()) }
-        single { TrainInfoRepository(get()) }
-        single { DepartureRepository(get(), get(), get()) }
-        single { JourneyDetailsRepository(get(), get()) }
+        singleOf(::TrainStationRepository)
+        singleOf(::TrainInfoRepository)
+        singleOf(::DepartureRepository)
+        singleOf(::JourneyDetailsRepository)
     }
 
     val viewModelsModule = module {
-        viewModel { DepartureBoardViewModel(get(), get(), get(), get()) }
-        viewModel { DepartureDetailsViewModel(get()) }
-        viewModel { DisruptionsViewModel(get()) }
-        viewModel { MaintenanceViewModel(get()) }
-        viewModel { SearchStationViewModel(get(), get()) }
+        viewModelOf(::DepartureBoardViewModel)
+        viewModelOf(::DepartureDetailsViewModel)
+        viewModelOf(::DisruptionsViewModel)
+        viewModelOf(::MaintenanceViewModel)
+        viewModelOf(::SearchStationViewModel)
     }
 
     val utilitiesModule = module {

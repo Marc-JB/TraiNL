@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base application theme. -->
-    <style name="Theme.OVgo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPrimaryLight</item>
-        <item name="colorPrimaryVariant">@color/colorPrimary</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryLight</item>
-
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/colorAccentLight</item>
-        <item name="colorSecondaryVariant">@color/colorAccent</item>
-        <item name="colorOnSecondary">@color/colorOnAccentLight</item>
-
-        <!-- Status bar color. -->
+    <style name="Theme.OVgo" parent="android:Theme.Material.NoActionBar">
         <item name="android:statusBarColor">@color/statusBarColor</item>
-
-        <!-- Background -->
-        <item name="android:windowBackground">@color/backgroundColor</item>
     </style>
-
-    <!-- Theme overlays -->
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Dark" />
 </resources>

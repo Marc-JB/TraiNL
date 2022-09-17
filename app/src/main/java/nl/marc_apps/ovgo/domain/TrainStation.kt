@@ -1,11 +1,8 @@
 package nl.marc_apps.ovgo.domain
 
-import android.os.Parcelable
 import androidx.annotation.Keep
-import kotlinx.parcelize.Parcelize
 
 @Keep
-@Parcelize
 data class TrainStation(
     val uicCode: String,
     val fullName: String,
@@ -15,7 +12,7 @@ data class TrainStation(
     val hasDepartureTimesBoard: Boolean = false,
     val hasTravelAssistance: Boolean = false,
     val country: Country? = null
-): Parcelable {
+) {
     enum class Country(val flag: String) {
         AUSTRIA("\uD83C\uDDE6\uD83C\uDDF9"),
         BELGIUM("\uD83C\uDDE7\uD83C\uDDEA"),

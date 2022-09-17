@@ -12,7 +12,7 @@ import nl.marc_apps.ovgo.data.type_conversions.TrainStationConversions
 import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.utils.getOrNull
 import nl.marc_apps.ovgo.utils.println
-import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.days
 
 class TrainStationRepository(
     private val trainStationDao: TrainStationDao,
@@ -104,7 +104,7 @@ class TrainStationRepository(
     private suspend fun isDatabaseOutdatedOrEmpty(): Boolean {
         val lastCacheDate = preferences.getOrNull(PreferenceKeys.trainStationCacheDatePreference) ?: return true
         val currentDate = System.currentTimeMillis()
-        return currentDate - lastCacheDate > databaseCacheExpirationTimeMs
+        return currentDate - lastCacheDate > databaseCacheExpirationTime.inWholeMilliseconds || trainStationDao.getSize() == 0
     }
 
     private suspend fun getTrainStationsFromApi(): List<TrainStation>? {
@@ -120,6 +120,6 @@ class TrainStationRepository(
     companion object {
         private const val TAG = "TRAIN_STATION_REPO"
 
-        private val databaseCacheExpirationTimeMs = TimeUnit.MILLISECONDS.convert(10, TimeUnit.DAYS)
+        private val databaseCacheExpirationTime = 10.days
     }
 }

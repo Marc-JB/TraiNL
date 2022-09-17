@@ -37,17 +37,15 @@ An Android application in Kotlin with the following libraries/patterns:
   * Data
     * Room
     * Preferences DataStore
-  * Lifecycle (with LiveData and ViewModels, used in MVVM)
+  * Lifecycle ViewModels
   * Navigation
   * UI
-    * AppCompat
-    * ConstraintLayout
+    * Jetpack Compose
     * Fragments
     * Material Design Components
-    * RecyclerView
 * Other
   * [Retrofit](https://square.github.io/retrofit/)
-  * [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
+  * [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) (Kotlin Flow is also used)
   * Serialization of JSON objects retrieved from the API using [Kotlin Serialization](https://kotlinlang.org/docs/serialization.html)
   * Dependency Injection using [Koin](https://insert-koin.io/)
 

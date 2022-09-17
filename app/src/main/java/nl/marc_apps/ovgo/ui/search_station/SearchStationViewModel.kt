@@ -1,9 +1,9 @@
 package nl.marc_apps.ovgo.ui.search_station
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import nl.marc_apps.ovgo.data.TrainStationRepository
 import nl.marc_apps.ovgo.domain.TrainStation
@@ -15,14 +15,14 @@ class SearchStationViewModel(
 ) : ViewModel() {
     private var allStations = emptyList<TrainStation>()
 
-    private val mutableIsLoadingData = MutableLiveData(true)
+    private val mutableIsLoadingData = MutableStateFlow(true)
 
-    val isLoadingData: LiveData<Boolean>
+    val isLoadingData: StateFlow<Boolean>
         get() = mutableIsLoadingData
 
-    private val mutableStationSuggestions = MutableLiveData(emptyList<TrainStation>())
+    private val mutableStationSuggestions = MutableStateFlow(emptyList<TrainStation>())
 
-    val stationSuggestions: LiveData<List<TrainStation>>
+    val stationSuggestions: StateFlow<List<TrainStation>>
         get() = mutableStationSuggestions
 
     init {
@@ -30,21 +30,21 @@ class SearchStationViewModel(
     }
 
     private fun loadAllStations() {
-        mutableIsLoadingData.postValue(true)
+        mutableIsLoadingData.value = true
 
         viewModelScope.launch {
             allStations = trainStationRepository.getTrainStations()
-            mutableIsLoadingData.postValue(false)
+            mutableIsLoadingData.value = false
         }
     }
 
     fun updateAutocompleteList(stationQuery: String) {
-        mutableStationSuggestions.postValue(allStations.sortedByDescending { station ->
+        mutableStationSuggestions.value = allStations.sortedByDescending { station ->
             val allNames = station.alternativeNames + station.alternativeSearches + station.fullName + station.shortenedName
 
             allNames.maxOf {
                 stringSimilarity.calculateSimilarity(stationQuery.lowercase(), it.lowercase())
             }
-        })
+        }
     }
 }
