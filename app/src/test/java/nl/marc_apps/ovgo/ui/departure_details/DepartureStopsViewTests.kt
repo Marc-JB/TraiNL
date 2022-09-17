@@ -43,10 +43,10 @@ class DepartureStopsViewTests {
         val stop = JourneyStop(
             "abcd",
             TrainStationPreviewParameterProvider().values.elementAt(0),
-            (now + 2.minutes).toJavaInstant(),
-            (now + 2.minutes).toJavaInstant(),
-            (now + 2.minutes).toJavaInstant(),
-            (now + 2.minutes).toJavaInstant(),
+            now + 2.minutes,
+            now + 2.minutes,
+            now + 2.minutes,
+            now + 2.minutes,
             "3a",
             "3a"
         )
@@ -69,10 +69,10 @@ class DepartureStopsViewTests {
         val stop = JourneyStop(
             "abcd",
             TrainStationPreviewParameterProvider().values.elementAt(0),
-            (now + 2.minutes).toJavaInstant(),
-            (now + 4.minutes).toJavaInstant(),
-            (now + 2.minutes).toJavaInstant(),
-            (now + 4.minutes).toJavaInstant(),
+            now + 2.minutes,
+            now + 4.minutes,
+            now + 2.minutes,
+            now + 4.minutes,
             "3a",
             "3a"
         )
@@ -95,10 +95,10 @@ class DepartureStopsViewTests {
         val stop = JourneyStop(
             "abcd",
             TrainStationPreviewParameterProvider().values.elementAt(0),
-            (now + 2.minutes).toJavaInstant(),
-            (now + 2.minutes).toJavaInstant(),
-            (now + 4.minutes).toJavaInstant(),
-            (now + 4.minutes).toJavaInstant(),
+            now + 2.minutes,
+            now + 2.minutes,
+            now + 4.minutes,
+            now + 4.minutes,
             "3a",
             "3a"
         )
@@ -121,10 +121,10 @@ class DepartureStopsViewTests {
         val stop = JourneyStop(
             "abcd",
             TrainStationPreviewParameterProvider().values.elementAt(0),
-            (now + 2.minutes).toJavaInstant(),
-            (now + 2.minutes).toJavaInstant(),
-            (now + 2.minutes).toJavaInstant(),
-            (now + 4.minutes).toJavaInstant(),
+            now + 2.minutes,
+            now + 2.minutes,
+            now + 2.minutes,
+            now + 4.minutes,
             "3a",
             "3a"
         )
@@ -147,10 +147,10 @@ class DepartureStopsViewTests {
         val stop = JourneyStop(
             "abcd",
             TrainStationPreviewParameterProvider().values.elementAt(0),
-            (now + 2.minutes).toJavaInstant(),
-            (now + 4.minutes).toJavaInstant(),
-            (now + 4.minutes).toJavaInstant(),
-            (now + 4.minutes).toJavaInstant(),
+            now + 2.minutes,
+            now + 4.minutes,
+            now + 4.minutes,
+            now + 4.minutes,
             "3a",
             "3a"
         )
@@ -173,10 +173,10 @@ class DepartureStopsViewTests {
         val stop = JourneyStop(
             "abcd",
             TrainStationPreviewParameterProvider().values.elementAt(0),
-            (now + 2.minutes).toJavaInstant(),
-            (now + 4.minutes).toJavaInstant(),
-            (now + 4.minutes).toJavaInstant(),
-            (now + 6.minutes).toJavaInstant(),
+            now + 2.minutes,
+            now + 4.minutes,
+            now + 4.minutes,
+            now + 6.minutes,
             "3a",
             "3a"
         )
