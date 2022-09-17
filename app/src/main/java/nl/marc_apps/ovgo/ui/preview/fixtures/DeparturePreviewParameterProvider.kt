@@ -2,7 +2,6 @@ package nl.marc_apps.ovgo.ui.preview.fixtures
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
-import kotlinx.datetime.toJavaInstant
 import nl.marc_apps.ovgo.domain.Departure
 import kotlin.time.Duration.Companion.minutes
 

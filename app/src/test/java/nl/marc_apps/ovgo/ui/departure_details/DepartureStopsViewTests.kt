@@ -5,7 +5,6 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.datetime.Clock
-import kotlinx.datetime.toJavaInstant
 import nl.marc_apps.ovgo.domain.JourneyStop
 import nl.marc_apps.ovgo.test_utils.KoinTestApplication
 import nl.marc_apps.ovgo.ui.preview.fixtures.TrainStationPreviewParameterProvider

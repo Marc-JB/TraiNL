@@ -1,7 +1,6 @@
 package nl.marc_apps.ovgo.data.type_conversions
 
 import android.content.Context
-import kotlinx.datetime.toJavaInstant
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.data.api.dutch_railways.models.DutchRailwaysDeparture
 import nl.marc_apps.ovgo.domain.Departure

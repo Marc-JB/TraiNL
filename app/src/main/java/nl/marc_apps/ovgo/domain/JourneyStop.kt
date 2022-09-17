@@ -3,10 +3,8 @@ package nl.marc_apps.ovgo.domain
 import androidx.annotation.Keep
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toKotlinInstant
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
-import java.time.Instant as JtInstant
 
 @Keep
 data class JourneyStop(
