@@ -6,11 +6,9 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import nl.marc_apps.ovgo.BuildConfig
-import nl.marc_apps.ovgo.utils.dnsHttpClient
 import nl.marc_apps.ovgo.utils.httpClient
 import nl.marc_apps.ovgo.utils.setUserAgent
 import okhttp3.Cache
-import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.brotli.BrotliInterceptor
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,7 +23,7 @@ class HttpClientImpl(val context: Context) : HttpClient {
         }
 
     override val okHttpClient by lazy {
-        val bootstrapClient = httpClient {
+        httpClient {
             setUserAgent(applicationUserAgent)
 
             addInterceptor(BrotliInterceptor)
@@ -41,15 +39,6 @@ class HttpClientImpl(val context: Context) : HttpClient {
 
             val cacheDir = File(context.cacheDir, NETWORK_CACHE_DIRECTORY_NAME).apply { mkdirs() }
             cache(Cache(cacheDir, maxSize = 2_000_000L))
-        }
-
-        val dns = dnsHttpClient {
-            client(bootstrapClient)
-            url(CloudflareDns.RESOLVER_URL.toHttpUrl())
-        }
-
-        httpClient(bootstrapClient) {
-            dns(dns)
         }
     }
 
