@@ -54,14 +54,17 @@ fun DepartureView(departure: Departure, imageLoader: ImageLoader? = null, onDepa
 }
 
 @DayNightPreview
-@Preview
 @Composable
 fun DeparturesListPreview() {
-    val departures = DeparturePreviewParameterProvider().values.toList()
+    val departures = DeparturePreviewParameterProvider().values.toList().mapIndexed { index, departure ->
+        if (index == 0) {
+            departure.copy(isCancelled = true)
+        } else departure
+    }
 
     AppTheme {
         Surface(color = MaterialTheme.colors.background) {
-            DeparturesList(departures + departures.first().copy(isCancelled = true), null) {}
+            DeparturesList(departures, null) {}
         }
     }
 }

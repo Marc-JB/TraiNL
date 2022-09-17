@@ -67,7 +67,6 @@ fun StationSuggestions(
 }
 
 @Composable
-@Preview
 @DayNightPreview
 fun StationSuggestionPreview(
     @PreviewParameter(TrainStationPreviewParameterProvider::class) trainStation: TrainStation

@@ -89,7 +89,6 @@ fun SearchStationView(
 }
 
 @DayNightPreview
-@Preview
 @Composable
 fun SearchStationViewPreview() {
     val exampleStations = TrainStationPreviewParameterProvider().values.toList()
@@ -101,7 +100,7 @@ fun SearchStationViewPreview() {
 }
 
 @Composable
-@Preview
+@DayNightPreview
 fun SearchStationViewLoadingPreview() {
     AppTheme {
         Surface(color = MaterialTheme.colors.background) {

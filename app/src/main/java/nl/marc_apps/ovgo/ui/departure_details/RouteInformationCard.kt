@@ -134,7 +134,6 @@ fun StationChip(station: TrainStation, onSelected: () -> Unit) {
 }
 
 @DayNightPreview
-@Preview
 @Composable
 fun RouteInformationCardPreview(
     @PreviewParameter(DeparturePreviewParameterProvider::class) departure: Departure

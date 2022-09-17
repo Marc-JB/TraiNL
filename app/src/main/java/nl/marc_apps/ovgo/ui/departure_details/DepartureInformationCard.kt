@@ -67,7 +67,6 @@ fun DepartureInformationCard(departure: Departure) {
 }
 
 @DayNightPreview
-@Preview
 @Composable
 fun DepartureInformationCardPreview(
     @PreviewParameter(DeparturePreviewParameterProvider::class) departure: Departure

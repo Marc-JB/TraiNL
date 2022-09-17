@@ -135,7 +135,6 @@ fun DepartureDetailsView(
 }
 
 @DayNightPreview
-@Preview
 @Composable
 fun DepartureDetailsViewPreview(
     @PreviewParameter(DeparturePreviewParameterProvider::class) departure: Departure

@@ -4,9 +4,6 @@ import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
 
-/**
- * Note: feature needs Android Studio Dolphin and newer
- */
 @Preview(
     name = "Light theme",
     group = "themes",

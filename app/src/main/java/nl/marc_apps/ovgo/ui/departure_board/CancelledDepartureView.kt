@@ -87,7 +87,6 @@ fun CancelledDepartureView(departure: Departure) {
 }
 
 @DayNightPreview
-@Preview
 @Composable
 fun CancelledDepartureViewPreview(
     @PreviewParameter(DeparturePreviewParameterProvider::class) departure: Departure

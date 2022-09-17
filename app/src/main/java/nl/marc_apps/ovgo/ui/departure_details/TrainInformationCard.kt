@@ -145,7 +145,6 @@ fun FacilityIcon(enabled: Boolean, vectorIcon: ImageVector, description: String)
     Spacer(Modifier.width(4.dp))
 }
 
-@Preview
 @DayNightPreview
 @Composable
 fun TrainInformationCardPreview(
@@ -158,7 +157,7 @@ fun TrainInformationCardPreview(
     }
 }
 
-@Preview
+@DayNightPreview
 @Composable
 fun FacilityViewPreview() {
     AppTheme {
