@@ -1,16 +1,11 @@
 package nl.marc_apps.ovgo.domain
 
-import android.os.Parcelable
-import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
 import nl.marc_apps.ovgo.utils.BitwiseOperations
 
-@Parcelize
 data class TrainInfo(
     val journeyId: Int,
     val trainParts: List<TrainPart>
-): Parcelable {
-    @IgnoredOnParcel
+) {
     val facilities by lazy {
         TrainFacilities(
             trainParts.sumOf { it.facilities.seatsFirstClass },
@@ -19,13 +14,11 @@ data class TrainInfo(
         )
     }
 
-    @Parcelize
     data class TrainFacilities(
         val seatsFirstClass: Int = 0,
         val seatsSecondClass: Int = 0,
         val features: Int = 0
-    ): Parcelable {
-        @IgnoredOnParcel
+    ) {
         val hasFirstClass = seatsFirstClass > 0 && seatsSecondClass > 0
 
         val hasToilet
@@ -74,10 +67,9 @@ data class TrainInfo(
         )
     }
 
-    @Parcelize
     data class TrainPart(
         val id: Int? = null,
         val facilities: TrainFacilities,
         val imageUrl: String? = null
-    ) : Parcelable
+    )
 }

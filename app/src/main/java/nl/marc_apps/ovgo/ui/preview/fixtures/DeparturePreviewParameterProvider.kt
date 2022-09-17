@@ -11,8 +11,8 @@ class DeparturePreviewParameterProvider : PreviewParameterProvider<Departure> {
         Departure(
             "abcd",
             actualDirection = TrainStationPreviewParameterProvider().values.last(),
-            _plannedDepartureTime = (Clock.System.now() + 2.minutes).toJavaInstant(),
-            _actualDepartureTime = (Clock.System.now() + 4.minutes).toJavaInstant(),
+            plannedDepartureTime = Clock.System.now() + 2.minutes,
+            actualDepartureTime = Clock.System.now() + 4.minutes,
             plannedTrack = "4b",
             actualTrack = "4",
             operator = "NS",
