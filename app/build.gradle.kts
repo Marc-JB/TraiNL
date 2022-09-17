@@ -47,7 +47,6 @@ android {
             excludes += "**/*.kotlin_metadata"
             excludes += "DebugProbesKt.bin"
             excludes += "META-INF/*.kotlin_module"
-            // excludes += "META-INF/*.version"
             excludes += "build-data.properties"
         }
     }
@@ -96,8 +95,8 @@ android {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-preview"
 
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
+            isShrinkResources = false
 
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
