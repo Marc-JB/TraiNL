@@ -23,6 +23,7 @@ import nl.marc_apps.ovgo.domain.Departure
 import nl.marc_apps.ovgo.ui.TrainStationDisplayName
 import nl.marc_apps.ovgo.ui.components.PlatformView
 import nl.marc_apps.ovgo.ui.components.TrainImagesView
+import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import nl.marc_apps.ovgo.ui.theme.BluePrimary
@@ -196,16 +197,7 @@ fun PlatformIcon(platform: String, platformChanged: Boolean) {
     }
 }
 
-@Preview(
-    name = "Light theme",
-    group = "themes",
-    uiMode = Configuration.UI_MODE_NIGHT_NO
-)
-@Preview(
-    name = "Dark theme",
-    group = "themes",
-    uiMode = Configuration.UI_MODE_NIGHT_YES
-)
+@DayNightPreview
 @Composable
 fun ActiveDepartureViewPreview(
     @PreviewParameter(DeparturePreviewParameterProvider::class) departure: Departure

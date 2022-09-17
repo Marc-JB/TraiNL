@@ -28,6 +28,7 @@ import kotlinx.datetime.Instant
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.JourneyStop
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.JourneyStopPreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import nl.marc_apps.ovgo.utils.format
@@ -159,7 +160,7 @@ fun Pill() {
     ) {}
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DayNightPreview
 @Composable
 fun DepartureStopsViewPreview() {
     val stops = JourneyStopPreviewParameterProvider().values.toList()

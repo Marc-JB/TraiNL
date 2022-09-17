@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nl.marc_apps.ovgo.R
+import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 
 @Composable
@@ -47,7 +48,7 @@ fun PlaceholderImage(
     }
 }
 
-@Preview
+@DayNightPreview
 @Composable
 fun PlaceholderImagePreview() {
     AppTheme {

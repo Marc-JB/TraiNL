@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.TrainStation
 import nl.marc_apps.ovgo.ui.components.PlatformView
+import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.TrainStationPreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import nl.marc_apps.ovgo.ui.theme.BluePrimary
@@ -72,7 +73,7 @@ fun StationAppBar(
     }
 }
 
-@Preview
+@DayNightPreview
 @Composable
 fun StationAppBarPreview() {
     AppTheme {
