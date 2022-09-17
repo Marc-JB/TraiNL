@@ -16,15 +16,23 @@ object InstantIso8601Serializer: KSerializer<Instant> {
     override fun deserialize(decoder: Decoder): Instant {
         val timestamp = decoder.decodeString()
         return try {
-            Instant.parse(fixOffsetRepresentation(timestamp))
-        } catch (error: IllegalArgumentException) {
-            Log.e("InstantIso8601Serializer", "timestamp: $timestamp", error)
+            Instant.parse(fixDateWithoutTime(fixOffsetRepresentation(timestamp)))
+        } catch (error: RuntimeException) {
+            Log.w("InstantIso8601Serializer", "timestamp: $timestamp", error)
             Instant.parse("2020-01-01T00:00Z")
         }
     }
 
     override fun serialize(encoder: Encoder, value: Instant) {
         encoder.encodeString(value.toString())
+    }
+
+    private fun fixDateWithoutTime(dateString: String): String {
+        if ("T" !in dateString && dateString.length in 8..10) {
+            return dateString + "T12:00:00Z"
+        }
+
+        return dateString
     }
 
     private fun fixOffsetRepresentation(isoString: String): String {
