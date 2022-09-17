@@ -45,7 +45,7 @@ android {
             excludes += "**/*.kotlin_metadata"
             excludes += "DebugProbesKt.bin"
             excludes += "META-INF/*.kotlin_module"
-            excludes += "META-INF/*.version"
+            // excludes += "META-INF/*.version"
             excludes += "build-data.properties"
         }
     }
