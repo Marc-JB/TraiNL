@@ -39,6 +39,8 @@ android {
     compileSdk = libs.versions.trainl.targetsdk.get().toInt()
     buildToolsVersion = "33.0.0"
 
+    namespace = "nl.marc_apps.ovgo"
+
     packagingOptions {
         resources {
             excludes += "kotlin/**"
