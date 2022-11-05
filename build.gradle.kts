@@ -1,5 +1,7 @@
 
 import kotlinx.kover.api.CoverageEngine
+import kotlinx.kover.api.DefaultIntellijEngine
+import kotlinx.kover.api.IntellijEngine
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 
@@ -30,18 +32,24 @@ plugins {
 }
 
 val coverageExclusionList = listOf(
-    "nl.marc_apps.ovgo.databinding.*",
     "nl.marc_apps.ovgo.BuildConfig",
-    "nl.marc_apps.ovgo.data.db.*_Impl",
-    "nl.marc_apps.ovgo.data.db.*_Impl*",
-    "nl.marc_apps.ovgo.ui.*.*FragmentArgs",
-    "nl.marc_apps.ovgo.ui.*.*FragmentArgs*",
-    "nl.marc_apps.ovgo.ui.*.*FragmentDirections",
-    "nl.marc_apps.ovgo.ui.*.*FragmentDirections*"
+    "*.ComposableSingletons",
+    "nl.marc_apps.ovgo.ui.preview.fixtures.*PreviewParameterProvider",
+    "nl.marc_apps.ovgo.data.db.*_Impl*"
 )
 
 kover {
-    coverageEngine.set(CoverageEngine.INTELLIJ)
+    engine.set(DefaultIntellijEngine)
+}
+
+koverMerged {
+    enable()
+
+    filters {
+        classes {
+            excludes += coverageExclusionList
+        }
+    }
 }
 
 fun getLocalProperties(): Properties {
@@ -76,14 +84,6 @@ tasks.sonarqube {
     dependsOn("koverMergedReport")
 }
 
-tasks.koverMergedHtmlReport {
-    excludes = coverageExclusionList
-}
-
-tasks.koverMergedXmlReport {
-    excludes = coverageExclusionList
-}
-
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
@@ -98,13 +98,16 @@ fun hasLowerStability(candidateVersion: String, currentVersion: String): Boolean
             // NOTHING
         }
         "BETA" in currentVersionUpperCased -> {
+            versionsToCheck += "DEV"
             versionsToCheck += "ALPHA"
         }
         "RC" in currentVersionUpperCased -> {
+            versionsToCheck += "DEV"
             versionsToCheck += "ALPHA"
             versionsToCheck += "BETA"
         }
         else -> {
+            versionsToCheck += "DEV"
             versionsToCheck += "ALPHA"
             versionsToCheck += "BETA"
             versionsToCheck += "RC"
