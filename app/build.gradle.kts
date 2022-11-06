@@ -1,17 +1,9 @@
-@file:SuppressLint("FragmentGradleConfiguration")
-
-import android.annotation.SuppressLint
 import kotlinx.kover.api.KoverTaskExtension
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 
 // TODO: Remove when https://youtrack.jetbrains.com/issue/KTIJ-19369 is fixed.
-@Suppress(
-    "DSL_SCOPE_VIOLATION",
-    "MISSING_DEPENDENCY_CLASS",
-    "UNRESOLVED_REFERENCE_WRONG_RECEIVER",
-    "FUNCTION_CALL_EXPECTED"
-)
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.app)
     alias(libs.plugins.kotlin.android)
