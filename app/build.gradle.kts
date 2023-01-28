@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import kotlinx.kover.api.KoverTaskExtension
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
@@ -32,7 +34,7 @@ fun getLocalProperties(): Properties {
 
 android {
     compileSdk = libs.versions.trainl.targetsdk.get().toInt()
-    buildToolsVersion = "33.0.0"
+    buildToolsVersion = "33.0.1"
 
     namespace = "nl.marc_apps.ovgo"
 
