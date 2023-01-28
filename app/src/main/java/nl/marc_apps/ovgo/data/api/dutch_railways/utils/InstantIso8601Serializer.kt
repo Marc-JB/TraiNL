@@ -18,7 +18,7 @@ object InstantIso8601Serializer: KSerializer<Instant> {
         return try {
             Instant.parse(fixDateWithoutTime(fixOffsetRepresentation(timestamp)))
         } catch (error: RuntimeException) {
-            Log.w("InstantIso8601Serializer", "timestamp: $timestamp", error)
+            Log.w("InstantIso8601Serialize", "timestamp: $timestamp", error)
             Instant.parse("2020-01-01T00:00Z")
         }
     }

@@ -54,7 +54,7 @@ fun getLocalProperties(): Properties {
     }
 }
 
-sonarqube {
+sonar {
     val keys = getLocalProperties()
 
     fun getProperty(key: String): String? {
@@ -69,11 +69,13 @@ sonarqube {
         property("sonar.host.url", getProperty("sonar.host.url")!!)
 
         property("sonar.coverage.jacoco.xmlReportPaths", "${projectDir.invariantSeparatorsPath}/build/reports/kover/report.xml")
+        
+        property("sonar.androidLint.reportPaths", "${projectDir.invariantSeparatorsPath}/app/build/reports/lint-results-debug.xml")
     }
 }
 
-tasks.sonarqube {
-    dependsOn("koverMergedReport")
+tasks.sonar {
+    dependsOn("lint", "koverMergedReport")
 }
 
 tasks.register("clean", Delete::class) {

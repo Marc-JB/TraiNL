@@ -39,5 +39,5 @@ fun Instant.format(
         if (timeZone != null) {
             it.timeZone = timeZone
         }
-    }.format(Date.from(this.toJavaInstant()))
+    }.format(Date(this.toEpochMilliseconds()))
 }

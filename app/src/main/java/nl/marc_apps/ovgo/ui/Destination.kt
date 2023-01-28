@@ -80,7 +80,7 @@ object DepartureDetailsDestination : Destination(
             nullable = false
         }
     ),
-    composable = { navController, layoutState, arguments ->
+    composable = { navController, _, arguments ->
         DepartureDetailsView(
             departureId = arguments?.getString(PARAM_DEPARTURE_ID),
             navController = navController
@@ -94,7 +94,7 @@ object DepartureDetailsDestination : Destination(
 
 object StationSearchDestination : Destination(
     routeSpecification = "station_search",
-    composable = { navController, layoutState, _ ->
+    composable = { navController, _, _ ->
         SearchStationView(navController = navController)
     }
 ) {
