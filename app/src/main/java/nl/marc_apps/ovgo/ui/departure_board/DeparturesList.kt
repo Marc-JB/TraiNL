@@ -18,16 +18,16 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import nl.marc_apps.ovgo.domain.Departure
+import nl.marc_apps.ovgo.ui.LayoutState
 import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import kotlin.math.min
 
-private val DepartureViewSpacingHorizontal = 16.dp
-
 @Composable
 fun DeparturesList(
     departures: List<Departure>,
+    layoutState: LayoutState = LayoutState(),
     imageLoader: ImageLoader? = null,
     onDepartureSelected: (Departure) -> Unit
 ) {
@@ -77,11 +77,11 @@ fun DeparturesList(
             key = { _, item -> item.journeyId },
             contentType = { _, item -> item.isCancelled }
         ) { index, departure ->
-            DepartureView(departure, imageLoader, onDepartureSelected)
+            DepartureView(departure, layoutState, imageLoader, onDepartureSelected)
 
             if (index != departures.lastIndex) {
                 Divider(
-                    modifier = Modifier.padding(DepartureViewSpacingHorizontal, 0.dp)
+                    modifier = Modifier.padding(layoutState.windowPadding.width, 0.dp)
                 )
             } else {
                 Spacer(Modifier.height(32.dp))
@@ -91,11 +91,16 @@ fun DeparturesList(
 }
 
 @Composable
-fun DepartureView(departure: Departure, imageLoader: ImageLoader? = null, onDepartureSelected: (Departure) -> Unit) {
+fun DepartureView(
+    departure: Departure,
+    layoutState: LayoutState = LayoutState(),
+    imageLoader: ImageLoader? = null,
+    onDepartureSelected: (Departure) -> Unit
+) {
     if (departure.isCancelled) {
-        CancelledDepartureView(departure)
+        CancelledDepartureView(departure, layoutState)
     } else {
-        ActiveDepartureView(departure, imageLoader, onDepartureSelected)
+        ActiveDepartureView(departure, layoutState, imageLoader, onDepartureSelected)
     }
 }
 
@@ -110,7 +115,7 @@ fun DeparturesListPreview() {
 
     AppTheme {
         Surface(color = MaterialTheme.colors.background) {
-            DeparturesList(departures, null) {}
+            DeparturesList(departures) {}
         }
     }
 }
