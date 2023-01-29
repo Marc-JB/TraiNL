@@ -1,7 +1,8 @@
 package nl.marc_apps.ovgo.ui.components
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,29 +32,34 @@ fun TrainImagesView(
     imageLoader: ImageLoader? = null,
     header: (@Composable () -> Unit)? = null
 ) {
-    LazyRow(
+    val scrollState = rememberScrollState()
+
+    Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .fillMaxWidth()
+            .horizontalScroll(scrollState)
     ) {
         if (header != null) {
-            item {
-                Box (
-                    modifier = Modifier.widthIn(min = paddingStart)
-                ) {
-                    header()
-                }
+            Box (
+                modifier = Modifier.widthIn(min = paddingStart)
+            ) {
+                header()
             }
         }
 
-        items(imageUrls.size) { index ->
-            if (index == 0 && header == null) {
-                Spacer(Modifier.width(paddingStart))
-            }
+        Row {
+            for (index in imageUrls.indices) {
+                if (index == 0 && header == null) {
+                    Spacer(Modifier.width(paddingStart))
+                }
 
-            TrainImage(imageUrls[index], imageLoader)
+                TrainImage(imageUrls[index], imageLoader)
 
-            if (index == imageUrls.lastIndex) {
-                Spacer(Modifier.width(paddingEnd))
+                if (index == imageUrls.lastIndex) {
+                    Spacer(Modifier.width(paddingEnd))
+                }
             }
         }
     }
