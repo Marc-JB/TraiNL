@@ -70,12 +70,12 @@ sonar {
 
         property("sonar.coverage.jacoco.xmlReportPaths", "${projectDir.invariantSeparatorsPath}/build/reports/kover/merged/xml/report.xml")
 
-        property("sonar.androidLint.reportPaths", "${projectDir.invariantSeparatorsPath}/app/build/reports/lint-results-release.xml")
+        property("sonar.androidLint.reportPaths", "${projectDir.invariantSeparatorsPath}/app/build/reports/lint-results-debug.xml")
     }
 }
 
 tasks.sonar {
-    dependsOn(":app:lintReportRelease", "koverMergedReport")
+    dependsOn(":app:lintReportDebug", "koverMergedReport")
 }
 
 tasks.register("clean", Delete::class) {
