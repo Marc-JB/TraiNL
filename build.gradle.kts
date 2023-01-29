@@ -68,7 +68,7 @@ sonar {
         property("sonar.organization", getProperty("sonar.organization")!!)
         property("sonar.host.url", getProperty("sonar.host.url")!!)
 
-        property("sonar.coverage.jacoco.xmlReportPaths", "${projectDir.invariantSeparatorsPath}/build/reports/kover/report.xml")
+        property("sonar.coverage.jacoco.xmlReportPaths", "${projectDir.invariantSeparatorsPath}/build/reports/kover/merged/xml/report.xml")
 
         property("sonar.androidLint.reportPaths", "${projectDir.invariantSeparatorsPath}/app/build/reports/lint-results-release.xml")
     }
