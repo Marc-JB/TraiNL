@@ -70,7 +70,7 @@ sonar {
 
         property("sonar.coverage.jacoco.xmlReportPaths", "${projectDir.invariantSeparatorsPath}/build/reports/kover/report.xml")
 
-        property("sonar.androidLint.reportPaths", "${projectDir.invariantSeparatorsPath}/app/build/reports/lint-results-debug.xml")
+        property("sonar.androidLint.reportPaths", "${projectDir.invariantSeparatorsPath}/app/build/reports/lint-results-release.xml")
     }
 }
 
