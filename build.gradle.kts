@@ -75,7 +75,7 @@ sonar {
 }
 
 tasks.sonar {
-    dependsOn("lint", "koverMergedReport")
+    dependsOn(":app:lintReportRelease", "koverMergedReport")
 }
 
 tasks.register("clean", Delete::class) {
