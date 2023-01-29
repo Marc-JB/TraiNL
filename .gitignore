@@ -138,3 +138,5 @@ fabric.properties
 
 ### Manually added ###
 .idea/deploymentTargetDropDown.xml
+.idea/sonarlint/
+.idea/inspectionProfiles/
