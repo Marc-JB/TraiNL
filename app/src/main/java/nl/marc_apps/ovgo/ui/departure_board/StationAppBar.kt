@@ -12,13 +12,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.TrainStation
+import nl.marc_apps.ovgo.ui.LayoutState
 import nl.marc_apps.ovgo.ui.components.PlatformView
 import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.TrainStationPreviewParameterProvider
 import nl.marc_apps.ovgo.ui.theme.AppTheme
 import nl.marc_apps.ovgo.ui.theme.BluePrimary
 
-private val AppBarHorizontalSpacing = 16.dp
+// private val AppBarHorizontalSpacing = 16.dp
 private val AppBarVerticalSpacing = 8.dp
 
 private val AppBarHeight = 56.dp
@@ -30,11 +31,12 @@ private val AppBarIconPadding = 16.dp
 @Composable
 fun StationAppBar(
     station: TrainStation?,
+    layoutState: LayoutState = LayoutState(),
     onEditStationSelected: () -> Unit
 ) {
     PlatformView(
         modifier = Modifier
-            .padding(AppBarHorizontalSpacing, AppBarVerticalSpacing)
+            .padding(layoutState.windowPadding.width, AppBarVerticalSpacing)
             .fillMaxWidth()
             .height(AppBarHeight),
         whiteSquareSize = StationAppBarWhiteSquareSize,

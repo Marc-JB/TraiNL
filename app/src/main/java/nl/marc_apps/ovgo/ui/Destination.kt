@@ -15,7 +15,7 @@ import nl.marc_apps.ovgo.ui.search_station.SearchStationView
 sealed class Destination(
     val routeSpecification: String,
     val arguments: List<NamedNavArgument> = emptyList(),
-    val composable: @Composable (NavHostController, Bundle?) -> Unit
+    val composable: @Composable (NavHostController, LayoutState, Bundle?) -> Unit
 ) {
     abstract fun buildRoute(): String
 
@@ -43,10 +43,11 @@ class DepartureBoardDestination : Destination(
             defaultValue = null
         }
     ),
-    composable = { navController, arguments ->
+    composable = { navController, layoutState, arguments ->
         DepartureBoardView(
             stationId = arguments?.getString(PARAM_STATION_ID),
-            navController = navController
+            navController = navController,
+            layoutState = layoutState
         )
     }
 ) {
@@ -59,14 +60,14 @@ class DepartureBoardDestination : Destination(
 
 object DisruptionsDestination : Destination(
     routeSpecification = "disruptions",
-    composable = { _, _ -> DisruptionsView() }
+    composable = { _, _, _ -> DisruptionsView() }
 ) {
     override fun buildRoute() = routeSpecification
 }
 
 object MaintenanceDestination : Destination(
     routeSpecification = "maintenance",
-    composable = { _, _ -> MaintenanceView() }
+    composable = { _, _, _ -> MaintenanceView() }
 ) {
     override fun buildRoute() = routeSpecification
 }
@@ -79,7 +80,7 @@ object DepartureDetailsDestination : Destination(
             nullable = false
         }
     ),
-    composable = { navController, arguments ->
+    composable = { navController, _, arguments ->
         DepartureDetailsView(
             departureId = arguments?.getString(PARAM_DEPARTURE_ID),
             navController = navController
@@ -93,7 +94,7 @@ object DepartureDetailsDestination : Destination(
 
 object StationSearchDestination : Destination(
     routeSpecification = "station_search",
-    composable = { navController, _ ->
+    composable = { navController, _, _ ->
         SearchStationView(navController = navController)
     }
 ) {

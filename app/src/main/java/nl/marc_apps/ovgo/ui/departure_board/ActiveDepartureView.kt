@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.Departure
+import nl.marc_apps.ovgo.ui.LayoutState
 import nl.marc_apps.ovgo.ui.TrainStationDisplayName
 import nl.marc_apps.ovgo.ui.components.PlatformView
 import nl.marc_apps.ovgo.ui.components.TrainImagesView
@@ -30,11 +31,15 @@ import java.text.DateFormat
 
 private const val MAX_STATIONS_DISPLAYED_ON_ROUTE = 2
 
-private val DepartureViewSpacingHorizontal = 16.dp
 private val DepartureViewItemSpacingVertical = 8.dp
 
 @Composable
-fun ActiveDepartureView(departure: Departure, imageLoader: ImageLoader? = null, onDepartureSelected: (Departure) -> Unit) {
+fun ActiveDepartureView(
+    departure: Departure,
+    layoutState: LayoutState = LayoutState(),
+    imageLoader: ImageLoader? = null,
+    onDepartureSelected: (Departure) -> Unit
+) {
     Column(
         modifier = Modifier
             .clickable {
@@ -43,7 +48,7 @@ fun ActiveDepartureView(departure: Departure, imageLoader: ImageLoader? = null, 
             .padding(0.dp, DepartureViewItemSpacingVertical)
     ) {
         Row(
-            modifier = Modifier.padding(DepartureViewSpacingHorizontal, 0.dp)
+            modifier = Modifier.padding(layoutState.windowPadding.width, 0.dp)
         ) {
             Text(
                 if (departure.isDelayed) {
@@ -108,14 +113,14 @@ fun ActiveDepartureView(departure: Departure, imageLoader: ImageLoader? = null, 
 
         Spacer(Modifier.height(DepartureViewItemSpacingVertical))
 
-        TrainInfoRow(departure, imageLoader)
+        TrainInfoRow(departure, layoutState, imageLoader)
 
         for (warning in departure.warnings) {
             Text(
                 warning,
                 style = MaterialTheme.typography.overline,
                 color = colorResource(R.color.departureMessageWarningColor),
-                modifier = Modifier.padding(DepartureViewSpacingHorizontal, 2.dp)
+                modifier = Modifier.padding(layoutState.windowPadding.width, 2.dp)
             )
         }
 
@@ -124,7 +129,7 @@ fun ActiveDepartureView(departure: Departure, imageLoader: ImageLoader? = null, 
                 Text(
                     message,
                     style = MaterialTheme.typography.overline,
-                    modifier = Modifier.padding(DepartureViewSpacingHorizontal, 2.dp)
+                    modifier = Modifier.padding(layoutState.windowPadding.width, 2.dp)
                 )
             }
         }
@@ -132,7 +137,11 @@ fun ActiveDepartureView(departure: Departure, imageLoader: ImageLoader? = null, 
 }
 
 @Composable
-fun TrainInfoRow(departure: Departure, imageLoader: ImageLoader? = null) {
+fun TrainInfoRow(
+    departure: Departure,
+    layoutState: LayoutState = LayoutState(),
+    imageLoader: ImageLoader? = null
+) {
     if (departure.trainInfo?.trainParts?.firstOrNull()?.imageUrl == null) {
         return
     }
@@ -142,11 +151,11 @@ fun TrainInfoRow(departure: Departure, imageLoader: ImageLoader? = null) {
     TrainImagesView(
         imageUrls,
         dimensionResource(R.dimen.train_image_spacing_start),
-        DepartureViewSpacingHorizontal,
+        layoutState.windowPadding.width,
         imageLoader,
         header = {
             Row {
-                Spacer(Modifier.width(DepartureViewSpacingHorizontal))
+                Spacer(Modifier.width(layoutState.windowPadding.width))
 
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                     Text(
@@ -205,7 +214,7 @@ fun ActiveDepartureViewPreview(
             color = MaterialTheme.colors.background,
             modifier = Modifier.fillMaxWidth()
         ) {
-            ActiveDepartureView(departure, null) {}
+            ActiveDepartureView(departure) {}
         }
     }
 }

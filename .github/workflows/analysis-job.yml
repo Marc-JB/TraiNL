@@ -73,7 +73,7 @@ jobs:
 
       # Test
       - name: Test with Gradle
-        run: ./gradlew sonarqube
+        run: ./gradlew sonar
         env:
           DUTCHRAILWAYS_TRAVELINFOAPI_KEY: ${{ secrets.DUTCHRAILWAYS_TRAVELINFOAPI_KEY }}
           ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}

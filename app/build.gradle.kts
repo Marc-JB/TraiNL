@@ -1,17 +1,11 @@
-@file:SuppressLint("FragmentGradleConfiguration")
+@file:Suppress("UnstableApiUsage")
 
-import android.annotation.SuppressLint
 import kotlinx.kover.api.KoverTaskExtension
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 
 // TODO: Remove when https://youtrack.jetbrains.com/issue/KTIJ-19369 is fixed.
-@Suppress(
-    "DSL_SCOPE_VIOLATION",
-    "MISSING_DEPENDENCY_CLASS",
-    "UNRESOLVED_REFERENCE_WRONG_RECEIVER",
-    "FUNCTION_CALL_EXPECTED"
-)
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.app)
     alias(libs.plugins.kotlin.android)
@@ -23,6 +17,9 @@ plugins {
 
     // API
     alias(libs.plugins.kotlin.serialization)
+
+    // Testing
+    alias(libs.plugins.kover)
 }
 
 fun getLocalProperties(): Properties {
@@ -37,7 +34,7 @@ fun getLocalProperties(): Properties {
 
 android {
     compileSdk = libs.versions.trainl.targetsdk.get().toInt()
-    buildToolsVersion = "33.0.0"
+    buildToolsVersion = "33.0.1"
 
     namespace = "nl.marc_apps.ovgo"
 
@@ -134,7 +131,7 @@ android {
 
         unitTests.all {
             it.extensions.configure<KoverTaskExtension> {
-                isDisabled = !it.name.contains("debug", ignoreCase = true)
+                isDisabled.set(!it.name.contains("debug", ignoreCase = true))
             }
         }
     }
@@ -159,14 +156,15 @@ dependencies {
 
     implementation(libs.coil)
 
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.androidx.compose)
     debugImplementation(libs.androidx.compose.tooling)
 
     implementation(libs.bundles.google.material)
 
     // Utilities
-    implementation(platform("com.google.firebase:firebase-bom:29.0.2"))
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation(platform(libs.google.firebase.bom))
+    implementation(libs.google.firebase.crashlytics)
 
     implementation(libs.koin)
 
@@ -176,6 +174,9 @@ dependencies {
     implementation(libs.kotlin.datetime)
 
     // Compose testing
+    testImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+
     testImplementation(libs.androidx.compose.testing)
     androidTestImplementation(libs.androidx.compose.testing)
     debugImplementation(libs.androidx.compose.testing.manifest)

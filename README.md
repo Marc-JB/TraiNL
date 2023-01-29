@@ -58,14 +58,14 @@ An Android application in Kotlin with the following libraries/patterns:
 ### :art: Color Reference
 | Color | Hex |
 | --- | --- |
-| Primary Color | ![#1976D2](https://via.placeholder.com/10/1976D2?text=+) #1976D2 |
-| Primary Color (Light) | ![#63A4FF](https://via.placeholder.com/10/63A4FF?text=+) #63A4FF |
-| Primary Color (Dark) | ![#004BA0](https://via.placeholder.com/10/004BA0?text=+) #004BA0 |
-| Secondary Color | ![#FFEB3B](https://via.placeholder.com/10/FFEB3B?text=+) #FFEB3B |
-| Secondary Color (Light) | ![#FFFF72](https://via.placeholder.com/10/FFFF72?text=+) #FFFF72 |
-| Secondary Color (Dark) | ![#C8B900](https://via.placeholder.com/10/C8B900?text=+) #C8B900 |
-| App Icon Color (Start) | ![#536DFE](https://via.placeholder.com/10/536DFE?text=+) #536DFE |
-| App Icon Color (End) | ![#6A3DE8](https://via.placeholder.com/10/6A3DE8?text=+) #6A3DE8 |
+| Primary Color | ![#1976D2](https://via.placeholder.com/16/1976D2.webp?text=+) #1976D2 |
+| Primary Color (Light) | ![#63A4FF](https://via.placeholder.com/16/63A4FF.webp?text=+) #63A4FF |
+| Primary Color (Dark) | ![#004BA0](https://via.placeholder.com/16/004BA0.webp?text=+) #004BA0 |
+| Secondary Color | ![#FFEB3B](https://via.placeholder.com/16/FFEB3B.webp?text=+) #FFEB3B |
+| Secondary Color (Light) | ![#FFFF72](https://via.placeholder.com/16/FFFF72.webp?text=+) #FFFF72 |
+| Secondary Color (Dark) | ![#C8B900](https://via.placeholder.com/16/C8B900.webp?text=+) #C8B900 |
+| App Icon Color (Start) | ![#536DFE](https://via.placeholder.com/16/536DFE.webp?text=+) #536DFE |
+| App Icon Color (End) | ![#6A3DE8](https://via.placeholder.com/16/6A3DE8.webp?text=+) #6A3DE8 |
 
 ### :key: Environment Variables
 This project requires a Firebase Crashlytics configuration file and a Dutch Railways API key.

@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.domain.Departure
+import nl.marc_apps.ovgo.ui.LayoutState
 import nl.marc_apps.ovgo.ui.TrainStationDisplayName
 import nl.marc_apps.ovgo.ui.preview.DayNightPreview
 import nl.marc_apps.ovgo.ui.preview.fixtures.DeparturePreviewParameterProvider
@@ -21,14 +22,13 @@ import nl.marc_apps.ovgo.ui.theme.AppTheme
 import nl.marc_apps.ovgo.utils.format
 import java.text.DateFormat
 
-private val DepartureViewSpacingHorizontal = 16.dp
 private val DepartureViewSpacingVertical = 8.dp
 
 @Composable
-fun CancelledDepartureView(departure: Departure) {
+fun CancelledDepartureView(departure: Departure, layoutState: LayoutState = LayoutState()) {
     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
         Row(
-            modifier = Modifier.padding(DepartureViewSpacingHorizontal, DepartureViewSpacingVertical)
+            modifier = Modifier.padding(layoutState.windowPadding.width, DepartureViewSpacingVertical)
         ) {
             Text(
                 departure.actualDepartureTime.format(timeStyle = DateFormat.SHORT),

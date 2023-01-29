@@ -1,15 +1,9 @@
-
-import kotlinx.kover.api.CoverageEngine
+import kotlinx.kover.api.DefaultIntellijEngine
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 
 // TODO: Remove when https://youtrack.jetbrains.com/issue/KTIJ-19369 is fixed.
-@Suppress(
-    "DSL_SCOPE_VIOLATION",
-    "MISSING_DEPENDENCY_CLASS",
-    "UNRESOLVED_REFERENCE_WRONG_RECEIVER",
-    "FUNCTION_CALL_EXPECTED"
-)
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.app) apply false
     alias(libs.plugins.kotlin.android) apply false
@@ -30,18 +24,24 @@ plugins {
 }
 
 val coverageExclusionList = listOf(
-    "nl.marc_apps.ovgo.databinding.*",
     "nl.marc_apps.ovgo.BuildConfig",
-    "nl.marc_apps.ovgo.data.db.*_Impl",
-    "nl.marc_apps.ovgo.data.db.*_Impl*",
-    "nl.marc_apps.ovgo.ui.*.*FragmentArgs",
-    "nl.marc_apps.ovgo.ui.*.*FragmentArgs*",
-    "nl.marc_apps.ovgo.ui.*.*FragmentDirections",
-    "nl.marc_apps.ovgo.ui.*.*FragmentDirections*"
+    "*.ComposableSingletons",
+    "nl.marc_apps.ovgo.ui.preview.fixtures.*PreviewParameterProvider",
+    "nl.marc_apps.ovgo.data.db.*_Impl*"
 )
 
 kover {
-    coverageEngine.set(CoverageEngine.INTELLIJ)
+    engine.set(DefaultIntellijEngine)
+}
+
+koverMerged {
+    enable()
+
+    filters {
+        classes {
+            excludes += coverageExclusionList
+        }
+    }
 }
 
 fun getLocalProperties(): Properties {
@@ -54,7 +54,7 @@ fun getLocalProperties(): Properties {
     }
 }
 
-sonarqube {
+sonar {
     val keys = getLocalProperties()
 
     fun getProperty(key: String): String? {
@@ -68,20 +68,14 @@ sonarqube {
         property("sonar.organization", getProperty("sonar.organization")!!)
         property("sonar.host.url", getProperty("sonar.host.url")!!)
 
-        property("sonar.coverage.jacoco.xmlReportPaths", "${projectDir.invariantSeparatorsPath}/build/reports/kover/report.xml")
+        property("sonar.coverage.jacoco.xmlReportPaths", "${projectDir.invariantSeparatorsPath}/build/reports/kover/merged/xml/report.xml")
+
+        property("sonar.androidLint.reportPaths", "${projectDir.invariantSeparatorsPath}/app/build/reports/lint-results-debug.xml")
     }
 }
 
-tasks.sonarqube {
-    dependsOn("koverMergedReport")
-}
-
-tasks.koverMergedHtmlReport {
-    excludes = coverageExclusionList
-}
-
-tasks.koverMergedXmlReport {
-    excludes = coverageExclusionList
+tasks.sonar {
+    dependsOn(":app:lintReportDebug", "koverMergedReport")
 }
 
 tasks.register("clean", Delete::class) {
@@ -98,13 +92,16 @@ fun hasLowerStability(candidateVersion: String, currentVersion: String): Boolean
             // NOTHING
         }
         "BETA" in currentVersionUpperCased -> {
+            versionsToCheck += "DEV"
             versionsToCheck += "ALPHA"
         }
         "RC" in currentVersionUpperCased -> {
+            versionsToCheck += "DEV"
             versionsToCheck += "ALPHA"
             versionsToCheck += "BETA"
         }
         else -> {
+            versionsToCheck += "DEV"
             versionsToCheck += "ALPHA"
             versionsToCheck += "BETA"
             versionsToCheck += "RC"

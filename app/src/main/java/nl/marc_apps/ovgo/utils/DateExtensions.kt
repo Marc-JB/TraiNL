@@ -3,7 +3,6 @@ package nl.marc_apps.ovgo.utils
 import android.os.Build
 import androidx.annotation.IntDef
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toJavaInstant
 import java.text.DateFormat
 import java.util.*
 
@@ -39,5 +38,5 @@ fun Instant.format(
         if (timeZone != null) {
             it.timeZone = timeZone
         }
-    }.format(Date.from(this.toJavaInstant()))
+    }.format(Date(this.toEpochMilliseconds()))
 }

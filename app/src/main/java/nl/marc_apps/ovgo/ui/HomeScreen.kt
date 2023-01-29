@@ -8,9 +8,7 @@ import androidx.compose.material.icons.rounded.DepartureBoard
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -67,16 +65,12 @@ fun HomeScreen() {
         )
 
         BoxWithConstraints {
-            val showNavigationRail by remember(maxWidth, maxHeight) {
-                derivedStateOf {
-                    maxWidth > maxHeight && maxWidth >= 600.dp
-                }
-            }
+            val layoutState = rememberLayoutState(windowConstraints = this)
 
-            if (showNavigationRail) {
-                HomeScreenWithNavigationRail(navController, items)
+            if (layoutState.isLandscape) {
+                HomeScreenWithNavigationRail(navController, items, layoutState)
             } else {
-                HomeScreenWithBottomNavigation(navController, items)
+                HomeScreenWithBottomNavigation(navController, items, layoutState)
             }
         }
     }
@@ -85,7 +79,8 @@ fun HomeScreen() {
 @Composable
 fun HomeScreenWithBottomNavigation(
     navController: NavHostController,
-    items: List<HomeScreenDestination>
+    items: List<HomeScreenDestination>,
+    layoutState: LayoutState
 ) {
     Scaffold(
         bottomBar = {
@@ -106,14 +101,15 @@ fun HomeScreenWithBottomNavigation(
             }
         }
     ) { innerPadding ->
-        HomeScreenNavigationHost(navController, innerPadding)
+        HomeScreenNavigationHost(navController, innerPadding, layoutState)
     }
 }
 
 @Composable
 fun HomeScreenWithNavigationRail(
     navController: NavHostController,
-    items: List<HomeScreenDestination>
+    items: List<HomeScreenDestination>,
+    layoutState: LayoutState
 ) {
     Scaffold { innerPadding ->
         Row(Modifier.padding(innerPadding)) {
@@ -133,7 +129,7 @@ fun HomeScreenWithNavigationRail(
                 }
             }
 
-            HomeScreenNavigationHost(navController, PaddingValues(0.dp))
+            HomeScreenNavigationHost(navController, PaddingValues(0.dp), layoutState)
         }
     }
 }
@@ -141,7 +137,8 @@ fun HomeScreenWithNavigationRail(
 @Composable
 fun HomeScreenNavigationHost(
     navController: NavHostController,
-    innerPadding: PaddingValues
+    innerPadding: PaddingValues,
+    layoutState: LayoutState
 ) {
     NavHost(
         navController,
@@ -153,7 +150,7 @@ fun HomeScreenNavigationHost(
                 route = destination.routeSpecification,
                 arguments = destination.arguments
             ) { backStackEntry ->
-                destination.composable(navController, backStackEntry.arguments)
+                destination.composable(navController, layoutState, backStackEntry.arguments)
             }
         }
     }

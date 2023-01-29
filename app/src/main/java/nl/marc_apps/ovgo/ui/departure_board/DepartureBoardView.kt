@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import coil.ImageLoader
 import nl.marc_apps.ovgo.R
 import nl.marc_apps.ovgo.ui.DepartureDetailsDestination
+import nl.marc_apps.ovgo.ui.LayoutState
 import nl.marc_apps.ovgo.ui.StationSearchDestination
 import nl.marc_apps.ovgo.ui.components.PlaceholderImage
 import org.koin.androidx.compose.get
@@ -29,6 +30,7 @@ fun DepartureBoardView(
     stationId: String? = null,
     departureBoardViewModel: DepartureBoardViewModel = getViewModel(),
     navController: NavController,
+    layoutState: LayoutState = LayoutState(),
     imageLoader: ImageLoader = get()
 ) {
     val selectedStation by departureBoardViewModel.currentStation.collectAsState()
@@ -39,7 +41,7 @@ fun DepartureBoardView(
         Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        StationAppBar(selectedStation) {
+        StationAppBar(selectedStation, layoutState) {
             navController.navigate(StationSearchDestination.buildRoute())
         }
 
@@ -70,7 +72,7 @@ fun DepartureBoardView(
                 text = stringResource(R.string.no_departures),
                 imageId = R.drawable.va_stranded_traveler
             )
-            else -> DeparturesList(departures.getOrThrow(), imageLoader) {
+            else -> DeparturesList(departures.getOrThrow(), layoutState, imageLoader) {
                 navController.navigate(DepartureDetailsDestination.buildRoute(it.journeyId))
             }
         }
