@@ -5,7 +5,7 @@ import androidx.compose.ui.platform.LocalContext
 import coil.request.ImageRequest
 
 @Composable
-fun ImageRequest(url: String, builder: @Composable ImageRequest.Builder.() -> Unit): ImageRequest {
+fun imageRequest(url: String, builder: @Composable ImageRequest.Builder.() -> Unit): ImageRequest {
     return ImageRequest.Builder(LocalContext.current)
         .data(url)
         .apply { builder() }

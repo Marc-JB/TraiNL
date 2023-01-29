@@ -16,7 +16,7 @@ import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.imageLoader
 import nl.marc_apps.ovgo.R
-import nl.marc_apps.ovgo.ui.ImageRequest
+import nl.marc_apps.ovgo.ui.imageRequest
 import nl.marc_apps.ovgo.ui.TrainImageBorderTransformation
 
 private fun isImageUrlFromWhiteTrain(imageUrl: String): Boolean {
@@ -77,7 +77,7 @@ fun TrainImage(url: String, imageLoader: ImageLoader? = null) {
     val shouldApplyBorder = isWhiteTrain || shouldDrawImageBorder
 
     AsyncImage(
-        ImageRequest(url = url) {
+        imageRequest(url = url) {
             if (shouldApplyBorder) {
                 transformations(borderTransformation)
             }
