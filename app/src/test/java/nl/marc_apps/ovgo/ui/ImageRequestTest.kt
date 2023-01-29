@@ -36,7 +36,7 @@ class ImageRequestTest {
 
         // Act
         composeTestRule.setContent {
-            imageRequest = ImageRequest(url) {}
+            imageRequest = imageRequest(url) {}
         }
 
         // Assert

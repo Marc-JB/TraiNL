@@ -2,18 +2,7 @@
 <resources>
     <!-- Application color palette -->
     <color name="colorPrimaryLight">#63a4ff</color>
-    <color name="colorOnPrimaryLight">#000000</color>
     <color name="colorPrimary">#1976d2</color>
-    <color name="colorOnPrimary">#FFFFFF</color>
-    <color name="colorPrimaryDark">#004ba0</color>
-    <color name="colorOnPrimaryDark">#FFFFFF</color>
-
-    <color name="colorAccentLight">#ffff72</color>
-    <color name="colorOnAccentLight">#000000</color>
-    <color name="colorAccent">#ffeb3b</color>
-    <color name="colorOnAccent">#000000</color>
-    <color name="colorAccentDark">#c8b900</color>
-    <color name="colorOnAccentDark">#000000</color>
 
     <color name="colorOK">#388E3C</color>
     <color name="colorOKLight">#6ABF69</color>
@@ -21,37 +10,18 @@
     <color name="colorError">#B00020</color>
     <color name="colorErrorLight">#E94948</color>
 
-    <color name="textColorPrimary">#DD000000</color>
-    <color name="textColorSecondary">#89000000</color>
-
     <!-- Specific colors -->
     <color name="backgroundColor">#FAFAFA</color>
-    <color name="backgroundColorTransparent">#00FAFAFA</color>
     <color name="bottomSheetPillColor">#52000000</color>
 
-    <color name="dividerColor">#52000000</color>
     <color name="departureMessageWarningColor">@color/colorError</color>
-    <color name="departureMessageColor">@android:color/secondary_text_light</color>
 
     <color name="sectionTitleWarningColor">@color/colorError</color>
     <color name="sectionTitleOkColor">@color/colorOK</color>
     <color name="sectionTitleColor">@color/colorPrimary</color>
-    <color name="sectionTitleDisabledColor">@color/textColorSecondary</color>
     <color name="statusBarColor">#212121</color>
-    <color name="surfaceOnBackground">#EEEEEE</color>
 
     <color name="trainImageBorder">#FAFAFA</color>
     <color name="trainImageBorderAlternative">@color/colorPrimary</color>
-
-    <color name="vectorAssetAccentColor">@color/colorPrimary</color>
-    <color name="vectorAssetStrandedTravelerColor1">#e6e6e6</color>
-    <color name="vectorAssetStrandedTravelerColor2">#fff</color>
-    <color name="vectorAssetStrandedTravelerColor3">#3f3d56</color>
-    <color name="vectorAssetStrandedTravelerColor4">#4d4d4d</color>
-    <color name="vectorAssetStrandedTravelerColor5">#2f2e41</color>
-    <color name="vectorAssetStrandedTravelerColor6">#a0616a</color>
-    <color name="vectorAssetTravellingColor1">#e6e6e6</color>
-    <color name="vectorAssetTravellingColor2">#f2f2f2</color>
-    <color name="vectorAssetTravellingColor3">#cbcbcb</color>
 
 </resources>

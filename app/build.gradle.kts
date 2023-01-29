@@ -60,8 +60,8 @@ android {
         minSdk = libs.versions.trainl.minsdk.get().toInt()
         targetSdk = libs.versions.trainl.targetsdk.get().toInt()
 
-        versionCode = getProperty("version.code")?.toInt() ?: 12
-        versionName = getProperty("version.name") ?: "0.9"
+        versionCode = getProperty("version.code")?.toInt() ?: 13
+        versionName = getProperty("version.name") ?: "0.10"
 
         testBuildType = "debug"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
